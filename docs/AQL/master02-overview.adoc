@@ -1,0 +1,35 @@
+= Overview
+
+== Existing Query Languages
+
+Currently, the available query languages, such as SQL, XQuery, or Object-Oriented Query Language, have dependencies on particular system data structure and working environment. Users must know the persistence data structure of an EHR in order to write an appropriate query. The query statement cannot be used by other systems which have different data store. Consequently, none of the these languages meet the aforementioned requirements and none of these can be used directly as the query language required by integrated care EHRs
+
+== What is AQL?
+
+Archetype Query Language (AQL) is a declarative query language developed specifically for expressing queries used for searching and retrieving the clinical data found in archetype-based EHRs. It is applied to the openEHR EHR Reference Model (RM) and the openEHR clinical archetypes, but the syntax is independent of applications, programming languages, system environment, and storage models. The minimum requirement for data to be querying with AQL (including with archetype structures and terminology) is for the data to be marked at a fine granularity with the appropriate archetype codes and terminology codes. This may be native openEHR-structured data, or legacy system data to which the relevant data markers (mainly archetype paths and terminology codes) have been added. Unlike other query languages, such as SQL or XQuery, AQL expresses the queries at the archetype level, i.e. semantic level, other than at the data instance level. This is the key in achieving sharing queries across system boundaries or enterprise boundaries.
+
+AQL has the following distinctive features:
+
+. the utilization of openEHR archetype path syntax in AQL. openEHR path syntax is used to locate clinical statements and data values within them using Archetypes. This path syntax is used to represent the query criteria and returned results. It allows setting query criteria using archetype and node identifiers, data values within the archetypes, and class attributes defined within the openEHR RM. It also allows the returned results to be top-level archetyped RM objects, data items within the archetypes or RM attribute values.
+. the utilization of containment mechanisms to indicate the data hierarchy and constrain the source data to which the query is applied.
+. the utilization of ADL-like operator syntaxes, such as matches, exists, in, negation. 
+. Neutral expression syntax. AQL does not have any dependencies on the underlying RM of the archetypes. It is neutral to system implementation and environment.
+. Supporting queries with logical time-based data rollback.
+
+AQL has some other features which can be found from other query languages:
+. Supporting naming returned results.
+. Supporting query criteria parameters.
+. Supporting arithmetic operations (such as count, addition, subtraction, multiplication, and division), relational operations (>, >=, =, !=, <=, <) and Boolean operations (or, and, xor, not).
+. Supporting some functions that are supported in XQuery, such as current-date().
+. Users can specify their preference on the retrieved data, such as ordering preferences, or total number of retrieved results.
+. Supporting queries for individual clinical subjects at the point of care, administrative purposes and clinical research purposes.
+
+== Structure & Example
+
+Like SQL, AQL has five clauses: SELECT, FROM, WHERE, ORDER BY, and TIMEWINDOW. The SELECT clause specifies the data elements to be returned. The FROM clause specifies the result source and the corresponding containment criteria. The WHERE clause specifies data value criteria within the result source. The ORDER BY clause indicates the data items used to order the returned result set. TIMEWINDOW clause is to constrain the query to data that was available in the system within the specified time criteria.
+
+Below is an example of AQL statement. This statement returns all blood pressure values where systolic value is greater or equal to 140 or diastolic value is greater or equals to 90 within a specified EHR. AQL syntax is a synthesis of SQL structural syntax and openEHR path syntax.
+
+[.text-center]
+.Simple AQL Example
+image::diagrams/AQLExample_1.png[id=AQLExample_1, align="center", width=70%]

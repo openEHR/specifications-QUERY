@@ -1,0 +1,82 @@
+= How to write an AQL query statement manually
+
+Ocean Informatics has implemented an AQL query builder which can be used to generate AQL query statements based on archetypes automatically. We strongly recommend to use this tool to generate an AQL query statement because it can be very complicated. This section is for the people who either do not have the access to AQL query builder or for users who want to have more understanding on AQL so that they can edit an existing AQL query manually.
+
+== Query scenario 
+
+An example is used to illustrate how to write an AQL statement. The query scenario is:
+
+*"Get all abnormal blood pressure values that are recorded in a health encounter for a specific patient."*
+
+== Step 1. Write FROM clause
+
+A FROM clause is to scope the data source for the query. Normally the first step is to shape FROM clause, which has EHR class expression and archetype class expressions.
+
+* EHR class expression. You need to determine whether this query is applied to a single EHR or all EHRs. The latter is called population queries. If it is for all EHRs, you don't need to specify ehr_id/value in FROM clause. Otherwise, you need to either specify a specific value or use a query parameter for ehr_id/value in FROM clause. For this particular scenario, it is for a single EHR. Parameter called ehrUid is used for the ehr_id/value, I would have this AQL query statement:
+FROM EHR [ehr_id/value=$ehrUid]
+
+* Archetype expressions.
+** To write archetype expressions in the FROM clause, we need to determine what archetypes are required in the scenario. Since archetypes are used to represent clinical concepts. The easy way to identify archetypes from a scenario is to identify clinical concepts mentioned in the scenario. Each clinical concept is generally associated with one archetype. Two clinical concepts are mentioned in the aforementioned scenario: blood pressure and health encounter. These concepts are used to identify two archetypes used in query: an observation archetype with archetype id - openEHR-EHR-OBSERVATION.blood_pressure.v1, and a composition archetype with archetype id - openEHR-EHR-COMPOSITION.encounter.v1.
+** Determine whether we need a variable name for each archetype class expression or not. We may need one if the reference to the archetype class expression is required by other AQL clauses. At the moment, I don't put any variable names for the archetype expressions. The two archetype expressions are:
+
+--------
+COMPOSITION [openEHR-EHR-COMPOSITION.encounter.v1]
+OBSERVATION [openEHR-EHR-OBSERVATION.blood_pressure.v1]
+--------
+
+* Containment expression. openEHR RM is used to identify the hierarchical relationships among the found archetypes so as to define the containment expression. For example, a composition archetype is the parent of an observation archetype, so the AQL query would look like:
+
+--------
+FROM EHR [ehr_id/value=$ehrUid] CONTAINS COMPOSITION [openEHR-EHR-COMPOSITION.encounter.v1]
+CONTAINS OBSERVATION [openEHR-EHR-OBSERVATION.blood_pressure.v1]
+--------
+
+== Step 2. Write WHERE clause
+
+WHERE clause represents all query criteria that cannot be represented in the FROM clause. To write WHERE clause expression, you need to:
+
+. Find the criteria. The criteria required by the scenario are abnormal blood pressure values. Different guidelines may have different definitions for abnormal blood pressure values. Here we interpret that abnormal blood pressure means 1) the systolic pressure value is greater than or equal to 140; OR 2) diastolic pressure value is greater than or equal to 90.
+. Write an identified expression for criterion 1).
+.. Write the Identified pathfor systolic data value. We need a class variable name as the reference to the blood pressure class expression defined in the FROM clause, so a variable name - obs - is added into the FROM clause. A path to systolic data value is also required to form the identified path. Two tools can be used to get the path: openEHR ADL WORKBENCHor Ocean Template Designer. The path to the systolic data value is /data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value.  
+.. Get appropriate operator: '>=' is chosen for criterion 1.
+.. Get the criteria value - 140. The query statement including the identified expression for criterion 1) is shown below:
+
+--------
+FROM EHR [ehr_id/value=$ehrUid] CONTAINS COMPOSITION [openEHR-EHR-COMPOSITION.encounter.v1]
+CONTAINS OBSERVATION obs [openEHR-EHR-OBSERVATION.blood_pressure.v1]
+WHERE obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value >= 140
+--------
+
+. Write an identified expression for criterion 2). Following the previous instruction to write the identified expression for criterion 2) which is shown as:
+
+--------
+obs/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/value >= 90
+--------
+
+. Find the appropriate boolean operator to join criterion 1) and 2) - OR. The query statement looks like:
+
+--------
+FROM EHR [ehr_id/value=$ehrUid] CONTAINS COMPOSITION [openEHR-EHR-COMPOSITION.encounter.v1]
+CONTAINS OBSERVATION obs [openEHR-EHR-OBSERVATION.blood_pressure.v1]
+WHERE obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value >= 140 OR
+obs/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/value >= 90
+--------
+
+== Step 3. Write SELECT clause
+
+Writing the SELECT clause needs to:
+
+. Find what data is required. The aforementioned scenario requires abnormal blood pressure values are returned, including both systolic pressure and diastolic pressure.
+. Write the appropriate identified path to the required item (variable name is required if the class object is required). Multiple identified path is separated using comma. For this particular scenario, two identified paths are found for systolic and diastolic data value by following Step 2. The completed query statement looks like:
+
+--------
+SELECT
+obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude,
+obs/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude
+
+FROM EHR [ehr_id/value=$ehrUid] CONTAINS COMPOSITION [openEHR-EHR-COMPOSITION.encounter.v1]
+CONTAINS OBSERVATION obs [openEHR-EHR-OBSERVATION.blood_pressure.v1]
+
+WHERE obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude>= 140 OR
+obs/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude>= 90
+--------

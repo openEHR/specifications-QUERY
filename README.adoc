@@ -1,0 +1,11 @@
+= specifications-QUERY
+openEHR Query Language Specifications
+
+This repository contains the document and model sources (Asciidoctor and MagicDraw) for the openEHR Query specifications including AQL.
+
+== Available Specifications
+
+Guides
+
+* AQL - https://rawgit.com/openEHR/specifications-QUERY/master/docs/AQL/AQL.html[HTML]
+

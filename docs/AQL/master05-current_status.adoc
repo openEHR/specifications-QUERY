@@ -1,0 +1,59 @@
+= Current status
+
+== AQL features not yet supported in the Ocean Informatics AQL Parser
+
+This is the list of all features that are not yet supported in the AQL Parser implemented by Ocean Informatics (Nov 2012):
+
+* TOP
+* XOR. Currently AND, OR, NOT, EXISTS are supported in WHERE clause.
+* All functions are not supported.
+* Embedded query is not supported
+* ORDER BY
+* TIMEWINDOW
+
+== AQL features that are proposed, but not finalised
+
+=== Arithmetic functions
+
+It has been proposed that AQL would support some basic arithmetic functions, such as addition (plus) , subtraction (minus) . Multiplication, and division may be supported as well. We do not have any scenario requiring for these two functions yet.
+
+Most cases, it is required that the left operand and the right operand must be the same type in order to do the calculation, e.g. numeric types. openEHR RM supports addition and subtraction for the types of: DV_QUANTITY, DV_COUNT, DV_INTERVAL, DV_PROPORTION, DV_DATE_TIME, DV_DATE, and DV_TIME. Again, it is required that the left and right operands must be the same type. However, one exception to this is that openEHR RM also supports subtraction between all subtypes of DV_TEMPORAL and type of `DV_DURATIO`N. AQL would support these arithmetic functions that openEHR RM supports.
+
+The example below shows a scenario which requires that a composition report (c1) is issued in the last year. It illustrates that a type of ISO 8601 date string (`current-date()`) subtracts a type of ISO 8601 interval string (`P1Y`).
+
+--------
+c1/context/other_context/items[at0006]/items[at0013]/value > current-date() - PIY
+--------
+
+=== Other functions
+
+It is proposed that AQL may also support other functions, such as:
+
+* `current-date()`: a build-in function returning the current date value in ISO date string format. 
+* `current-date-time()`: a build-in function returning the current date time value in ISO date/time string format. 
+* `max`: a build-in function returning the max value out of an expression.
+
+= Further discussions
+
+Ocean products have been using AQL to search and retrieve openEHR-conformed EHR data for couple of years. The major usages of AQL are:
+
+* Retrieving candidate compositions with given criteria on EHR identifier and composition meta data, such as composition type (i.e. archetype id), healthcare facility, event start time, composer and so on.
+* Retrieving EHR data from a single EHR for dedicated purposes, such as risk factor calculations 
+* Reporting, in which case AQL is used to retrieve EHR data that are cross multiple EHRs, i.e. population AQL query. 
+* to be continued...
+
+The existing AQL grammar and syntax maybe further enhanced in the following areas:
+
+* Reduce the length of the query statement. The use of archetype path in AQL query makes the query lengthy and hard to read. Local variables with meaningful names that are assigned with path can be used to reduce the length of the query as well as improve readability of the query. One example is shown below:
+
+--------
+let $systolic_bp="data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude"
+let $diastolic_bp="data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude"
+ 
+SELECT obs/$systolic_bp, obs/$diastolic_bp
+FROM EHR [ehr_id/value=$ehrUid] CONTAINS COMPOSITION [openEHR-EHR-COMPOSITION.encounter.v1] 
+     CONTAINS OBSERVATION obs [openEHR-EHR-OBSERVATION.blood_pressure.v1]
+WHERE obs/$systolic_bp>= 140 OR obs/$diastolic_bp>=90
+--------
+
+* To be continued
