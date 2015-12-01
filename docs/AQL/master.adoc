@@ -65,8 +65,9 @@ The work reported in this paper has been funded in by the following organisation
 include::master01-preface.adoc[leveloffset=+1]
 include::master02-overview.adoc[leveloffset=+1]
 include::master03-syntax.adoc[leveloffset=+1]
-include::master04-writing_AQL.adoc[leveloffset=+1]
-include::master05-current_status.adoc[leveloffset=+1]
+include::master04-operator_examples.adoc[leveloffset=+1]
+include::master05-writing_AQL.adoc[leveloffset=+1]
+include::master06-grammar.adoc[leveloffset=+1]
 
 //
 // --------------------------------------------- REFERENCES -----------------------------------------------

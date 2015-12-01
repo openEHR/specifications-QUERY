@@ -5,10 +5,10 @@
 |Issue|Details|Raiser|Completed
 
 |[[latest_issue]]1.0
-|Initial Writing.
+|Initial Writing, based on https://openehr.atlassian.net/wiki/display/spec/Archetype+Query+Language+Description[openEHR AQL wiki page].
 |Chunlan Ma +
  H Frankel +
  T Beale
-|[[latest_issue_date]]10 Jun 2008
+|[[latest_issue_date]]10 Dec 2015
 
 |===

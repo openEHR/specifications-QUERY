@@ -28,6 +28,18 @@
 <ul class="sectlevel2">
 <li><a href="#_purpose">1.1. Purpose</a></li>
 <li><a href="#_status">1.2. Status</a></li>
+<li><a href="#_tooling_status">1.3. Tooling status</a>
+<ul class="sectlevel3">
+<li><a href="#_aql_features_not_yet_supported">1.3.1. AQL features not yet supported</a></li>
+<li><a href="#_aql_features_that_are_proposed_but_not_finalised">1.3.2. AQL features that are proposed, but not finalised</a>
+<ul class="sectlevel4">
+<li><a href="#_arithmetic_functions">Arithmetic functions</a></li>
+<li><a href="#_other_functions">Other functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_further_discussions">1.4. Further discussions</a></li>
 </ul>
 </li>
 <li><a href="#_overview">2. Overview</a>
@@ -77,6 +89,7 @@
 <li><a href="#_aql_identified_paths">3.8. AQL identified paths</a>
 <ul class="sectlevel3">
 <li><a href="#_usage">3.8.1. Usage</a></li>
+<li><a href="#_syntax">3.8.2. Syntax</a></li>
 </ul>
 </li>
 <li><a href="#_leaf_data">3.9. Leaf Data</a>
@@ -113,7 +126,7 @@
 </li>
 <li><a href="#_where">3.10.3. WHERE</a>
 <ul class="sectlevel4">
-<li><a href="#_syntax">Syntax</a></li>
+<li><a href="#_syntax_2">Syntax</a></li>
 <li><a href="#_identified_expression">Identified expression</a></li>
 </ul>
 </li>
@@ -130,26 +143,16 @@
 </li>
 </ul>
 </li>
-<li><a href="#_how_to_write_an_aql_query_statement_manually">4. How to write an AQL query statement manually</a>
+<li><a href="#_aql_operators">4. AQL Operators</a></li>
+<li><a href="#_how_to_write_an_aql_query_statement_manually">5. How to write an AQL query statement manually</a>
 <ul class="sectlevel2">
-<li><a href="#_query_scenario">4.1. Query scenario</a></li>
-<li><a href="#_step_1_write_from_clause">4.2. Step 1. Write FROM clause</a></li>
-<li><a href="#_step_2_write_where_clause">4.3. Step 2. Write WHERE clause</a></li>
-<li><a href="#_step_3_write_select_clause">4.4. Step 3. Write SELECT clause</a></li>
+<li><a href="#_query_scenario">5.1. Query scenario</a></li>
+<li><a href="#_step_1_the_from_clause">5.2. Step 1. The FROM clause</a></li>
+<li><a href="#_step_2_the_where_clause">5.3. Step 2. The WHERE clause</a></li>
+<li><a href="#_step_3_the_select_clause">5.4. Step 3. The SELECT clause</a></li>
+<li><a href="#_aql_syntax_specification">5.5. AQL Syntax Specification</a></li>
 </ul>
 </li>
-<li><a href="#_current_status">5. Current status</a>
-<ul class="sectlevel2">
-<li><a href="#_aql_features_not_yet_supported_in_the_ocean_informatics_aql_parser">5.1. AQL features not yet supported in the Ocean Informatics AQL Parser</a></li>
-<li><a href="#_aql_features_that_are_proposed_but_not_finalised">5.2. AQL features that are proposed, but not finalised</a>
-<ul class="sectlevel3">
-<li><a href="#_arithmetic_functions">5.2.1. Arithmetic functions</a></li>
-<li><a href="#_other_functions">5.2.2. Other functions</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#_further_discussions">6. Further discussions</a></li>
 <li><a href="#_references">References</a>
 <ul class="sectlevel2">
 <li><a href="#_openehr_resources">openEHR Resources</a></li>
@@ -248,11 +251,11 @@
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="latest_issue"></a>1.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Initial Writing.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Initial Writing, based on <a href="https://openehr.atlassian.net/wiki/display/spec/Archetype+Query+Language+Description">openEHR AQL wiki page</a>.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Chunlan Ma<br>
  H Frankel<br>
  T Beale</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="latest_issue_date"></a>10 Jun 2008</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="latest_issue_date"></a>10 Dec 2015</p></td>
 </tr>
 </tbody>
 </table>
@@ -313,6 +316,101 @@
 <p>Users are encouraged to comment on and/or advise on these paragraphs as well as the main content.  Feedback should be provided either on the <a href="http://lists.openehr.org/mailman/listinfo/openehr-technical_lists.openehr.org">technical mailing list</a>, or on the <a href="https://openehr.atlassian.net/browse/SPECPR/?selectedTab=com.atlassian.jira.jira-projects-plugin:issues-panel">specifications issue tracker</a>.</p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_tooling_status">1.3. Tooling status</h3>
+<div class="sect3">
+<h4 id="_aql_features_not_yet_supported">1.3.1. AQL features not yet supported</h4>
+<div class="paragraph">
+<p>The following features are likely to be needed, but are not yet implemented in tools:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>TOP</code>
+*` XOR`. Currently <code>AND</code>, <code>OR</code>, <code>NOT</code>, <code>EXISTS</code> are supported in <code>WHERE</code> clause.</p>
+</li>
+<li>
+<p>functions are not supported.</p>
+</li>
+<li>
+<p>embedded query is not supported</p>
+</li>
+<li>
+<p><code>ORDER BY</code></p>
+</li>
+<li>
+<p><code>TIMEWINDOW</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_aql_features_that_are_proposed_but_not_finalised">1.3.2. AQL features that are proposed, but not finalised</h4>
+<div class="sect4">
+<h5 id="_arithmetic_functions">Arithmetic functions</h5>
+<div class="paragraph">
+<p>It has been proposed that AQL would support some basic arithmetic functions, such as addition (plus) , subtraction (minus) . Multiplication, and division may be supported as well. We do not have any scenario requiring for these two functions yet.</p>
+</div>
+<div class="paragraph">
+<p>Most cases, it is required that the left operand and the right operand must be the same type in order to do the calculation, e.g. numeric types. openEHR RM supports addition and subtraction for the types of: <code>DV_QUANTITY</code>, <code>DV_COUNT</code>, <code>DV_INTERVAL</code>, <code>DV_PROPORTION</code>, <code>DV_DATE_TIME</code>, <code>DV_DATE</code>, and <code>DV_TIME</code>. Again, it is required that the left and right operands must be the same type. However, one exception to this is that openEHR RM also supports subtraction between all subtypes of <code>DV_TEMPORAL</code> and type of <code>DV_DURATION</code>. AQL would support these arithmetic functions that openEHR RM supports.</p>
+</div>
+<div class="paragraph">
+<p>The example below shows a scenario which requires that a Composition report (c1) is issued in the last year. It illustrates that a type of ISO 8601 date string (<code>current-date()</code>) subtracts a type of ISO 8601 interval string (<code>P1Y</code>).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>c1/context/other_context/items[at0006]/items[at0013]/value &gt; current-date() - PIY</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_other_functions">Other functions</h5>
+<div class="paragraph">
+<p>It is proposed that AQL may also support other functions, such as:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>current-date()</code>: a build-in function returning the current date value in ISO date string format.</p>
+</li>
+<li>
+<p><code>current-date-time()</code>: a build-in function returning the current date time value in ISO date/time string format.</p>
+</li>
+<li>
+<p><code>max</code>: a build-in function returning the max value out of an expression.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_further_discussions">1.4. Further discussions</h3>
+<div class="paragraph">
+<p>The existing AQL grammar and syntax could be further enhanced in the following areas:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Reduce the length of the query statement. The use of archetype path in AQL query makes the query lengthy and hard to read. Local variables with meaningful names that are assigned with path can be used to reduce the length of the query as well as improve readability of the query. One example is shown below:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>let $systolic_bp="data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude"
+let $diastolic_bp="data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude"
+
+SELECT
+    obs/$systolic_bp, obs/$diastolic_bp
+FROM
+    EHR [ehr_id/value=$ehrUid] CONTAINS COMPOSITION [openEHR-EHR-COMPOSITION.encounter.v1]
+        CONTAINS OBSERVATION obs [openEHR-EHR-OBSERVATION.blood_pressure.v1]
+WHERE
+    obs/$systolic_bp&gt;= 140 OR obs/$diastolic_bp&gt;=90</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -355,8 +453,8 @@
 <p>AQL has some other features which can be found from other query languages:
 . Supporting naming returned results.
 . Supporting query criteria parameters.
-. Supporting arithmetic operations (such as count, addition, subtraction, multiplication, and division), relational operations (&gt;, &gt;=, =, !=, &#8656;, &lt;) and Boolean operations (or, and, xor, not).
-. Supporting some functions that are supported in XQuery, such as current-date().
+. Supporting arithmetic operations (such as count, addition, subtraction, multiplication, and division), relational operations (<code>&gt;</code>, <code>&gt;=</code>, <code>=</code>, <code>!=</code>, <code>&lt;=</code>, <code>&lt;</code>) and Boolean operations (<code>OR</code>, <code>AND</code>, <code>XOR</code>, <code>NOT</code>).
+. Supporting some functions that are supported in XQuery, such as <code>current-date()</code>.
 . Users can specify their preference on the retrieved data, such as ordering preferences, or total number of retrieved results.
 . Supporting queries for individual clinical subjects at the point of care, administrative purposes and clinical research purposes.</p>
 </div>
@@ -364,7 +462,7 @@
 <div class="sect2">
 <h3 id="_structure_example">2.3. Structure &amp; Example</h3>
 <div class="paragraph">
-<p>Like SQL, AQL has five clauses: SELECT, FROM, WHERE, ORDER BY, and TIMEWINDOW. The SELECT clause specifies the data elements to be returned. The FROM clause specifies the result source and the corresponding containment criteria. The WHERE clause specifies data value criteria within the result source. The ORDER BY clause indicates the data items used to order the returned result set. TIMEWINDOW clause is to constrain the query to data that was available in the system within the specified time criteria.</p>
+<p>Like SQL, AQL has five clauses: <code>SELECT</code>, <code>FROM</code>, <code>WHERE</code>, <code>ORDER BY</code>, and <code>TIMEWINDOW</code>. The <code>SELECT</code> clause specifies the data elements to be returned. The <code>FROM</code> clause specifies the result source and the corresponding containment criteria. The WHERE clause specifies data value criteria within the result source. The <code>ORDER BY</code> clause indicates the data items used to order the returned result set. <code>TIMEWINDOW</code> clause is to constrain the query to data that was available in the system within the specified time criteria.</p>
 </div>
 <div class="paragraph">
 <p>Below is an example of AQL statement. This statement returns all blood pressure values where systolic value is greater or equal to 140 or diastolic value is greater or equals to 90 within a specified EHR. AQL syntax is a synthesis of SQL structural syntax and openEHR path syntax.</p>
@@ -384,7 +482,7 @@
 <div class="sect2">
 <h3 id="_overview_2">3.1. Overview</h3>
 <div class="paragraph">
-<p>AQL has SELECT, FROM, WHERE and ORDER BY  clauses. openEHR path syntax is used to locate any node or data values within archetypes. The SELECT clause uses openEHR path syntax to indicate expected archetypes, elements, or data values that are need to be returned. FROM clause uses containment mechanisms indicating the scope of the query data source. WHERE clause utilises archetype path to set query criteria on archetypes or any node within the archetypes. The following sections introduce the AQL syntax in detail.</p>
+<p>AQL has <code>SELECT</code>, <code>FROM</code>, <code>WHERE</code> and <code>ORDER BY</code>  clauses. openEHR path syntax is used to locate any node or data values within archetypes. The <code>SELECT</code> clause uses openEHR path syntax to indicate expected archetypes, elements, or data values that are need to be returned. The <code>FROM</code> clause uses containment mechanisms indicating the scope of the query data source. <code>WHERE</code> clause utilises archetype path to set query criteria on archetypes or any node within the archetypes. The following sections introduce the AQL syntax in detail.</p>
 </div>
 </div>
 <div class="sect2">
@@ -395,31 +493,31 @@
 <div class="ulist">
 <ul>
 <li>
-<p>select, from, where, order by, top, and, or</p>
+<p><code>SELECT, FROM, WHERE, ORDER BY, TOP, AND, OR</code></p>
 </li>
 <li>
-<p>contains, max, now, current-date, current-date-time</p>
+<p><code>CONTAINS, max, now, current-date, current-date-time</code></p>
 </li>
 <li>
-<p>timewindow (need to be confirmed)</p>
+<p><code>TIMEWINDOW</code> (need to be confirmed)</p>
 </li>
 <li>
-<p>matches, in, exists, not in</p>
+<p><code>matches</code>, <code>in</code>, <code>exists</code>, <code>not in</code></p>
 </li>
 <li>
 <p>'"' and ''': double quote characters and single quote characters are used to delimit string values;</p>
 </li>
 <li>
-<p>'|': bar characters are used to delimit intervals;</p>
+<p><code>|</code>: bar characters are used to delimit intervals;</p>
 </li>
 <li>
-<p>[]: brackets are used to delimit coded terms, archetype id values or openEHR reference model class attribute values.</p>
+<p><code>[]</code>: brackets are used to delimit coded terms, archetype id values or openEHR reference model class attribute values.</p>
 </li>
 <li>
-<p>{}: brackets are used with MATCHES delimiting matches criteria</p>
+<p><code>{}</code>: brackets are used with <code>matches</code> delimiting matches criteria</p>
 </li>
 <li>
-<p>&lt;, &gt;, =, %, !, $</p>
+<p><code>&lt;</code>, <code>&gt;</code>, <code>=</code>, <code>%</code>, <code>!</code>, <code>$</code></p>
 </li>
 </ul>
 </div>
@@ -427,12 +525,12 @@
 <div class="sect2">
 <h3 id="_openehr_path_syntax">3.3. openEHR path syntax</h3>
 <div class="paragraph">
-<p>The openEHR path syntax has been described in a detail (see the overview specification). AQL utilises the basic openEHR path syntax to represent both coarse-grained and fine-grained archetype nodes and openEHR class instances and attributes. The syntax details are not repeated here. A set of openEHR path examples are provided.</p>
+<p>The openEHR path syntax has been described in a detail (see the Architecture Overview specification <a href="#openehr_overview">[openehr_overview]</a>). AQL utilises the basic openEHR path syntax to represent both coarse-grained and fine-grained archetype nodes and openEHR class instances and attributes. The syntax details are not repeated here. A set of openEHR path examples are provided.</p>
 </div>
 <div class="sect3">
 <h4 id="_openehr_path_examples_archetype_path">3.3.1. openEHR path examples - archetype path</h4>
 <div class="paragraph">
-<p>Archetype path is the path referring to any nodes within an archetype. The picture below is an ADL workbench screen shot of apgar observation node map. The table below shows some examples.</p>
+<p>An archetype path is the path referring to any node within an archetype. The following is an ADL workbench screen shot of apgar observation node map. The table below shows some examples.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
@@ -461,7 +559,7 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">OBSERVATION</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Heart rate</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">`/data[at0002]/events[at0003]/data[at0001]/items[at0005]`x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/data[at0002]/events[at0003]/data[at0001]/items[at0005]</code> x</p></td>
 </tr>
 </tbody>
 </table>
@@ -507,19 +605,19 @@
 <div class="ulist">
 <ul>
 <li>
-<p>AQL variable names must be defined in an AQL FROM clause.</p>
+<p>AQL variable names must be defined in an AQL <code>FROM</code> clause.</p>
 </li>
 <li>
 <p>A variable name must be unique within an AQL statement.</p>
 </li>
 <li>
-<p>Not all classes or archetypes defined within an AQL statement need a variable name. It is required only when other clauses within the AQL statement need to refer to the class or archetype defined in the FROM clause. For instance, the example doesn&#8217;t define a variable name for EHR class. It has a variable name - c - indicating the composition archetype with 'openEHR-EHR-COMPOSITION.encounter.v1' as the archetype id, and varialbe name - o - referring to the observation archetype with archetype id 'openEHR-EHR-OBSERVATION.blood_pressure.v1'. Variable name o is used by both WHERE clause and SELECT clause.</p>
+<p>Not all classes or archetypes defined within an AQL statement need a variable name. It is required only when other clauses within the AQL statement need to refer to the class or archetype defined in the <code>FROM</code> clause. For instance, the example doesn&#8217;t define a variable name for EHR class. It has a variable name <code>c</code> indicating the Composition archetype <code>openEHR-EHR-COMPOSITION.encounter.v1</code>, and varialbe name <code>o</code> referring to the Observation archetype <code>openEHR-EHR-OBSERVATION.blood_pressure.v1</code>. Variable name <code>o</code> is used by both <code>WHERE</code> clause and <code>SELECT</code> clause.</p>
 </li>
 <li>
-<p>Variable names are used by other clauses within the AQL statement along with openEHR path to form a complete AQL path - Identified path. Refer back to Section 2.2. example, o/data[at0001/events[at0006]/data[at0003]/items[at0004]/value/value] points to the systolic value node of the observation with 'openEHR-EHR-OBSERVATION.blood_pressure.v1'.</p>
+<p>Variable names are used by other clauses within the AQL statement along with openEHR path to form a complete AQL path - Identified path. Refer back to Section 2.2. example, <code>o/data[at0001/events[at0006]/data[at0003]/items[at0004]/value/value]</code> points to the systolic value node of the Observation archetype <code>openEHR-EHR-OBSERVATION.blood_pressure.v1</code>.</p>
 </li>
 <li>
-<p>Except for the reserved words and characters, and space, any letters, Alphanumeric, or underscore can be used for a variable name. It is not case sensitive. Digit numbers are not recommenced to be used at the beginning of a variable name even though no restriction on this at the current stage.</p>
+<p>Except for the reserved words, any characters, whitespace, letters, Alphanumeric, and underscore can be used for a variable name. Variable names are not case sensitive. Digits are not recommended at the beginning of a variable name even though there is no formal restriction.</p>
 </li>
 </ul>
 </div>
@@ -535,7 +633,7 @@
 <div class="sect3">
 <h4 id="_when_parameters_are_needed">3.5.1. When parameters are needed</h4>
 <div class="paragraph">
-<p>Parameters are needed when the same AQL query statement is used with different criteria values. This AQL example is to return all abnormal blood pressure values for a single specific EHR. This query has a parameter $ehrUid. This parameter will be substituted by a specific EHR.ehr_id value at run time. Consequently, this query can be reused for all EHRs either within an EHR system or by other EHR systems (assuming these EHR systems support AQL).</p>
+<p>Parameters are needed when the same AQL query statement is used with different criteria values. This AQL example is to return all abnormal blood pressure values for a single specific EHR. This query has a parameter $ehrUid. This parameter will be substituted by a specific <code>EHR.ehr_id</code> value at run time. Consequently, this query can be reused for all EHRs either within an EHR system or by other EHR systems (assuming these EHR systems support AQL).</p>
 </div>
 </div>
 <div class="sect3">
@@ -583,10 +681,10 @@
 <div class="ulist">
 <ul>
 <li>
-<p>The left operand is normally an openEHR path, such as ehr_id/value, name/value.</p>
+<p>The left operand is normally an openEHR path, such as <code>ehr_id/value</code>, <code>name/value</code>.</p>
 </li>
 <li>
-<p>The right operand is normally a criterion value or a parameter, such as '123456', $ehrUid. It can also be an openEHR path (based on the BNF), but we do not have an example of this situation yet.</p>
+<p>The right operand is normally a criterion value or a parameter, such as '123456', $ehrUid. It can also be an openEHR path (based on the BNF).</p>
 </li>
 <li>
 <p>The operator can be one of the following:</p>
@@ -595,14 +693,14 @@
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code>&gt;, &gt;=, =, &lt;, &lt;=, !=</code></pre>
+<pre>&gt;, &gt;=, =, &lt;, &lt;=, !=</pre>
 </div>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_archetype_predicate">3.6.2. Archetype predicate</h4>
 <div class="paragraph">
-<p>An archetype predicate is a shortcut of a standard predicate, i.e. the predicate does not have the left operand and operator. It only has an archetype id, e.g. [openEHR-EHR-COMPOSITION.encounter.v1]. The archetype predicate is a specific type of query criterion indicating what archetype instances are relevant to this query. It is used to scope the the data source from which the query expected data is to be retrieved. Therefore, an archetype predicate is only used within an AQL FROM clause, for example,</p>
+<p>An archetype predicate is a shortcut of a standard predicate, i.e. the predicate does not have the left operand and operator. It only has an archetype id, e.g. <code>[openEHR-EHR-COMPOSITION.encounter.v1]</code>. The archetype predicate is a specific type of query criterion indicating what archetype instances are relevant to this query. It is used to scope the the data source from which the query expected data is to be retrieved. Therefore, an archetype predicate is only used within an AQL <code>FROM</code> clause, for example,</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -619,7 +717,7 @@ OBSERVATION o [openEHR-EHR-OBSERVATION.blood_pressure.v1]</pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Containing an archetype node id (known as atcode) only, e.g.:</p>
+<p>Containing an <code>archetype_node_id</code> (i.e. an at-code) only, e.g.:</p>
 </li>
 </ul>
 </div>
@@ -631,7 +729,7 @@ OBSERVATION o [openEHR-EHR-OBSERVATION.blood_pressure.v1]</pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Containing an archetype node id and a name value/criterion, e.g.:</p>
+<p>Containing an <code>archetype_node_id</code> and a <code>name value/criterion</code>, e.g.:</p>
 </li>
 </ul>
 </div>
@@ -644,7 +742,7 @@ OBSERVATION o [openEHR-EHR-OBSERVATION.blood_pressure.v1]</pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Containing an archetype node id and a shortcut of a name/value criterion, e.g.:</p>
+<p>Containing an <code>archetype_node_id</code> and a shortcut of a <code>name/value</code> criterion, e.g.:</p>
 </li>
 </ul>
 </div>
@@ -657,7 +755,7 @@ OBSERVATION o [openEHR-EHR-OBSERVATION.blood_pressure.v1]</pre>
 <div class="ulist">
 <ul>
 <li>
-<p>The above three forms are the most common node predicates. A more advanced form is to include a general criterion instead of the name/value criterion within the predicate. The general criterion consists of left operand, operator, and right operand, e.g.:</p>
+<p>The above three forms are the most common node predicates. A more advanced form is to include a general criterion instead of the <code>name/value</code> criterion within the predicate. The general criterion consists of left operand, operator, and right operand, e.g.:</p>
 </li>
 </ul>
 </div>
@@ -713,7 +811,7 @@ OBSERVATION o [openEHR-EHR-OBSERVATION.blood_pressure.v1]</pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>o/data[at0001]/&#8230;&#8203;/data[at0003]/items[at0004]/value/value &lt;160</code></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#8656;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;=</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Smaller than or equal to</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>o/data[at0001]/&#8230;&#8203;/data[at0003]/items[at0004]/value/value &#8656;160</code></p></td>
 </tr>
@@ -730,7 +828,7 @@ OBSERVATION o [openEHR-EHR-OBSERVATION.blood_pressure.v1]</pre>
 <div class="sect4">
 <h5 id="_matches">matches</h5>
 <div class="paragraph">
-<p>The matches operator is used in WHERE clause. This operator needs left operand and right operand. Left operand is an AQL identified path. Right operand is enclosed within curly braces. Right operand of matches operator has three forms:</p>
+<p>The matches operator is used in the <code>WHERE</code> clause. This operator needs left operand and right operand. Left operand is an AQL identified path. Right operand is enclosed within curly braces. Right operand of matches operator has three forms:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -741,92 +839,107 @@ OBSERVATION o [openEHR-EHR-OBSERVATION.blood_pressure.v1]</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>SELECT o/data[at0002]/events[at0003]/data/items[at0015]/items[at0018]/name
-FROM Ehr [uid=$ehrUid] CONTAINS Composition c CONTAINS Observation o[openEHR-EHR-OBSERVATION.microbiology.v1]
-WHERE o/data[at0002]/events[at0003]/data/items[at0015]/items[at0018]/items[at0019]/items[at0021]/name/defining_code/code_string matches {'18919-1', '18961-3', '19000-9'}</pre>
+<pre>SELECT
+    o/data[at0002]/events[at0003]/data/items[at0015]/items[at0018]/name
+FROM
+    Ehr [uid=$ehrUid]
+        CONTAINS Composition c
+            CONTAINS Observation o[openEHR-EHR-OBSERVATION.microbiology.v1]
+WHERE
+    o/data[at0002]/events[at0003]/data/items[at0015]/items[at0018]/items[at0019]/items[at0021]/name/defining_code/code_string matches {'18919-1', '18961-3', '19000-9'}</pre>
 </div>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>URI: can be either terminology URI or EHR URI, or some other URIS. Only terminology URI is supported in the current AQL grammar. An example with matches a terminology URI -is shown below:</p>
+<p>URI: can be a terminology URI, openEHR EHR URI, or other URI. An example with a terminology URI is shown below:</p>
 </li>
 </ol>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>SELECT e/ehr_status/subject/external_ref/id/value, diagnosis/data/items[at0002.1]/value
-FROM EHR e CONTAINS Composition c[openEHR-EHR-COMPOSITION.problem_list.v1] CONTAINS Evaluation diagnosis[openEHR-EHR-EVALUATION.problem-diagnosis.v1]
-WHERE c/name/value='Current Problems' AND diagnosis/data/items[at0002.1]/value/defining_code matches { terminology://Snomed-CT/hierarchy?rootConceptId=50043002 }</pre>
-</div>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>embedded AQL query: means an AQL query statement, i.e. embedded query, within the curly braces. Embedded query is not supported in the current AQL grammar. It looks like:</p>
-</li>
-</ol>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>matches {SELECT ... FROM .. WHERE}</pre>
+<pre>SELECT
+    e/ehr_status/subject/external_ref/id/value, diagnosis/data/items[at0002.1]/value
+FROM
+    EHR e
+        CONTAINS Composition c[openEHR-EHR-COMPOSITION.problem_list.v1]
+            CONTAINS Evaluation diagnosis[openEHR-EHR-EVALUATION.problem-diagnosis.v1]
+WHERE
+    c/name/value='Current Problems'
+    AND diagnosis/data/items[at0002.1]/value/defining_code matches { terminology://Snomed-CT/hierarchy?rootConceptId=50043002 }</pre>
 </div>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_exists">EXISTS</h5>
 <div class="paragraph">
-<p>EXISTS is a unary operator, which is always followed by a single operand. The single operand is an AQL identified path. This operator return boolean results: true means the data associated with the specified path exists, false otherwise. EXISTS expression is a single identified expression. The latest grammar only allows this operator in WHERE clause.It may be required as part of openEHR path in future.</p>
+<p><code>EXISTS</code> is a unary operator, which is always followed by a single operand. The single operand is an AQL identified path. This operator returns Boolean results: <code>true</code> means the data associated with the specified path exists, <code>false</code> otherwise. An <code>EXISTS</code> expression is a single identified expression. The latest grammar only allows this operator in <code>WHERE</code> clause. It may be required as part of openEHR path in future.</p>
 </div>
 <div class="paragraph">
 <p>The example below means retrieving the identifiers of the EHRs which do not have discharge admin entry instance.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>SELECT e/ehr_id/value
-FROM EHR e CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.administrative_encounter.v1]
-     CONTAINS ADMIN_ENTRY admission[openEHR-EHR-ADMIN_ENTRY.admission.v1]
-WHERE NOT EXISTS c/content[openEHR-EHR-ADMIN_ENTRY.discharge.v1]</pre>
+<pre>SELECT
+    e/ehr_id/value
+FROM
+    EHR e
+        CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.administrative_encounter.v1]
+            CONTAINS ADMIN_ENTRY admission[openEHR-EHR-ADMIN_ENTRY.admission.v1]
+WHERE
+    NOT EXISTS c/content[openEHR-EHR-ADMIN_ENTRY.discharge.v1]</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This example below means from a particular EHR, retrieving all composition uid values and the contained instruction instances if the instruction instances have links with particular EHR_URI value.</p>
+<p>This example below means from a particular EHR, retrieving all composition uid values and the contained instruction instances if the instruction instances have links with particular EHR URI value.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>SELECT c/uid/value, instruction
-FROM EHR e [ehr_id/value=$ehrid] CONTAINS COMPOSITION c
-     CONTAINS INSTRUCTION instruction[openEHR-EHR-INSTRUCTION.referral.v1]
-WHERE EXISTS instruction/links[target='ehr://327000002/87284370-2D4B-4e3d-A3F3-F303D2F4F34B@latest_trunk_version']</pre>
+<pre>SELECT
+    c/uid/value, instruction
+FROM
+    EHR e [ehr_id/value=$ehrid]
+        CONTAINS COMPOSITION c
+            CONTAINS INSTRUCTION instruction[openEHR-EHR-INSTRUCTION.referral.v1]
+WHERE
+    EXISTS instruction/links[target='ehr://327000002/87284370-2D4B-4e3d-A3F3-F303D2F4F34B@latest_trunk_version']</pre>
 </div>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_not">NOT</h5>
 <div class="paragraph">
-<p>NOT is a unary boolean operator and it is always followed by either a single identified expression or boolean identified expression. It returns boolean results: true means the followed expression (single or boolean expression) is false.</p>
+<p><code>NOT</code> is a unary Boolean operator and it is always followed by either a single identified expression or boolean identified expression. It returns Boolean results: <code>true</code> means the followed expression (single or Boolean expression) is false.</p>
 </div>
 <div class="paragraph">
-<p>The example below uses NOT operator followed by a single identified expression</p>
+<p>The example below uses the <code>NOT</code> operator followed by a single identified expression</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>SELECT e/ehr_id/value
-FROM EHR e CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.administrative_encounter.v1]
-     CONTAINS ADMIN_ENTRY admission[openEHR-EHR-ADMIN_ENTRY.admission.v1]
-WHERE NOT EXISTS c/content[openEHR-EHR-ADMIN_ENTRY.discharge.v1]</pre>
+<pre>SELECT
+    e/ehr_id/value
+FROM
+    EHR e
+        CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.administrative_encounter.v1]
+            CONTAINS ADMIN_ENTRY admission[openEHR-EHR-ADMIN_ENTRY.admission.v1]
+WHERE
+    NOT EXISTS c/content[openEHR-EHR-ADMIN_ENTRY.discharge.v1]</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The example below uses NOT operator followed by a boolean identified expression.</p>
+<p>The example below uses <code>NOT</code> operator followed by a boolean identified expression.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>SELECT e/ehr_id/value
-FROM EHR e CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.administrative_encounter.v1]
-     CONTAINS ADMIN_ENTRY admission[openEHR-EHR-ADMIN_ENTRY.admission.v1]
-WHERE NOT (EXISTS c/content[openEHR-EHR-ADMIN_ENTRY.discharge.v1] AND
-           e/ehr_status/subject/external_ref/namespace='CEC')</pre>
+<pre>SELECT
+    e/ehr_id/value
+FROM
+    EHR e
+        CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.administrative_encounter.v1]
+            CONTAINS ADMIN_ENTRY admission[openEHR-EHR-ADMIN_ENTRY.admission.v1]
+WHERE
+    NOT (EXISTS c/content[openEHR-EHR-ADMIN_ENTRY.discharge.v1]
+    AND e/ehr_status/subject/external_ref/namespace='CEC')</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -834,18 +947,26 @@ WHERE NOT (EXISTS c/content[openEHR-EHR-ADMIN_ENTRY.discharge.v1] AND
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>SELECT e/ehr_id/value
-FROM EHR e CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.administrative_encounter.v1]
-     CONTAINS ADMIN_ENTRY admission[openEHR-EHR-ADMIN_ENTRY.admission.v1]
-WHERE NOT EXISTS c/content[openEHR-EHR-ADMIN_ENTRY.discharge.v1] OR
-      NOT e/ehr_status/subject/external_ref/namespace='CEC'
+<pre>SELECT
+    e/ehr_id/value
+FROM
+    EHR e
+        CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.administrative_encounter.v1]
+            CONTAINS ADMIN_ENTRY admission[openEHR-EHR-ADMIN_ENTRY.admission.v1]
+WHERE
+    NOT EXISTS c/content[openEHR-EHR-ADMIN_ENTRY.discharge.v1]
+    OR NOT e/ehr_status/subject/external_ref/namespace = 'CEC'
 
 
-SELECT e/ehr_id/value
-FROM EHR e CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.administrative_encounter.v1]
-     CONTAINS ADMIN_ENTRY admission[openEHR-EHR-ADMIN_ENTRY.admission.v1]
-WHERE NOT EXISTS c/content[openEHR-EHR-ADMIN_ENTRY.discharge.v1] OR
-      e/ehr_status/subject/external_ref/namespace != 'CEC'</pre>
+SELECT
+    e/ehr_id/value
+FROM
+    EHR e
+        CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.administrative_encounter.v1]
+            CONTAINS ADMIN_ENTRY admission[openEHR-EHR-ADMIN_ENTRY.admission.v1]
+WHERE
+    NOT EXISTS c/content[openEHR-EHR-ADMIN_ENTRY.discharge.v1]
+    OR e/ehr_status/subject/external_ref/namespace != 'CEC'</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -859,15 +980,49 @@ WHERE NOT EXISTS c/content[openEHR-EHR-ADMIN_ENTRY.discharge.v1] OR
 <div class="sect3">
 <h4 id="_usage">3.8.1. Usage</h4>
 <div class="paragraph">
-<p>Identified paths are used to locate data items within an archetype RM class. Except for FROM clause, an identified path could appears in any clauses of an AQL statement. For example, it can be used to indicate the data to be returned in a SELECT clause, or the data item on which query criteria are applied in a WHERE clause.
-Syntax
-AQL identified path has the following forms:
-consisting an AQL variable name defined within the FROM clause, followed by an openEHR path, e.g.
-o/data[at0001]/&#8230;&#8203;/data[at0003]/items[at0004]/value/value
-consisting an AQL variable name followed by a predicate, e.g.
-o[name/value=$nameValue]
-consisting an AQL variable name followed by a predicate and an openEHR path, e.g.
-o[name/value=$nameValue]/data[at0001]/&#8230;&#8203;/data[at0003]/items[at0004]/value/value</p>
+<p>Identified paths are used to locate data items within an archetype RM class. Except for the <code>FROM</code> clause, an identified path could appears in any clauses of an AQL statement. For example, it can be used to indicate the data to be returned in a <code>SELECT</code> clause, or the data item on which query criteria are applied in a <code>WHERE</code> clause.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_syntax">3.8.2. Syntax</h4>
+<div class="paragraph">
+<p>AQL identified path can take any of the following forms:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>an AQL variable name defined within the <code>FROM</code> clause, followed by an openEHR path, e.g.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>o/data[at0001]/.../data[at0003]/items[at0004]/value/value</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>an AQL variable name followed by a predicate, e.g.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>o[name/value=$nameValue]</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>an AQL variable name followed by a predicate and an openEHR path, e.g.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>o[name/value=$nameValue]/data[at0001]/.../data[at0003]/items[at0004]/value/value</pre>
+</div>
 </div>
 </div>
 </div>
@@ -878,8 +1033,10 @@ o[name/value=$nameValue]/data[at0001]/&#8230;&#8203;/data[at0003]/items[at0004]/
 <div class="sect4">
 <h5 id="_string_data">String Data</h5>
 <div class="paragraph">
-<p>All strings are enclosed in double quotes or single quotes. It doesn&#8217;t support line breaks.
-TODO list:</p>
+<p>All strings are enclosed in double quotes or single quotes. It doesn&#8217;t support line breaks.</p>
+</div>
+<div class="paragraph">
+<p>TODO list:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -926,8 +1083,7 @@ WHERE composition/context/start_time &lt;= '1986-01-01'  // complete calendar da
 <div class="sect4">
 <h5 id="_uri">URI</h5>
 <div class="paragraph">
-<p>URI leaf data is enclosed within curly braces after "matches" operator. URI can be expressed as a normal URI described in  <a href="http://www.ietf.org/rfc/rfc3986.txt" class="bare">http://www.ietf.org/rfc/rfc3986.txt</a>. URI is not
-case sensitive. In AQL, a URI can be either terminology URI or EHR URI.</p>
+<p>URI leaf data is enclosed within curly braces after <code>matches</code> operator. URI can be expressed as a normal URI described in  <a href="#rfc3986">[rfc3986]</a>. URIs are not case sensitive. In AQL, a URI can be either terminology URI or an EHR URI.</p>
 </div>
 </div>
 <div class="sect4">
@@ -938,16 +1094,16 @@ case sensitive. In AQL, a URI can be either terminology URI or EHR URI.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>terminology: the URI schemes value;</p>
+<p><strong>terminology</strong>: the URI schemes value;</p>
 </li>
 <li>
-<p>terminology service: the URI authority value, such as SNOMED-CT;</p>
+<p><strong>terminology service</strong>: the URI authority value, such as SNOMED-CT;</p>
 </li>
 <li>
-<p>terminology function name: the URI path, e.g. "hierarchy" is the function name in the example shown below;</p>
+<p><strong>terminology function name</strong>: the URI path, e.g. "hierarchy" is the function name in the example shown below;</p>
 </li>
 <li>
-<p>argument values required by the terminology functions: URI queries;</p>
+<p><strong>argument values</strong> required by the terminology functions - URI queries;</p>
 </li>
 </ol>
 </div>
@@ -973,7 +1129,7 @@ case sensitive. In AQL, a URI can be either terminology URI or EHR URI.</p>
 <p>Value list leaf data is enclosed within curly braces after matches operator. Each item is separated by comma if there are multiple items in the list. Value list can be string value list, date time value list, integer value list, and real value list. Quotes are required for string value list and date time value list.</p>
 </div>
 <div class="paragraph">
-<p>A value list is only used in AQL WHERE clause when the criteria is to match one item of the list. The relationships among these value list items are "OR".</p>
+<p>A value list is only used in AQL` WHERE` clause when the criteria is to match one item of the list. The relationships among these value list items are "OR".</p>
 </div>
 <div class="paragraph">
 <p>Some examples of value list:</p>
@@ -995,9 +1151,13 @@ matches {1.1, 2.5, 3.8}                                     // a real value list
 <p>It is not supported in the current AQL grammar.</p>
 </div>
 <div class="paragraph">
-<p>Value range leaf data is enclosed within curly braces after matches operator. It is only used in AQL WHERE clause to specify a criteria within a range. The syntax is similar as intervals of ordered primitive types detailed in Section 4.5.2, adl.pdf. Some examples:
-matches {|3.0..5.0|} // means 3.0 &#8656; x &#8656;5.0
-matches {|&lt;8|}       // means x&lt;8</p>
+<p>Value range leaf data is enclosed within curly braces after matches operator. It is only used in AQL <code>WHERE</code> clause to specify a criteria within a range. The syntax is similar to intervals of ordered primitive types detailed in Section 4.5.2, adl.pdf. Some examples:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>matches {|3.0..5.0|} // means 3.0 &lt;= x &lt;=5.0
+matches {|&lt;8|}       // means x&lt;8</pre>
+</div>
 </div>
 </div>
 </div>
@@ -1010,24 +1170,24 @@ matches {|&lt;8|}       // means x&lt;8</p>
 <p>AQL structure has been briefly introduced in Section 2.2. This section describes the syntax in more formal detail.</p>
 </div>
 <div class="paragraph">
-<p>AQL structure has the following clauses and these clauses must be listed in the same order as the list below in an AQL statement. An AQL statement must contain SELECT and FROM clauses.</p>
+<p>AQL structure has the following clauses and these clauses must be listed in the same order as the list below in an AQL statement. An AQL statement must contain <code>SELECT</code> and <code>FROM</code> clauses.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>SELECT (mandatory)</p>
+<p><code>SELECT</code> (mandatory)</p>
 </li>
 <li>
-<p>FROM (mandatory)</p>
+<p><code>FROM</code> (mandatory)</p>
 </li>
 <li>
-<p>WHERE (optional)</p>
+<p><code>WHERE</code> (optional)</p>
 </li>
 <li>
-<p>ORDER BY (optional)</p>
+<p><code>ORDER BY</code> (optional)</p>
 </li>
 <li>
-<p>TIMEWINDOW (optional)</p>
+<p><code>TIMEWINDOW</code> (optional)</p>
 </li>
 </ul>
 </div>
@@ -1035,16 +1195,18 @@ matches {|&lt;8|}       // means x&lt;8</p>
 <div class="sect3">
 <h4 id="_from">3.10.2. FROM</h4>
 <div class="paragraph">
-<p>The FROM clause utilises class expressions and a set of containment criteria to specify the data source from which the query required data is to be retrieved.  Its function is similar as the FROM clause of an SQL expression.</p>
+<p>The <code>FROM</code> clause utilises class expressions and a set of containment criteria to specify the data source from which the query required data is to be retrieved.  Its function is similar as the <code>FROM</code> clause of an SQL expression.</p>
 </div>
 <div class="sect4">
 <h5 id="_from_syntax">FROM Syntax</h5>
 <div class="paragraph">
-<p>A simple FROM clause consists of three parts: keyword - FROM, class expression and/or containment constraints, e.g.</p>
+<p>A simple <code>FROM</code> clause consists of three parts: keyword <code>FROM</code>, class expression and/or containment constraints, e.g.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>FROM EHR e [ehr_id/value=$ehrId] CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]</pre>
+<pre>FROM
+    EHR e [ehr_id/value=$ehrId]
+        CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]</pre>
 </div>
 </div>
 </div>
@@ -1055,7 +1217,7 @@ matches {|&lt;8|}       // means x&lt;8</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>EHR e [ehr_id/value=$ehrId]                                          \\EHR class, class identifier/variable, and a standard predicate
+<pre>EHR e [ehr_id/value=$ehrId]                        \\EHR class, class identifier/variable, and a standard predicate
 COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]   \\COMPOSITION class, class identifier/variable, and an archetype predicate</pre>
 </div>
 </div>
@@ -1065,18 +1227,22 @@ COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]   \\COMPOSITION class, class id
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>indicating the constraints on RM classes so as to scope the data source for the query. For instance, EHR e[ehr_id/value='123456'] indicates that the required data must be from a specific EHR with ehr_id value '123456'; while "COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1] " indicates the required data must be from or must be associated with a composition instance with archetype id - openEHR-EHR-COMPOSITION.report.v1.</p>
+<p>indicating the constraints on RM classes so as to scope the data source for the query. For instance, <code>EHR e[ehr_id/value='123456']</code> indicates that the required data must be from a specific EHR with <code>ehr_id</code> value '123456'; while <code>COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]</code> indicates the required data must be from or must be associated with a Composition instance with archetype id - <code>openEHR-EHR-COMPOSITION.report.v1</code>.</p>
 </li>
 <li>
-<p>defining a RM class variable that may be used by other clauses to indicate the required data or data items on which query criteria are applied. The example below uses the class expression to define a variable e which is used by the SELECT clause indicating all relevant ehr_id values are retrieved, and a variable c used by WHERE clause indicating that the query criteria is set on the composition template id value.</p>
+<p>defining a RM class variable that may be used by other clauses to indicate the required data or data items on which query criteria are applied. The example below uses the class expression to define a variable e which is used by the <code>SELECT</code> clause indicating all relevant ehr_id values are retrieved, and a variable c used by WHERE clause indicating that the query criteria is set on the composition template id value.</p>
 </li>
 </ol>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>SELECT e/ehr_id/value
-FROM EHR e CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.referral.v1]
-WHERE c/archetype_details/template_id/value=$templateId</pre>
+<pre>SELECT
+    e/ehr_id/value
+FROM
+    EHR e
+        CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.referral.v1]
+WHERE
+    c/archetype_details/template_id/value=$templateId</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1085,7 +1251,7 @@ WHERE c/archetype_details/template_id/value=$templateId</pre>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>part one (mandatory): openEHR RM class name, such as EHR, COMPOSITION, OBSERVATION etc.</p>
+<p>part one (mandatory): openEHR RM class name, such as <code>EHR</code>, <code>COMPOSITION</code>, <code>OBSERVATION</code> etc.</p>
 </li>
 <li>
 <p>part two (optional): AQL variable name</p>
@@ -1099,10 +1265,10 @@ WHERE c/archetype_details/template_id/value=$templateId</pre>
 <div class="sect4">
 <h5 id="_containment">Containment</h5>
 <div class="paragraph">
-<p>Since archetypes are in hierarchical structure, AQL has a containment constraint which specifies the hierarchical relationships between parent and child data items. FROM clause utilises this hierarchical constraint along with class expression to determine the data source to which the AQL query is applied.</p>
+<p>Since archetypes are in hierarchical structure, AQL has a containment constraint which specifies the hierarchical relationships between parent and child data items. The <code>FROM</code> clause utilises this hierarchical constraint along with class expression to determine the data source to which the AQL query is applied.</p>
 </div>
 <div class="paragraph">
-<p>The syntax of containment constraint is very simple: using keyword CONTAINS between two class expressions. Left class expression is the the parent object of the right class expression, e.g.</p>
+<p>The syntax of containment constraint is very simple: using keyword <code>CONTAINS</code> between two class expressions. Left class expression is the the parent object of the right class expression, e.g.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1110,16 +1276,16 @@ WHERE c/archetype_details/template_id/value=$templateId</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Boolean operators (AND, OR, NOT) and parentheses are used when multiple containment constrains are required, e.g.</p>
+<p>Boolean operators (<code>AND</code>, <code>OR</code>, <code>NOT</code>) and parentheses are used when multiple containment constrains are required, e.g.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>EHR e CONTAINS COMPOSITION c [openEHR-EHR-COMPOSITION.referral.v1] AND
-COMPOSITION c1 [openEHR-EHR-COMPOSITION.report.v1]
+<pre>EHR e
+    CONTAINS COMPOSITION c [openEHR-EHR-COMPOSITION.referral.v1] AND COMPOSITION c1 [openEHR-EHR-COMPOSITION.report.v1]
 
-EHR e CONTAINS COMPOSITION c [openEHR-EHR-COMPOSITION.referral.v1] CONTAINS
-(OBSERVATION o openEHR-EHR-OBSERVATION-laboratory-hba1c.v1 AND
-OBSERVATION o1 openEHR-EHR-OBSERVATION-laboratory-glucose.v1)</pre>
+EHR e
+    CONTAINS COMPOSITION c [openEHR-EHR-COMPOSITION.referral.v1]
+        CONTAINS (OBSERVATION o openEHR-EHR-OBSERVATION-laboratory-hba1c.v1 AND OBSERVATION o1 openEHR-EHR-OBSERVATION-laboratory-glucose.v1)</pre>
 </div>
 </div>
 </div>
@@ -1127,25 +1293,28 @@ OBSERVATION o1 openEHR-EHR-OBSERVATION-laboratory-glucose.v1)</pre>
 <div class="sect3">
 <h4 id="_where">3.10.3. WHERE</h4>
 <div class="paragraph">
-<p>An AQL WHERE clause is used to represent further criteria applied to the data items within the objects declared in the FROM clause. A WHERE clause expresses the query criteria that cannot be represented in other AQL clauses, such as criteria on archetype id, composition committal date time, and the criteria on in which order the returned results should be listed.</p>
+<p>An AQL <code>WHERE</code> clause is used to represent further criteria applied to the data items within the objects declared in the FROM clause. A <code>WHERE</code> clause expresses the query criteria that cannot be represented in other AQL clauses, such as criteria on archetype id, composition committal date time, and the criteria on in which order the returned results should be listed.</p>
 </div>
 <div class="sect4">
-<h5 id="_syntax">Syntax</h5>
+<h5 id="_syntax_2">Syntax</h5>
 <div class="paragraph">
-<p>The WHERE clause syntax has the following parts (in order): keyword WHERE and identified expression(s). Boolean operator (AND, OR, NOT) and parenthesis can be used to represent multiple identified expressions. Examples:</p>
+<p>The <code>WHERE</code> clause syntax has the following parts (in order): keyword <code>WHERE</code> and identified expression(s). Boolean operators (<code>AND</code>, <code>OR</code>, <code>NOT</code>) and parenthesis can be used to represent multiple identified expressions. Examples:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>WHERE c/name/value=$nameValue AND c/archetype_details/template_id/value=$templateId
-WHERE (c/name/value=$nameValue OR c/archetype_details/template_id/value=$templateId) AND
-o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value &gt;= 140</pre>
+<pre>WHERE
+    c/name/value=$nameValue AND c/archetype_details/template_id/value=$templateId
+
+WHERE
+    (c/name/value=$nameValue OR c/archetype_details/template_id/value=$templateId)
+    AND o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value &gt;= 140</pre>
 </div>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_identified_expression">Identified expression</h5>
 <div class="paragraph">
-<p>Identified expression specifies the criteria within WHERE clause. It consists of left operand, operator and right operand.</p>
+<p>Identified expression specifies the criteria within <code>WHERE</code> clause. It consists of left operand, operator and right operand.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -1156,7 +1325,7 @@ o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value &gt;= 140</
 <p>Operator is normally the basic operator,</p>
 </li>
 <li>
-<p>Right operand is the criteria value, which normally is primitive type, such as string, integer, boolean, double, or float. When it is a string value, single quotation marks or double quotation marks are required. Right operand can also be a parameter or an identified path as well.</p>
+<p>Right operand is the criteria value, which normally is primitive type, such as String, Integer, Boolean, Double, or Float. When it is a string value, single quotation marks or double quotation marks are required. Right operand can also be a parameter or an identified path as well.</p>
 </li>
 </ol>
 </div>
@@ -1206,13 +1375,13 @@ o1/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value</pre>
 <div class="sect3">
 <h4 id="_select">3.10.4. SELECT</h4>
 <div class="paragraph">
-<p>A SELECT clause specifies what data is to be retrieved by the AQL query. The data can be any types from openEHR RM and any primitive data types. In addition, SELECT clause uses TOP to indicate the number of result setS that should be returned and name alias to rename the retrieved data.</p>
+<p>A <code>SELECT</code> clause specifies what data is to be retrieved by the AQL query. The data can be any types from openEHR RM and any primitive data types. In addition, the <code>SELECT</code> clause uses <code>TOP</code> to indicate the number of result setS that should be returned and name alias to rename the retrieved data.</p>
 </div>
 <div class="paragraph">
-<p>The SELECT syntax always starts with keyword SELECT, followed by TOP (optional), and identified path(s) or variable name(s) defined in the FROM clause. Each variable name or an identified path may have a name alias renaming the associated data.</p>
+<p>The <code>SELECT</code> syntax always starts with keyword <code>SELECT</code>, followed by <code>TOP</code> (optional), and identified path(s) or variable name(s) defined in the <code>FROM</code> clause. Each variable name or an identified path may have a name alias renaming the associated data.</p>
 </div>
 <div class="paragraph">
-<p>If variable name(s) is(are) required, the full object of the type associated with the variable is retrieved, such as a COMPOSITION, an OBSERVATION object etc. If identified paths are required, the path-associated data items are returned. Multiple identifiers or identified paths are separated using a comma.</p>
+<p>If variable name(s) is(are) required, the full object of the type associated with the variable is retrieved, such as a <code>COMPOSITION</code>, an <code>OBSERVATION</code> object etc. If identified paths are required, the path-associated data items are returned. Multiple identifiers or identified paths are separated using a comma.</p>
 </div>
 <div class="paragraph">
 <p>Some examples are shown below.</p>
@@ -1222,8 +1391,10 @@ o1/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>SELECT c/name/value AS Name, c/context/start_time AS date_time, c/composer/name AS Composer
- FROM EHR e[ehr_id/value=$ehrUid] CONTAINS COMPOSITION c</pre>
+<pre>SELECT
+    c/name/value AS Name, c/context/start_time AS date_time, c/composer/name AS Composer
+FROM
+    EHR e[ehr_id/value=$ehrUid] CONTAINS COMPOSITION c</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1231,36 +1402,41 @@ o1/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>SELECT c
-FROM EHR e[ehr_id/value=$ehrUid] CONTAINS COMPOSITION c</pre>
+<pre>SELECT
+    c
+FROM
+    EHR e[ehr_id/value=$ehrUid] CONTAINS COMPOSITION c</pre>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_top">TOP</h5>
 <div class="paragraph">
-<p>TOP syntax was borrowed from SQL language for representing the number of result sets that should be returned by the AQL query. It uses BACKWARD and FORWARD to indicate the direction where to start to get the number of results to be returned.</p>
+<p>The <code>TOP</code> syntax was borrowed from SQL language for representing the number of result sets that should be returned by the AQL query. It uses <code>BACKWARD</code> and <code>FORWARD</code> to indicate the direction where to start to get the number of results to be returned.</p>
 </div>
 <div class="paragraph">
-<p>It starts with keyword TOP, followed by an integer number and/or the direction (i.e. BACKWARD, FORWARD), e.g.</p>
+<p>It starts with keyword TOP, followed by an integer number and/or the direction (i.e. <code>BACKWARD</code>, <code>FORWARD</code>), e.g.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>SELECT TOP 10 c/name/value AS Name, c/context/start_time AS date_time, c/composer/name AS Composer
-FROM EHR e[ehr_id/value=$ehrUid] CONTAINS COMPOSITION c</pre>
+<pre>SELECT
+    TOP 10 c/name/value AS Name, c/context/start_time AS date_time, c/composer/name AS Composer
+FROM
+    EHR e[ehr_id/value=$ehrUid]
+        CONTAINS COMPOSITION c</pre>
 </div>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_name_alias">Name alias</h5>
 <div class="paragraph">
-<p>Like SQL, AQL supports using name alias to rename the retrieved data. It starts with keyword - AS, followed by the name which conforms to the syntax rule of AQL variable.</p>
+<p>As in SQL, <code>AQL</code> supports the use of a name alias for the retrieved data. This is domne with the keyword <code>AS</code>, followed by the name which conforms to the syntax rule of AQL variable.</p>
 </div>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_order_by">3.10.5. ORDER BY</h4>
 <div class="paragraph">
-<p>The ORDER BY clause is used to sort  the returned results. It starts with the keyword ORDER BY, followed by an identified path and the keyword DESC, DESCENDING, ASCE, or ASCENDING, e.g.</p>
+<p>The <code>ORDER BY</code> clause is used to sort the returned results. The keyword <code>ORDER BY</code> is followed by an identified path and the keyword <code>DESC</code>, <code>DESCENDING</code>, <code>ASCE</code>, or <code>ASCENDING</code>, e.g.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1271,10 +1447,10 @@ FROM EHR e[ehr_id/value=$ehrUid] CONTAINS COMPOSITION c</pre>
 <div class="sect3">
 <h4 id="_timewindow">3.10.6. TIMEWINDOW</h4>
 <div class="paragraph">
-<p>In addition to FROM clause, TIMEWINDOW helps to scope the data source from which the required data is retrieved. TIMEWINDOW is an addition query clause used in AQL to constrain the query to data that was available in the system (also know the data committal time) within the specified time criteria. This supports a timebased logical system rollback allowing a query to be executed as though it was performed at that specified time, which is essential for medico-legal reporting.</p>
+<p>In addition to the <code>FROM</code> clause, <code>TIMEWINDOW</code> helps to scope the data source from which the required data is retrieved. <code>TIMEWINDOW</code> is an addition query clause used in AQL to constrain the query to data that was available in the system (also know the data committal time) within the specified time criteria. This supports a timebased logical system rollback allowing a query to be executed as though it was performed at that specified time, which is essential for medico-legal reporting.</p>
 </div>
 <div class="paragraph">
-<p>It starts with the keyword - TIMEWINDOW, and followed by a string compatible with the ISO 8601 representation of time interval.</p>
+<p>It starts with the keyword <code>TIMEWINDOW</code>, and followed by a string compatible with the ISO 8601 representation of time interval.</p>
 </div>
 <div class="paragraph">
 <p>The first example below constrains the query source to data committed to the system before 2006-01-01.</p>
@@ -1296,20 +1472,28 @@ FROM EHR e[ehr_id/value=$ehrUid] CONTAINS COMPOSITION c</pre>
 <div class="sect3">
 <h4 id="_result_structure">3.10.7. Result structure</h4>
 <div class="paragraph">
-<p>The result structure of an AQL query is described <a href="https://openehr.atlassian.net/wiki/display/spec/Ocean+Informatics+EHR+Service+Interface">here</a> as part of the EHR service definition.</p>
+<p>The result structure of an AQL query is described as part of the <a href="https://openehr.atlassian.net/wiki/display/spec/Ocean+Informatics+EHR+Service+Interface">openEHR EHR service definition</a>.</p>
 </div>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_how_to_write_an_aql_query_statement_manually">4. How to write an AQL query statement manually</h2>
+<h2 id="_aql_operators">4. AQL Operators</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Ocean Informatics has implemented an AQL query builder which can be used to generate AQL query statements based on archetypes automatically. We strongly recommend to use this tool to generate an AQL query statement because it can be very complicated. This section is for the people who either do not have the access to AQL query builder or for users who want to have more understanding on AQL so that they can edit an existing AQL query manually.</p>
+<p>TODO: TAKE CONTENT FROM <a href="https://openehr.atlassian.net/wiki/display/spec/AQL+Operators" class="bare">https://openehr.atlassian.net/wiki/display/spec/AQL+Operators</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_to_write_an_aql_query_statement_manually">5. How to write an AQL query statement manually</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This section describes how to build an AQL query manually. The process described here gives may provide some hints for AQL builder tools.</p>
 </div>
 <div class="sect2">
-<h3 id="_query_scenario">4.1. Query scenario</h3>
+<h3 id="_query_scenario">5.1. Query scenario</h3>
 <div class="paragraph">
 <p>An example is used to illustrate how to write an AQL statement. The query scenario is:</p>
 </div>
@@ -1318,25 +1502,33 @@ FROM EHR e[ehr_id/value=$ehrUid] CONTAINS COMPOSITION c</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_step_1_write_from_clause">4.2. Step 1. Write FROM clause</h3>
+<h3 id="_step_1_the_from_clause">5.2. Step 1. The FROM clause</h3>
 <div class="paragraph">
-<p>A FROM clause is to scope the data source for the query. Normally the first step is to shape FROM clause, which has EHR class expression and archetype class expressions.</p>
+<p>A <code>FROM</code> clause is to scope the data source for the query. Normally the first step is to determine the <code>FROM</code> clause, which has EHR class expression and archetype class expressions.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>EHR class expression. You need to determine whether this query is applied to a single EHR or all EHRs. The latter is called population queries. If it is for all EHRs, you don&#8217;t need to specify ehr_id/value in FROM clause. Otherwise, you need to either specify a specific value or use a query parameter for ehr_id/value in FROM clause. For this particular scenario, it is for a single EHR. Parameter called ehrUid is used for the ehr_id/value, I would have this AQL query statement:
-FROM EHR [ehr_id/value=$ehrUid]</p>
+<p><strong>EHR class expression</strong>: determines whether this query is applied to a single EHR or all EHRs. The latter is called a population query. If it is for all EHRs, there is no need to specify <code>ehr_id/value</code> in the <code>FROM</code> clause. Otherwise, you need to either specify a specific value or use a query parameter for <code>ehr_id/value</code> in a <code>FROM</code> clause. For this particular scenario, it is for a single EHR. A parameter called <code>ehrUid</code> is used for the <code>ehr_id/value</code>, I would have this AQL query statement:</p>
 </li>
-<li>
-<p>Archetype expressions.</p>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>FROM EHR [ehr_id/value=$ehrUid]</pre>
+</div>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>To write archetype expressions in the FROM clause, we need to determine what archetypes are required in the scenario. Since archetypes are used to represent clinical concepts. The easy way to identify archetypes from a scenario is to identify clinical concepts mentioned in the scenario. Each clinical concept is generally associated with one archetype. Two clinical concepts are mentioned in the aforementioned scenario: blood pressure and health encounter. These concepts are used to identify two archetypes used in query: an observation archetype with archetype id - openEHR-EHR-OBSERVATION.blood_pressure.v1, and a composition archetype with archetype id - openEHR-EHR-COMPOSITION.encounter.v1.</p>
+<p><strong>Archetype expressions</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>To write archetype expressions in the <code>FROM</code> clause, the archetypes required for the scenario must be determined, since archetypes are used to represent clinical concepts. The easy way to identify archetypes for a scenario is to identify clinical concepts mentioned in the scenario. Each clinical concept is generally associated with one archetype. Two clinical concepts are mentioned in the above scenario: 'blood pressure' and 'health encounter'. From these concepts the two archetypes used in query are identified: an Observation archetype <code>openEHR-EHR-OBSERVATION.blood_pressure.v1</code>, and a Composition archetype <code>openEHR-EHR-COMPOSITION.encounter.v1</code>.</p>
 </li>
 <li>
-<p>Determine whether we need a variable name for each archetype class expression or not. We may need one if the reference to the archetype class expression is required by other AQL clauses. At the moment, I don&#8217;t put any variable names for the archetype expressions. The two archetype expressions are:</p>
+<p>Determine whether a variable name is needed for each archetype class expression or not. This is useful if the reference to the archetype class expression is required by other AQL clauses. Without using variable names for the archetype expressions, the two archetype expressions are:</p>
 </li>
 </ul>
 </div>
@@ -1352,7 +1544,7 @@ OBSERVATION [openEHR-EHR-OBSERVATION.blood_pressure.v1]</pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Containment expression. openEHR RM is used to identify the hierarchical relationships among the found archetypes so as to define the containment expression. For example, a composition archetype is the parent of an observation archetype, so the AQL query would look like:</p>
+<p><strong>Containment expression</strong>. The openEHR RM is used to identify the hierarchical relationships among the found archetypes so as to define the containment expression. For example, a Composition archetype is the parent of an Observation archetype, so the AQL query looks as follows:</p>
 </li>
 </ul>
 </div>
@@ -1364,24 +1556,24 @@ CONTAINS OBSERVATION [openEHR-EHR-OBSERVATION.blood_pressure.v1]</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_step_2_write_where_clause">4.3. Step 2. Write WHERE clause</h3>
+<h3 id="_step_2_the_where_clause">5.3. Step 2. The WHERE clause</h3>
 <div class="paragraph">
-<p>WHERE clause represents all query criteria that cannot be represented in the FROM clause. To write WHERE clause expression, you need to:</p>
+<p>The <code>WHERE</code> clause represents all query criteria that cannot be represented in the <code>FROM</code> clause. To write <code>WHERE</code> clause expression, the following is needed:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Find the criteria. The criteria required by the scenario are abnormal blood pressure values. Different guidelines may have different definitions for abnormal blood pressure values. Here we interpret that abnormal blood pressure means 1) the systolic pressure value is greater than or equal to 140; OR 2) diastolic pressure value is greater than or equal to 90.</p>
+<p>Find the criteria. The criteria required by the scenario are abnormal blood pressure values. Different guidelines may have different definitions for abnormal blood pressure values. Here <code>abnormal blood pressure</code> is interpreted to mean mean 1) the 'systolic pressure' value is greater than or equal to 140; OR 2) the 'diastolic pressure' value is greater than or equal to 90.</p>
 </li>
 <li>
 <p>Write an identified expression for criterion 1).</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>Write the Identified pathfor systolic data value. We need a class variable name as the reference to the blood pressure class expression defined in the FROM clause, so a variable name - obs - is added into the FROM clause. A path to systolic data value is also required to form the identified path. Two tools can be used to get the path: openEHR ADL WORKBENCHor Ocean Template Designer. The path to the systolic data value is /data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value.</p>
+<p>Write the Identified path for the systolic data value. A class variable name is needed as the reference to the blood pressure class expression defined in the <code>FROM</code> clause, so a variable name <code>obs</code> is added into the <code>FROM</code> clause. A path to systolic data value is also required to form the identified path. Two tools can be used to get the path: the <a href="#openEHR_ADL_workbench">[openEHR_ADL_workbench]</a> or <a href="#Template_Designer">[Template_Designer]</a>. The path to the systolic data value is <code>/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value</code>.</p>
 </li>
 <li>
-<p>Get appropriate operator: '&gt;=' is chosen for criterion 1.</p>
+<p>Get appropriate operator: <code>&gt;=</code> is chosen for criterion 1.</p>
 </li>
 <li>
 <p>Get the criteria value - 140. The query statement including the identified expression for criterion 1) is shown below:</p>
@@ -1393,9 +1585,11 @@ CONTAINS OBSERVATION [openEHR-EHR-OBSERVATION.blood_pressure.v1]</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>FROM EHR [ehr_id/value=$ehrUid] CONTAINS COMPOSITION [openEHR-EHR-COMPOSITION.encounter.v1]
-CONTAINS OBSERVATION obs [openEHR-EHR-OBSERVATION.blood_pressure.v1]
-WHERE obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value &gt;= 140</pre>
+<pre>FROM
+    EHR [ehr_id/value=$ehrUid] CONTAINS COMPOSITION [openEHR-EHR-COMPOSITION.encounter.v1]
+        CONTAINS OBSERVATION obs [openEHR-EHR-OBSERVATION.blood_pressure.v1]
+WHERE
+    obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value &gt;= 140</pre>
 </div>
 </div>
 <div class="olist arabic">
@@ -1419,22 +1613,23 @@ WHERE obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value &gt
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>FROM EHR [ehr_id/value=$ehrUid] CONTAINS COMPOSITION [openEHR-EHR-COMPOSITION.encounter.v1]
-CONTAINS OBSERVATION obs [openEHR-EHR-OBSERVATION.blood_pressure.v1]
+<pre>FROM
+    EHR [ehr_id/value=$ehrUid] CONTAINS COMPOSITION [openEHR-EHR-COMPOSITION.encounter.v1]
+        CONTAINS OBSERVATION obs [openEHR-EHR-OBSERVATION.blood_pressure.v1]
 WHERE obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value &gt;= 140 OR
-obs/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/value &gt;= 90</pre>
+    obs/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/value &gt;= 90</pre>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_step_3_write_select_clause">4.4. Step 3. Write SELECT clause</h3>
+<h3 id="_step_3_the_select_clause">5.4. Step 3. The SELECT clause</h3>
 <div class="paragraph">
-<p>Writing the SELECT clause needs to:</p>
+<p>Writing a <code>SELECT</code> clause depends on determining:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Find what data is required. The aforementioned scenario requires abnormal blood pressure values are returned, including both systolic pressure and diastolic pressure.</p>
+<p>What return data is required. The afore-mentioned scenario requires abnormal blood pressure values as return values, including both systolic pressure and diastolic pressure.</p>
 </li>
 <li>
 <p>Write the appropriate identified path to the required item (variable name is required if the class object is required). Multiple identified path is separated using comma. For this particular scenario, two identified paths are found for systolic and diastolic data value by following Step 2. The completed query statement looks like:</p>
@@ -1444,140 +1639,557 @@ obs/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/value &gt;= 90<
 <div class="listingblock">
 <div class="content">
 <pre>SELECT
-obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude,
-obs/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude
+    obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude,
+    obs/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude
 
-FROM EHR [ehr_id/value=$ehrUid] CONTAINS COMPOSITION [openEHR-EHR-COMPOSITION.encounter.v1]
-CONTAINS OBSERVATION obs [openEHR-EHR-OBSERVATION.blood_pressure.v1]
+FROM
+    EHR [ehr_id/value=$ehrUid] CONTAINS COMPOSITION [openEHR-EHR-COMPOSITION.encounter.v1]
+        CONTAINS OBSERVATION obs [openEHR-EHR-OBSERVATION.blood_pressure.v1]
 
-WHERE obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude&gt;= 140 OR
-obs/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude&gt;= 90</pre>
+WHERE
+    obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude&gt;= 140 OR
+    obs/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude&gt;= 90</pre>
 </div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_current_status">5. Current status</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_aql_features_not_yet_supported_in_the_ocean_informatics_aql_parser">5.1. AQL features not yet supported in the Ocean Informatics AQL Parser</h3>
-<div class="paragraph">
-<p>This is the list of all features that are not yet supported in the AQL Parser implemented by Ocean Informatics (Nov 2012):</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>TOP</p>
-</li>
-<li>
-<p>XOR. Currently AND, OR, NOT, EXISTS are supported in WHERE clause.</p>
-</li>
-<li>
-<p>All functions are not supported.</p>
-</li>
-<li>
-<p>Embedded query is not supported</p>
-</li>
-<li>
-<p>ORDER BY</p>
-</li>
-<li>
-<p>TIMEWINDOW</p>
-</li>
-</ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_aql_features_that_are_proposed_but_not_finalised">5.2. AQL features that are proposed, but not finalised</h3>
-<div class="sect3">
-<h4 id="_arithmetic_functions">5.2.1. Arithmetic functions</h4>
+<h3 id="_aql_syntax_specification">5.5. AQL Syntax Specification</h3>
 <div class="paragraph">
-<p>It has been proposed that AQL would support some basic arithmetic functions, such as addition (plus) , subtraction (minus) . Multiplication, and division may be supported as well. We do not have any scenario requiring for these two functions yet.</p>
-</div>
-<div class="paragraph">
-<p>Most cases, it is required that the left operand and the right operand must be the same type in order to do the calculation, e.g. numeric types. openEHR RM supports addition and subtraction for the types of: DV_QUANTITY, DV_COUNT, DV_INTERVAL, DV_PROPORTION, DV_DATE_TIME, DV_DATE, and DV_TIME. Again, it is required that the left and right operands must be the same type. However, one exception to this is that openEHR RM also supports subtraction between all subtypes of DV_TEMPORAL and type of `DV_DURATIO`N. AQL would support these arithmetic functions that openEHR RM supports.</p>
-</div>
-<div class="paragraph">
-<p>The example below shows a scenario which requires that a composition report (c1) is issued in the last year. It illustrates that a type of ISO 8601 date string (<code>current-date()</code>) subtracts a type of ISO 8601 interval string (<code>P1Y</code>).</p>
+<p>The following Antlr grammar expresses the AQL syntax.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>c1/context/other_context/items[at0006]/items[at0013]/value &gt; current-date() - PIY</pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_other_functions">5.2.2. Other functions</h4>
-<div class="paragraph">
-<p>It is proposed that AQL may also support other functions, such as:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>current-date()</code>: a build-in function returning the current date value in ISO date string format.</p>
-</li>
-<li>
-<p><code>current-date-time()</code>: a build-in function returning the current date time value in ISO date/time string format.</p>
-</li>
-<li>
-<p><code>max</code>: a build-in function returning the max value out of an expression.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_further_discussions">6. Further discussions</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Ocean products have been using AQL to search and retrieve openEHR-conformed EHR data for couple of years. The major usages of AQL are:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Retrieving candidate compositions with given criteria on EHR identifier and composition meta data, such as composition type (i.e. archetype id), healthcare facility, event start time, composer and so on.</p>
-</li>
-<li>
-<p>Retrieving EHR data from a single EHR for dedicated purposes, such as risk factor calculations</p>
-</li>
-<li>
-<p>Reporting, in which case AQL is used to retrieve EHR data that are cross multiple EHRs, i.e. population AQL query.</p>
-</li>
-<li>
-<p>to be continued&#8230;&#8203;</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>The existing AQL grammar and syntax maybe further enhanced in the following areas:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Reduce the length of the query statement. The use of archetype path in AQL query makes the query lengthy and hard to read. Local variables with meaningful names that are assigned with path can be used to reduce the length of the query as well as improve readability of the query. One example is shown below:</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>let $systolic_bp="data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude"
-let $diastolic_bp="data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude"
+<pre class="pygments highlight"><code data-lang="antlr-java"><span class="tok-c">// Author: Bostjan Lah</span><span class="tok-w"></span>
+<span class="tok-c">// (c) Copyright, Marand, http://www.marand.com</span><span class="tok-w"></span>
+<span class="tok-c">// Licensed under LGPL: http://www.gnu.org/copyleft/lesser.html</span><span class="tok-w"></span>
+<span class="tok-c">// Based on AQL grammar by Ocean Informatics: http://www.openehr.org/wiki/download/attachments/2949295/EQL_v0.6.grm?version=1&amp;modificationDate=1259650833000</span><span class="tok-w"></span>
+<span class="tok-k">grammar</span><span class="tok-w"> </span><span class="tok-nc">Aql</span><span class="tok-p">;</span><span class="tok-w"></span>
 
-SELECT obs/$systolic_bp, obs/$diastolic_bp
-FROM EHR [ehr_id/value=$ehrUid] CONTAINS COMPOSITION [openEHR-EHR-COMPOSITION.encounter.v1]
-     CONTAINS OBSERVATION obs [openEHR-EHR-OBSERVATION.blood_pressure.v1]
-WHERE obs/$systolic_bp&gt;= 140 OR obs/$diastolic_bp&gt;=90</pre>
+<span class="tok-k">options</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-nv">output</span><span class="tok-p">=</span>AST<span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-nv">ASTLabelType</span><span class="tok-p">=</span>CommonTree<span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-nv">backtrack</span><span class="tok-p">=</span>true<span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-nv">memoize</span><span class="tok-p">=</span>true<span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-p">}</span><span class="tok-w"></span>
+
+<span class="tok-k">tokens</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-nl">ORDERDESC</span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-nl">ORDERASC</span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-p">}</span><span class="tok-w"></span>
+
+<span class="tok-nl">@header</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-kn">package</span> <span class="tok-nn">com.marand.thinkehr.aql.antlr</span><span class="tok-o">;</span>
+<span class="tok-kn">import</span> <span class="tok-nn">com.marand.thinkehr.aql.AqlRecognitionException</span><span class="tok-o">;</span>
+<span class="tok-p">}</span><span class="tok-w"></span>
+
+<span class="tok-nl">@lexer</span><span class="tok-p">::</span><span class="tok-nl">header</span><span class="tok-p">{</span>
+<span class="tok-kn">package</span> <span class="tok-nn">com.marand.thinkehr.aql.antlr</span><span class="tok-o">;</span>
+<span class="tok-kn">import</span> <span class="tok-nn">com.marand.thinkehr.aql.AqlRecognitionException</span><span class="tok-o">;</span>
+<span class="tok-p">}</span><span class="tok-w"></span>
+
+<span class="tok-nl">@members</span><span class="tok-p">{</span>
+<span class="tok-kd">public</span> <span class="tok-kt">void</span> <span class="tok-nf">displayRecognitionError</span><span class="tok-o">(</span><span class="tok-n">String</span><span class="tok-o">[]</span> <span class="tok-n">tokenNames</span><span class="tok-o">,</span> <span class="tok-n">RecognitionException</span> <span class="tok-n">e</span><span class="tok-o">)</span>
+<span class="tok-p">{</span>
+  <span class="tok-k">throw</span> <span class="tok-k">new</span> <span class="tok-n">AqlRecognitionException</span><span class="tok-o">(</span><span class="tok-n">e</span><span class="tok-o">);</span>
+<span class="tok-p">}</span>
+<span class="tok-p">}</span><span class="tok-w"></span>
+
+<span class="tok-c">// Rule Definitions</span><span class="tok-w"></span>
+<span class="tok-c">//&lt;Query&gt; ::= &lt;Select&gt; &lt;From&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//           | &lt;Select&gt; &lt;From&gt; &lt;Where&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//            | &lt;Select&gt; &lt;From&gt; &lt;OrderBy&gt;   ! is this allowed?</span><span class="tok-w"></span>
+<span class="tok-c">//            | &lt;Select&gt; &lt;From&gt; &lt;Where&gt; &lt;OrderBy&gt;</span><span class="tok-w"></span>
+<span class="tok-nl">query</span><span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-nv">select</span><span class="tok-w"> </span><span class="tok-nv">from</span><span class="tok-w"> </span><span class="tok-nv">where</span><span class="tok-o">?</span><span class="tok-w"> </span><span class="tok-nv">orderBy</span><span class="tok-o">?</span><span class="tok-w"> </span><span class="tok-s">&#39;;&#39;</span><span class="tok-o">!?</span><span class="tok-w"> </span><span class="tok-no">EOF</span><span class="tok-o">!</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//&lt;Select&gt; ::= &#39;SELECT&#39; &lt;SelectExpr&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//         | &#39;SELECT&#39; &lt;TOP&gt; &lt;SelectExpr&gt;</span><span class="tok-w"></span>
+<span class="tok-nl">select</span><span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-no">SELECT</span><span class="tok-w"> </span><span class="tok-nv">top</span><span class="tok-o">?</span><span class="tok-w"> </span><span class="tok-nv">selectExpr</span><span class="tok-w"> </span><span class="tok-o">-&gt;</span><span class="tok-w"> </span><span class="tok-o">^(</span><span class="tok-no">SELECT</span><span class="tok-w"> </span><span class="tok-nv">top</span><span class="tok-o">?</span><span class="tok-w"> </span><span class="tok-nv">selectExpr</span><span class="tok-o">)</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//&lt;Top&gt; ::= &#39;TOP&#39; Integer</span><span class="tok-w"></span>
+<span class="tok-c">//          | &#39;TOP&#39; Integer &#39;BACKWARD&#39;</span><span class="tok-w"></span>
+<span class="tok-c">//          | &#39;TOP&#39; Integer &#39;FORWARD&#39;</span><span class="tok-w"></span>
+<span class="tok-nl">top</span><span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-no">TOP</span><span class="tok-w"> </span><span class="tok-no">INTEGER</span><span class="tok-w"> </span><span class="tok-no">FORWARD</span><span class="tok-o">?</span><span class="tok-w"> </span><span class="tok-o">-&gt;</span><span class="tok-w"> </span><span class="tok-o">^(</span><span class="tok-no">TOP</span><span class="tok-w"> </span><span class="tok-no">INTEGER</span><span class="tok-o">)</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-o">|</span><span class="tok-w">	</span><span class="tok-no">TOP</span><span class="tok-w"> </span><span class="tok-no">INTEGER</span><span class="tok-w"> </span><span class="tok-no">BACKWARD</span><span class="tok-w"> </span><span class="tok-o">-&gt;</span><span class="tok-w"> </span><span class="tok-o">^(</span><span class="tok-no">TOP</span><span class="tok-w"> </span><span class="tok-no">INTEGER</span><span class="tok-w"> </span><span class="tok-no">BACKWARD</span><span class="tok-o">)</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+
+<span class="tok-c">//&lt;Where&gt; ::= &#39;WHERE&#39; &lt;IdentifiedExpr&gt;</span><span class="tok-w"></span>
+<span class="tok-nl">where</span><span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-no">WHERE</span><span class="tok-w"> </span><span class="tok-nv">identifiedExpr</span><span class="tok-w"> </span><span class="tok-o">-&gt;</span><span class="tok-w"> </span><span class="tok-o">^(</span><span class="tok-no">WHERE</span><span class="tok-w"> </span><span class="tok-nv">identifiedExpr</span><span class="tok-o">)</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//&lt;OrderBy&gt; ::= &#39;ORDER BY&#39; &lt;OrderBySeq&gt;</span><span class="tok-w"></span>
+<span class="tok-nl">orderBy</span><span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-no">ORDERBY</span><span class="tok-w"> </span><span class="tok-nv">orderBySeq</span><span class="tok-w"> </span><span class="tok-o">-&gt;</span><span class="tok-w"> </span><span class="tok-o">^(</span><span class="tok-no">ORDERBY</span><span class="tok-w"> </span><span class="tok-nv">orderBySeq</span><span class="tok-o">)</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//&lt;OrderBySeq&gt;  ::= &lt;OrderByExpr&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//		| &lt;OrderByExpr&gt; &#39;,&#39; &lt;OrderBySeq&gt;</span><span class="tok-w"></span>
+<span class="tok-nl">orderBySeq</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-nv">orderByExpr</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;,&#39;</span><span class="tok-o">!</span><span class="tok-w"> </span><span class="tok-nv">orderByExpr</span><span class="tok-o">)*</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//&lt;OrderByExpr&gt; ::= &lt;IdentifiedPath&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//		| &lt;IdentifiedPath&gt; &#39;DESCENDING&#39;</span><span class="tok-w"></span>
+<span class="tok-c">//		| &lt;IdentifiedPath&gt; &#39;ASCENDING&#39;</span><span class="tok-w"></span>
+<span class="tok-c">//		| &lt;IdentifiedPath&gt; &#39;DESC&#39;</span><span class="tok-w"></span>
+<span class="tok-c">//		| &lt;IdentifiedPath&gt; &#39;ASC&#39;</span><span class="tok-w"></span>
+<span class="tok-nl">orderByExpr</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-nv">identifiedPath</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-no">DESCENDING</span><span class="tok-o">|</span><span class="tok-no">DESC</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-o">-&gt;</span><span class="tok-w"> </span><span class="tok-o">^(</span><span class="tok-no">ORDERDESC</span><span class="tok-w"> </span><span class="tok-nv">identifiedPath</span><span class="tok-o">)</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-o">|</span><span class="tok-w">	</span><span class="tok-nv">identifiedPath</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-no">ASCENDING</span><span class="tok-o">|</span><span class="tok-no">ASC</span><span class="tok-o">)?</span><span class="tok-w"> </span><span class="tok-o">-&gt;</span><span class="tok-w"> </span><span class="tok-o">^(</span><span class="tok-no">ORDERASC</span><span class="tok-w"> </span><span class="tok-nv">identifiedPath</span><span class="tok-o">)</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//&lt;SelectExpr&gt; ::= &lt;IdentifiedPathSeq&gt;</span><span class="tok-w"></span>
+<span class="tok-nl">selectExpr</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-nv">identifiedPathSeq</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//! When multiple paths provided, each IdentifiedPath must represent an object of type DataValue</span><span class="tok-w"></span>
+<span class="tok-c">//&lt;IdentifiedPathSeq&gt; ::= &lt;IdentifiedPath//&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//			| &lt;IdentifiedPath&gt; &#39;as&#39; Identifier</span><span class="tok-w"></span>
+<span class="tok-c">//			| &lt;IdentifiedPath&gt; &#39;,&#39; &lt;IdentifiedPathSeq&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//			| &lt;IdentifiedPath&gt; &#39;as&#39; Identifier &#39;,&#39; &lt;IdentifiedPathSeq&gt;</span><span class="tok-w"></span>
+<span class="tok-nl">identifiedPathSeq</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-nv">selectVar</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;,&#39;</span><span class="tok-o">!</span><span class="tok-w"> </span><span class="tok-nv">selectVar</span><span class="tok-o">)*</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-nl">selectVar</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-nv">identifiedPath</span><span class="tok-o">^</span><span class="tok-w"> </span><span class="tok-nv">asIdentifier</span><span class="tok-o">?</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-nl">asIdentifier</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-no">AS</span><span class="tok-w"> </span><span class="tok-no">IDENTIFIER</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//&lt;From&gt; ::=   &#39;FROM&#39; &lt;FromExpr&gt;		! stop or/and without root class</span><span class="tok-w"></span>
+<span class="tok-c">//	    | &#39;FROM&#39; &lt;FromEHR&gt; &lt;ContainsExpr&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//           | &#39;FROM&#39; &lt;FromEHR&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//!          &#39;FROM&#39; &lt;ContainsOr&gt;</span><span class="tok-w"></span>
+<span class="tok-nl">from</span><span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-no">FROM</span><span class="tok-w"> </span><span class="tok-nv">fromExpr</span><span class="tok-w"> </span><span class="tok-o">-&gt;</span><span class="tok-w"> </span><span class="tok-o">^(</span><span class="tok-no">FROM</span><span class="tok-w"> </span><span class="tok-nv">fromExpr</span><span class="tok-o">)</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-no">FROM</span><span class="tok-w"> </span><span class="tok-nv">ehrContains</span><span class="tok-w"> </span><span class="tok-o">-&gt;</span><span class="tok-w"> </span><span class="tok-o">^(</span><span class="tok-no">FROM</span><span class="tok-w"> </span><span class="tok-nv">ehrContains</span><span class="tok-o">)</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//&lt;FromEHR&gt; ::= &#39;EHR&#39; &lt;StandardPredicate&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//              | &#39;EHR&#39; Identifier &lt;StandardPredicate&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//              | &#39;EHR&#39; Identifier</span><span class="tok-w"></span>
+<span class="tok-nl">fromEHR</span><span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-no">EHR</span><span class="tok-w"> </span><span class="tok-no">IDENTIFIER</span><span class="tok-w"> </span><span class="tok-o">-&gt;</span><span class="tok-w"> </span><span class="tok-o">^(</span><span class="tok-no">EHR</span><span class="tok-w"> </span><span class="tok-no">IDENTIFIER</span><span class="tok-o">)</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-no">EHR</span><span class="tok-w"> </span><span class="tok-no">IDENTIFIER</span><span class="tok-w"> </span><span class="tok-nv">standardPredicate</span><span class="tok-w"> </span><span class="tok-o">-&gt;</span><span class="tok-w"> </span><span class="tok-o">^(</span><span class="tok-no">EHR</span><span class="tok-w"> </span><span class="tok-no">IDENTIFIER</span><span class="tok-w"> </span><span class="tok-nv">standardPredicate</span><span class="tok-o">)</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-no">EHR</span><span class="tok-w"> </span><span class="tok-nv">standardPredicate</span><span class="tok-w"> </span><span class="tok-o">-&gt;</span><span class="tok-w"> </span><span class="tok-o">^(</span><span class="tok-no">EHR</span><span class="tok-w"> </span><span class="tok-nv">standardPredicate</span><span class="tok-o">)</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-nl">ehrContains</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-nv">fromEHR</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-no">CONTAINS</span><span class="tok-o">^</span><span class="tok-w"> </span><span class="tok-nv">contains</span><span class="tok-o">)?</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//&lt;IdentifiedExpr&gt; ::= &lt;IdentifiedEquality&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//                   | &lt;IdentifiedExprBoolean&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//                   |&#39;(&#39; &lt;IdentifiedExprBoolean&gt; &#39;)&#39;</span><span class="tok-w"></span>
+<span class="tok-c">//identifiedExpr</span><span class="tok-w"></span>
+<span class="tok-c">//	: identifiedExprBoolean;</span><span class="tok-w"></span>
+<span class="tok-c">//        | &#39;(&#39;! identifiedExprBoolean &#39;)&#39;!;</span><span class="tok-w"></span>
+
+<span class="tok-c">//&lt;IdentifiedExprBoolean&gt; ::= &lt;IdentifiedExpr&gt; &#39;OR&#39; &lt;IdentifiedExpr&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//                              | &lt;IdentifiedExpr&gt; &#39;AND&#39; &lt;IdentifiedExpr&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//                              | &lt;IdentifiedExpr&gt; &#39;XOR&#39; &lt;IdentifiedExpr&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//                              | &#39;NOT&#39;&#39;(&#39; &lt;IdentifiedExprBoolean&gt; &#39;)&#39;</span><span class="tok-w"></span>
+<span class="tok-c">//                              | &#39;NOT&#39; &lt;IdentifiedEquality&gt;</span><span class="tok-w"></span>
+<span class="tok-nl">identifiedExpr</span><span class="tok-w"></span>
+<span class="tok-w"> 	</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-nv">identifiedExprAnd</span><span class="tok-w"> </span><span class="tok-o">((</span><span class="tok-no">OR</span><span class="tok-o">|</span><span class="tok-no">XOR</span><span class="tok-o">)^</span><span class="tok-w"> </span><span class="tok-nv">identifiedExprAnd</span><span class="tok-o">)*</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-nl">identifiedExprAnd</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-nv">identifiedEquality</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-no">AND</span><span class="tok-o">^</span><span class="tok-w"> </span><span class="tok-nv">identifiedEquality</span><span class="tok-o">)*</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+
+<span class="tok-c">//&lt;IdentifiedEquality&gt; ::= &lt;IdentifiedOperand&gt; ComparableOperator &lt;IdentifiedOperand&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//			     | &lt;IdentifiedOperand&gt; &#39;matches&#39; &#39;{&#39; &lt;MatchesOperand&gt; &#39;}&#39;</span><span class="tok-w"></span>
+<span class="tok-c">//                          | &lt;IdentifiedOperand&gt; &#39;matches&#39; RegExPattern</span><span class="tok-w"></span>
+<span class="tok-c">//                          | &#39;EXISTS&#39; &lt;IdentifiedPath&gt;</span><span class="tok-w"></span>
+<span class="tok-nl">identifiedEquality</span><span class="tok-w"></span>
+<span class="tok-w"> 	</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-nv">identifiedOperand</span><span class="tok-w"> </span><span class="tok-o">((</span><span class="tok-no">MATCHES</span><span class="tok-o">^</span><span class="tok-w"> </span><span class="tok-s">&#39;{&#39;</span><span class="tok-o">!</span><span class="tok-w"> </span><span class="tok-nv">matchesOperand</span><span class="tok-w"> </span><span class="tok-s">&#39;}&#39;</span><span class="tok-o">!)|(</span><span class="tok-no">COMPARABLEOPERATOR</span><span class="tok-o">^</span><span class="tok-w"> </span><span class="tok-nv">identifiedOperand</span><span class="tok-o">))</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-no">EXISTS</span><span class="tok-w"> </span><span class="tok-nv">identifiedPath</span><span class="tok-w"> </span><span class="tok-o">-&gt;</span><span class="tok-w"> </span><span class="tok-o">^(</span><span class="tok-no">EXISTS</span><span class="tok-w"> </span><span class="tok-nv">identifiedPath</span><span class="tok-o">)</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-s">&#39;(&#39;</span><span class="tok-o">!</span><span class="tok-w"> </span><span class="tok-nv">identifiedExpr</span><span class="tok-w"> </span><span class="tok-s">&#39;)&#39;</span><span class="tok-o">!</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-no">NOT</span><span class="tok-o">^</span><span class="tok-w"> </span><span class="tok-nv">identifiedEquality</span><span class="tok-w"></span>
+<span class="tok-w"> 	</span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-c">// 	| identifiedOperand &#39;matches&#39; &#39;{&#39; matchesOperand &#39;}&#39;</span><span class="tok-w"></span>
+<span class="tok-c">//        | identifiedOperand &#39;matches&#39; REGEXPATTERN</span><span class="tok-w"></span>
+<span class="tok-c">//        | &#39;EXISTS&#39; identifiedPath;</span><span class="tok-w"></span>
+
+<span class="tok-c">//&lt;IdentifiedOperand&gt; ::= &lt;Operand&gt; | &lt;IdentifiedPath&gt;</span><span class="tok-w"></span>
+<span class="tok-nl">identifiedOperand</span><span class="tok-w"></span>
+<span class="tok-w"> 	</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-nv">operand</span><span class="tok-w"> </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-nv">identifiedPath</span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-c">//!&lt;IdentifiedOperand&gt; ::= &lt;Operand&gt; | &lt;RelativePath&gt;</span><span class="tok-w"></span>
+
+<span class="tok-c">//&lt;IdentifiedPath&gt;::= Identifier</span><span class="tok-w"></span>
+<span class="tok-c">//                    | Identifier &lt;Predicate&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//                    | Identifier &#39;/&#39; &lt;ObjectPath&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//                    | Identifier &lt;Predicate&gt; &#39;/&#39; &lt;ObjectPath&gt;</span><span class="tok-w"></span>
+<span class="tok-nl">identifiedPath</span><span class="tok-w"></span>
+<span class="tok-w">	 </span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-no">IDENTIFIER</span><span class="tok-w"> </span><span class="tok-nv">predicate</span><span class="tok-o">?</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;/&#39;</span><span class="tok-w"> </span><span class="tok-nv">objectPath</span><span class="tok-o">)?</span><span class="tok-w"> </span><span class="tok-o">-&gt;</span><span class="tok-w"> </span><span class="tok-o">^(</span><span class="tok-no">IDENTIFIER</span><span class="tok-w"> </span><span class="tok-nv">predicate</span><span class="tok-o">?</span><span class="tok-w"> </span><span class="tok-nv">objectPath</span><span class="tok-o">?)</span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-c">//!		| Identifer &lt;AbsolutePath&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//!		| Identifer &lt;Predicate&gt; &lt;AbsolutePath&gt;</span><span class="tok-w"></span>
+
+
+<span class="tok-c">//&lt;Predicate&gt; ::= &lt;NodePredicate&gt;</span><span class="tok-w"></span>
+<span class="tok-nl">predicate</span><span class="tok-w"></span>
+<span class="tok-w"> 	</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-nv">nodePredicate</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//&lt;NodePredicate&gt; ::= &#39;[&#39;&lt;NodePredicateOr&gt;&#39;]&#39;</span><span class="tok-w"></span>
+<span class="tok-nl">nodePredicate</span><span class="tok-w"></span>
+<span class="tok-w"> 	</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-no">OPENBRACKET</span><span class="tok-w"> </span><span class="tok-nv">nodePredicateOr</span><span class="tok-w"> </span><span class="tok-no">CLOSEBRACKET</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//&lt;NodePredicateOr&gt; ::= &lt;NodePredicateAnd&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//                 | &lt;NodePredicateOr&gt; &#39;or&#39; &lt;NodePredicateAnd&gt;</span><span class="tok-w"></span>
+<span class="tok-nl">nodePredicateOr</span><span class="tok-w"></span>
+<span class="tok-w"> 	</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-nv">nodePredicateAnd</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-no">OR</span><span class="tok-o">^</span><span class="tok-w"> </span><span class="tok-nv">nodePredicateAnd</span><span class="tok-o">)*</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//&lt;NodePredicateAnd&gt; ::= &lt;NodePredicateComparable&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//                 | &lt;NodePredicateAnd&gt; &#39;and&#39; &lt;NodePredicateComparable&gt;</span><span class="tok-w"></span>
+<span class="tok-nl">nodePredicateAnd</span><span class="tok-w"></span>
+<span class="tok-w"> 	</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-nv">nodePredicateComparable</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-no">AND</span><span class="tok-o">^</span><span class="tok-w"> </span><span class="tok-nv">nodePredicateComparable</span><span class="tok-o">)*</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//&lt;NodePredicateComparable&gt; ::= &lt;PredicateOperand&gt; ComparableOperator &lt;PredicateOperand&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//                          | NodeId</span><span class="tok-w"></span>
+<span class="tok-c">//                          | NodeId &#39;,&#39; String        ! &lt;NodeId&gt; and name/value = &lt;String&gt; shortcut</span><span class="tok-w"></span>
+<span class="tok-c">//                          | NodeId &#39;,&#39; parameter     ! &lt;NodeId&gt; and name/value = &lt;Parameter&gt; shortcut</span><span class="tok-w"></span>
+<span class="tok-c">//                          | &lt;NodePredicateRegEx&gt;     ! /items[{/at0001.*/}], /items[at0001 and name/value matches {//}]</span><span class="tok-w"></span>
+<span class="tok-c">//                          | ArchetypeId</span><span class="tok-w"></span>
+<span class="tok-c">//                          | ArchetypeId &#39;,&#39; String        ! &lt;NodeId&gt; and name/value = &lt;String&gt; shortcut</span><span class="tok-w"></span>
+<span class="tok-c">//                          | ArchetypeId &#39;,&#39; parameter     ! &lt;NodeId&gt; and name/value = &lt;Parameter&gt; shortcut</span><span class="tok-w"></span>
+<span class="tok-nl">nodePredicateComparable</span><span class="tok-w"></span>
+<span class="tok-w"> 	</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-no">NODEID</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-no">COMMA</span><span class="tok-o">^</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-no">STRING</span><span class="tok-o">|</span><span class="tok-no">PARAMETER</span><span class="tok-o">))?</span><span class="tok-w"></span>
+<span class="tok-w"> 	</span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-no">ARCHETYPEID</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-no">COMMA</span><span class="tok-o">^</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-no">STRING</span><span class="tok-o">|</span><span class="tok-no">PARAMETER</span><span class="tok-o">))?</span><span class="tok-w"></span>
+<span class="tok-w"> 	</span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-nv">predicateOperand</span><span class="tok-w"> </span><span class="tok-o">((</span><span class="tok-no">COMPARABLEOPERATOR</span><span class="tok-o">^</span><span class="tok-w"> </span><span class="tok-nv">predicateOperand</span><span class="tok-o">)|(</span><span class="tok-no">MATCHES</span><span class="tok-o">^</span><span class="tok-w"> </span><span class="tok-no">REGEXPATTERN</span><span class="tok-o">))</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-no">REGEXPATTERN</span><span class="tok-w">     </span><span class="tok-c">//! /items[{/at0001.*/}], /items[at0001 and name/value matches {//}]</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//&lt;NodePredicateRegEx&gt;    ::= RegExPattern</span><span class="tok-w"></span>
+<span class="tok-c">//                          | &lt;PredicateOperand&gt; &#39;matches&#39; RegExPattern</span><span class="tok-w"></span>
+<span class="tok-nl">nodePredicateRegEx</span><span class="tok-w"></span>
+<span class="tok-w"> 	</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-no">REGEXPATTERN</span><span class="tok-w"></span>
+<span class="tok-w"> 	</span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-nv">predicateOperand</span><span class="tok-w"> </span><span class="tok-no">MATCHES</span><span class="tok-o">^</span><span class="tok-w"> </span><span class="tok-no">REGEXPATTERN</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//&lt;MatchesOperand&gt; ::= &lt;ValueListItems&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//			| UriValue</span><span class="tok-w"></span>
+<span class="tok-nl">matchesOperand</span><span class="tok-w"></span>
+<span class="tok-w"> 	</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-nv">valueListItems</span><span class="tok-w"> </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-no">URIVALUE</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//! &lt;ValueList&gt; ::= &#39;{&#39;&lt;ValueListItems&gt;&#39;}&#39;</span><span class="tok-w"></span>
+<span class="tok-c">//&lt;ValueListItems&gt; ::= &lt;Operand&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//                     |&lt;Operand&gt; &#39;,&#39; &lt;ValueListItems&gt;</span><span class="tok-w"></span>
+<span class="tok-nl">valueListItems</span><span class="tok-w"></span>
+<span class="tok-w"> 	</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-nv">operand</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;,&#39;</span><span class="tok-o">!</span><span class="tok-w"> </span><span class="tok-nv">operand</span><span class="tok-o">)*</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//&lt;URI&gt;     ::= &#39;{&#39; UriValue &#39;}&#39;</span><span class="tok-w"></span>
+<span class="tok-nl">uri</span><span class="tok-w"> 	</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-s">&#39;{&#39;</span><span class="tok-w"> </span><span class="tok-no">URIVALUE</span><span class="tok-w"> </span><span class="tok-s">&#39;}&#39;</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+
+<span class="tok-c">//&lt;ArchetypePredicate&gt; ::= &#39;[&#39; ArchetypeId &#39;]&#39;</span><span class="tok-w"></span>
+<span class="tok-c">//			 | &#39;[&#39; Parameter &#39;]&#39;</span><span class="tok-w"></span>
+<span class="tok-c">//                      | &#39;[&#39; RegExPattern &#39;]&#39;</span><span class="tok-w"></span>
+<span class="tok-nl">archetypePredicate</span><span class="tok-w"></span>
+<span class="tok-w"> 	</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-no">OPENBRACKET</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-nv">archetypeId</span><span class="tok-o">|</span><span class="tok-no">PARAMETER</span><span class="tok-o">|</span><span class="tok-no">REGEXPATTERN</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-no">CLOSEBRACKET</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-nl">archetypeId</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-no">ARCHETYPEID</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//&lt;VersionPredicate&gt; ::= &#39;[&#39; &lt;VersionPredicateOptions&gt; &#39;]&#39;</span><span class="tok-w"></span>
+<span class="tok-nl">versionPredicate</span><span class="tok-w"></span>
+<span class="tok-w"> 	</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-no">OPENBRACKET</span><span class="tok-w"> </span><span class="tok-nv">versionPredicateOptions</span><span class="tok-w"> </span><span class="tok-no">CLOSEBRACKET</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//&lt;VersionPredicateOptions&gt; ::= &#39;latest_version&#39; | &#39;all_versions&#39;</span><span class="tok-w"></span>
+<span class="tok-nl">versionPredicateOptions</span><span class="tok-w"></span>
+<span class="tok-w"> 	</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-s">&#39;latest_version&#39;</span><span class="tok-w"> </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-no">ALL_VERSIONS</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//&lt;StandardPredicate&gt; ::= &#39;[&#39; &lt;PredicateExpr&gt; &#39;]&#39;</span><span class="tok-w"></span>
+<span class="tok-nl">standardPredicate</span><span class="tok-w"></span>
+<span class="tok-w"> 	</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-s">&#39;[&#39;</span><span class="tok-o">!</span><span class="tok-w"> </span><span class="tok-nv">predicateExpr</span><span class="tok-w"> </span><span class="tok-s">&#39;]&#39;</span><span class="tok-o">!</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//&lt;PredicateExpr&gt; ::= &lt;PredicateOr&gt;</span><span class="tok-w"></span>
+<span class="tok-nl">predicateExpr</span><span class="tok-w"></span>
+<span class="tok-w"> 	</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-nv">predicateOr</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//&lt;PredicateOr&gt; ::= &lt;PredicateAnd&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//                 | &lt;PredicateOr&gt; &#39;or&#39; &lt;PredicateAnd&gt;</span><span class="tok-w"></span>
+<span class="tok-nl">predicateOr</span><span class="tok-w"></span>
+<span class="tok-w"> 	</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-nv">predicateAnd</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-no">OR</span><span class="tok-o">^</span><span class="tok-w"> </span><span class="tok-nv">predicateAnd</span><span class="tok-o">)*</span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-c">// 	: (predicateOr &#39;or&#39;)? predicateAnd; !!!</span><span class="tok-w"></span>
+
+<span class="tok-c">//&lt;PredicateAnd&gt; ::= &lt;PredicateEquality&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//                 | &lt;PredicateAnd&gt; &#39;and&#39; &lt;PredicateEquality&gt;</span><span class="tok-w"></span>
+<span class="tok-nl">predicateAnd</span><span class="tok-w"></span>
+<span class="tok-w"> 	</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-nv">predicateEquality</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-no">AND</span><span class="tok-o">^</span><span class="tok-w"> </span><span class="tok-nv">predicateEquality</span><span class="tok-o">)*</span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-c">// 	: (predicateAnd &#39;and&#39;)? predicateEquality; !!!</span><span class="tok-w"></span>
+
+<span class="tok-c">//&lt;PredicateEquality&gt; ::= &lt;PredicateOperand&gt; ComparableOperator &lt;PredicateOperand&gt;</span><span class="tok-w"></span>
+<span class="tok-nl">predicateEquality</span><span class="tok-w"></span>
+<span class="tok-w"> 	</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-nv">predicateOperand</span><span class="tok-w"> </span><span class="tok-no">COMPARABLEOPERATOR</span><span class="tok-o">^</span><span class="tok-w"> </span><span class="tok-nv">predicateOperand</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//&lt;PredicateOperand&gt; ::= !Identifier</span><span class="tok-w"></span>
+<span class="tok-c">//			!| Identifier PathItem</span><span class="tok-w"></span>
+<span class="tok-c">//                     | &lt;ObjectPath&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//                     | &lt;Operand&gt;</span><span class="tok-w"></span>
+<span class="tok-nl">predicateOperand</span><span class="tok-w"></span>
+<span class="tok-w"> 	</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-nv">objectPath</span><span class="tok-w"> </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-nv">operand</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//&lt;Operand&gt; ::= String | Integer | Float | Date | Parameter | Boolean</span><span class="tok-w"></span>
+<span class="tok-nl">operand</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-no">STRING</span><span class="tok-w"> </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-no">INTEGER</span><span class="tok-w"> </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-no">FLOAT</span><span class="tok-w"> </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-no">DATE</span><span class="tok-w"> </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-no">PARAMETER</span><span class="tok-w"> </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-no">BOOLEAN</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+
+<span class="tok-c">//&lt;ObjectPath&gt; ::=  &lt;PathPart&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//                | &lt;PathPart&gt; &#39;/&#39; &lt;ObjectPath&gt;</span><span class="tok-w"></span>
+<span class="tok-nl">objectPath</span><span class="tok-w"></span>
+<span class="tok-w"> 	</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-nv">pathPart</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;/&#39;</span><span class="tok-w"> </span><span class="tok-nv">pathPart</span><span class="tok-o">)*</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+
+<span class="tok-c">//&lt;PathPart&gt; ::= Identifier</span><span class="tok-w"></span>
+<span class="tok-c">//           | Identifier &lt;Predicate&gt;</span><span class="tok-w"></span>
+<span class="tok-nl">pathPart</span><span class="tok-w"></span>
+<span class="tok-w"> 	</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-no">IDENTIFIER</span><span class="tok-w"> </span><span class="tok-nv">predicate</span><span class="tok-o">?</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//&lt;FromExpr&gt; ::=  &lt;SimpleClassExpr&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//		| &lt;SimpleClassExpr&gt; &lt;ContainsExpr&gt;</span><span class="tok-w"></span>
+<span class="tok-nl">fromExpr</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-nv">containsExpression</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-nl">contains</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-nv">simpleClassExpr</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-no">CONTAINS</span><span class="tok-o">^</span><span class="tok-w"> </span><span class="tok-nv">containsExpression</span><span class="tok-o">)?</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//! Check thislass</span><span class="tok-w"></span>
+<span class="tok-c">//&lt;ContainsExpr&gt;::= &#39;CONTAINS&#39; &lt;ContainsExpression&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//                  !&#39;CONTAINS&#39; &lt;ContainsOr&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//&lt;ContainsExpression&gt; ::= &lt;ClassExpr&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//                        | &lt;ContainExpressionBoolean&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//                        |&#39;(&#39; &lt;ContainExpressionBoolean&gt; &#39;)&#39;</span><span class="tok-w"></span>
+<span class="tok-nl">containsExpression</span><span class="tok-w"></span>
+<span class="tok-w"> 	</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-nv">containExpressionBool</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-nv">boolOp</span><span class="tok-w"> </span><span class="tok-nv">containsExpression</span><span class="tok-o">)?</span><span class="tok-w"></span>
+<span class="tok-c">// 	| &#39;(&#39; containExpressionBool &#39;)&#39; -&gt; ^(OPEN containExpressionBool)</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//&lt;ContainExpressionBoolean&gt; ::= &lt;ContainsExpression&gt; &#39;OR&#39; &lt;ContainsExpression&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//                              | &lt;ContainsExpression&gt; &#39;AND&#39; &lt;ContainsExpression&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//                              | &lt;ContainsExpression&gt; &#39;XOR&#39; &lt;ContainsExpression&gt;</span><span class="tok-w"></span>
+<span class="tok-nl">containExpressionBool</span><span class="tok-w"></span>
+<span class="tok-w"> 	</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-nv">contains</span><span class="tok-w"></span>
+<span class="tok-w"> 	</span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-s">&#39;(&#39;</span><span class="tok-w"> </span><span class="tok-nv">containsExpression</span><span class="tok-w"> </span><span class="tok-s">&#39;)&#39;</span><span class="tok-w"> </span><span class="tok-o">-&gt;</span><span class="tok-w"> </span><span class="tok-o">^(</span><span class="tok-no">OPEN</span><span class="tok-w"> </span><span class="tok-nv">containsExpression</span><span class="tok-w"> </span><span class="tok-no">CLOSE</span><span class="tok-o">)</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-nl">boolOp</span><span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-no">OR</span><span class="tok-o">|</span><span class="tok-no">XOR</span><span class="tok-o">|</span><span class="tok-no">AND</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//&lt;ClassExpr&gt;::=   &lt;SimpleClassExpr&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//		   | &#39;(&#39; &lt;SimpleClassExpr&gt; &lt;ContainsExpr&gt; &#39;)&#39;</span><span class="tok-w"></span>
+<span class="tok-c">//		   | &lt;SimpleClassExpr&gt; &lt;ContainsExpr&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//classExpr</span><span class="tok-w"></span>
+<span class="tok-c">// 	: &#39;(&#39; simpleClassExpr &#39;)&#39;</span><span class="tok-w"></span>
+<span class="tok-c">//	| simpleClassExpr</span><span class="tok-w"></span>
+<span class="tok-c">//	;</span><span class="tok-w"></span>
+
+<span class="tok-c">//&lt;SimpleClassExpr&gt;::= Identifier							! RM_TYPE_NAME</span><span class="tok-w"></span>
+<span class="tok-c">//               | Identifier Identifier					! RM_TYPE_NAME variable</span><span class="tok-w"></span>
+<span class="tok-c">//               | &lt;ArchetypedClassExpr&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//		 | &lt;VersionedClassExpr&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//		 | &lt;VersionClassExpr&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//		 ! | &lt;IdentifiedObjectExpr&gt;                           ! need to be used once VersionedClassExpr is removed</span><span class="tok-w"></span>
+<span class="tok-nl">simpleClassExpr</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-no">IDENTIFIER</span><span class="tok-w"> </span><span class="tok-no">IDENTIFIER</span><span class="tok-o">?</span><span class="tok-w">					</span><span class="tok-c">//! RM_TYPE_NAME .. RM_TYPE_NAME variable</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-nv">archetypedClassExpr</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-nv">versionedClassExpr</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-nv">versionClassExpr</span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-c">//		 ! | &lt;IdentifiedObjectExpr&gt;                           ! need to be used once VersionedClassExpr is removed</span><span class="tok-w"></span>
+
+<span class="tok-c">//&lt;ArchetypedClassExpr&gt;::= Identifier &lt;ArchetypePredicate&gt;	! RM_TYPE_NAME [archetype_id]</span><span class="tok-w"></span>
+<span class="tok-c">//               | Identifier Identifier &lt;ArchetypePredicate&gt;	! RM_TYPE_NAME variable [archetype_id]</span><span class="tok-w"></span>
+<span class="tok-nl">archetypedClassExpr</span><span class="tok-w"></span>
+<span class="tok-w"> 	</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-no">IDENTIFIER</span><span class="tok-o">^</span><span class="tok-w"> </span><span class="tok-no">IDENTIFIER</span><span class="tok-o">?</span><span class="tok-w"> </span><span class="tok-nv">archetypePredicate</span><span class="tok-p">;</span><span class="tok-w">	</span><span class="tok-c">//! RM_TYPE_NAME variable? [archetype_id]</span><span class="tok-w"></span>
+
+<span class="tok-c">//! need to be used once VersionedClassExpr is removed</span><span class="tok-w"></span>
+<span class="tok-c">//!&lt;IdentifiedObjectExpr&gt;::= Identifier &lt;StandardPredicate&gt;	! RM_TYPE_NAME [path operator operand]</span><span class="tok-w"></span>
+<span class="tok-c">//!               | Identifier Identifier &lt;StandardPredicate&gt;	! RM_TYPE_NAME variable [path operator operand]</span><span class="tok-w"></span>
+<span class="tok-c">//&lt;VersionedClassExpr&gt;::= &#39;VERSIONED_OBJECT&#39;</span><span class="tok-w"></span>
+<span class="tok-c">//               | &#39;VERSIONED_OBJECT&#39; Identifier</span><span class="tok-w"></span>
+<span class="tok-c">//               | &#39;VERSIONED_OBJECT&#39; &lt;StandardPredicate&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//               | &#39;VERSIONED_OBJECT&#39; Identifier &lt;StandardPredicate&gt;</span><span class="tok-w"></span>
+<span class="tok-nl">versionedClassExpr</span><span class="tok-w"></span>
+<span class="tok-w"> 	</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-no">VERSIONED_OBJECT</span><span class="tok-o">^</span><span class="tok-w"> </span><span class="tok-no">IDENTIFIER</span><span class="tok-o">?</span><span class="tok-w"> </span><span class="tok-nv">standardPredicate</span><span class="tok-o">?</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//&lt;VersionClassExpr&gt;::= &#39;VERSION&#39;</span><span class="tok-w"></span>
+<span class="tok-c">//               | &#39;VERSION&#39; Identifier</span><span class="tok-w"></span>
+<span class="tok-c">//               | &#39;VERSION&#39; &lt;StandardPredicate&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//               | &#39;VERSION&#39; Identifier &lt;StandardPredicate&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//		 | &#39;VERSION&#39; &lt;VersionPredicate&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//               | &#39;VERSION&#39; Identifier &lt;VersionPredicate&gt;</span><span class="tok-w"></span>
+<span class="tok-nl">versionClassExpr</span><span class="tok-w"></span>
+<span class="tok-w"> 	</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-no">VERSION</span><span class="tok-o">^</span><span class="tok-w"> </span><span class="tok-no">IDENTIFIER</span><span class="tok-o">?</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-nv">standardPredicate</span><span class="tok-o">|</span><span class="tok-nv">versionPredicate</span><span class="tok-o">)?</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//</span><span class="tok-w"></span>
+<span class="tok-c">// LEXER PATTERNS</span><span class="tok-w"></span>
+<span class="tok-c">//</span><span class="tok-w"></span>
+
+<span class="tok-nl">WS</span><span class="tok-w">  </span><span class="tok-p">:</span><span class="tok-w">   </span><span class="tok-o">(</span><span class="tok-w"> </span><span class="tok-s">&#39; &#39;</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-s">&#39;\t&#39;</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-s">&#39;\r&#39;</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-s">&#39;\n&#39;</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-nv">$channel</span><span class="tok-o">=</span><span class="tok-n">HIDDEN</span><span class="tok-o">;</span><span class="tok-p">}</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-nl">SELECT</span><span class="tok-w"> </span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;S&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;s&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;E&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;e&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;L&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;l&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;E&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;e&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;C&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;c&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;T&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;t&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-nl">TOP</span><span class="tok-w"> </span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;T&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;t&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;O&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;o&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;P&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;p&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-nl">FORWARD</span><span class="tok-w"> </span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;F&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;f&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;O&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;o&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;R&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;r&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;W&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;w&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;A&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;a&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;R&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;r&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;D&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;d&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-nl">BACKWARD</span><span class="tok-w"> </span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;B&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;b&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;A&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;a&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;C&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;c&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;K&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;k&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;W&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;w&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;A&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;a&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;R&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;r&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;D&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;d&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-nl">AS</span><span class="tok-w"> </span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;A&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;a&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;S&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;s&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-nl">CONTAINS</span><span class="tok-w"> </span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;C&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;c&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;O&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;o&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;N&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;n&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;T&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;t&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;A&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;a&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;I&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;i&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;N&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;n&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;S&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;s&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-nl">WHERE</span><span class="tok-w"> </span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;W&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;w&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;H&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;h&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;E&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;e&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;R&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;r&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;E&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;e&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-nl">ORDERBY</span><span class="tok-w"> </span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;O&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;o&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;R&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;r&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;D&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;d&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;E&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;e&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;R&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;r&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39; &#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;B&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;b&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;Y&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;y&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-nl">FROM</span><span class="tok-w"> </span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;F&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;f&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;R&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;r&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;O&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;o&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;M&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;m&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-nl">DESCENDING</span><span class="tok-w"> </span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;D&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;d&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;E&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;e&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;S&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;s&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;C&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;c&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;E&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;e&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;N&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;n&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;D&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;d&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;I&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;i&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;N&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;n&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;G&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;g&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-nl">ASCENDING</span><span class="tok-w"> </span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;A&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;a&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;S&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;s&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;C&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;c&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;E&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;e&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;N&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;n&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;D&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;d&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;I&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;i&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;N&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;n&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;G&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;g&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-nl">DESC</span><span class="tok-w"> </span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;D&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;d&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;E&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;e&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;S&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;s&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;C&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;c&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-nl">ASC</span><span class="tok-w"> </span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;A&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;a&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;S&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;s&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;C&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;c&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-nl">EHR</span><span class="tok-w"> </span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-s">&#39;EHR&#39;</span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-nl">AND</span><span class="tok-w"> </span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;A&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;a&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;N&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;n&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;D&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;d&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-nl">OR</span><span class="tok-w"> </span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;O&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;o&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;R&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;r&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-nl">XOR</span><span class="tok-w"> </span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;X&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;x&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;O&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;o&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;R&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;r&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-nl">NOT</span><span class="tok-w"> </span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;N&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;n&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;O&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;o&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;T&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;t&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-nl">MATCHES</span><span class="tok-w"> </span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;M&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;m&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;A&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;a&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;T&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;t&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;C&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;c&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;H&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;h&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;E&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;e&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;S&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;s&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-nl">EXISTS</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;E&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;e&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;X&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;x&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;I&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;i&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;S&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;s&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;T&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;t&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;S&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;s&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-nl">VERSION</span><span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-s">&#39;VERSION&#39;</span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-nl">VERSIONED_OBJECT</span><span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-s">&#39;VERSIONED_OBJECT&#39;</span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-nl">ALL_VERSIONS</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-s">&#39;all_versions&#39;</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-k">fragment</span><span class="tok-w"></span>
+<span class="tok-nl">ESC_SEQ</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">:</span><span class="tok-w">   </span><span class="tok-s">&#39;\\&#39;</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;b&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;t&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;n&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;f&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;r&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;\&quot;&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;\&#39;&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;\\&#39;</span><span class="tok-o">)</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-o">|</span><span class="tok-w">   </span><span class="tok-no">UNICODE_ESC</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-o">|</span><span class="tok-w">   </span><span class="tok-no">OCTAL_ESC</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-k">fragment</span><span class="tok-w"></span>
+<span class="tok-nl">OCTAL_ESC</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">:</span><span class="tok-w">   </span><span class="tok-s">&#39;\\&#39;</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;0&#39;</span><span class="tok-o">..</span><span class="tok-s">&#39;3&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;0&#39;</span><span class="tok-o">..</span><span class="tok-s">&#39;7&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;0&#39;</span><span class="tok-o">..</span><span class="tok-s">&#39;7&#39;</span><span class="tok-o">)</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-o">|</span><span class="tok-w">   </span><span class="tok-s">&#39;\\&#39;</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;0&#39;</span><span class="tok-o">..</span><span class="tok-s">&#39;7&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;0&#39;</span><span class="tok-o">..</span><span class="tok-s">&#39;7&#39;</span><span class="tok-o">)</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-o">|</span><span class="tok-w">   </span><span class="tok-s">&#39;\\&#39;</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;0&#39;</span><span class="tok-o">..</span><span class="tok-s">&#39;7&#39;</span><span class="tok-o">)</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-k">fragment</span><span class="tok-w"></span>
+<span class="tok-nl">UNICODE_ESC</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">:</span><span class="tok-w">   </span><span class="tok-s">&#39;\\&#39;</span><span class="tok-w"> </span><span class="tok-s">&#39;u&#39;</span><span class="tok-w"> </span><span class="tok-no">HEX_DIGIT</span><span class="tok-w"> </span><span class="tok-no">HEX_DIGIT</span><span class="tok-w"> </span><span class="tok-no">HEX_DIGIT</span><span class="tok-w"> </span><span class="tok-no">HEX_DIGIT</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-k">fragment</span><span class="tok-w"></span>
+<span class="tok-nl">HEX_DIGIT</span><span class="tok-w"> </span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;0&#39;</span><span class="tok-o">..</span><span class="tok-s">&#39;9&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;a&#39;</span><span class="tok-o">..</span><span class="tok-s">&#39;f&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;A&#39;</span><span class="tok-o">..</span><span class="tok-s">&#39;F&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-nl">QUOTE</span><span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-s">&#39;\&#39;&#39;</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-k">fragment</span><span class="tok-w"></span>
+<span class="tok-nl">DIGIT</span><span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-s">&#39;0&#39;</span><span class="tok-o">..</span><span class="tok-s">&#39;9&#39;</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-k">fragment</span><span class="tok-w"></span>
+<span class="tok-nl">HEXCHAR</span><span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	 </span><span class="tok-no">DIGIT</span><span class="tok-o">|</span><span class="tok-s">&#39;a&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;A&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;b&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;B&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;c&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;C&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;d&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;D&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;e&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;E&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;f&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;F&#39;</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-k">fragment</span><span class="tok-w"></span>
+<span class="tok-nl">LETTER</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-s">&#39;a&#39;</span><span class="tok-o">..</span><span class="tok-s">&#39;z&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;A&#39;</span><span class="tok-o">..</span><span class="tok-s">&#39;Z&#39;</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-k">fragment</span><span class="tok-w"></span>
+<span class="tok-nl">ALPHANUM</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-no">LETTER</span><span class="tok-o">|</span><span class="tok-no">DIGIT</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-k">fragment</span><span class="tok-w"></span>
+<span class="tok-nl">LETTERMINUSA</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-s">&#39;b&#39;</span><span class="tok-o">..</span><span class="tok-s">&#39;z&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;B&#39;</span><span class="tok-o">..</span><span class="tok-s">&#39;Z&#39;</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-k">fragment</span><span class="tok-w"></span>
+<span class="tok-nl">LETTERMINUST</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-s">&#39;a&#39;</span><span class="tok-o">..</span><span class="tok-s">&#39;s&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;A&#39;</span><span class="tok-o">..</span><span class="tok-s">&#39;S&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;u&#39;</span><span class="tok-o">..</span><span class="tok-s">&#39;z&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;U&#39;</span><span class="tok-o">..</span><span class="tok-s">&#39;Z&#39;</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-k">fragment</span><span class="tok-w"></span>
+<span class="tok-nl">IDCHAR</span><span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-no">ALPHANUM</span><span class="tok-o">|</span><span class="tok-s">&#39;_&#39;</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-k">fragment</span><span class="tok-w"></span>
+<span class="tok-nl">IDCHARMINUST</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-no">LETTERMINUST</span><span class="tok-o">|</span><span class="tok-no">DIGIT</span><span class="tok-o">|</span><span class="tok-s">&#39;_&#39;</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-k">fragment</span><span class="tok-w"></span>
+<span class="tok-nl">URISTRING</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-no">ALPHANUM</span><span class="tok-o">|</span><span class="tok-s">&#39;_&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;-&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;/&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;:&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;.&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;?&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;&amp;&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;%&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;$&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;#&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;@&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;!&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;+&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;=&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;*&#39;</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-k">fragment</span><span class="tok-w"></span>
+<span class="tok-nl">REGEXCHAR</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-no">URISTRING</span><span class="tok-o">|</span><span class="tok-s">&#39;(&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;)&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;\\&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;^&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;{&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;}&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;]&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;[&#39;</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+
+<span class="tok-c">// Terminal Definitions</span><span class="tok-w"></span>
+
+<span class="tok-c">//Boolean     = &#39;true&#39; | &#39;false&#39;</span><span class="tok-w"></span>
+<span class="tok-nl">BOOLEAN</span><span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-s">&#39;true&#39;</span><span class="tok-w"> </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-s">&#39;false&#39;</span><span class="tok-w"> </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-s">&#39;TRUE&#39;</span><span class="tok-w"> </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-s">&#39;FALSE&#39;</span><span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//!NodeId      = &#39;a&#39;&#39;t&#39;{Digit}{Digit}{Digit}{Digit}</span><span class="tok-w"></span>
+<span class="tok-c">//! conflict with Identifier</span><span class="tok-w"></span>
+<span class="tok-c">//!NodeId	     = &#39;at&#39;({Digit}{Digit}{Digit}{Digit}(&#39;.0&#39;*(&#39;.&#39;{NonZeroDigit}{Digit}*)+|(&#39;.&#39;{NonZeroDigit}{Digit}*)*)|&#39;0&#39;&#39;.0&#39;*(&#39;.&#39;{NonZeroDigit}{Digit}*)+|(&#39;.&#39;{NonZeroDigit}{Digit}*)+)</span><span class="tok-w"></span>
+<span class="tok-c">//NodeId	     = &#39;at&#39;({Digit}+(&#39;.&#39;{Digit}+)*)</span><span class="tok-w"></span>
+<span class="tok-c">//NODEID	:	&#39;at&#39; DIGIT+ (&#39;.&#39; DIGIT+)*;</span><span class="tok-w"></span>
+<span class="tok-nl">NODEID</span><span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-s">&#39;at&#39;</span><span class="tok-w"> </span><span class="tok-no">DIGIT</span><span class="tok-o">+</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;.&#39;</span><span class="tok-w"> </span><span class="tok-no">DIGIT</span><span class="tok-o">+)*</span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-c">// DIGIT DIGIT DIGIT DIGIT;</span><span class="tok-w"></span>
+
+<span class="tok-c">//!Identifier  = {Letter}({Alphanumeric}|&#39;_&#39;)*   ! Conflicts with UID</span><span class="tok-w"></span>
+<span class="tok-c">//!Identifier  = {Letter}{IdChar}*   ! Conflicts with extended NodeId</span><span class="tok-w"></span>
+<span class="tok-c">//! restricted to allow only letters after the 4th character due to conflict with extended NodeId</span><span class="tok-w"></span>
+<span class="tok-c">//!Identifier  = {Letter}{IdChar}?{IdChar}?{IdChar}?({Letter}|&#39;_&#39;)*  !Conficts with NodeId which may have any length of digit, such as at0.9</span><span class="tok-w"></span>
+<span class="tok-c">//Identifier = {LetterMinusA}{IdCharMinusT}?{IdChar}* | &#39;a&#39;&#39;t&#39;?(({letter}|&#39;_&#39;)*|{LetterMinusT}{Alphanumeric}*)</span><span class="tok-w"></span>
+<span class="tok-c">// ???</span><span class="tok-w"></span>
+<span class="tok-nl">IDENTIFIER</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-o">(</span><span class="tok-s">&#39;a&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;A&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-no">ALPHANUM</span><span class="tok-o">|</span><span class="tok-s">&#39;_&#39;</span><span class="tok-o">)*</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-o">|</span><span class="tok-w"> 	</span><span class="tok-no">LETTERMINUSA</span><span class="tok-w"> </span><span class="tok-no">IDCHAR</span><span class="tok-o">*</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//!PathItem = &#39;/&#39;{Letter}({Alphanumeric}|&#39;_&#39;)*</span><span class="tok-w"></span>
+
+<span class="tok-c">//Integer     = {Digit}+</span><span class="tok-w"></span>
+<span class="tok-nl">INTEGER</span><span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-s">&#39;-&#39;</span><span class="tok-o">?</span><span class="tok-w"> </span><span class="tok-no">DIGIT</span><span class="tok-o">+</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//Float       = {Digit}+&#39;.&#39;{Digit}+</span><span class="tok-w"></span>
+<span class="tok-nl">FLOAT</span><span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-s">&#39;-&#39;</span><span class="tok-o">?</span><span class="tok-w"> </span><span class="tok-no">DIGIT</span><span class="tok-o">+</span><span class="tok-w"> </span><span class="tok-s">&#39;.&#39;</span><span class="tok-w"> </span><span class="tok-no">DIGIT</span><span class="tok-o">+</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//Date        = &#39;&#39;{Digit}{Digit}{Digit}{Digit}&#39;-&#39;{Digit}{Digit}&#39;-&#39;{Digit}{Digit}&#39;&#39;</span><span class="tok-w"></span>
+<span class="tok-nl">DATE</span><span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-s">&#39;\&#39;&#39;</span><span class="tok-w"> </span><span class="tok-no">DIGIT</span><span class="tok-w"> </span><span class="tok-no">DIGIT</span><span class="tok-w"> </span><span class="tok-no">DIGIT</span><span class="tok-w"> </span><span class="tok-no">DIGIT</span><span class="tok-w"> </span><span class="tok-no">DIGIT</span><span class="tok-w"> </span><span class="tok-no">DIGIT</span><span class="tok-w"> </span><span class="tok-no">DIGIT</span><span class="tok-w"> </span><span class="tok-no">DIGIT</span><span class="tok-w"> </span><span class="tok-s">&#39;T&#39;</span><span class="tok-w"> </span><span class="tok-no">DIGIT</span><span class="tok-w"> </span><span class="tok-no">DIGIT</span><span class="tok-w"> </span><span class="tok-no">DIGIT</span><span class="tok-w"> </span><span class="tok-no">DIGIT</span><span class="tok-w"> </span><span class="tok-no">DIGIT</span><span class="tok-w"> </span><span class="tok-no">DIGIT</span><span class="tok-w"> </span><span class="tok-s">&#39;.&#39;</span><span class="tok-w"> </span><span class="tok-no">DIGIT</span><span class="tok-w"> </span><span class="tok-no">DIGIT</span><span class="tok-w"> </span><span class="tok-no">DIGIT</span><span class="tok-w"> </span><span class="tok-s">&#39;+&#39;</span><span class="tok-w"> </span><span class="tok-no">DIGIT</span><span class="tok-w"> </span><span class="tok-no">DIGIT</span><span class="tok-w"> </span><span class="tok-no">DIGIT</span><span class="tok-w"> </span><span class="tok-no">DIGIT</span><span class="tok-w"> </span><span class="tok-s">&#39;\&#39;&#39;</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//!Parameter   = &#39;$&#39;{letter}({Alphanumeric}|&#39;_&#39;)*</span><span class="tok-w"></span>
+<span class="tok-c">//Parameter   = &#39;$&#39;{letter}{IdChar}*</span><span class="tok-w"></span>
+<span class="tok-nl">PARAMETER</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-s">&#39;$&#39;</span><span class="tok-w"> </span><span class="tok-no">LETTER</span><span class="tok-w"> </span><span class="tok-no">IDCHAR</span><span class="tok-o">*</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//! could constrain UID further</span><span class="tok-w"></span>
+<span class="tok-c">//UniqueId    = {digit}+(&#39;.&#39;{digit}+)+&#39;.&#39;{digit}+  ! OID</span><span class="tok-w"></span>
+<span class="tok-c">//          | {Hex Char}+(&#39;-&#39;{Hex Char}+)+       ! UUID</span><span class="tok-w"></span>
+<span class="tok-nl">UNIQUEID</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-no">DIGIT</span><span class="tok-o">+</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;.&#39;</span><span class="tok-w"> </span><span class="tok-no">DIGIT</span><span class="tok-o">+)+</span><span class="tok-w"> </span><span class="tok-s">&#39;.&#39;</span><span class="tok-w"> </span><span class="tok-no">DIGIT</span><span class="tok-o">+</span><span class="tok-w">  </span><span class="tok-c">// OID</span><span class="tok-w"></span>
+<span class="tok-w">            </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-no">HEXCHAR</span><span class="tok-o">+</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;-&#39;</span><span class="tok-w"> </span><span class="tok-no">HEXCHAR</span><span class="tok-o">+)+</span><span class="tok-w">       </span><span class="tok-c">// UUID</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//! could constrain ArchetypeId further</span><span class="tok-w"></span>
+<span class="tok-c">//!ArchetypeId = {Letter}+&#39;-&#39;{Letter}+&#39;-&#39;({Letter}|&#39;_&#39;)+&#39;.&#39;({Letter}|&#39;_&#39;|&#39;-&#39;)+&#39;.v&#39;{Digit}+(&#39;.&#39;{Digit}+)?  ! not allow a number in archetype id concept, such as openEHR-EHR-OBSERVATION.laboratory-hba1c.v1</span><span class="tok-w"></span>
+<span class="tok-c">//ArchetypeId = {Letter}+&#39;-&#39;{Letter}+&#39;-&#39;({Letter}|&#39;_&#39;)+&#39;.&#39;({IdChar}|&#39;-&#39;)+&#39;.v&#39;{Digit}+(&#39;.&#39;{Digit}+)?</span><span class="tok-w"></span>
+<span class="tok-nl">ARCHETYPEID</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-no">LETTER</span><span class="tok-o">+</span><span class="tok-w"> </span><span class="tok-s">&#39;-&#39;</span><span class="tok-w"> </span><span class="tok-no">LETTER</span><span class="tok-o">+</span><span class="tok-w"> </span><span class="tok-s">&#39;-&#39;</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-no">LETTER</span><span class="tok-o">|</span><span class="tok-s">&#39;_&#39;</span><span class="tok-o">)+</span><span class="tok-w"> </span><span class="tok-s">&#39;.&#39;</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-no">IDCHAR</span><span class="tok-o">|</span><span class="tok-s">&#39;-&#39;</span><span class="tok-o">)+</span><span class="tok-w"> </span><span class="tok-s">&#39;.v&#39;</span><span class="tok-w"> </span><span class="tok-no">DIGIT</span><span class="tok-o">+</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;.&#39;</span><span class="tok-w"> </span><span class="tok-no">DIGIT</span><span class="tok-o">+)?</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//ComparableOperator = &#39;=&#39; | &#39;!=&#39; | &#39;&gt;&#39; | &#39;&gt;=&#39; | &#39;&lt;&#39; | &#39;&lt;=&#39;</span><span class="tok-w"></span>
+<span class="tok-nl">COMPARABLEOPERATOR</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-s">&#39;=&#39;</span><span class="tok-w"> </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-s">&#39;!=&#39;</span><span class="tok-w"> </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-s">&#39;&gt;&#39;</span><span class="tok-w"> </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-s">&#39;&gt;=&#39;</span><span class="tok-w"> </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-s">&#39;&lt;&#39;</span><span class="tok-w"> </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-s">&#39;&lt;=&#39;</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//UriValue   = {Letter}+&#39;://&#39;({UriString}|&#39;[&#39;|&#39;]&#39;|&#39;, &#39;&#39;&#39;|&#39;&#39;)*</span><span class="tok-w"></span>
+<span class="tok-c">//            |{Letter}+&#39;:&#39;({UriString}|&#39;[&#39;|&#39;]&#39;|&#39;&#39;)*</span><span class="tok-w"></span>
+<span class="tok-nl">URIVALUE</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-no">LETTER</span><span class="tok-o">+</span><span class="tok-w"> </span><span class="tok-s">&#39;://&#39;</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-no">URISTRING</span><span class="tok-o">|</span><span class="tok-s">&#39;[&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;]&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;, \&#39;&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;\&#39;&#39;</span><span class="tok-o">)*</span><span class="tok-w"></span>
+<span class="tok-c">//	| LETTER+ &#39;:&#39; (URISTRING|&#39;[&#39;|&#39;]&#39;|&#39;\&#39;&#39;)*</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//RegExPattern = &#39;{/&#39;{RegExChar}+&#39;/}&#39;</span><span class="tok-w"></span>
+<span class="tok-nl">REGEXPATTERN</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-s">&#39;{/&#39;</span><span class="tok-w"> </span><span class="tok-no">REGEXCHAR</span><span class="tok-o">+</span><span class="tok-w"> </span><span class="tok-s">&#39;/}&#39;</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//String      = &#39;&quot;&#39;{String Char}*&#39;&quot;&#39;</span><span class="tok-w"></span>
+<span class="tok-w">  </span><span class="tok-c">//          | &#39;&#39;{String Char}*&#39;&#39;</span><span class="tok-w"></span>
+<span class="tok-nl">STRING</span><span class="tok-w"></span>
+<span class="tok-w">    	</span><span class="tok-p">:</span><span class="tok-w">  </span><span class="tok-s">&#39;\&#39;&#39;</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-w"> </span><span class="tok-no">ESC_SEQ</span><span class="tok-w"> </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-o">~(</span><span class="tok-s">&#39;\\&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;\&#39;&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-o">)*</span><span class="tok-w"> </span><span class="tok-s">&#39;\&#39;&#39;</span><span class="tok-w"></span>
+<span class="tok-w">    	</span><span class="tok-o">|</span><span class="tok-w">  </span><span class="tok-s">&#39;&quot;&#39;</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-w"> </span><span class="tok-no">ESC_SEQ</span><span class="tok-w"> </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-o">~(</span><span class="tok-s">&#39;\\&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;&quot;&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-o">)*</span><span class="tok-w"> </span><span class="tok-s">&#39;&quot;&#39;</span><span class="tok-w"></span>
+<span class="tok-w">    	</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-nl">SLASH</span><span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-s">&#39;/&#39;</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-nl">COMMA</span><span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-s">&#39;,&#39;</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-nl">OPENBRACKET</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-s">&#39;[&#39;</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-nl">CLOSEBRACKET</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-s">&#39;]&#39;</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-nl">OPEN</span><span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-s">&#39;(&#39;</span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-nl">CLOSE</span><span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-s">&#39;)&#39;</span><span class="tok-p">;</span><span class="tok-w"></span></code></pre>
 </div>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>To be continued</p>
-</li>
-</ul>
 </div>
 </div>
 </div>
@@ -1595,40 +2207,58 @@ WHERE obs/$systolic_bp&gt;= 140 OR obs/$diastolic_bp&gt;=90</pre>
 <p><a id="openEHR_ADL_workbench"></a>[openEHR_ADL_workbench] The openEHR Foundation. <strong>The openEHR ADL Workbench</strong>. <a href="http://www.openehr.org/downloads/ADLworkbench/home" class="bare">http://www.openehr.org/downloads/ADLworkbench/home</a> .</p>
 </li>
 <li>
-<p><a id="openehr_am_overview"></a>[openehr_am_overview] The openEHR Foundation. <strong>The openEHR Archetypes Technical Overview.</strong> See <a href="http://www.openehr.org/releases/AM/dev/Overview.html" class="bare">http://www.openehr.org/releases/AM/dev/Overview.html</a>.</p>
+<p><a id="openehr_am_overview"></a>[openehr_am_overview] The openEHR Foundation. <strong>The openEHR Archetypes Technical Overview.</strong> See <a href="http://www.openehr.org/releases/AM/latest/Overview.html" class="bare">http://www.openehr.org/releases/AM/latest/Overview.html</a>.</p>
 </li>
 <li>
-<p><a id="openehr_am_adl"></a>[openehr_am_adl] The openEHR Foundation. <strong>Archetype Definition Language (ADL2).</strong> Available at <a href="http://www.openehr.org/releases/AM/dev/ADL2.html" class="bare">http://www.openehr.org/releases/AM/dev/ADL2.html</a>.</p>
+<p><a id="openehr_am_adl14"></a>[openehr_am_adl14] The openEHR Foundation. <strong>Archetype Definition Language 1.4 (ADL1.4).</strong> Available at <a href="http://www.openehr.org/releases/AM/latest/ADL1.4.html" class="bare">http://www.openehr.org/releases/AM/latest/ADL1.4.html</a>.</p>
 </li>
 <li>
-<p><a id="openehr_am_aom"></a>[openehr_am_aom] The openEHR Foundation. <strong>Archetype Object Model (AOM2).</strong> Available at <a href="http://www.openehr.org/releases/AM/dev/AOM2.html" class="bare">http://www.openehr.org/releases/AM/dev/AOM2.html</a>.</p>
+<p><a id="openehr_am_aom14"></a>[openehr_am_aom14] The openEHR Foundation. <strong>Archetype Object Model 1.4 (AOM1.4).</strong> Available at <a href="http://www.openehr.org/releases/AM/latest/AOM1.4.html" class="bare">http://www.openehr.org/releases/AM/latest/AOM1.4.html</a>.</p>
 </li>
 <li>
-<p><a id="openehr_am_identification"></a>[openehr_am_identification] The openEHR Foundation. <strong>Archetype Identification specification.</strong> Available at <a href="http://www.openehr.org/releases/AM/dev/Identification.html" class="bare">http://www.openehr.org/releases/AM/dev/Identification.html</a>.</p>
+<p><a id="openehr_am_adl2"></a>[openehr_am_adl2] The openEHR Foundation. <strong>Archetype Definition Language 2 (ADL2).</strong> Available at <a href="http://www.openehr.org/releases/AM/latest/ADL2.html" class="bare">http://www.openehr.org/releases/AM/latest/ADL2.html</a>.</p>
+</li>
+<li>
+<p><a id="openehr_am_aom2"></a>[openehr_am_aom2] The openEHR Foundation. <strong>Archetype Object Model 2 (AOM2).</strong> Available at <a href="http://www.openehr.org/releases/AM/latest/AOM2.html" class="bare">http://www.openehr.org/releases/AM/latest/AOM2.html</a>.</p>
+</li>
+<li>
+<p><a id="openehr_am_identification"></a>[openehr_am_identification] The openEHR Foundation. <strong>Archetype Identification specification.</strong> Available at <a href="http://www.openehr.org/releases/AM/latest/Identification.html" class="bare">http://www.openehr.org/releases/AM/latest/Identification.html</a>.</p>
+</li>
+<li>
+<p><a id="openehr_am_def_pri"></a>[openehr_am_def_pri] The openEHR Foundation. <strong>Archetype Definitions and Principles.</strong> (deprecated) Available at <a href="http://www.openehr.org/releases/1.0.2/architecture/am/archetype_principles.pdf" class="bare">http://www.openehr.org/releases/1.0.2/architecture/am/archetype_principles.pdf</a>.</p>
+</li>
+<li>
+<p><a id="openehr_am_sys"></a>[openehr_am_sys] The openEHR Foundation. <strong>The Archetype System.</strong> (deprecated) Available at <a href="http://www.openehr.org/releases/1.0.2/architecture/am/archetype_system.pdf" class="bare">http://www.openehr.org/releases/1.0.2/architecture/am/archetype_system.pdf</a>.</p>
+</li>
+<li>
+<p><a id="openehr_am_oap"></a>[openehr_am_oap] The openEHR Foundation. <strong>The openEHR Archetype Profile.</strong> <a href="http://www.openehr.org/releases/1.0.2/architecture/am/openehr_archetype_profile.pdf" class="bare">http://www.openehr.org/releases/1.0.2/architecture/am/openehr_archetype_profile.pdf</a> .</p>
 </li>
 <li>
 <p><a id="openehr_CKM"></a>[openehr_CKM] <strong>The openEHR Clinical Knowledge Manager (CKM)</strong>. See <a href="http://www.openEHR.org/ckm" class="bare">http://www.openEHR.org/ckm</a></p>
 </li>
 <li>
-<p><a id="openehr_overview"></a>[openehr_overview] The openEHR Foundation. <strong>The openEHR Architecture Overview.</strong> See <a href="http://www.openehr.org/releases/BASE/dev/architecture_overview.html" class="bare">http://www.openehr.org/releases/BASE/dev/architecture_overview.html</a>.</p>
+<p><a id="openehr_odin"></a>[openehr_odin] The openEHR Foundation. <strong>Object Data Instance Notation (ODIN).</strong> Available at <a href="http://www.openehr.org/releases/BASE/latest/odin.html" class="bare">http://www.openehr.org/releases/BASE/latest/odin.html</a>.</p>
 </li>
 <li>
-<p><a id="openehr_query_aql"></a>[openehr_query_aql] The openEHR Foundation. <strong>The openEHR Archetype Query language (AQL)</strong>. See <a href="http://www.openehr.org/releases/QUERY/dev/AQL.html" class="bare">http://www.openehr.org/releases/QUERY/dev/AQL.html</a>.</p>
+<p><a id="openehr_overview"></a>[openehr_overview] The openEHR Foundation. <strong>The openEHR Architecture Overview.</strong> See <a href="http://www.openehr.org/releases/BASE/latest/architecture_overview.html" class="bare">http://www.openehr.org/releases/BASE/latest/architecture_overview.html</a>.</p>
 </li>
 <li>
-<p><a id="openehr_rm_data_types"></a>[openehr_rm_data_types] openEHR. <strong>Data Types Information Model.</strong> See <a href="http://www.openehr.org/releases/RM/dev/data_types.html" class="bare">http://www.openehr.org/releases/RM/dev/data_types.html</a>.</p>
+<p><a id="openehr_query_aql"></a>[openehr_query_aql] The openEHR Foundation. <strong>The openEHR Archetype Query language (AQL)</strong>. See <a href="http://www.openehr.org/releases/QUERY/latest/AQL.html" class="bare">http://www.openehr.org/releases/QUERY/latest/AQL.html</a>.</p>
 </li>
 <li>
-<p><a id="openehr_rm_data_structures"></a>[openehr_rm_data_structures] openEHR. <strong>Data Structures Information Model.</strong> See <a href="http://www.openehr.org/releases/RM/dev/data_structures.html" class="bare">http://www.openehr.org/releases/RM/dev/data_structures.html</a>.</p>
+<p><a id="openehr_rm_data_types"></a>[openehr_rm_data_types] openEHR. <strong>Data Types Information Model.</strong> See <a href="http://www.openehr.org/releases/RM/latest/data_types.html" class="bare">http://www.openehr.org/releases/RM/latest/data_types.html</a>.</p>
 </li>
 <li>
-<p><a id="openehr_rm_common"></a>[openehr_rm_common] openEHR. <strong>Common Information Model.</strong> See <a href="http://www.openehr.org/releases/RM/dev/common.html" class="bare">http://www.openehr.org/releases/RM/dev/common.html</a>.</p>
+<p><a id="openehr_rm_data_structures"></a>[openehr_rm_data_structures] openEHR. <strong>Data Structures Information Model.</strong> See <a href="http://www.openehr.org/releases/RM/latest/data_structures.html" class="bare">http://www.openehr.org/releases/RM/latest/data_structures.html</a>.</p>
 </li>
 <li>
-<p><a id="openehr_rm_ehr"></a>[openehr_rm_ehr] The openEHR Foundation. <strong>The EHR Information Model</strong>. <a href="http://www.openehr.org/releases/RM/dev/ehr.html" class="bare">http://www.openehr.org/releases/RM/dev/ehr.html</a>.</p>
+<p><a id="openehr_rm_common"></a>[openehr_rm_common] openEHR. <strong>Common Information Model.</strong> See <a href="http://www.openehr.org/releases/RM/latest/common.html" class="bare">http://www.openehr.org/releases/RM/latest/common.html</a>.</p>
 </li>
 <li>
-<p><a id="openehr_rm_support"></a>[openehr_rm_support] openEHR. <strong>Support Information Model.</strong> See <a href="http://www.openehr.org/releases/RM/dev/support.html" class="bare">http://www.openehr.org/releases/RM/dev/support.html</a>.</p>
+<p><a id="openehr_rm_ehr"></a>[openehr_rm_ehr] The openEHR Foundation. <strong>The EHR Information Model</strong>. <a href="http://www.openehr.org/releases/RM/latest/ehr.html" class="bare">http://www.openehr.org/releases/RM/latest/ehr.html</a>.</p>
+</li>
+<li>
+<p><a id="openehr_rm_support"></a>[openehr_rm_support] openEHR. <strong>Support Information Model.</strong> See <a href="http://www.openehr.org/releases/RM/latest/support.html" class="bare">http://www.openehr.org/releases/RM/latest/support.html</a>.</p>
 </li>
 <li>
 <p><a id="openehr_terminology"></a>[openehr_terminology] The openEHR Foundation. <strong>The openEHR Terminology</strong> <a href="http://www.openehr.org/releases/trunk/architecture/terminology.pdf" class="bare">http://www.openehr.org/releases/trunk/architecture/terminology.pdf</a></p>
@@ -1644,7 +2274,7 @@ WHERE obs/$systolic_bp&gt;= 140 OR obs/$diastolic_bp&gt;=90</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-08-11 20:35:37 BST
+Last updated 2015-12-01 21:17:04 GMT
 </div>
 </div>
 </body>
