@@ -4,8 +4,7 @@
 |===
 |Issue|Details|Raiser|Completed
 
-4+^|*R E L E A S E{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}1.0.3*
-{set:cellbgcolor:skyblue}
+4+^h|*R E L E A S E{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}1.0.3*
 
 |[[latest_issue]]1.0
 |Initial Writing, based on https://openehr.atlassian.net/wiki/display/spec/Archetype+Query+Language+Description[openEHR AQL wiki page].
