@@ -20,7 +20,7 @@ AQL has the following reserved keywords and characters:
 
 == openEHR path syntax
 
-The openEHR path syntax has been described in a detail (see the Architecture Overview specification <<openehr_overview>>). AQL utilises the basic openEHR path syntax to represent both coarse-grained and fine-grained archetype nodes and openEHR class instances and attributes. The syntax details are not repeated here. A set of openEHR path examples are provided.
+The openEHR path syntax has been described in a detail (see the {openehr_overview}[Architecture Overview specification]). AQL utilises the basic openEHR path syntax to represent both coarse-grained and fine-grained archetype nodes and openEHR class instances and attributes. The syntax details are not repeated here. A set of openEHR path examples are provided.
 
 === openEHR path examples - archetype path
 
