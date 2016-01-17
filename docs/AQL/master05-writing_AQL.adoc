@@ -40,7 +40,7 @@ The `WHERE` clause represents all query criteria that cannot be represented in t
 
 . Find the criteria. The criteria required by the scenario are abnormal blood pressure values. Different guidelines may have different definitions for abnormal blood pressure values. Here `abnormal blood pressure` is interpreted to mean mean 1) the 'systolic pressure' value is greater than or equal to 140; OR 2) the 'diastolic pressure' value is greater than or equal to 90.
 . Write an identified expression for criterion 1).
-.. Write the Identified path for the systolic data value. A class variable name is needed as the reference to the blood pressure class expression defined in the `FROM` clause, so a variable name `obs` is added into the `FROM` clause. A path to systolic data value is also required to form the identified path. Two tools can be used to get the path: the <<openEHR_ADL_workbench>> or <<Template_Designer>>. The path to the systolic data value is `/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value`.  
+.. Write the Identified path for the systolic data value. A class variable name is needed as the reference to the blood pressure class expression defined in the `FROM` clause, so a variable name `obs` is added into the `FROM` clause. A path to systolic data value is also required to form the identified path. Two tools can be used to get the path: the {openehr_awb}[openEHR ADL Workbench] or {template_designer}[Template Designer]. The path to the systolic data value is `/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value`.  
 .. Get appropriate operator: `>=` is chosen for criterion 1.
 .. Get the criteria value - 140. The query statement including the identified expression for criterion 1) is shown below:
 
