@@ -1,0 +1,3 @@
+= Result structure
+
+The result structure of an AQL query is described as part of the https://openehr.atlassian.net/wiki/display/spec/Ocean+Informatics+EHR+Service+Interface[openEHR EHR service definition].

@@ -7,6 +7,11 @@
 4+^h|*R E L E A S E{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}1.0.3*
 
 |[[latest_issue]]1.0
+|Various reformatting, adjustment of headings.
+|T Beale
+|[[latest_issue_date]]10 Jan 2017
+
+|
 |Initial Writing, based on https://openehr.atlassian.net/wiki/display/spec/Archetype+Query+Language+Description[openEHR AQL wiki page].
 |Chunlan Ma +
  H Frankel +
