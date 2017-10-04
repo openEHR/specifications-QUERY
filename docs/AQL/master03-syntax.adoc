@@ -50,7 +50,7 @@ Another type of openEHR path is the path pointing to an attribute of openEHR Ref
 
 == AQL variables
 
-AQL variables are used to refer a specific archetype or openEHR class defined within an AQL statement. It has following features:
+AQL variables are used to refer a specific archetype or openEHR class defined within an AQL statement. It has the following features:
 
 * AQL variable names must be defined in an AQL `FROM` clause.
 * A variable name must be unique within an AQL statement.
@@ -72,7 +72,7 @@ Parameters are needed when the same AQL query statement is used with different c
 
 AQL query parameters can be resolved at application level, or EHR system level. It depends on what the query parameters are used for and the design/implementation of the system or components. Query parameters would be normally resolved outside of a query engine. 
 
-If a query needs to be reusable across different EHR systems, any query parameters normally need to be registered in these EHR systems so that they can be resolved with real values from each environment. A typical example of this type of query parameter is $ehrUid. If the query is only used within an application, then the query parameters would be resolved by the application, such as the parameter of healthcare facility identifier or template identifier. 
+If a query needs to be reusable across different EHR systems, any query parameters normally need to be registered in these EHR systems so that they can be resolved with real values from each environment. A typical example of this type of query parameter is `$ehrUid`. If the query is only used within an application, then the query parameters would be resolved by the application, such as the parameter of healthcare facility identifier or template identifier. 
 
 There are no specific guidelines on how to resolve query parameters. Generally speaking, a parameter name is used as a key (or a key is associated with a parameter name) and the key needs to be unique within the boundary where the parameters are resolved. The EHR system or application needs to have the API functions to get the real value with a given parameter name or key.
 
@@ -94,7 +94,7 @@ AQL has three types of predicates: the standard predicate, the archetype predica
 Standard predicates always have a left operand, operator and right operand, e.g. `[ehr_id/value='123456']`.
 
 * The left operand is normally an openEHR path, such as `ehr_id/value`, `name/value`.
-* The right operand is normally a criterion value or a parameter, such as '123456', $ehrUid. It can also be an openEHR path (based on the BNF).
+* The right operand is normally a criterion value or a parameter, such as `'123456'`, `$ehrUid`. It can also be an openEHR path (based on the BNF).
 * The operator can be one of the following:
 +
 ----
@@ -466,7 +466,7 @@ EHR e
 
 EHR e 
     CONTAINS COMPOSITION c [openEHR-EHR-COMPOSITION.referral.v1] 
-        CONTAINS (OBSERVATION o openEHR-EHR-OBSERVATION-laboratory-hba1c.v1 AND OBSERVATION o1 openEHR-EHR-OBSERVATION-laboratory-glucose.v1)
+        CONTAINS (OBSERVATION o [openEHR-EHR-OBSERVATION-laboratory-hba1c.v1] AND OBSERVATION o1 [openEHR-EHR-OBSERVATION-laboratory-glucose.v1])
 --------
 
 === WHERE

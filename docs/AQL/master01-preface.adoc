@@ -21,7 +21,7 @@ Users are encouraged to comment on and/or advise on these paragraphs as well as 
 The following features are likely to be needed, but are not yet implemented in tools:
 
 * `TOP`
-*` XOR`. Currently `AND`, `OR`, `NOT`, `EXISTS` are supported in `WHERE` clause.
+* `XOR`. Currently `AND`, `OR`, `NOT`, `EXISTS` are supported in `WHERE` clause.
 * functions are not supported.
 * embedded query is not supported
 * `ORDER BY`
