@@ -1139,11 +1139,16 @@ WHERE composition/context/start_time &lt;= '1986-01-01'  // complete calendar da
 <div class="paragraph">
 <p>This is an example of a terminology URI:</p>
 </div>
-<div id="terminology_uri" class="imageblock text-center" style="text-align: center">
+<div class="listingblock">
 <div class="content">
-<img src="diagrams/terminology_uri.png" alt="terminology uri" width="70%">
+<pre>    terminology://snomed-CT/hierarchy?rootConceptId=50043002
+    \_________/   \_______/ \_______/ \___________/ \______/
+        |             |         |           |__________|
+     scheme       authority   path          | queries  |
+        |             |         |           |          |
+    terminology  terminology function    argument   argument
+       uri         service                 name      value</pre>
 </div>
-<div class="title">Figure 2. Terminology URI</div>
 </div>
 </div>
 <div class="sect4">

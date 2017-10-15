@@ -157,7 +157,7 @@ The table below shows the basic AQL operators, meaning and example.
 |>          |Greater than               |`o/data[at0001]/.../data[at0003]/items[at0004]/value/value >140`
 |>=         |Greater than or equal to   |`o/data[at0001]/..../data[at0003]/items[at0004]/value/value >=140`
 |<          |Smaller than               |`o/data[at0001]/.../data[at0003]/items[at0004]/value/value <160`
-|\<=         |Smaller than or equal to   |`o/data[at0001]/.../data[at0003]/items[at0004]/value/value <=160`
+|\<=        |Smaller than or equal to   |`o/data[at0001]/.../data[at0003]/items[at0004]/value/value <=160`
 |!=         |not equals to              |`c/archetype_details/template_id/value != ''`
 |===
 
@@ -357,9 +357,15 @@ A terminology URI consists of the following components:
 
 This is an example of a terminology URI:
 
-[.text-center]
-.Terminology URI
-image::diagrams/terminology_uri.png[id=terminology_uri, align="center", width=70%]
+----
+    terminology://snomed-CT/hierarchy?rootConceptId=50043002
+    \_________/   \_______/ \_______/ \___________/ \______/
+        |             |         |           |__________|
+     scheme       authority   path          | queries  |
+        |             |         |           |          |
+    terminology  terminology function    argument   argument
+       uri         service                 name      value
+----
 
 ==== Value List
 
