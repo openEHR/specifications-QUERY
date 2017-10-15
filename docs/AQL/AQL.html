@@ -529,11 +529,23 @@ WHERE
 <div class="paragraph">
 <p>Below is an example of AQL statement. This statement returns all blood pressure values where systolic value is greater or equal to 140 or whose diastolic value is greater or equal to 90 within a specified EHR. AQL syntax is a synthesis of SQL structural syntax and openEHR path syntax.</p>
 </div>
-<div id="AQLExample_1" class="imageblock text-center" style="text-align: center">
+<div class="listingblock">
 <div class="content">
-<img src="diagrams/AQLExample_1.png" alt="AQLExample 1" width="70%">
+<pre>SELECT                                                          -- Select clause
+    o/data[at0001]/.../items[at0004]/value AS systolic,         -- Identified path with named result
+    o/data[at0001]/.../items[at0005]/value AS systolic,
+FROM                                                            -- From clause
+    EHR[ehr_id=$ehrId]                                          -- RM class expression
+        CONTAINS                                                -- containment
+            COMPOSITION c                                       -- RM class expression
+                [openEHR-EHR-COMPOSITION.encounter.v1]          -- archetype predicate
+        CONTAINS
+            OBSERVATION o
+                [openEHR-EHR-OBSERVATION.blood_pressure.v1]
+WHERE                                                           -- Where clause
+    o/data[at0001]/.../items[at0004]/value/value &gt;= 140 OR      -- value comparison
+    o/data[at0001]/.../items[at0005]/value/value &gt;= 90</pre>
 </div>
-<div class="title">Figure 1. Simple AQL Example</div>
 </div>
 </div>
 </div>
