@@ -6,13 +6,17 @@ This document describes the syntax of the openEHR Archetype Query Language (AQL)
 
 == Status
 
-This specification is in the {spec_status} state. The development version of this document can be found at {openehr_query_aql}.
+This specification is in the {spec_status} state. The latest development version of this document can be found at {openehr_query_aql}.
 
 Known omissions or questions are indicated in the text with a 'to be determined' paragraph, as follows:
 [.tbd]
 *TBD*: (example To Be Determined paragraph)
 
 Users are encouraged to comment on and/or advise on these paragraphs as well as the main content.  Feedback should be provided either on the {openehr_technical_list}[technical mailing list], or on the https://openehr.atlassian.net/browse/SPECPR/?selectedTab=com.atlassian.jira.jira-projects-plugin:issues-panel[specifications issue tracker].
+
+== Original Source
+
+The text of this specification was originally posted on the https://openehr.atlassian.net/wiki/spaces/spec/pages/4915203/AQL-+Archetype+Query+Language[openEHR wiki], and was used by the global openEHR community in that form.
 
 == Tooling status
 
