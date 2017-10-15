@@ -4,18 +4,23 @@
 |===
 |Issue|Details|Raiser|Completed
 
-4+^h|*R E L E A S E{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}1.0.3*
+4+^h|*R E L E A S E{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}1.0.2*
 
-|[[latest_issue]]1.0
+|[[latest_issue]]1.0.0
 |Various reformatting, adjustment of headings.
 |T Beale
 |[[latest_issue_date]]10 Jan 2017
 
 |
+|Add Antlr grammar for AQL
+|B Lah
+|13 Jan 2012
+
+|
 |Initial Writing, based on https://openehr.atlassian.net/wiki/display/spec/Archetype+Query+Language+Description[openEHR AQL wiki page].
-|Chunlan Ma +
+|C Ma +
  H Frankel +
  T Beale
-|[[latest_issue_date]]10 Dec 2015
+|10 Dec 2008
 
 |===

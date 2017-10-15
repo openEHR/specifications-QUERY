@@ -1,3 +1,319 @@
 = AQL Operator Syntax Examples
 
-TODO: Review content from https://openehr.atlassian.net/wiki/display/spec/AQL+Operators
+The following sub-sections illustrate various AQL operators with examples.
+
+== ADL matches operator
+
+The following examples show how the ADL `matches` operator may be used within AQL statements.
+
+NOTE: the ADL expressions on the right-hand side of the `matches` operator are in ADL 1.4 format.
+
+[cols="1,4a",options="header",separator=¦]
+|===
+
+¦*Clinical Scenario 1*      ¦Blood glucose > 11 mmol/L or blood glucose >= 200 mg/dL
+
+¦*EHR path*                 ¦`o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]`
+
+¦*AQL Fragment*             ¦
+----
+ehr_path/value
+    matches {
+        C_DV_QUANTITY<
+            list = <
+               ["1"] = <
+                   units = <"mmol/L">
+                   magnitude = <|>=11|>
+               >
+               ["2"] = <
+                   units=<"mg/dL">
+                   magnitude=<|>=200|>
+               >
+            >
+        >
+    }
+----
+|===
+
+
+[cols="1,4a",options="header",separator=¦]
+|===
+
+¦*Clinical Scenario 2*      ¦Blood glucose level is between 5-6 mmol/L or between 90-110 mg/dL
+
+¦*EHR path*                 ¦`o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]`
+
+¦*AQL Fragment*             ¦
+----
+ehr_path/value
+    matches {
+        C_DV_QUANTITY<
+            list = <
+                ["1"] = <
+                    units = <"mmol/L">
+                    magnitude = <|5.0..6.0|>
+                >
+                ["2"] = <
+                    units = <"mg/dL">
+                    magnitude = <|90..110|>
+                >
+            >
+        > 
+    }
+----
+|===
+
+
+[cols="1,4a",options="header",separator=¦]
+|===
+
+¦*Clinical Scenario 3*      ¦HbA1c > 7.0%
+
+¦*EHR path*                 ¦`o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]`
+
+¦*AQL Fragment*             ¦
+----
+ehr_path/value matches {
+    DV_PROPORTION matches {
+        numerator matches {|>7.0|}
+        denominator matches {|100.0|}
+    }
+}
+----
+|===
+
+
+[cols="1,4a",options="header",separator=¦]
+|===
+
+¦*Clinical Scenario 4*          ¦Total cholesterol >= 5.0 mmol/L or LDL-C >= 3.0 mmol/L
+
+¦*Total cholesterol EHR path*   ¦`o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]`
+¦*LDL-C EHR path*               ¦`o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0011.1 and +
+                                  name/value='Fractions']/items[at0013.4 and name/value='LDL-Cholesterol']`
+
+¦*AQL Fragment*                 ¦
+----
+Total cholesterol EHR path/value matches {
+    DV_QUANTITY matches {
+        units matches {"mmol/L"}
+        magnitude matches {|>=5.0|}
+    }
+}
+ 
+OR
+ 
+LDL-C EHR path/value matches {
+    DV_QUANTITY matches {
+        units matches {"mmol/L"}
+        magnitude matches {|>=3.0|}
+    }
+}
+----
+|===
+
+
+[cols="1,4a",options="header",separator=¦]
+|===
+
+¦*Clinical Scenario 5*          ¦Require all HbA1c values done in 1999
+
+¦*Total cholesterol EHR path*   ¦`o/data/origin`
+
+¦*AQL Fragment +
+(alt 1)*         ¦
+----
+EHR path/value matches {"^1999"}
+----
+
+¦*AQL Fragment +
+(alt 2)*         ¦
+----
+EHR path/value matches {|1999-??-??|
+----
+
+¦*AQL Fragment +
+(alt 3)*         ¦
+----
+EHR path/value matches {|1999-01-01..1999-12-31|
+----
+|===
+
+
+[cols="1,4a",options="header",separator=¦]
+|===
+
+¦*Clinical Scenario 6*      ¦Require all blood glucose values done in the morning of 1st December, 1999
+
+¦*EHR path*                 ¦`o/data/origin`
+
+¦*AQL Fragment +
+(alt 1)*                    ¦
+----
+EHR path/value matches {"^19991201T(((0[0-9])|10|11|)(([0-5][0-9])?([0-5][0-9])?)|(1200))$"}
+----
+
+¦*AQL Fragment +
+(alt 2)*                    ¦
+----
+EHR path/value matches {|1999-12-01T00:00:00..1999-12-01T11:59:59|}
+----
+|===
+
+
+[cols="1,4a",options="header",separator=¦]
+|===
+
+¦*Clinical Scenario 7*      ¦Require all blood glucose values done in the morning of December, 1999
+
+¦*EHR path*                 ¦`o/data/origin`
+
+¦*AQL Fragment +
+(alt 1)*                    ¦
+----
+EHR path/value matches {"^199912(([0-2][1-9])|10|20|30|31)?(T((0[0-5])|10|11)(([0-5][0-9])?([0-5][0-9])?))$"}
+----
+
+¦*AQL Fragment +
+(alt 2)*                    ¦
+----
+EHR path/value matches {|1999-12-ddT00:00:00..1999-12-ddT11:59:59|}
+----
+|===
+
+
+[cols="1,4a",options="header",separator=¦]
+|===
+
+¦*Clinical Scenario 8*      ¦Require all HbA1c values done after 1999
+
+¦*EHR path*                 ¦`o/data/origin`
+
+¦*AQL Fragment +
+(alt 1)*                    ¦
+----
+EHR path/value matches {"^[2-9]\d\d\d"}
+----
+
+¦*AQL Fragment +
+(alt 2)*                    ¦
+----
+EHR path/value matches {|>1999-??-??|}
+----
+|===
+
+
+[cols="1,4a",options="header",separator=¦]
+|===
+
+¦*Clinical Scenario 9*      ¦Require all HbA1c values done before 1999
+
+¦*EHR path*                 ¦`o/data/origin`
+
+¦*AQL Fragment +
+(alt 1)*                    ¦
+----
+EHR path/value matches {"^1\d\d[0-8]"}
+----
+
+¦*AQL Fragment +
+(alt 2)*                    ¦
+----
+EHR path/value matches {|<1999-??-??|}
+----
+|===
+
+
+[cols="1,4a",options="header",separator=¦]
+|===
+
+¦*Clinical Scenario 10*     ¦Requires all reports composed by patient self
+
+¦*AQL Fragment*             ¦
+----
+SELECT c
+    FROM EHR e[ehr_id=$ehrUid] CONTAINS COMPOSITION c
+    WHERE c/composer matches {PARTY_SELF}
+----
+|===
+
+
+== Arithmetic operators
+
+The following example shows how arithmetic operators may be used within AQL statements.
+
+[cols="1,4a",options="header",separator=¦]
+|===
+
+¦*Clinical Scenario 1*      ¦For each recorded administration of ampicillin check for problem diagnosis of skin rash that is within 2 days of the administration date
+
+¦*AQL Fragment*             ¦
+----
+SELECT e/ehr_id
+ 
+FROM EHR e CONTAINS (COMPOSITION c1
+       CONTAINS ACTION a [openEHR-EHR-ACTION.medication.v1]
+           CONTAINS ITEM_TREE it [openEHR-EHR-ITEM_TREE.medication.v1]) AND
+       CONTAINS (COMPOSITION c2 CONTAINS EVALUATION eval [openEHR-EHR-EVALUATION.problem-diagnosis.v1])
+ 
+WHERE 
+    it/description[openEHR-EHR-ITEM_TREE.medication.v1]/items[at0001]/value matches {"SNOMED::31087008"} AND
+    eval/data[at0001]/items[at0002.1]/value/value/defining_code matches {
+          CODE_PHRASE matches {[SNOMED::294506009, 21626009]}
+    } AND
+    eval/data[at0001]/items[at0010]/value - it/description[openEHR-EHR-ITEM_TREE.medication.v1]/items[at0018]/items[at0019]/value
+    matches {
+      DV_DURATION matches {
+          value matches{<=P2d}
+      }
+    }
+----
+|===
+
+
+== Nest Query and 'Not in'
+
+The following example shows the use of a nested query and the `not-in` operator.
+
+[cols="1,4a",options="header",separator=¦]
+|===
+
+¦*Clinical Scenario 1*      ¦All patients who have not been discharged
+
+¦*AQL Fragment*             ¦
+----
+SELECT e/ehr_id
+FROM
+    EHR e CONTAINS 
+        ADMIN_ENTRY ae1 [openEHR-EHR-ADMIN_ENTRY.admission.v1]
+WHERE 
+    ae1/encounter_id/value not in (
+        SELECT ae2/encounter_id/value
+        FROM 
+            EHR e CONTAINS 
+                ADMIN_ENTRY ae2 [openEHR-EHR-ADMIN_ENTRY.discharge.v1]
+    )
+----
+|===
+
+
+== Exists operator
+
+The following example shows how the `exists` operator may be used within AQL statements.
+
+[cols="1,4a",options="header",separator=¦]
+|===
+
+¦*Clinical Scenario 1*      ¦Require all blood pressure values with position recorded
+
+¦*AQL Fragment*             ¦
+----
+SELECT o
+FROM 
+    EHR e CONTAINS 
+        COMPOSITION CONTAINS
+            OBSERVATION o [openEHR-EHR-OBSERVATION.blood_pressure.v1]
+ WHERE 
+    exists {"o//*/state[at0007]/items[at0008]"}
+----
+|===
