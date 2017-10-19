@@ -7,7 +7,8 @@
 4+^h|*R E L E A S E{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}1.0.2*
 
 |[[latest_issue]]1.0.0
-|Various reformatting, adjustment of headings.
+|{openehr_jira}/SPECQUERY-6[SPECQUERY-6]Publish original AQL wiki page as formal specification; +
+ Various reformatting, adjustment of headings.
 |T Beale
 |[[latest_issue_date]]10 Jan 2017
 

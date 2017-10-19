@@ -42,7 +42,7 @@ Most cases, it is required that the left operand and the right operand must be t
 The example below shows a scenario which requires that a Composition report (c1) is issued in the last year. It illustrates that a type of ISO 8601 date string (`current-date()`) subtracts a type of ISO 8601 interval string (`P1Y`).
 
 --------
-c1/context/other_context/items[at0006]/items[at0013]/value > current-date() - PIY
+c1/context/other_context/items[at0006]/items[at0013]/value > current-date() - P1Y
 --------
 
 ==== Other functions
