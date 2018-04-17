@@ -8,8 +8,8 @@
 <meta name="description" content="openEHR Archetype Query Language (AQL)">
 <meta name="keywords" content="query, AQL, archetype, Xpath">
 <title>Archetype Query Language (AQL)</title>
-<link rel="stylesheet" href="http://www.openehr.org/releases/BASE/latest/resources/css/openehr.css">
-<link rel="stylesheet" href="http://www.openehr.org/releases/BASE/latest/resources/css/pygments-default.css">
+<link rel="stylesheet" href="/releases/BASE/latest/resources/css/openehr.css">
+<link rel="stylesheet" href="/releases/BASE/latest/resources/css/pygments-default.css">
 </head>
 <body class="book toc2 toc-left">
 <div id="header">
@@ -21,6 +21,9 @@
 <li><a href="#_amendment_record">Amendment Record</a></li>
 <li><a href="#_acknowledgements">Acknowledgements</a>
 <ul class="sectlevel2">
+<li><a href="#_primary_author">Primary Author</a></li>
+<li><a href="#_contributors">Contributors</a></li>
+<li><a href="#_support">Support</a></li>
 <li><a href="#_trademarks">Trademarks</a></li>
 </ul>
 </li>
@@ -28,18 +31,19 @@
 <ul class="sectlevel2">
 <li><a href="#_purpose">1.1. Purpose</a></li>
 <li><a href="#_status">1.2. Status</a></li>
-<li><a href="#_tooling_status">1.3. Tooling status</a>
+<li><a href="#_original_source">1.3. Original Source</a></li>
+<li><a href="#_tooling_status">1.4. Tooling status</a>
 <ul class="sectlevel3">
-<li><a href="#_aql_features_not_yet_supported">1.3.1. AQL features not yet supported</a></li>
-<li><a href="#_aql_features_that_are_proposed_but_not_finalised">1.3.2. AQL features that are proposed, but not finalised</a>
+<li><a href="#_aql_features_not_yet_supported">1.4.1. AQL features not yet supported</a></li>
+<li><a href="#_aql_features_that_are_proposed_but_not_finalised">1.4.2. AQL features that are proposed, but not finalised</a>
 <ul class="sectlevel4">
-<li><a href="#_arithmetic_functions">Arithmetic functions</a></li>
-<li><a href="#_other_functions">Other functions</a></li>
+<li><a href="#_arithmetic_functions">1.4.2.1. Arithmetic functions</a></li>
+<li><a href="#_other_functions">1.4.2.2. Other functions</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#_further_discussions">1.4. Further discussions</a></li>
+<li><a href="#_further_discussions">1.5. Further discussions</a></li>
 </ul>
 </li>
 <li><a href="#_overview">2. Overview</a>
@@ -79,9 +83,9 @@
 <li><a href="#_basic_operators">3.7.1. Basic operators</a></li>
 <li><a href="#_advanced_operators">3.7.2. Advanced operators</a>
 <ul class="sectlevel4">
-<li><a href="#_matches">matches</a></li>
-<li><a href="#_exists">EXISTS</a></li>
-<li><a href="#_not">NOT</a></li>
+<li><a href="#_matches">3.7.2.1. matches</a></li>
+<li><a href="#_exists">3.7.2.2. EXISTS</a></li>
+<li><a href="#_not">3.7.2.3. NOT</a></li>
 </ul>
 </li>
 </ul>
@@ -96,20 +100,19 @@
 <ul class="sectlevel3">
 <li><a href="#_primitive_types">3.9.1. Primitive Types</a>
 <ul class="sectlevel4">
-<li><a href="#_string_data">String Data</a></li>
-<li><a href="#_integer_data">Integer data</a></li>
-<li><a href="#_real_data">Real data</a></li>
-<li><a href="#_boolean_data">Boolean data</a></li>
-<li><a href="#_dates_and_times">Dates and Times</a></li>
+<li><a href="#_string_data">3.9.1.1. String Data</a></li>
+<li><a href="#_integer_data">3.9.1.2. Integer data</a></li>
+<li><a href="#_real_data">3.9.1.3. Real data</a></li>
+<li><a href="#_boolean_data">3.9.1.4. Boolean data</a></li>
+<li><a href="#_dates_and_times">3.9.1.5. Dates and Times</a></li>
 </ul>
 </li>
 <li><a href="#_other_built_in_types">3.9.2. Other Built-in Types</a>
 <ul class="sectlevel4">
-<li><a href="#_uri">URI</a></li>
-<li><a href="#_terminology_uri">Terminology URI</a></li>
-<li><a href="#_ehr_uri">EHR URI</a></li>
-<li><a href="#_value_list">Value List</a></li>
-<li><a href="#_value_range">Value Range</a></li>
+<li><a href="#_uri">3.9.2.1. URI</a></li>
+<li><a href="#_terminology_uri">3.9.2.2. Terminology URI</a></li>
+<li><a href="#_value_list">3.9.2.3. Value List</a></li>
+<li><a href="#_value_range">3.9.2.4. Value Range</a></li>
 </ul>
 </li>
 </ul>
@@ -119,40 +122,47 @@
 <li><a href="#_overview_3">3.10.1. Overview</a></li>
 <li><a href="#_from">3.10.2. FROM</a>
 <ul class="sectlevel4">
-<li><a href="#_from_syntax">FROM Syntax</a></li>
-<li><a href="#_class_expressions">Class expressions</a></li>
-<li><a href="#_containment">Containment</a></li>
+<li><a href="#_from_syntax">3.10.2.1. FROM Syntax</a></li>
+<li><a href="#_class_expressions">3.10.2.2. Class expressions</a></li>
+<li><a href="#_containment">3.10.2.3. Containment</a></li>
 </ul>
 </li>
 <li><a href="#_where">3.10.3. WHERE</a>
 <ul class="sectlevel4">
-<li><a href="#_syntax_2">Syntax</a></li>
-<li><a href="#_identified_expression">Identified expression</a></li>
+<li><a href="#_syntax_2">3.10.3.1. Syntax</a></li>
+<li><a href="#_identified_expression">3.10.3.2. Identified expression</a></li>
 </ul>
 </li>
 <li><a href="#_select">3.10.4. SELECT</a>
 <ul class="sectlevel4">
-<li><a href="#_top">TOP</a></li>
-<li><a href="#_name_alias">Name alias</a></li>
+<li><a href="#_top">3.10.4.1. TOP</a></li>
+<li><a href="#_name_alias">3.10.4.2. Name alias</a></li>
 </ul>
 </li>
 <li><a href="#_order_by">3.10.5. ORDER BY</a></li>
 <li><a href="#_timewindow">3.10.6. TIMEWINDOW</a></li>
-<li><a href="#_result_structure">3.10.7. Result structure</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#_aql_operators">4. AQL Operators</a></li>
-<li><a href="#_how_to_write_an_aql_query_statement_manually">5. How to write an AQL query statement manually</a>
+<li><a href="#_result_structure">4. Result structure</a></li>
+<li><a href="#_aql_operator_syntax_examples">5. AQL Operator Syntax Examples</a>
 <ul class="sectlevel2">
-<li><a href="#_query_scenario">5.1. Query scenario</a></li>
-<li><a href="#_step_1_the_from_clause">5.2. Step 1. The FROM clause</a></li>
-<li><a href="#_step_2_the_where_clause">5.3. Step 2. The WHERE clause</a></li>
-<li><a href="#_step_3_the_select_clause">5.4. Step 3. The SELECT clause</a></li>
-<li><a href="#_aql_syntax_specification">5.5. AQL Syntax Specification</a></li>
+<li><a href="#_adl_matches_operator">5.1. ADL matches operator</a></li>
+<li><a href="#_arithmetic_operators">5.2. Arithmetic operators</a></li>
+<li><a href="#_nest_query_and_not_in">5.3. Nest Query and 'Not in'</a></li>
+<li><a href="#_exists_operator">5.4. Exists operator</a></li>
 </ul>
 </li>
+<li><a href="#_how_to_write_an_aql_query_statement_manually">6. How to write an AQL query statement manually</a>
+<ul class="sectlevel2">
+<li><a href="#_query_scenario">6.1. Query scenario</a></li>
+<li><a href="#_step_1_the_from_clause">6.2. Step 1. The FROM clause</a></li>
+<li><a href="#_step_2_the_where_clause">6.3. Step 2. The WHERE clause</a></li>
+<li><a href="#_step_3_the_select_clause">6.4. Step 3. The SELECT clause</a></li>
+</ul>
+</li>
+<li><a href="#_aql_syntax_specification">7. AQL Syntax Specification</a></li>
 </ul>
 </li>
 </ul>
@@ -178,13 +188,13 @@
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-center valign-top" colspan="2"><strong>Issuer</strong>: <a href="http://www.openehr.org/programs/specification/">openEHR Specification Program</a></th>
+<th class="tableblock halign-center valign-top" colspan="2"><strong>Issuer</strong>: <a href="/programs/specification/">openEHR Specification Program</a></th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Release</strong>: latest</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Status</strong>: TRIAL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Status</strong>: STABLE</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Revision</strong>: <a href="#latest_issue">[latest_issue]</a></p></td>
@@ -207,21 +217,21 @@
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-center valign-top" colspan="2">&#169; 2008 - 2016 The openEHR Foundation</th>
+<th class="tableblock halign-center valign-top" colspan="2">&#169; 2008 - 2017 The openEHR Foundation</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><a href="http://www.openehr.org/">The openEHR Foundation</a> is an independent, non-profit community organisation, facilitating the sharing of health records by consumers and clinicians via open-source, standards-based implementations.</p></td>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><a href="/">The openEHR Foundation</a> is an independent, non-profit community organisation, facilitating the sharing of health records by consumers and clinicians via open-source, standards-based implementations.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Licence</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="http://www.openehr.org/releases/BASE/latest/resources/images/cc-by-nd-88x31.png" alt="image"></span> Creative Commons Attribution-NoDerivs 3.0 Unported. <a href="https://creativecommons.org/licenses/by-nd/3.0/" class="bare">https://creativecommons.org/licenses/by-nd/3.0/</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="/releases/BASE/latest/resources/images/cc-by-nd-88x31.png" alt="image"></span> Creative Commons Attribution-NoDerivs 3.0 Unported. <a href="https://creativecommons.org/licenses/by-nd/3.0/" class="bare">https://creativecommons.org/licenses/by-nd/3.0/</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Support</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Issues: <a href="https://openehr.atlassian.net/browse/SPECPR/" class="bare">https://openehr.atlassian.net/browse/SPECPR/</a><br>
- Web: <a href="http://www.openehr.org/" class="bare">http://www.openehr.org/</a></p></td>
+ Web: <a href="/">www.openehr.org</a></p></td>
 </tr>
 </tbody>
 </table>
@@ -247,15 +257,29 @@
 </thead>
 <tbody>
 <tr>
-<th class="tableblock halign-center valign-top" colspan="4"><p class="tableblock"><strong>R E L E A S E&#160;&#160;&#160;&#160;&#160;1.0.3</strong></p></th>
+<th class="tableblock halign-center valign-top" colspan="4"><p class="tableblock"><strong>R E L E A S E&#160;&#160;&#160;&#160;&#160;1.0.2</strong></p></th>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="latest_issue"></a>1.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="latest_issue"></a>1.0.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://openehr.atlassian.net/browse/SPECQUERY-6">SPECQUERY-6</a> Publish original AQL wiki page as formal specification;<br>
+ Various reformatting, adjustment of headings;<br>
+ Fix missing square brackets on query example. (<a href="https://openehr.atlassian.net/browse/SPECPR-236">SPECPR-236</a>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">openEHR SEC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="latest_issue_date"></a>10 Jan 2017</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Add Antlr grammar for AQL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">B Lah</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">13 Jan 2012</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Initial Writing, based on <a href="https://openehr.atlassian.net/wiki/display/spec/Archetype+Query+Language+Description">openEHR AQL wiki page</a>.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Chunlan Ma<br>
+<td class="tableblock halign-left valign-top"><p class="tableblock">C Ma<br>
  H Frankel<br>
  T Beale</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="latest_issue_date"></a>10 Dec 2015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10 Dec 2008</p></td>
 </tr>
 </tbody>
 </table>
@@ -264,15 +288,47 @@
 <div class="sect1">
 <h2 id="_acknowledgements">Acknowledgements</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_primary_author">Primary Author</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Chunlan Ma, MD, Ocean Informatics, Australia.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_contributors">Contributors</h3>
 <div class="paragraph">
-<p>The work reported in this paper has been funded in by the following organisations:</p>
+<p>This specification benefited from wide formal and informal input from the openEHR and wider health informatics community. The openEHR Foundation would like to recognise the following people for their contributions.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Ocean Informatics.</p>
+<p>Heath Frankel, Ocean Informatics, Australia</p>
+</li>
+<li>
+<p>Bostjan Lah, Architect, Marand, Slovenia</p>
 </li>
 </ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_support">Support</h3>
+<div class="paragraph">
+<p>The work reported in this paper has been funded by the following organisations:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Ocean Informatics, Australia</p>
+</li>
+<li>
+<p>Marand, Slovenia</p>
+</li>
+</ul>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_trademarks">Trademarks</h3>
@@ -304,7 +360,7 @@
 <div class="sect2">
 <h3 id="_status"><a class="anchor" href="#_status"></a>1.2. Status</h3>
 <div class="paragraph">
-<p>This specification is in the TRIAL state. The development version of this document can be found at <a href="http://www.openehr.org/releases/QUERY/latest/AQL.html" class="bare">http://www.openehr.org/releases/QUERY/latest/AQL.html</a>.</p>
+<p>This specification is in the STABLE state. The latest development version of this document can be found at <a href="/releases/QUERY/latest/AQL.html">www.openehr.org/releases/QUERY/latest/AQL.html</a>.</p>
 </div>
 <div class="paragraph">
 <p>Known omissions or questions are indicated in the text with a 'to be determined' paragraph, as follows:</p>
@@ -313,21 +369,29 @@
 <p><strong>TBD</strong>: (example To Be Determined paragraph)</p>
 </div>
 <div class="paragraph">
-<p>Users are encouraged to comment on and/or advise on these paragraphs as well as the main content.  Feedback should be provided either on the <a href="http://lists.openehr.org/mailman/listinfo/openehr-technical_lists.openehr.org">technical mailing list</a>, or on the <a href="https://openehr.atlassian.net/browse/SPECPR/?selectedTab=com.atlassian.jira.jira-projects-plugin:issues-panel">specifications issue tracker</a>.</p>
+<p>Users are encouraged to comment on and/or advise on these paragraphs as well as the main content.  Feedback should be provided either on the <a href="http://lists.openehr.org/mailman/listinfo/openehr-technical_lists.openehr.org">technical mailing list</a>, or on the <a href="https://openehr.atlassian.net/issues/?filter=11109">specifications issue tracker</a>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_tooling_status"><a class="anchor" href="#_tooling_status"></a>1.3. Tooling status</h3>
+<h3 id="_original_source"><a class="anchor" href="#_original_source"></a>1.3. Original Source</h3>
+<div class="paragraph">
+<p>The text of this specification was originally posted on the <a href="https://openehr.atlassian.net/wiki/spaces/spec/pages/4915203/AQL-+Archetype+Query+Language">openEHR wiki</a>, and was used by the global openEHR community in that form.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_tooling_status"><a class="anchor" href="#_tooling_status"></a>1.4. Tooling status</h3>
 <div class="sect3">
-<h4 id="_aql_features_not_yet_supported"><a class="anchor" href="#_aql_features_not_yet_supported"></a>1.3.1. AQL features not yet supported</h4>
+<h4 id="_aql_features_not_yet_supported"><a class="anchor" href="#_aql_features_not_yet_supported"></a>1.4.1. AQL features not yet supported</h4>
 <div class="paragraph">
 <p>The following features are likely to be needed, but are not yet implemented in tools:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>TOP</code>
-*` XOR`. Currently <code>AND</code>, <code>OR</code>, <code>NOT</code>, <code>EXISTS</code> are supported in <code>WHERE</code> clause.</p>
+<p><code>TOP</code></p>
+</li>
+<li>
+<p><code>XOR</code>. Currently <code>AND</code>, <code>OR</code>, <code>NOT</code>, <code>EXISTS</code> are supported in <code>WHERE</code> clause.</p>
 </li>
 <li>
 <p>functions are not supported.</p>
@@ -345,9 +409,9 @@
 </div>
 </div>
 <div class="sect3">
-<h4 id="_aql_features_that_are_proposed_but_not_finalised"><a class="anchor" href="#_aql_features_that_are_proposed_but_not_finalised"></a>1.3.2. AQL features that are proposed, but not finalised</h4>
+<h4 id="_aql_features_that_are_proposed_but_not_finalised"><a class="anchor" href="#_aql_features_that_are_proposed_but_not_finalised"></a>1.4.2. AQL features that are proposed, but not finalised</h4>
 <div class="sect4">
-<h5 id="_arithmetic_functions"><a class="anchor" href="#_arithmetic_functions"></a>Arithmetic functions</h5>
+<h5 id="_arithmetic_functions"><a class="anchor" href="#_arithmetic_functions"></a>1.4.2.1. Arithmetic functions</h5>
 <div class="paragraph">
 <p>It has been proposed that AQL would support some basic arithmetic functions, such as addition (plus) , subtraction (minus) . Multiplication, and division may be supported as well. We do not have any scenario requiring for these two functions yet.</p>
 </div>
@@ -359,12 +423,12 @@
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>c1/context/other_context/items[at0006]/items[at0013]/value &gt; current-date() - PIY</pre>
+<pre>c1/context/other_context/items[at0006]/items[at0013]/value &gt; current-date() - P1Y</pre>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_other_functions"><a class="anchor" href="#_other_functions"></a>Other functions</h5>
+<h5 id="_other_functions"><a class="anchor" href="#_other_functions"></a>1.4.2.2. Other functions</h5>
 <div class="paragraph">
 <p>It is proposed that AQL may also support other functions, such as:</p>
 </div>
@@ -385,7 +449,7 @@
 </div>
 </div>
 <div class="sect2">
-<h3 id="_further_discussions"><a class="anchor" href="#_further_discussions"></a>1.4. Further discussions</h3>
+<h3 id="_further_discussions"><a class="anchor" href="#_further_discussions"></a>1.5. Further discussions</h3>
 <div class="paragraph">
 <p>The existing AQL grammar and syntax could be further enhanced in the following areas:</p>
 </div>
@@ -465,13 +529,25 @@ WHERE
 <p>Like SQL, AQL has five clauses: <code>SELECT</code>, <code>FROM</code>, <code>WHERE</code>, <code>ORDER BY</code>, and <code>TIMEWINDOW</code>. The <code>SELECT</code> clause specifies the data elements to be returned. The <code>FROM</code> clause specifies the result source and the corresponding containment criteria. The WHERE clause specifies data value criteria within the result source. The <code>ORDER BY</code> clause indicates the data items used to order the returned result set. <code>TIMEWINDOW</code> clause is to constrain the query to data that was available in the system within the specified time criteria.</p>
 </div>
 <div class="paragraph">
-<p>Below is an example of AQL statement. This statement returns all blood pressure values where systolic value is greater or equal to 140 or diastolic value is greater or equals to 90 within a specified EHR. AQL syntax is a synthesis of SQL structural syntax and openEHR path syntax.</p>
+<p>Below is an example of AQL statement. This statement returns all blood pressure values where systolic value is greater or equal to 140 or whose diastolic value is greater or equal to 90 within a specified EHR. AQL syntax is a synthesis of SQL structural syntax and openEHR path syntax.</p>
 </div>
-<div id="AQLExample_1" class="imageblock text-center" style="text-align: center">
+<div class="listingblock">
 <div class="content">
-<img src="diagrams/AQLExample_1.png" alt="AQLExample 1" width="70%">
+<pre>SELECT                                                          -- Select clause
+    o/data[at0001]/.../items[at0004]/value AS systolic,         -- Identified path with named result
+    o/data[at0001]/.../items[at0005]/value AS systolic,
+FROM                                                            -- From clause
+    EHR[ehr_id=$ehrId]                                          -- RM class expression
+        CONTAINS                                                -- containment
+            COMPOSITION c                                       -- RM class expression
+                [openEHR-EHR-COMPOSITION.encounter.v1]          -- archetype predicate
+        CONTAINS
+            OBSERVATION o
+                [openEHR-EHR-OBSERVATION.blood_pressure.v1]
+WHERE                                                           -- Where clause
+    o/data[at0001]/.../items[at0004]/value/value &gt;= 140 OR      -- value comparison
+    o/data[at0001]/.../items[at0005]/value/value &gt;= 90</pre>
 </div>
-<div class="title">Figure 1. Simple AQL Example</div>
 </div>
 </div>
 </div>
@@ -505,7 +581,7 @@ WHERE
 <p><code>matches</code>, <code>in</code>, <code>exists</code>, <code>not in</code></p>
 </li>
 <li>
-<p>'"' and ''': double quote characters and single quote characters are used to delimit string values;</p>
+<p><code>"</code> and <code>'</code>: double and single quote characters are used to delimit string values;</p>
 </li>
 <li>
 <p><code>|</code>: bar characters are used to delimit intervals;</p>
@@ -525,7 +601,7 @@ WHERE
 <div class="sect2">
 <h3 id="_openehr_path_syntax"><a class="anchor" href="#_openehr_path_syntax"></a>3.3. openEHR path syntax</h3>
 <div class="paragraph">
-<p>The openEHR path syntax has been described in a detail (see the <a href="http://www.openehr.org/releases/BASE/latest/architecture_overview.html">Architecture Overview specification</a>). AQL utilises the basic openEHR path syntax to represent both coarse-grained and fine-grained archetype nodes and openEHR class instances and attributes. The syntax details are not repeated here. A set of openEHR path examples are provided.</p>
+<p>The openEHR path syntax has been described in a detail (see the <a href="/releases/BASE/latest/architecture_overview.html">Architecture Overview specification</a>). AQL utilises the basic openEHR path syntax to represent both coarse-grained and fine-grained archetype nodes and openEHR class instances and attributes. The syntax details are not repeated here. A set of openEHR path examples are provided.</p>
 </div>
 <div class="sect3">
 <h4 id="_openehr_path_examples_archetype_path"><a class="anchor" href="#_openehr_path_examples_archetype_path"></a>3.3.1. openEHR path examples - archetype path</h4>
@@ -547,17 +623,17 @@ WHERE
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">OBSERVATION</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>OBSERVATION</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Apgar score</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>/</code></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">OBSERVATION</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>OBSERVATION</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1 minute</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>/data[at0002]/events[at0003]</code></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">OBSERVATION</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>OBSERVATION</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Heart rate</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>/data[at0002]/events[at0003]/data[at0001]/items[at0005]</code> x</p></td>
 </tr>
@@ -567,7 +643,7 @@ WHERE
 <div class="sect3">
 <h4 id="_openehr_path_examples_path_to_rm_class_attributes"><a class="anchor" href="#_openehr_path_examples_path_to_rm_class_attributes"></a>3.3.2. openEHR path examples - path to RM class attributes</h4>
 <div class="paragraph">
-<p>Another type of openEHR path is the path pointing to an attribute of openEHR Reference Model classes. The examples shown below uses the attributes from COMPOSITION class.</p>
+<p>Another type of openEHR path is the path pointing to an attribute of openEHR Reference Model classes. The examples shown below uses the attributes from the <code>COMPOSITION</code> class.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
@@ -600,7 +676,7 @@ WHERE
 <div class="sect2">
 <h3 id="_aql_variables"><a class="anchor" href="#_aql_variables"></a>3.4. AQL variables</h3>
 <div class="paragraph">
-<p>AQL variables are used to refer a specific archetype or openEHR class defined within an AQL statement. It has following featueres:</p>
+<p>AQL variables are used to refer a specific archetype or openEHR class defined within an AQL statement. It has the following features:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -633,7 +709,7 @@ WHERE
 <div class="sect3">
 <h4 id="_when_parameters_are_needed"><a class="anchor" href="#_when_parameters_are_needed"></a>3.5.1. When parameters are needed</h4>
 <div class="paragraph">
-<p>Parameters are needed when the same AQL query statement is used with different criteria values. This AQL example is to return all abnormal blood pressure values for a single specific EHR. This query has a parameter $ehrUid. This parameter will be substituted by a specific <code>EHR.ehr_id</code> value at run time. Consequently, this query can be reused for all EHRs either within an EHR system or by other EHR systems (assuming these EHR systems support AQL).</p>
+<p>Parameters are needed when the same AQL query statement is used with different criteria values. This AQL example is to return all abnormal blood pressure values for a single specific EHR. This query has a parameter <code>$ehrUid</code>. This parameter will be substituted by a specific <code>EHR.ehr_id</code> value at run time. Consequently, this query can be reused for all EHRs either within an EHR system or by other EHR systems (assuming these EHR systems support AQL).</p>
 </div>
 </div>
 <div class="sect3">
@@ -642,7 +718,7 @@ WHERE
 <p>AQL query parameters can be resolved at application level, or EHR system level. It depends on what the query parameters are used for and the design/implementation of the system or components. Query parameters would be normally resolved outside of a query engine.</p>
 </div>
 <div class="paragraph">
-<p>If a query needs to be reusable across different EHR systems, any query parameters normally need to be registered in these EHR systems so that they can be resolved with real values from each environment. A typical example of this type of query parameter is $ehrUid. If the query is only used within an application, then the query parameters would be resolved by the application, such as the parameter of healthcare facility identifier or template identifier.</p>
+<p>If a query needs to be reusable across different EHR systems, any query parameters normally need to be registered in these EHR systems so that they can be resolved with real values from each environment. A typical example of this type of query parameter is <code>$ehrUid</code>. If the query is only used within an application, then the query parameters would be resolved by the application, such as the parameter of healthcare facility identifier or template identifier.</p>
 </div>
 <div class="paragraph">
 <p>There are no specific guidelines on how to resolve query parameters. Generally speaking, a parameter name is used as a key (or a key is associated with a parameter name) and the key needs to be unique within the boundary where the parameters are resolved. The EHR system or application needs to have the API functions to get the real value with a given parameter name or key.</p>
@@ -684,17 +760,17 @@ WHERE
 <p>The left operand is normally an openEHR path, such as <code>ehr_id/value</code>, <code>name/value</code>.</p>
 </li>
 <li>
-<p>The right operand is normally a criterion value or a parameter, such as '123456', $ehrUid. It can also be an openEHR path (based on the BNF).</p>
+<p>The right operand is normally a criterion value or a parameter, such as <code>'123456'</code>, <code>$ehrUid</code>. It can also be an openEHR path (based on the BNF).</p>
 </li>
 <li>
 <p>The operator can be one of the following:</p>
-</li>
-</ul>
-</div>
 <div class="listingblock">
 <div class="content">
 <pre>&gt;, &gt;=, =, &lt;, &lt;=, !=</pre>
 </div>
+</div>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect3">
@@ -704,8 +780,9 @@ WHERE
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>FROM EHR [ehr_id/value='1234'] CONTAINS COMPOSITION c [openEHR-EHR-COMPOSITION.encounter.v1] CONTAINS
-OBSERVATION o [openEHR-EHR-OBSERVATION.blood_pressure.v1]</pre>
+<pre>FROM EHR [ehr_id/value='1234']
+CONTAINS COMPOSITION c [openEHR-EHR-COMPOSITION.encounter.v1]
+CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION.blood_pressure.v1]</pre>
 </div>
 </div>
 </div>
@@ -718,51 +795,39 @@ OBSERVATION o [openEHR-EHR-OBSERVATION.blood_pressure.v1]</pre>
 <ul>
 <li>
 <p>Containing an <code>archetype_node_id</code> (i.e. an at-code) only, e.g.:</p>
-</li>
-</ul>
-</div>
 <div class="listingblock">
 <div class="content">
 <pre>[at0002]</pre>
 </div>
 </div>
-<div class="ulist">
-<ul>
+</li>
 <li>
 <p>Containing an <code>archetype_node_id</code> and a <code>name value/criterion</code>, e.g.:</p>
-</li>
-</ul>
-</div>
 <div class="listingblock">
 <div class="content">
 <pre>[at0002 and name/value=$nameValue]
 [at0002 and name/value='real name value']</pre>
 </div>
 </div>
-<div class="ulist">
-<ul>
+</li>
 <li>
 <p>Containing an <code>archetype_node_id</code> and a shortcut of a <code>name/value</code> criterion, e.g.:</p>
-</li>
-</ul>
-</div>
 <div class="listingblock">
 <div class="content">
 <pre>[at0002, $nameValue]
 [at0002, 'real name value']</pre>
 </div>
 </div>
-<div class="ulist">
-<ul>
+</li>
 <li>
 <p>The above three forms are the most common node predicates. A more advanced form is to include a general criterion instead of the <code>name/value</code> criterion within the predicate. The general criterion consists of left operand, operator, and right operand, e.g.:</p>
-</li>
-</ul>
-</div>
 <div class="listingblock">
 <div class="content">
 <pre>[at0002 and value/defining_code/terminology_id/value=$terminologyId]</pre>
 </div>
+</div>
+</li>
+</ul>
 </div>
 <div class="paragraph">
 <p>A node predicate defines criteria on fine-grained data. It is only used within an identified path.</p>
@@ -826,7 +891,7 @@ OBSERVATION o [openEHR-EHR-OBSERVATION.blood_pressure.v1]</pre>
 <div class="sect3">
 <h4 id="_advanced_operators"><a class="anchor" href="#_advanced_operators"></a>3.7.2. Advanced operators</h4>
 <div class="sect4">
-<h5 id="_matches"><a class="anchor" href="#_matches"></a>matches</h5>
+<h5 id="_matches"><a class="anchor" href="#_matches"></a>3.7.2.1. matches</h5>
 <div class="paragraph">
 <p>The matches operator is used in the <code>WHERE</code> clause. This operator needs left operand and right operand. Left operand is an AQL identified path. Right operand is enclosed within curly braces. Right operand of matches operator has three forms:</p>
 </div>
@@ -834,9 +899,6 @@ OBSERVATION o [openEHR-EHR-OBSERVATION.blood_pressure.v1]</pre>
 <ol class="arabic">
 <li>
 <p>type of constraint ADL (cADL): this type of right operand can be a value list or a value range. Value range is not supported in the current AQL grammar. Below is an example with matches a string value list:</p>
-</li>
-</ol>
-</div>
 <div class="listingblock">
 <div class="content">
 <pre>SELECT
@@ -849,13 +911,9 @@ WHERE
     o/data[at0002]/events[at0003]/data/items[at0015]/items[at0018]/items[at0019]/items[at0021]/name/defining_code/code_string matches {'18919-1', '18961-3', '19000-9'}</pre>
 </div>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
+</li>
 <li>
 <p>URI: can be a terminology URI, openEHR EHR URI, or other URI. An example with a terminology URI is shown below:</p>
-</li>
-</ol>
-</div>
 <div class="listingblock">
 <div class="content">
 <pre>SELECT
@@ -869,9 +927,12 @@ WHERE
     AND diagnosis/data/items[at0002.1]/value/defining_code matches { terminology://Snomed-CT/hierarchy?rootConceptId=50043002 }</pre>
 </div>
 </div>
+</li>
+</ol>
+</div>
 </div>
 <div class="sect4">
-<h5 id="_exists"><a class="anchor" href="#_exists"></a>EXISTS</h5>
+<h5 id="_exists"><a class="anchor" href="#_exists"></a>3.7.2.2. EXISTS</h5>
 <div class="paragraph">
 <p><code>EXISTS</code> is a unary operator, which is always followed by a single operand. The single operand is an AQL identified path. This operator returns Boolean results: <code>true</code> means the data associated with the specified path exists, <code>false</code> otherwise. An <code>EXISTS</code> expression is a single identified expression. The latest grammar only allows this operator in <code>WHERE</code> clause. It may be required as part of openEHR path in future.</p>
 </div>
@@ -907,7 +968,7 @@ WHERE
 </div>
 </div>
 <div class="sect4">
-<h5 id="_not"><a class="anchor" href="#_not"></a>NOT</h5>
+<h5 id="_not"><a class="anchor" href="#_not"></a>3.7.2.3. NOT</h5>
 <div class="paragraph">
 <p><code>NOT</code> is a unary Boolean operator and it is always followed by either a single identified expression or boolean identified expression. It returns Boolean results: <code>true</code> means the followed expression (single or Boolean expression) is false.</p>
 </div>
@@ -992,37 +1053,29 @@ WHERE
 <ul>
 <li>
 <p>an AQL variable name defined within the <code>FROM</code> clause, followed by an openEHR path, e.g.</p>
-</li>
-</ul>
-</div>
 <div class="listingblock">
 <div class="content">
 <pre>o/data[at0001]/.../data[at0003]/items[at0004]/value/value</pre>
 </div>
 </div>
-<div class="ulist">
-<ul>
+</li>
 <li>
 <p>an AQL variable name followed by a predicate, e.g.</p>
-</li>
-</ul>
-</div>
 <div class="listingblock">
 <div class="content">
 <pre>o[name/value=$nameValue]</pre>
 </div>
 </div>
-<div class="ulist">
-<ul>
+</li>
 <li>
 <p>an AQL variable name followed by a predicate and an openEHR path, e.g.</p>
-</li>
-</ul>
-</div>
 <div class="listingblock">
 <div class="content">
 <pre>o[name/value=$nameValue]/data[at0001]/.../data[at0003]/items[at0004]/value/value</pre>
 </div>
+</div>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -1031,41 +1084,31 @@ WHERE
 <div class="sect3">
 <h4 id="_primitive_types"><a class="anchor" href="#_primitive_types"></a>3.9.1. Primitive Types</h4>
 <div class="sect4">
-<h5 id="_string_data"><a class="anchor" href="#_string_data"></a>String Data</h5>
+<h5 id="_string_data"><a class="anchor" href="#_string_data"></a>3.9.1.1. String Data</h5>
 <div class="paragraph">
-<p>All strings are enclosed in double quotes or single quotes. It doesn&#8217;t support line breaks.</p>
-</div>
-<div class="paragraph">
-<p>TODO list:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>allows double quotes and single quotes in the string.</p>
-</li>
-</ul>
+<p>All strings are enclosed in double quotes or single quotes. Line breaks are not supported.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_integer_data"><a class="anchor" href="#_integer_data"></a>Integer data</h5>
+<h5 id="_integer_data"><a class="anchor" href="#_integer_data"></a>3.9.1.2. Integer data</h5>
 <div class="paragraph">
-<p>Integers are represented as numbers, such as 1, 2, 365. Commas or periods for breaking long numbers are not allowed. Hex integer is not supported.</p>
+<p>Integers are represented as numberic literals, such as <code>1</code>, <code>2</code>, <code>365</code>. Commas or periods for breaking long numbers are not allowed. Hex integers are not supported.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_real_data"><a class="anchor" href="#_real_data"></a>Real data</h5>
+<h5 id="_real_data"><a class="anchor" href="#_real_data"></a>3.9.1.3. Real data</h5>
 <div class="paragraph">
-<p>Real numbers are the numbers with a decimal, such as 3.1415926. Commas or periods for breaking long numbers are not allowed. Hexadecimal is not supported.</p>
+<p>Real numbers are the decimal literals that include a decimal point, such as <code>3.1415926</code>. Commas or periods for breaking long numbers are not allowed.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_boolean_data"><a class="anchor" href="#_boolean_data"></a>Boolean data</h5>
+<h5 id="_boolean_data"><a class="anchor" href="#_boolean_data"></a>3.9.1.4. Boolean data</h5>
 <div class="paragraph">
-<p>Boolean values can be indicated as true or false. It is case-insensitive.</p>
+<p>Boolean values are indicated using the case-insensitive literals <code>true</code> or <code>false</code>.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_dates_and_times"><a class="anchor" href="#_dates_and_times"></a>Dates and Times</h5>
+<h5 id="_dates_and_times"><a class="anchor" href="#_dates_and_times"></a>3.9.1.5. Dates and Times</h5>
 <div class="paragraph">
 <p>No matter whether the date/date time is complete or partial, it is allowed in AQL as long as it is in ISO8601 date/date time format. Quotes (either single quotes or double quotes) are required to enclose the date/date time value. In AQL grammar, it is treated as a date value if the value is a complete calendar date represented in ISO8601 extended format and if single quotes are used. If the value is in other ISO8601 date/date time format, AQL treats it as a string value, but the AQL query engine processes it differently from a normal string value. It is a temporary solution. In future, a date/date time value should be identified as date/date time value if it is a valid ISO8601 date/date time. Examples are as below:</p>
 </div>
@@ -1081,13 +1124,13 @@ WHERE composition/context/start_time &lt;= '1986-01-01'  // complete calendar da
 <div class="sect3">
 <h4 id="_other_built_in_types"><a class="anchor" href="#_other_built_in_types"></a>3.9.2. Other Built-in Types</h4>
 <div class="sect4">
-<h5 id="_uri"><a class="anchor" href="#_uri"></a>URI</h5>
+<h5 id="_uri"><a class="anchor" href="#_uri"></a>3.9.2.1. URI</h5>
 <div class="paragraph">
 <p>URI leaf data is enclosed within curly braces after <code>matches</code> operator. URI can be expressed as a normal URI described in  <a href="#rfc3986">[rfc3986]</a>. URIs are not case sensitive. In AQL, a URI can be either terminology URI or an EHR URI.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_terminology_uri"><a class="anchor" href="#_terminology_uri"></a>Terminology URI</h5>
+<h5 id="_terminology_uri"><a class="anchor" href="#_terminology_uri"></a>3.9.2.2. Terminology URI</h5>
 <div class="paragraph">
 <p>A terminology URI consists of the following components:</p>
 </div>
@@ -1110,21 +1153,20 @@ WHERE composition/context/start_time &lt;= '1986-01-01'  // complete calendar da
 <div class="paragraph">
 <p>This is an example of a terminology URI:</p>
 </div>
-<div id="terminology_uri" class="imageblock text-center" style="text-align: center">
+<div class="listingblock">
 <div class="content">
-<img src="diagrams/terminology_uri.png" alt="terminology uri" width="70%">
+<pre>    terminology://snomed-CT/hierarchy?rootConceptId=50043002
+    \_________/   \_______/ \_______/ \___________/ \______/
+        |             |         |           |__________|
+     scheme       authority   path          | queries  |
+        |             |         |           |          |
+    terminology  terminology function    argument   argument
+       uri         service                 name      value</pre>
 </div>
-<div class="title">Figure 2. Terminology URI</div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_ehr_uri"><a class="anchor" href="#_ehr_uri"></a>EHR URI</h5>
-<div class="paragraph tbd">
-<p>To be continued&#8230;&#8203;</p>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_value_list"><a class="anchor" href="#_value_list"></a>Value List</h5>
+<h5 id="_value_list"><a class="anchor" href="#_value_list"></a>3.9.2.3. Value List</h5>
 <div class="paragraph">
 <p>Value list leaf data is enclosed within curly braces after matches operator. Each item is separated by comma if there are multiple items in the list. Value list can be string value list, date time value list, integer value list, and real value list. Quotes are required for string value list and date time value list.</p>
 </div>
@@ -1136,9 +1178,10 @@ WHERE composition/context/start_time &lt;= '1986-01-01'  // complete calendar da
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>matches {'string item 1', 'string item 2', 'string item3'}  // a string list. It is equivalent to matches
-                                                            // 'string item1' or .. matches 'string item 2'
-                                                            // or .. matches 'string item 3'
+<pre>matches {'string item 1', 'string item 2', 'string item3'}  // a string list. It Equivalent to
+                                                            // matches  string item1' or ..
+                                                            // matches 'string item 2' or ..
+                                                            // matches 'string item 3'
 matches {'20060101', '20070101', '20080101'}                // a date value list
 matches {1, 2, 3}                                           // a integer list
 matches {1.1, 2.5, 3.8}                                     // a real value list</pre>
@@ -1146,7 +1189,7 @@ matches {1.1, 2.5, 3.8}                                     // a real value list
 </div>
 </div>
 <div class="sect4">
-<h5 id="_value_range"><a class="anchor" href="#_value_range"></a>Value Range</h5>
+<h5 id="_value_range"><a class="anchor" href="#_value_range"></a>3.9.2.4. Value Range</h5>
 <div class="paragraph">
 <p>It is not supported in the current AQL grammar.</p>
 </div>
@@ -1156,7 +1199,7 @@ matches {1.1, 2.5, 3.8}                                     // a real value list
 <div class="listingblock">
 <div class="content">
 <pre>matches {|3.0..5.0|} // means 3.0 &lt;= x &lt;=5.0
-matches {|&lt;8|}       // means x&lt;8</pre>
+matches {|&lt;8|}       // means x &lt; 8</pre>
 </div>
 </div>
 </div>
@@ -1198,7 +1241,7 @@ matches {|&lt;8|}       // means x&lt;8</pre>
 <p>The <code>FROM</code> clause utilises class expressions and a set of containment criteria to specify the data source from which the query required data is to be retrieved.  Its function is similar as the <code>FROM</code> clause of an SQL expression.</p>
 </div>
 <div class="sect4">
-<h5 id="_from_syntax"><a class="anchor" href="#_from_syntax"></a>FROM Syntax</h5>
+<h5 id="_from_syntax"><a class="anchor" href="#_from_syntax"></a>3.10.2.1. FROM Syntax</h5>
 <div class="paragraph">
 <p>A simple <code>FROM</code> clause consists of three parts: keyword <code>FROM</code>, class expression and/or containment constraints, e.g.</p>
 </div>
@@ -1211,7 +1254,7 @@ matches {|&lt;8|}       // means x&lt;8</pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_class_expressions"><a class="anchor" href="#_class_expressions"></a>Class expressions</h5>
+<h5 id="_class_expressions"><a class="anchor" href="#_class_expressions"></a>3.10.2.2. Class expressions</h5>
 <div class="paragraph">
 <p>Two examples of a class expression are shown below:</p>
 </div>
@@ -1231,9 +1274,6 @@ COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]   \\COMPOSITION class, class id
 </li>
 <li>
 <p>defining a RM class variable that may be used by other clauses to indicate the required data or data items on which query criteria are applied. The example below uses the class expression to define a variable e which is used by the <code>SELECT</code> clause indicating all relevant ehr_id values are retrieved, and a variable c used by WHERE clause indicating that the query criteria is set on the composition template id value.</p>
-</li>
-</ol>
-</div>
 <div class="listingblock">
 <div class="content">
 <pre>SELECT
@@ -1244,6 +1284,9 @@ FROM
 WHERE
     c/archetype_details/template_id/value=$templateId</pre>
 </div>
+</div>
+</li>
+</ol>
 </div>
 <div class="paragraph">
 <p>Class expressions syntax include three parts. A class expression must have part one and at least one of part two or part three.</p>
@@ -1263,7 +1306,7 @@ WHERE
 </div>
 </div>
 <div class="sect4">
-<h5 id="_containment"><a class="anchor" href="#_containment"></a>Containment</h5>
+<h5 id="_containment"><a class="anchor" href="#_containment"></a>3.10.2.3. Containment</h5>
 <div class="paragraph">
 <p>Since archetypes are in hierarchical structure, AQL has a containment constraint which specifies the hierarchical relationships between parent and child data items. The <code>FROM</code> clause utilises this hierarchical constraint along with class expression to determine the data source to which the AQL query is applied.</p>
 </div>
@@ -1285,7 +1328,7 @@ WHERE
 
 EHR e
     CONTAINS COMPOSITION c [openEHR-EHR-COMPOSITION.referral.v1]
-        CONTAINS (OBSERVATION o openEHR-EHR-OBSERVATION-laboratory-hba1c.v1 AND OBSERVATION o1 openEHR-EHR-OBSERVATION-laboratory-glucose.v1)</pre>
+        CONTAINS (OBSERVATION o [openEHR-EHR-OBSERVATION-laboratory-hba1c.v1] AND OBSERVATION o1 [openEHR-EHR-OBSERVATION-laboratory-glucose.v1])</pre>
 </div>
 </div>
 </div>
@@ -1296,7 +1339,7 @@ EHR e
 <p>An AQL <code>WHERE</code> clause is used to represent further criteria applied to the data items within the objects declared in the FROM clause. A <code>WHERE</code> clause expresses the query criteria that cannot be represented in other AQL clauses, such as criteria on archetype id, composition committal date time, and the criteria on in which order the returned results should be listed.</p>
 </div>
 <div class="sect4">
-<h5 id="_syntax_2"><a class="anchor" href="#_syntax_2"></a>Syntax</h5>
+<h5 id="_syntax_2"><a class="anchor" href="#_syntax_2"></a>3.10.3.1. Syntax</h5>
 <div class="paragraph">
 <p>The <code>WHERE</code> clause syntax has the following parts (in order): keyword <code>WHERE</code> and identified expression(s). Boolean operators (<code>AND</code>, <code>OR</code>, <code>NOT</code>) and parenthesis can be used to represent multiple identified expressions. Examples:</p>
 </div>
@@ -1312,7 +1355,7 @@ WHERE
 </div>
 </div>
 <div class="sect4">
-<h5 id="_identified_expression"><a class="anchor" href="#_identified_expression"></a>Identified expression</h5>
+<h5 id="_identified_expression"><a class="anchor" href="#_identified_expression"></a>3.10.3.2. Identified expression</h5>
 <div class="paragraph">
 <p>Identified expression specifies the criteria within <code>WHERE</code> clause. It consists of left operand, operator and right operand.</p>
 </div>
@@ -1336,39 +1379,31 @@ WHERE
 <ul>
 <li>
 <p>Left operand is an identified path and right operand is a real criteria value - primitive type:</p>
-</li>
-</ul>
-</div>
 <div class="listingblock">
 <div class="content">
 <pre>o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value &gt;= 140
 c/archetype_details/template_id/value='health_encounter'</pre>
 </div>
 </div>
-<div class="ulist">
-<ul>
+</li>
 <li>
 <p>Left operand is an identified path and right operand is a parameter:</p>
-</li>
-</ul>
-</div>
 <div class="listingblock">
 <div class="content">
 <pre>c/archetype_details/template_id/value=$templateParameter</pre>
 </div>
 </div>
-<div class="ulist">
-<ul>
+</li>
 <li>
 <p>Both left operand and right operand are an identified path (this is an advanced feature):</p>
-</li>
-</ul>
-</div>
 <div class="listingblock">
 <div class="content">
 <pre>o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value &gt;
 o1/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value</pre>
 </div>
+</div>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -1409,7 +1444,7 @@ FROM
 </div>
 </div>
 <div class="sect4">
-<h5 id="_top"><a class="anchor" href="#_top"></a>TOP</h5>
+<h5 id="_top"><a class="anchor" href="#_top"></a>3.10.4.1. TOP</h5>
 <div class="paragraph">
 <p>The <code>TOP</code> syntax was borrowed from SQL language for representing the number of result sets that should be returned by the AQL query. It uses <code>BACKWARD</code> and <code>FORWARD</code> to indicate the direction where to start to get the number of results to be returned.</p>
 </div>
@@ -1427,7 +1462,7 @@ FROM
 </div>
 </div>
 <div class="sect4">
-<h5 id="_name_alias"><a class="anchor" href="#_name_alias"></a>Name alias</h5>
+<h5 id="_name_alias"><a class="anchor" href="#_name_alias"></a>3.10.4.2. Name alias</h5>
 <div class="paragraph">
 <p>As in SQL, <code>AQL</code> supports the use of a name alias for the retrieved data. This is domne with the keyword <code>AS</code>, followed by the name which conforms to the syntax rule of AQL variable.</p>
 </div>
@@ -1469,31 +1504,557 @@ FROM
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_result_structure"><a class="anchor" href="#_result_structure"></a>3.10.7. Result structure</h4>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_result_structure"><a class="anchor" href="#_result_structure"></a>4. Result structure</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>The result structure of an AQL query is described as part of the <a href="https://openehr.atlassian.net/wiki/display/spec/Ocean+Informatics+EHR+Service+Interface">openEHR EHR service definition</a>.</p>
 </div>
 </div>
 </div>
-</div>
-</div>
 <div class="sect1">
-<h2 id="_aql_operators"><a class="anchor" href="#_aql_operators"></a>4. AQL Operators</h2>
+<h2 id="_aql_operator_syntax_examples"><a class="anchor" href="#_aql_operator_syntax_examples"></a>5. AQL Operator Syntax Examples</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>TODO: TAKE CONTENT FROM <a href="https://openehr.atlassian.net/wiki/display/spec/AQL+Operators" class="bare">https://openehr.atlassian.net/wiki/display/spec/AQL+Operators</a></p>
+<p>The following sub-sections illustrate various AQL operators with examples.</p>
+</div>
+<div class="sect2">
+<h3 id="_adl_matches_operator"><a class="anchor" href="#_adl_matches_operator"></a>5.1. ADL matches operator</h3>
+<div class="paragraph">
+<p>The following examples show how the ADL <code>matches</code> operator may be used within AQL statements.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+the ADL expressions on the right-hand side of the <code>matches</code> operator are in ADL 1.4 format.
+</td>
+</tr>
+</table>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Clinical Scenario 1</strong></th>
+<th class="tableblock halign-left valign-top">Blood glucose &gt; 11 mmol/L or blood glucose &gt;= 200 mg/dL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>EHR path</strong></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment</strong></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>ehr_path/value
+    matches {
+        C_DV_QUANTITY&lt;
+            list = &lt;
+               ["1"] = &lt;
+                   units = &lt;"mmol/L"&gt;
+                   magnitude = &lt;|&gt;=11|&gt;
+               &gt;
+               ["2"] = &lt;
+                   units=&lt;"mg/dL"&gt;
+                   magnitude=&lt;|&gt;=200|&gt;
+               &gt;
+            &gt;
+        &gt;
+    }</pre>
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Clinical Scenario 2</strong></th>
+<th class="tableblock halign-left valign-top">Blood glucose level is between 5-6 mmol/L or between 90-110 mg/dL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>EHR path</strong></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment</strong></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>ehr_path/value
+    matches {
+        C_DV_QUANTITY&lt;
+            list = &lt;
+                ["1"] = &lt;
+                    units = &lt;"mmol/L"&gt;
+                    magnitude = &lt;|5.0..6.0|&gt;
+                &gt;
+                ["2"] = &lt;
+                    units = &lt;"mg/dL"&gt;
+                    magnitude = &lt;|90..110|&gt;
+                &gt;
+            &gt;
+        &gt;
+    }</pre>
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Clinical Scenario 3</strong></th>
+<th class="tableblock halign-left valign-top">HbA1c &gt; 7.0%</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>EHR path</strong></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment</strong></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>ehr_path/value matches {
+    DV_PROPORTION matches {
+        numerator matches {|&gt;7.0|}
+        denominator matches {|100.0|}
+    }
+}</pre>
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Clinical Scenario 4</strong></th>
+<th class="tableblock halign-left valign-top">Total cholesterol &gt;= 5.0 mmol/L or LDL-C &gt;= 3.0 mmol/L</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Total cholesterol EHR path</strong></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>LDL-C EHR path</strong></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0011.1 and<br>
+                                  name/value='Fractions']/items[at0013.4 and name/value='LDL-Cholesterol']</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment</strong></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>Total cholesterol EHR path/value matches {
+    DV_QUANTITY matches {
+        units matches {"mmol/L"}
+        magnitude matches {|&gt;=5.0|}
+    }
+}
+
+OR
+
+LDL-C EHR path/value matches {
+    DV_QUANTITY matches {
+        units matches {"mmol/L"}
+        magnitude matches {|&gt;=3.0|}
+    }
+}</pre>
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Clinical Scenario 5</strong></th>
+<th class="tableblock halign-left valign-top">Require all HbA1c values done in 1999</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Total cholesterol EHR path</strong></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>o/data/origin</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment<br>
+(alt 1)</strong></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>EHR path/value matches {"^1999"}</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment<br>
+(alt 2)</strong></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>EHR path/value matches {|1999-??-??|</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment<br>
+(alt 3)</strong></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>EHR path/value matches {|1999-01-01..1999-12-31|</pre>
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Clinical Scenario 6</strong></th>
+<th class="tableblock halign-left valign-top">Require all blood glucose values done in the morning of 1st December, 1999</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>EHR path</strong></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>o/data/origin</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment<br>
+(alt 1)</strong></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>EHR path/value matches {"^19991201T(((0[0-9])|10|11|)(([0-5][0-9])?([0-5][0-9])?)|(1200))$"}</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment<br>
+(alt 2)</strong></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>EHR path/value matches {|1999-12-01T00:00:00..1999-12-01T11:59:59|}</pre>
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Clinical Scenario 7</strong></th>
+<th class="tableblock halign-left valign-top">Require all blood glucose values done in the morning of December, 1999</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>EHR path</strong></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>o/data/origin</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment<br>
+(alt 1)</strong></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>EHR path/value matches {"^199912(([0-2][1-9])|10|20|30|31)?(T((0[0-5])|10|11)(([0-5][0-9])?([0-5][0-9])?))$"}</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment<br>
+(alt 2)</strong></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>EHR path/value matches {|1999-12-ddT00:00:00..1999-12-ddT11:59:59|}</pre>
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Clinical Scenario 8</strong></th>
+<th class="tableblock halign-left valign-top">Require all HbA1c values done after 1999</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>EHR path</strong></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>o/data/origin</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment<br>
+(alt 1)</strong></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>EHR path/value matches {"^[2-9]\d\d\d"}</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment<br>
+(alt 2)</strong></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>EHR path/value matches {|&gt;1999-??-??|}</pre>
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Clinical Scenario 9</strong></th>
+<th class="tableblock halign-left valign-top">Require all HbA1c values done before 1999</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>EHR path</strong></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>o/data/origin</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment<br>
+(alt 1)</strong></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>EHR path/value matches {"^1\d\d[0-8]"}</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment<br>
+(alt 2)</strong></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>EHR path/value matches {|&lt;1999-??-??|}</pre>
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Clinical Scenario 10</strong></th>
+<th class="tableblock halign-left valign-top">Requires all reports composed by patient self</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment</strong></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>SELECT c
+    FROM EHR e[ehr_id=$ehrUid] CONTAINS COMPOSITION c
+    WHERE c/composer matches {PARTY_SELF}</pre>
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_arithmetic_operators"><a class="anchor" href="#_arithmetic_operators"></a>5.2. Arithmetic operators</h3>
+<div class="paragraph">
+<p>The following example shows how arithmetic operators may be used within AQL statements.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Clinical Scenario 1</strong></th>
+<th class="tableblock halign-left valign-top">For each recorded administration of ampicillin check for problem diagnosis of skin rash that is within 2 days of the administration date</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment</strong></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>SELECT e/ehr_id
+
+FROM EHR e CONTAINS (COMPOSITION c1
+       CONTAINS ACTION a [openEHR-EHR-ACTION.medication.v1]
+           CONTAINS ITEM_TREE it [openEHR-EHR-ITEM_TREE.medication.v1]) AND
+       CONTAINS (COMPOSITION c2 CONTAINS EVALUATION eval [openEHR-EHR-EVALUATION.problem-diagnosis.v1])
+
+WHERE
+    it/description[openEHR-EHR-ITEM_TREE.medication.v1]/items[at0001]/value matches {"SNOMED::31087008"} AND
+    eval/data[at0001]/items[at0002.1]/value/value/defining_code matches {
+          CODE_PHRASE matches {[SNOMED::294506009, 21626009]}
+    } AND
+    eval/data[at0001]/items[at0010]/value - it/description[openEHR-EHR-ITEM_TREE.medication.v1]/items[at0018]/items[at0019]/value
+    matches {
+      DV_DURATION matches {
+          value matches{&lt;=P2d}
+      }
+    }</pre>
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_nest_query_and_not_in"><a class="anchor" href="#_nest_query_and_not_in"></a>5.3. Nest Query and 'Not in'</h3>
+<div class="paragraph">
+<p>The following example shows the use of a nested query and the <code>not-in</code> operator.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Clinical Scenario 1</strong></th>
+<th class="tableblock halign-left valign-top">All patients who have not been discharged</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment</strong></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>SELECT e/ehr_id
+FROM
+    EHR e CONTAINS
+        ADMIN_ENTRY ae1 [openEHR-EHR-ADMIN_ENTRY.admission.v1]
+WHERE
+    ae1/encounter_id/value not in (
+        SELECT ae2/encounter_id/value
+        FROM
+            EHR e CONTAINS
+                ADMIN_ENTRY ae2 [openEHR-EHR-ADMIN_ENTRY.discharge.v1]
+    )</pre>
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_exists_operator"><a class="anchor" href="#_exists_operator"></a>5.4. Exists operator</h3>
+<div class="paragraph">
+<p>The following example shows how the <code>exists</code> operator may be used within AQL statements.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Clinical Scenario 1</strong></th>
+<th class="tableblock halign-left valign-top">Require all blood pressure values with position recorded</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment</strong></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>SELECT o
+FROM
+    EHR e CONTAINS
+        COMPOSITION CONTAINS
+            OBSERVATION o [openEHR-EHR-OBSERVATION.blood_pressure.v1]
+ WHERE
+    exists {"o//*/state[at0007]/items[at0008]"}</pre>
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_how_to_write_an_aql_query_statement_manually"><a class="anchor" href="#_how_to_write_an_aql_query_statement_manually"></a>5. How to write an AQL query statement manually</h2>
+<h2 id="_how_to_write_an_aql_query_statement_manually"><a class="anchor" href="#_how_to_write_an_aql_query_statement_manually"></a>6. How to write an AQL query statement manually</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This section describes how to build an AQL query manually. The process described here gives may provide some hints for AQL builder tools.</p>
 </div>
 <div class="sect2">
-<h3 id="_query_scenario"><a class="anchor" href="#_query_scenario"></a>5.1. Query scenario</h3>
+<h3 id="_query_scenario"><a class="anchor" href="#_query_scenario"></a>6.1. Query scenario</h3>
 <div class="paragraph">
 <p>An example is used to illustrate how to write an AQL statement. The query scenario is:</p>
 </div>
@@ -1502,26 +2063,24 @@ FROM
 </div>
 </div>
 <div class="sect2">
-<h3 id="_step_1_the_from_clause"><a class="anchor" href="#_step_1_the_from_clause"></a>5.2. Step 1. The FROM clause</h3>
+<h3 id="_step_1_the_from_clause"><a class="anchor" href="#_step_1_the_from_clause"></a>6.2. Step 1. The FROM clause</h3>
 <div class="paragraph">
 <p>A <code>FROM</code> clause is to scope the data source for the query. Normally the first step is to determine the <code>FROM</code> clause, which has EHR class expression and archetype class expressions.</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>EHR class expression</strong>: determines whether this query is applied to a single EHR or all EHRs. The latter is called a population query. If it is for all EHRs, there is no need to specify <code>ehr_id/value</code> in the <code>FROM</code> clause. Otherwise, you need to either specify a specific value or use a query parameter for <code>ehr_id/value</code> in a <code>FROM</code> clause. For this particular scenario, it is for a single EHR. A parameter called <code>ehrUid</code> is used for the <code>ehr_id/value</code>, I would have this AQL query statement:</p>
-</li>
-</ul>
+<div class="paragraph">
+<p><strong>EHR class expression</strong></p>
+</div>
+<div class="paragraph">
+<p>This determines whether this query is applied to a single EHR or all EHRs. The latter is called a population query. If it is for all EHRs, there is no need to specify <code>ehr_id/value</code> in the <code>FROM</code> clause. Otherwise, you need to either specify a specific value or use a query parameter for <code>ehr_id/value</code> in a <code>FROM</code> clause. For this particular scenario, it is for a single EHR. A parameter called <code>ehrUid</code> is used for the <code>ehr_id/value</code>, giving this AQL query statement:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre>FROM EHR [ehr_id/value=$ehrUid]</pre>
 </div>
 </div>
-<div class="ulist">
-<ul>
-<li>
+<div class="paragraph">
 <p><strong>Archetype expressions</strong></p>
+</div>
 <div class="ulist">
 <ul>
 <li>
@@ -1532,21 +2091,17 @@ FROM
 </li>
 </ul>
 </div>
-</li>
-</ul>
-</div>
 <div class="listingblock">
 <div class="content">
 <pre>COMPOSITION [openEHR-EHR-COMPOSITION.encounter.v1]
 OBSERVATION [openEHR-EHR-OBSERVATION.blood_pressure.v1]</pre>
 </div>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Containment expression</strong>. The openEHR RM is used to identify the hierarchical relationships among the found archetypes so as to define the containment expression. For example, a Composition archetype is the parent of an Observation archetype, so the AQL query looks as follows:</p>
-</li>
-</ul>
+<div class="paragraph">
+<p><strong>Containment expression</strong>.</p>
+</div>
+<div class="paragraph">
+<p>The openEHR RM is used to identify the hierarchical relationships among the found archetypes so as to define the containment expression. For example, a Composition archetype is the parent of an Observation archetype, so the AQL query looks as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1556,7 +2111,7 @@ CONTAINS OBSERVATION [openEHR-EHR-OBSERVATION.blood_pressure.v1]</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_step_2_the_where_clause"><a class="anchor" href="#_step_2_the_where_clause"></a>5.3. Step 2. The WHERE clause</h3>
+<h3 id="_step_2_the_where_clause"><a class="anchor" href="#_step_2_the_where_clause"></a>6.3. Step 2. The WHERE clause</h3>
 <div class="paragraph">
 <p>The <code>WHERE</code> clause represents all query criteria that cannot be represented in the <code>FROM</code> clause. To write <code>WHERE</code> clause expression, the following is needed:</p>
 </div>
@@ -1570,19 +2125,13 @@ CONTAINS OBSERVATION [openEHR-EHR-OBSERVATION.blood_pressure.v1]</pre>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>Write the Identified path for the systolic data value. A class variable name is needed as the reference to the blood pressure class expression defined in the <code>FROM</code> clause, so a variable name <code>obs</code> is added into the <code>FROM</code> clause. A path to systolic data value is also required to form the identified path. Two tools can be used to get the path: the <a href="http://www.openehr.org/downloads/ADLworkbench/home">openEHR ADL Workbench</a> or <a href="http://www.openehr.org/downloads/modellingtools">Template Designer</a>. The path to the systolic data value is <code>/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value</code>.</p>
+<p>Write the Identified path for the systolic data value. A class variable name is needed as the reference to the blood pressure class expression defined in the <code>FROM</code> clause, so a variable name <code>obs</code> is added into the <code>FROM</code> clause. A path to systolic data value is also required to form the identified path. Two tools can be used to get the path: the <a href="/downloads/ADLworkbench">openEHR ADL Workbench</a> or <a href="/downloads/modellingtools">Template Designer</a>. The path to the systolic data value is <code>/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value</code>.</p>
 </li>
 <li>
 <p>Get appropriate operator: <code>&gt;=</code> is chosen for criterion 1.</p>
 </li>
 <li>
 <p>Get the criteria value - 140. The query statement including the identified expression for criterion 1) is shown below:</p>
-</li>
-</ol>
-</div>
-</li>
-</ol>
-</div>
 <div class="listingblock">
 <div class="content">
 <pre>FROM
@@ -1592,25 +2141,20 @@ WHERE
     obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value &gt;= 140</pre>
 </div>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Write an identified expression for criterion 2). Following the previous instruction to write the identified expression for criterion 2) which is shown as:</p>
 </li>
 </ol>
 </div>
+</li>
+<li>
+<p>Write an identified expression for criterion 2). Following the previous instruction to write the identified expression for criterion 2) which is shown as:</p>
 <div class="listingblock">
 <div class="content">
 <pre>obs/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/value &gt;= 90</pre>
 </div>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
+</li>
 <li>
 <p>Find the appropriate boolean operator to join criterion 1) and 2) - OR. The query statement looks like:</p>
-</li>
-</ol>
-</div>
 <div class="listingblock">
 <div class="content">
 <pre>FROM
@@ -1620,9 +2164,12 @@ WHERE obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value &gt
     obs/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/value &gt;= 90</pre>
 </div>
 </div>
+</li>
+</ol>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_step_3_the_select_clause"><a class="anchor" href="#_step_3_the_select_clause"></a>5.4. Step 3. The SELECT clause</h3>
+<h3 id="_step_3_the_select_clause"><a class="anchor" href="#_step_3_the_select_clause"></a>6.4. Step 3. The SELECT clause</h3>
 <div class="paragraph">
 <p>Writing a <code>SELECT</code> clause depends on determining:</p>
 </div>
@@ -1633,9 +2180,6 @@ WHERE obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value &gt
 </li>
 <li>
 <p>Write the appropriate identified path to the required item (variable name is required if the class object is required). Multiple identified path is separated using comma. For this particular scenario, two identified paths are found for systolic and diastolic data value by following Step 2. The completed query statement looks like:</p>
-</li>
-</ol>
-</div>
 <div class="listingblock">
 <div class="content">
 <pre>SELECT
@@ -1651,9 +2195,15 @@ WHERE
     obs/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude&gt;= 90</pre>
 </div>
 </div>
+</li>
+</ol>
 </div>
-<div class="sect2">
-<h3 id="_aql_syntax_specification"><a class="anchor" href="#_aql_syntax_specification"></a>5.5. AQL Syntax Specification</h3>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_aql_syntax_specification"><a class="anchor" href="#_aql_syntax_specification"></a>7. AQL Syntax Specification</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>The following Antlr grammar expresses the AQL syntax.</p>
 </div>
@@ -2193,10 +2743,9 @@ WHERE
 </div>
 </div>
 </div>
-</div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-01-16 19:18:29 GMT
+Last updated 2017-10-15 13:20:49 BST
 </div>
 </div>
 </body>

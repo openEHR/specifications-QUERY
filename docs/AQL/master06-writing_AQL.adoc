@@ -12,22 +12,27 @@ An example is used to illustrate how to write an AQL statement. The query scenar
 
 A `FROM` clause is to scope the data source for the query. Normally the first step is to determine the `FROM` clause, which has EHR class expression and archetype class expressions.
 
-* *EHR class expression*: determines whether this query is applied to a single EHR or all EHRs. The latter is called a population query. If it is for all EHRs, there is no need to specify `ehr_id/value` in the `FROM` clause. Otherwise, you need to either specify a specific value or use a query parameter for `ehr_id/value` in a `FROM` clause. For this particular scenario, it is for a single EHR. A parameter called `ehrUid` is used for the `ehr_id/value`, I would have this AQL query statement:
+*EHR class expression*
+
+This determines whether this query is applied to a single EHR or all EHRs. The latter is called a population query. If it is for all EHRs, there is no need to specify `ehr_id/value` in the `FROM` clause. Otherwise, you need to either specify a specific value or use a query parameter for `ehr_id/value` in a `FROM` clause. For this particular scenario, it is for a single EHR. A parameter called `ehrUid` is used for the `ehr_id/value`, giving this AQL query statement:
 
 ----
 FROM EHR [ehr_id/value=$ehrUid]
 ----
 
-* *Archetype expressions*
-** To write archetype expressions in the `FROM` clause, the archetypes required for the scenario must be determined, since archetypes are used to represent clinical concepts. The easy way to identify archetypes for a scenario is to identify clinical concepts mentioned in the scenario. Each clinical concept is generally associated with one archetype. Two clinical concepts are mentioned in the above scenario: 'blood pressure' and 'health encounter'. From these concepts the two archetypes used in query are identified: an Observation archetype `openEHR-EHR-OBSERVATION.blood_pressure.v1`, and a Composition archetype `openEHR-EHR-COMPOSITION.encounter.v1`.
-** Determine whether a variable name is needed for each archetype class expression or not. This is useful if the reference to the archetype class expression is required by other AQL clauses. Without using variable names for the archetype expressions, the two archetype expressions are:
+*Archetype expressions*
+
+* To write archetype expressions in the `FROM` clause, the archetypes required for the scenario must be determined, since archetypes are used to represent clinical concepts. The easy way to identify archetypes for a scenario is to identify clinical concepts mentioned in the scenario. Each clinical concept is generally associated with one archetype. Two clinical concepts are mentioned in the above scenario: 'blood pressure' and 'health encounter'. From these concepts the two archetypes used in query are identified: an Observation archetype `openEHR-EHR-OBSERVATION.blood_pressure.v1`, and a Composition archetype `openEHR-EHR-COMPOSITION.encounter.v1`.
+* Determine whether a variable name is needed for each archetype class expression or not. This is useful if the reference to the archetype class expression is required by other AQL clauses. Without using variable names for the archetype expressions, the two archetype expressions are:
 
 --------
 COMPOSITION [openEHR-EHR-COMPOSITION.encounter.v1]
 OBSERVATION [openEHR-EHR-OBSERVATION.blood_pressure.v1]
 --------
 
-* *Containment expression*. The openEHR RM is used to identify the hierarchical relationships among the found archetypes so as to define the containment expression. For example, a Composition archetype is the parent of an Observation archetype, so the AQL query looks as follows:
+*Containment expression*. 
+
+The openEHR RM is used to identify the hierarchical relationships among the found archetypes so as to define the containment expression. For example, a Composition archetype is the parent of an Observation archetype, so the AQL query looks as follows:
 
 --------
 FROM EHR [ehr_id/value=$ehrUid] CONTAINS COMPOSITION [openEHR-EHR-COMPOSITION.encounter.v1]
@@ -43,7 +48,7 @@ The `WHERE` clause represents all query criteria that cannot be represented in t
 .. Write the Identified path for the systolic data value. A class variable name is needed as the reference to the blood pressure class expression defined in the `FROM` clause, so a variable name `obs` is added into the `FROM` clause. A path to systolic data value is also required to form the identified path. Two tools can be used to get the path: the {openehr_awb}[openEHR ADL Workbench] or {template_designer}[Template Designer]. The path to the systolic data value is `/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value`.  
 .. Get appropriate operator: `>=` is chosen for criterion 1.
 .. Get the criteria value - 140. The query statement including the identified expression for criterion 1) is shown below:
-
++
 --------
 FROM 
     EHR [ehr_id/value=$ehrUid] CONTAINS COMPOSITION [openEHR-EHR-COMPOSITION.encounter.v1]
@@ -53,13 +58,13 @@ WHERE
 --------
 
 . Write an identified expression for criterion 2). Following the previous instruction to write the identified expression for criterion 2) which is shown as:
-
++
 --------
 obs/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/value >= 90
 --------
 
 . Find the appropriate boolean operator to join criterion 1) and 2) - OR. The query statement looks like:
-
++
 --------
 FROM 
     EHR [ehr_id/value=$ehrUid] CONTAINS COMPOSITION [openEHR-EHR-COMPOSITION.encounter.v1]
@@ -74,7 +79,7 @@ Writing a `SELECT` clause depends on determining:
 
 . What return data is required. The afore-mentioned scenario requires abnormal blood pressure values as return values, including both systolic pressure and diastolic pressure.
 . Write the appropriate identified path to the required item (variable name is required if the class object is required). Multiple identified path is separated using comma. For this particular scenario, two identified paths are found for systolic and diastolic data value by following Step 2. The completed query statement looks like:
-
++
 --------
 SELECT
     obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude,

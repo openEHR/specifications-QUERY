@@ -6,13 +6,17 @@ This document describes the syntax of the openEHR Archetype Query Language (AQL)
 
 == Status
 
-This specification is in the {spec_status} state. The development version of this document can be found at http://www.openehr.org/releases/QUERY/latest/AQL.html.
+This specification is in the {spec_status} state. The latest development version of this document can be found at {openehr_query_aql}[{openehr_domain}/releases/QUERY/latest/AQL.html].
 
 Known omissions or questions are indicated in the text with a 'to be determined' paragraph, as follows:
 [.tbd]
 *TBD*: (example To Be Determined paragraph)
 
-Users are encouraged to comment on and/or advise on these paragraphs as well as the main content.  Feedback should be provided either on the http://lists.openehr.org/mailman/listinfo/openehr-technical_lists.openehr.org[technical mailing list], or on the https://openehr.atlassian.net/browse/SPECPR/?selectedTab=com.atlassian.jira.jira-projects-plugin:issues-panel[specifications issue tracker].
+Users are encouraged to comment on and/or advise on these paragraphs as well as the main content.  Feedback should be provided either on the {openehr_technical_list}[technical mailing list], or on the {openehr_jira_prs_query}[specifications issue tracker].
+
+== Original Source
+
+The text of this specification was originally posted on the {openehr_wiki_root}/spaces/spec/pages/4915203/AQL-+Archetype+Query+Language[openEHR wiki], and was used by the global openEHR community in that form.
 
 == Tooling status
 
@@ -21,7 +25,7 @@ Users are encouraged to comment on and/or advise on these paragraphs as well as 
 The following features are likely to be needed, but are not yet implemented in tools:
 
 * `TOP`
-*` XOR`. Currently `AND`, `OR`, `NOT`, `EXISTS` are supported in `WHERE` clause.
+* `XOR`. Currently `AND`, `OR`, `NOT`, `EXISTS` are supported in `WHERE` clause.
 * functions are not supported.
 * embedded query is not supported
 * `ORDER BY`

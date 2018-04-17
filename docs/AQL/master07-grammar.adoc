@@ -1,4 +1,4 @@
-== AQL Syntax Specification
+= AQL Syntax Specification
 
 The following Antlr grammar expresses the AQL syntax.
 
