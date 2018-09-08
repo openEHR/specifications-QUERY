@@ -344,7 +344,7 @@ WHERE composition/context/start_time <= '1986-01-01'  // complete calendar date 
 
 ==== URI
 
-URI leaf data is enclosed within curly braces after `matches` operator. URI can be expressed as a normal URI described in  <<rfc3986>>. URIs are not case sensitive. In AQL, a URI can be either terminology URI or an EHR URI.
+URI leaf data is enclosed within curly braces after `matches` operator. URI can be expressed as a normal URI described in {rfc3986}[IETF RFC 3986]. URIs are not case sensitive. In AQL, a URI can be either terminology URI or an EHR URI.
 
 ==== Terminology URI 
 
