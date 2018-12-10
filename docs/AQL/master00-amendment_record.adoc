@@ -7,9 +7,9 @@
 4+^h|*R E L E A S E{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}1.0.2*
 
 |[[latest_issue]]1.0.0
-|{openehr_jira}/SPECQUERY-6[SPECQUERY-6] Publish original AQL wiki page as formal specification; +
+|{spec_tickets}/SPECQUERY-6[SPECQUERY-6^] Publish original AQL wiki page as formal specification; +
  Various reformatting, adjustment of headings; +
- Fix missing square brackets on query example. ({openehr_jira}/SPECPR-236[SPECPR-236])
+ Fix missing square brackets on query example. ({spec_tickets}/SPECPR-236[SPECPR-236^])
 |openEHR SEC
 |[[latest_issue_date]]10 Jan 2017
 

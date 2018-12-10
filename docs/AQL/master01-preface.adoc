@@ -6,7 +6,7 @@ This document describes the syntax of the openEHR Archetype Query Language (AQL)
 
 == Status
 
-This specification is in the {spec_status} state. The latest development version of this document can be found at {openehr_query_aql}[{openehr_query_aql}].
+This specification is in the {spec_status} state. The latest development version of this document can be found at {openehr_query_aql}[{openehr_query_aql}^].
 
 Known omissions or questions are indicated in the text with a 'to be determined' paragraph, as follows:
 [.tbd]
@@ -14,15 +14,15 @@ Known omissions or questions are indicated in the text with a 'to be determined'
 
 == Feedback
 
-Feedback may be provided on the {openehr_technical_list}[technical mailing list].
+Feedback may be provided on the {openehr_technical_list}[technical mailing list^].
 
-Issues may be raised on the {openehr_jira_prs_query}[specifications Problem Report tracker].
+Issues may be raised on the {component_prs}[specifications Problem Report tracker^].
 
-To see changes made due to previously reported issues, see the {openehr_jira_crs_query}[{component} component Change Request tracker].
+To see changes made due to previously reported issues, see the {component_history}[{component} component Change Request tracker^].
 
 == Original Source
 
-The text of this specification was originally posted on the {openehr_wiki_root}/spaces/spec/pages/4915203/AQL-+Archetype+Query+Language[openEHR wiki], and was used by the global openEHR community in that form.
+The text of this specification was originally posted on the {openehr_wiki_root}/spaces/spec/pages/4915203/AQL-+Archetype+Query+Language[openEHR wiki^], and was used by the global openEHR community in that form.
 
 == Tooling status
 
