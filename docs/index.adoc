@@ -13,9 +13,6 @@
 :keywords: query languages
 :description: openEHR Query Specifications
 :sectanchors:
-:query_release: latest
-:jira-roadmap: https://openehr.atlassian.net/projects/SPECQUERY?selectedItem=com.atlassian.jira.jira-projects-plugin%3Arelease-page&status=unreleased
-:jira-hist-issues: https://openehr.atlassian.net/projects/SPEC?selectedItem=com.atlassian.jira.jira-projects-plugin:release-page&status=released
 
 include::{ref_dir}/docs/boilerplate/global_vars.adoc[]
 
@@ -29,17 +26,16 @@ image::{openehr_logo}["openEHR logo",align="center"]
 
 // Use the following version for 'latest'
 ifeval::["{query_release}" == "latest"]
-:jira-issues: https://openehr.atlassian.net/issues/?filter=10723
 [.title-para]
-{jira-roadmap}[Roadmap] | {jira-issues}[Current Issues] | {jira-hist-issues}[Change History]
+{component_prs}[Open Issues^] | {component_roadmap}[Roadmap^] | {component_history}[Previous Releases^] 
 endif::[]
 
 // Use the following version for a named release
 ifeval::["{query_release}" != "latest"]
-:jira-pr-release: https://openehr.atlassian.net/projects/SPECPR/versions/11564
-:jira-cr-release: https://openehr.atlassian.net/projects/SPECQUERY/versions/11260
+:query_prs_fixed: {component_prs_fixed}{query_release}/issues
+:query_crs_done: {component_crs_done}{query_release}/changes
 [.title-para]
-{jira-pr-release}[Problems Fixed] | {jira-cr-release}[Changes Implemented] | {jira-roadmap}[Roadmap] | {jira-hist-issues}[Change History]
+{query_prs_fixed}[Issues Fixed^] | {query_crs_done}[Changes Implemented^] | {component_roadmap}[Roadmap^] | {component_history}[Change History^]
 endif::[]
 
 == Specifications
