@@ -19,7 +19,7 @@
 |13 Jan 2012
 
 |
-|Initial Writing, based on https://openehr.atlassian.net/wiki/display/spec/Archetype+Query+Language+Description[openEHR AQL wiki page].
+|Initial Writing, based on {openehr_wiki_root}/display/spec/Archetype+Query+Language+Description[openEHR AQL wiki page].
 |C Ma +
  H Frankel +
  T Beale
