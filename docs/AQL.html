@@ -174,7 +174,7 @@
 <div class="sectionbody">
 <div class="imageblock" style="text-align: center">
 <div class="content">
-<img src="https://specifications.openehr.org/images/openehr_logo_large.png" alt="openEHR logo">
+<img src="https://specifications.openehr.org/images/openEHR_logo_RGB.svg" alt="openEHR logo">
 </div>
 </div>
 </div>
@@ -208,7 +208,7 @@
 </table>
 <div class="imageblock" style="text-align: center">
 <div class="content">
-<img src="openehr_block_diagram.svg" alt="openEHR components" width="60%">
+<object type="image/svg+xml" data="openehr_block_diagram.svg" width="60%"><span class="alt">openEHR components</span></object>
 </div>
 </div>
 <table class="tableblock frame-all grid-all spread">
@@ -218,7 +218,7 @@
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-center valign-top" colspan="2">&#169; 2008 - 2018 The openEHR Foundation</th>
+<th class="tableblock halign-center valign-top" colspan="2">&#169; 2008 - 2019 The openEHR Foundation</th>
 </tr>
 </thead>
 <tbody>
@@ -258,7 +258,7 @@
 </thead>
 <tbody>
 <tr>
-<th class="tableblock halign-center valign-top" colspan="4"><p class="tableblock"><strong>R E L E A S E&#160;&#160;&#160;&#160;&#160;1.0.2</strong></p></th>
+<th class="tableblock halign-center valign-top" colspan="4"><p class="tableblock"><strong>Release 1.0.2</strong></p></th>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="latest_issue"></a>1.0.0</p></td>
@@ -1136,7 +1136,7 @@ WHERE composition/context/start_time &lt;= '1986-01-01'  // complete calendar da
 <div class="sect4">
 <h5 id="_uri"><a class="anchor" href="#_uri"></a>3.9.2.1. URI</h5>
 <div class="paragraph">
-<p>URI leaf data is enclosed within curly braces after <code>matches</code> operator. URI can be expressed as a normal URI described in <a href="http://www.ietf.org/rfc/rfc3986">IETF RFC 3986</a>. URIs are not case sensitive. In AQL, a URI can be either terminology URI or an EHR URI.</p>
+<p>URI leaf data is enclosed within curly braces after <code>matches</code> operator. URI can be expressed as a normal URI described in <a href="https://www.ietf.org/rfc/rfc3986">IETF RFC 3986</a>. URIs are not case sensitive. In AQL, a URI can be either terminology URI or an EHR URI.</p>
 </div>
 </div>
 <div class="sect4">
@@ -2135,7 +2135,7 @@ CONTAINS OBSERVATION [openEHR-EHR-OBSERVATION.blood_pressure.v1]</pre>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>Write the Identified path for the systolic data value. A class variable name is needed as the reference to the blood pressure class expression defined in the <code>FROM</code> clause, so a variable name <code>obs</code> is added into the <code>FROM</code> clause. A path to systolic data value is also required to form the identified path. Two tools can be used to get the path: the <a href="/downloads/ADLworkbench">openEHR ADL Workbench</a> or <a href="/downloads/modellingtools">Template Designer</a>. The path to the systolic data value is <code>/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value</code>.</p>
+<p>Write the Identified path for the systolic data value. A class variable name is needed as the reference to the blood pressure class expression defined in the <code>FROM</code> clause, so a variable name <code>obs</code> is added into the <code>FROM</code> clause. A path to systolic data value is also required to form the identified path. Two tools can be used to get the path: the <a href="https://www.openehr.org/downloads/ADLworkbench">openEHR ADL Workbench</a> or <a href="https://www.openehr.org/downloads/modellingtools">Template Designer</a>. The path to the systolic data value is <code>/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value</code>.</p>
 </li>
 <li>
 <p>Get appropriate operator: <code>&gt;=</code> is chosen for criterion 1.</p>
