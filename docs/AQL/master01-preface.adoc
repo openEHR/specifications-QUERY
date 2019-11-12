@@ -37,28 +37,6 @@ The following features are likely to be needed, but are not yet implemented in t
 * `ORDER BY`
 * `TIMEWINDOW`
 
-=== AQL features that are proposed, but not finalised
-
-==== Arithmetic functions
-
-It has been proposed that AQL would support some basic arithmetic functions, such as addition (plus) , subtraction (minus) . Multiplication, and division may be supported as well. We do not have any scenario requiring for these two functions yet.
-
-Most cases, it is required that the left operand and the right operand must be the same type in order to do the calculation, e.g. numeric types. openEHR RM supports addition and subtraction for the types of: `DV_QUANTITY`, `DV_COUNT`, `DV_INTERVAL`, `DV_PROPORTION`, `DV_DATE_TIME`, `DV_DATE`, and `DV_TIME`. Again, it is required that the left and right operands must be the same type. However, one exception to this is that openEHR RM also supports subtraction between all subtypes of `DV_TEMPORAL` and type of `DV_DURATION`. AQL would support these arithmetic functions that openEHR RM supports.
-
-The example below shows a scenario which requires that a Composition report (c1) is issued in the last year. It illustrates that a type of ISO 8601 date string (`current-date()`) subtracts a type of ISO 8601 interval string (`P1Y`).
-
---------
-c1/context/other_context/items[at0006]/items[at0013]/value > current-date() - P1Y
---------
-
-==== Other functions
-
-It is proposed that AQL may also support other functions, such as:
-
-* `current-date()`: a build-in function returning the current date value in ISO date string format. 
-* `current-date-time()`: a build-in function returning the current date time value in ISO date/time string format. 
-* `max`: a build-in function returning the max value out of an expression.
-
 == Further discussions
 
 The existing AQL grammar and syntax could be further enhanced in the following areas:
@@ -68,12 +46,12 @@ The existing AQL grammar and syntax could be further enhanced in the following a
 --------
 let $systolic_bp="data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude"
 let $diastolic_bp="data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude"
- 
-SELECT 
+
+SELECT
     obs/$systolic_bp, obs/$diastolic_bp
-FROM 
-    EHR [ehr_id/value=$ehrUid] CONTAINS COMPOSITION [openEHR-EHR-COMPOSITION.encounter.v1] 
+FROM
+    EHR [ehr_id/value=$ehrUid] CONTAINS COMPOSITION [openEHR-EHR-COMPOSITION.encounter.v1]
         CONTAINS OBSERVATION obs [openEHR-EHR-OBSERVATION.blood_pressure.v1]
-WHERE 
+WHERE
     obs/$systolic_bp>= 140 OR obs/$diastolic_bp>=90
 --------
