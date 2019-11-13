@@ -36,22 +36,3 @@ The following features are likely to be needed, but are not yet implemented in t
 * embedded query is not supported
 * `ORDER BY`
 * `TIMEWINDOW`
-
-== Further discussions
-
-The existing AQL grammar and syntax could be further enhanced in the following areas:
-
-* Reduce the length of the query statement. The use of archetype path in AQL query makes the query lengthy and hard to read. Local variables with meaningful names that are assigned with path can be used to reduce the length of the query as well as improve readability of the query. One example is shown below:
-
---------
-let $systolic_bp="data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude"
-let $diastolic_bp="data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude"
-
-SELECT
-    obs/$systolic_bp, obs/$diastolic_bp
-FROM
-    EHR [ehr_id/value=$ehrUid] CONTAINS COMPOSITION [openEHR-EHR-COMPOSITION.encounter.v1]
-        CONTAINS OBSERVATION obs [openEHR-EHR-OBSERVATION.blood_pressure.v1]
-WHERE
-    obs/$systolic_bp>= 140 OR obs/$diastolic_bp>=90
---------
