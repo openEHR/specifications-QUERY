@@ -33,7 +33,7 @@ Below is an example of AQL statement. This statement returns all blood pressure 
 ----
 SELECT                                                          -- Select clause
     o/data[at0001]/.../items[at0004]/value AS systolic,         -- Identified path with named result
-    o/data[at0001]/.../items[at0005]/value AS systolic,
+    o/data[at0001]/.../items[at0005]/value AS diastolic,
 FROM                                                            -- From clause
     EHR[ehr_id=$ehrId]                                          -- RM class expression
         CONTAINS                                                -- containment
