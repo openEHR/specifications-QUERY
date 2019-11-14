@@ -2,15 +2,17 @@
 
 == Overview
 
-AQL has `SELECT`, `FROM`, `WHERE` and `ORDER BY`  clauses. openEHR path syntax is used to locate any node or data values within archetypes. The `SELECT` clause uses openEHR path syntax to indicate expected archetypes, elements, or data values that are need to be returned. The `FROM` clause uses containment mechanisms indicating the scope of the query data source. `WHERE` clause utilises archetype path to set query criteria on archetypes or any node within the archetypes. The following sections introduce the AQL syntax in detail.
+AQL has five clauses: `SELECT`, `FROM`, `WHERE`, `ORDER BY`, and `TIMEWINDOW`. The `SELECT` clause specifies the data elements to be returned. The `FROM` clause specifies the result source and the corresponding containment criteria. The `WHERE` clause specifies data value criteria within the result source. The `ORDER BY` clause indicates the data items used to order the returned result set. `TIMEWINDOW` clause is to constrain the query to data that was available in the system within the specified time criteria.
+
+In AQL, openEHR path syntax is used to locate any node or data values defined within archetypes. The `SELECT` clause uses openEHR path syntax to indicate expected archetypes, elements, or data values that are need to be returned. The `FROM` clause uses containment mechanisms indicating the scope of the query data source. `WHERE` clause uses archetype path to set query criteria on archetypes or any node within the archetypes. The following sections introduce the AQL syntax in detail.
 
 == Reserved words and characters
 
 AQL has the following reserved keywords and characters:
 
-* `SELECT, FROM, WHERE, ORDER BY, TOP, AND, OR`
-* `CONTAINS, max, now, current-date, current-date-time`
-* `TIMEWINDOW` (need to be confirmed)
+* `SELECT`, `FROM`, `WHERE`, `ORDER BY`, `TIMEWINDOW`
+* `TOP`, `AND`, `OR`, `NOT`, `CONTAINS`
+* `max`, `now`, `current-date`, `current-date-time`
 * `matches`, `in`, `exists`, `not in`
 * `"` and `'`: double and single quote characters are used to delimit string values;
 * `|`: bar characters are used to delimit intervals;

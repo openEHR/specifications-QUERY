@@ -25,9 +25,7 @@ AQL has some other features which can be found from other query languages:
 . Users can specify their preference on the retrieved data, such as ordering preferences, or total number of retrieved results.
 . Supporting queries for individual clinical subjects at the point of care, administrative purposes and clinical research purposes.
 
-== Structure & Example
-
-AQL has five clauses: `SELECT`, `FROM`, `WHERE`, `ORDER BY`, and `TIMEWINDOW`. The `SELECT` clause specifies the data elements to be returned. The `FROM` clause specifies the result source and the corresponding containment criteria. The `WHERE` clause specifies data value criteria within the result source. The `ORDER BY` clause indicates the data items used to order the returned result set. `TIMEWINDOW` clause is to constrain the query to data that was available in the system within the specified time criteria.
+== AQL example
 
 Below is an example of AQL statement. This statement returns all blood pressure values, contained in COMPOSITIONs defined by the `openEHR-EHR-COMPOSITION.encounter.v1` archetype which contains OBSERVATIONs defined by the `openEHR-EHR-OBSERVATION.blood_pressure.v1` archetype, where the systolic value is greater or equal to 140 or whose diastolic value is greater or equal to 90, within a specified EHR (which ehr_id is equals to the value hold by the variable $ehrId). AQL syntax is a synthesis of SQL structural syntax and openEHR path syntax.
 
