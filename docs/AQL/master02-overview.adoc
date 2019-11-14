@@ -6,13 +6,13 @@ Currently, the available query languages, such as SQL, XQuery, or Object-Oriente
 
 == What is AQL?
 
-Archetype Query Language (AQL) is a declarative query language developed specifically for expressing queries used for searching and retrieving the clinical data found in archetype-based EHRs. It is applied to the openEHR EHR Reference Model (RM) and the openEHR clinical archetypes, but the syntax is independent of applications, programming languages, system environment, and storage models. The minimum requirement for data to be querying with AQL (including with archetype structures and terminology) is for the data to be marked at a fine granularity with the appropriate archetype codes and terminology codes. This may be native openEHR-structured data, or legacy system data to which the relevant data markers (mainly archetype paths and terminology codes) have been added. Unlike other query languages, such as SQL or XQuery, AQL expresses the queries at the archetype level, i.e. semantic level, other than at the data instance level. This is the key in achieving sharing queries across system boundaries or enterprise boundaries.
+Archetype Query Language (AQL) is a declarative query language developed specifically for expressing queries used for searching and retrieving the clinical data found in archetype-based EHRs. It is applied to the openEHR EHR Reference Model (RM) and the openEHR clinical archetypes, but the syntax is independent of applications, programming languages, system environment, and storage models. The minimum requirement for data to be queried with AQL (including with archetype structures and terminology) is for the data to be marked at a fine granularity with the appropriate archetype codes and terminology codes. This may be native openEHR-structured data, or legacy system data to which the relevant data markers (mainly archetype paths and terminology codes) have been added. Unlike other query languages, such as SQL or XQuery, AQL expresses the queries at the archetype level, i.e. semantic level, other than at the data instance level. This is the key in achieving sharing queries across system boundaries or enterprise boundaries.
 
 AQL has the following distinctive features:
 
 . the utilization of openEHR archetype path syntax in AQL. openEHR path syntax is used to locate clinical statements and data values within them using Archetypes. This path syntax is used to represent the query criteria and returned results. It allows setting query criteria using archetype and node identifiers, data values within the archetypes, and class attributes defined within the openEHR RM. It also allows the returned results to be top-level archetyped RM objects, data items within the archetypes or RM attribute values.
 . the utilization of containment mechanisms to indicate the data hierarchy and constrain the source data to which the query is applied.
-. the utilization of ADL-like operator syntaxes, such as matches, exists, in, negation. 
+. the utilization of ADL-like operator syntaxes, such as matches, exists, in, negation.
 . Neutral expression syntax. AQL does not have any dependencies on the underlying RM of the archetypes. It is neutral to system implementation and environment.
 . Supporting queries with logical time-based data rollback.
 
@@ -39,8 +39,8 @@ FROM                                                            -- From clause
         CONTAINS                                                -- containment
             COMPOSITION c                                       -- RM class expression
                 [openEHR-EHR-COMPOSITION.encounter.v1]          -- archetype predicate
-        CONTAINS 
-            OBSERVATION o 
+        CONTAINS
+            OBSERVATION o
                 [openEHR-EHR-OBSERVATION.blood_pressure.v1]
 WHERE                                                           -- Where clause
     o/data[at0001]/.../items[at0004]/value/value >= 140 OR      -- value comparison
