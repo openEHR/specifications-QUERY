@@ -17,6 +17,7 @@ AQL has the following distinctive features:
 . supports time-based conditions to query historical versions of data.
 
 AQL has some other features which can be found from other query languages:
+
 . Supporting naming returned results.
 . Supporting query criteria parameters.
 . Supporting arithmetic operations (such as count, addition, subtraction, multiplication, and division), relational operations (`>`, `>=`, `=`, `!=`, `\<=`, `<`) and Boolean operations (`OR`, `AND`, `XOR`, `NOT`).
@@ -26,23 +27,23 @@ AQL has some other features which can be found from other query languages:
 
 == Structure & Example
 
-Like SQL, AQL has five clauses: `SELECT`, `FROM`, `WHERE`, `ORDER BY`, and `TIMEWINDOW`. The `SELECT` clause specifies the data elements to be returned. The `FROM` clause specifies the result source and the corresponding containment criteria. The WHERE clause specifies data value criteria within the result source. The `ORDER BY` clause indicates the data items used to order the returned result set. `TIMEWINDOW` clause is to constrain the query to data that was available in the system within the specified time criteria.
+AQL has five clauses: `SELECT`, `FROM`, `WHERE`, `ORDER BY`, and `TIMEWINDOW`. The `SELECT` clause specifies the data elements to be returned. The `FROM` clause specifies the result source and the corresponding containment criteria. The `WHERE` clause specifies data value criteria within the result source. The `ORDER BY` clause indicates the data items used to order the returned result set. `TIMEWINDOW` clause is to constrain the query to data that was available in the system within the specified time criteria.
 
 Below is an example of AQL statement. This statement returns all blood pressure values where systolic value is greater or equal to 140 or whose diastolic value is greater or equal to 90 within a specified EHR. AQL syntax is a synthesis of SQL structural syntax and openEHR path syntax.
 
 ----
-SELECT                                                          -- Select clause
-    o/data[at0001]/.../items[at0004]/value AS systolic,         -- Identified path with named result
+SELECT                                                       -- Select clause
+    o/data[at0001]/.../items[at0004]/value AS systolic,      -- Identified path with named result
     o/data[at0001]/.../items[at0005]/value AS diastolic,
-FROM                                                            -- From clause
-    EHR[ehr_id=$ehrId]                                          -- RM class expression
-        CONTAINS                                                -- containment
-            COMPOSITION c                                       -- RM class expression
-                [openEHR-EHR-COMPOSITION.encounter.v1]          -- archetype predicate
+FROM                                                         -- From clause
+    EHR[ehr_id=$ehrId]                                       -- RM class expression
+        CONTAINS                                             -- containment
+            COMPOSITION c                                    -- RM class expression
+                [openEHR-EHR-COMPOSITION.encounter.v1]       -- archetype predicate
         CONTAINS
             OBSERVATION o
                 [openEHR-EHR-OBSERVATION.blood_pressure.v1]
-WHERE                                                           -- Where clause
-    o/data[at0001]/.../items[at0004]/value/value >= 140 OR      -- value comparison
+WHERE                                                        -- Where clause
+    o/data[at0001]/.../items[at0004]/value/value >= 140 OR   -- value comparison
     o/data[at0001]/.../items[at0005]/value/value >= 90
 ----
