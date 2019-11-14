@@ -6,6 +6,8 @@ AQL has five clauses: `SELECT`, `FROM`, `WHERE`, `ORDER BY`, and `TIMEWINDOW`. T
 
 In AQL, openEHR path syntax is used to locate any node or data values defined within archetypes. The `SELECT` clause uses openEHR path syntax to indicate expected archetypes, elements, or data values that are need to be returned. The `FROM` clause uses containment mechanisms indicating the scope of the query data source. `WHERE` clause uses archetype path to set query criteria on archetypes or any node within the archetypes. The following sections introduce the AQL syntax in detail.
 
+It is important to state that if no `ORDER BY` clause is specified, then the query result doesn't have any default ordering criteria defined by this specification. Ordering could be defined by each implementation or be random. In terms of compliance to this specification, default ordering in results is undefined.
+
 == Reserved words and characters
 
 AQL has the following reserved keywords and characters:
