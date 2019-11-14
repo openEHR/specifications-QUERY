@@ -14,7 +14,7 @@ AQL has the following distinctive features:
 . the utilization of containment mechanisms to indicate the data hierarchy and constrain the source data to which the query is applied.
 . the utilization of ADL-like operator syntaxes, such as matches, exists, in, negation.
 . Neutral expression syntax. AQL does not have any dependencies on the underlying RM of the archetypes. It is neutral to system implementation and environment.
-. Supporting queries with logical time-based data rollback.
+. supports time-based conditions to query historical versions of data.
 
 AQL has some other features which can be found from other query languages:
 . Supporting naming returned results.
