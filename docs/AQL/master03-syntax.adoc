@@ -30,13 +30,13 @@ The openEHR path syntax has been described in detail (see the {openehr_overview}
 
 An archetype path is the path referring to any node within an archetype. The following is an ADL workbench screen shot of apgar observation node map. The table below shows some examples.
 
-[width="100%",cols="1,1,3",options="header",]
+[width="100%",cols="1,1,1,1,1",options="header",]
 |===
-|Archetype RM type  |Archetype node name    |Path syntax
+|Archetype RM type |Archetype node name |Archetype ID                               |Path syntax  | Referenced RM Type
 
-|`OBSERVATION`      |Apgar score            |`/`
-|`OBSERVATION`      |1 minute               |`/data[at0002]/events[at0003]`
-|`OBSERVATION`      |Heart rate             |`/data[at0002]/events[at0003]/data[at0001]/items[at0005]` x
+|`OBSERVATION`     |Apgar score         |openEHR-EHR-OBSERVATION.apgar.v1           |`/`  | `OBSERVATION`
+|`OBSERVATION`     |Heart rate          |openEHR-EHR-OBSERVATION.pulse.v1           |`/data[at0002]/events[at0003]/data[at0001]/items[at0004]`  | `ELEMENT`
+|`OBSERVATION`     |Systolic            |openEHR-EHR-OBSERVATION.blood_pressure.v2  |`/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value`  | `DV_QUANTITY`
 |===
 
 === openEHR path examples - path to RM class attributes
@@ -45,7 +45,7 @@ Another type of openEHR path is the path pointing to an attribute of openEHR Ref
 
 [width="100%",cols="2,1",options="header",]
 |===
-|OpenEHR RM attribute name          |Path syntax
+|openEHR RM attribute name          |Path syntax
 
 |`COMPOSITION.category`             |`/category`
 |`COMPOSITION.context.start_time`   |`/context/start_time`
