@@ -127,6 +127,13 @@ A node predicate is also a shortcut of a standard predicate. It has the followin
 --------
 [at0002]
 --------
++
+The correspondent standard predicate would be:
++
+--------
+[archetype_node_id=at0002]
+--------
+
 
 * Containing an `archetype_node_id` and a `name value/criterion`, e.g.:
 +
@@ -134,12 +141,26 @@ A node predicate is also a shortcut of a standard predicate. It has the followin
 [at0002 and name/value=$nameValue]
 [at0002 and name/value='real name value']
 --------
++
+The correspondent standard predicates would be:
++
+--------
+[archetype_node_id=at0002 and name/value=$nameValue]
+[archetype_node_id=at0002 and name/value='real name value']
+--------
 
 * Containing an `archetype_node_id` and a shortcut of a `name/value` criterion, e.g.:
 +
 --------
 [at0002, $nameValue]
 [at0002, 'real name value']
+--------
++
+The correspondent standard predicates would be:
++
+--------
+[archetype_node_id=at0002 and name/value=$nameValue]
+[archetype_node_id=at0002 and name/value='real name value']
 --------
 
 * The above three forms are the most common node predicates. A more advanced form is to include a general criterion instead of the `name/value` criterion within the predicate. The general criterion consists of left operand, operator, and right operand, e.g.:
