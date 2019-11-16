@@ -68,6 +68,17 @@ AQL syntax supports parameterisation. AQL parameters are used to indicate criter
 
 The parameters can be EHR specific (such as the parameter of EHR identifier or EHR creation date time), archetype specific (such as an archetype identifier, or archetype constraints), or template specific (such as a template identifier or template constraints).
 
+=== Parameter syntax
+
+A parameter always starts with a dollar sign `$` followed by the parameter name, e.g. `$ehrUid`. The parameter name can consist of letters, digits and underscores. It cannot have spaces and it cannot be an AQL reserved word.
+
+A parameter can be used for any criteria values within an AQL statement, e.g.:
+
+* within a predicate: `[$archetypeId]`, `[at0003, $nameValue]`, `[ehr_id/value=$ehrId]`
+* withing a WHERE criteria: `o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value > $systolicCriteria`
+
+_Note: in the WHERE criteria, when the value of the parameter is not a number or boolean value, it should be substituted with the correspondent quotes added to the value, for instance `o/../.. = $textVariable`, when substituted should look like this `o/../.. = "value"` (single or double quotes could be used)._
+
 === When parameters are needed
 
 Parameters are needed when the same AQL query statement is used with different criteria values. This AQL example is to return all abnormal blood pressure values for a single specific EHR. This query has a parameter `$ehrUid`. This parameter will be substituted by a specific `EHR.ehr_id` value at run time. Consequently, this query can be reused for all EHRs either within an EHR system or by other EHR systems (assuming these EHR systems support AQL).
@@ -80,14 +91,6 @@ If a query needs to be reusable across different EHR systems, any query paramete
 
 There are no specific guidelines on how to resolve query parameters. Generally speaking, a parameter name is used as a key (or a key is associated with a parameter name) and the key needs to be unique within the boundary where the parameters are resolved. The EHR system or application needs to have the API functions to get the real value with a given parameter name or key.
 
-=== Parameter syntax
-
-A parameter always starts with a dollar sign `$` followed by the parameter name, e.g. `$ehrUid`. The parameter name can consist of letters, digits and underscores. It cannot have spaces and it cannot be an AQL reserved word.
-
-A parameter can be used for any criteria values within an AQL statement, e.g.:
-
-* within a predicate: `[$archetypeId], [at0003, $nameValue], [ehr_id/value=$ehrId]`
-* outside a predicate: `o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value > $systolicCriteria`
 
 == Predicates
 
