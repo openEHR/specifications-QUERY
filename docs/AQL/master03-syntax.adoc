@@ -24,7 +24,7 @@ Keywords in AQL are not case sensitive, so `SELECT`, `Select`, `select`, `SeLeCt
 
 == openEHR path syntax
 
-The openEHR path syntax has been described in detail (see the {openehr_overview}[Architecture Overview specification]). AQL utilises the basic openEHR path syntax to represent both coarse-grained and fine-grained archetype nodes and openEHR class instances and attributes. The syntax details are not repeated here. A set of openEHR path examples are provided.
+The openEHR path syntax has been described in detail (see the {openehr_overview}[Architecture Overview specification]). AQL utilises the basic openEHR path syntax to reference both coarse-grained (objects) and fine-grained (data values) archetype nodes, and openEHR class instances and attributes (when referencing something that is not defined in an archetype but is part of the openEHR Reference Model). A set of openEHR path examples are provided on this section.
 
 === openEHR path examples - archetype path
 
