@@ -114,9 +114,23 @@ An archetype predicate is a shortcut of a standard predicate, i.e. the predicate
 
 --------
 FROM EHR [ehr_id/value='1234']
-CONTAINS COMPOSITION c [openEHR-EHR-COMPOSITION.encounter.v1]
-CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION.blood_pressure.v1]
+  CONTAINS COMPOSITION c [openEHR-EHR-COMPOSITION.encounter.v1]
+    CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION.blood_pressure.v1]
 --------
+
+This predicates could also be written as `Standard predicates`:
+
+--------
+FROM EHR e
+  CONTAINS COMPOSITION c
+    CONTAINS OBSERVATION o
+WHERE
+  e/ehr_id/value = '1234' AND
+  c/archetype_node_id = 'openEHR-EHR-COMPOSITION.encounter.v1' AND
+  o/archetype_node_id = 'openEHR-EHR-OBSERVATION.blood_pressure.v1'
+--------
+
+This equivalence could be used by implementers of AQL to transform predicates into their standard form, as a canonical representation of the query, which can simplified it's processing, validation, evaluation and transformation into specific database query languages.
 
 === Node predicate
 
