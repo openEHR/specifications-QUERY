@@ -187,9 +187,9 @@ A node predicate defines criteria on fine-grained data. It is only used within a
 
 == Operators
 
-=== Basic operators
+=== Comparison operators
 
-The table below shows the basic AQL operators, meaning and example.
+The table below shows the supported AQL comparison operators, meaning and example.
 
 [width="100%",cols="1,2,5",options="header",]
 |===
@@ -201,11 +201,11 @@ The table below shows the basic AQL operators, meaning and example.
 |<          |Smaller than               |`o/data[at0001]/.../data[at0003]/items[at0004]/value/value <160`
 |\<=        |Smaller than or equal to   |`o/data[at0001]/.../data[at0003]/items[at0004]/value/value <=160`
 |!=         |not equals to              |`c/archetype_details/template_id/value != ''`
+|matches    |advanced matcher           |`o/data[at0002]/.../name/defining_code/code_string matches {'18919-1', '18961-3', '19000-9'}`
 |===
 
-=== Advanced operators
 
-==== matches
+=== matches operator definition
 
 The matches operator is used in the `WHERE` clause. This operator needs left operand and right operand. Left operand is an AQL identified path. Right operand is enclosed within curly braces. Right operand of matches operator has three forms:
 
@@ -215,7 +215,7 @@ The matches operator is used in the `WHERE` clause. This operator needs left ope
 SELECT
     o/data[at0002]/events[at0003]/data/items[at0015]/items[at0018]/name
 FROM
-    Ehr [uid=$ehrUid]
+    EHR [uid=$ehrUid]
         CONTAINS Composition c
             CONTAINS Observation o[openEHR-EHR-OBSERVATION.microbiology.v1]
 WHERE
@@ -235,6 +235,9 @@ WHERE
     c/name/value='Current Problems'
     AND diagnosis/data/items[at0002.1]/value/defining_code matches { terminology://Snomed-CT/hierarchy?rootConceptId=50043002 }
 --------
+
+
+=== Logical operators
 
 ==== EXISTS
 
@@ -539,7 +542,7 @@ WHERE
 Identified expression specifies the criteria within `WHERE` clause. It consists of left operand, operator and right operand.
 
 . Left operand is normally an identified path,
-. Operator is normally the basic operator,
+. Operator is normally a comparison operator,
 . Right operand is the criteria value, which normally is primitive type, such as String, Integer, Boolean, Double, or Float. When it is a string value, single quotation marks or double quotation marks are required. Right operand can also be a parameter or an identified path as well.
 
 Examples:
