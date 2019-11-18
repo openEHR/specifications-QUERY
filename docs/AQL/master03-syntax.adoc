@@ -132,20 +132,20 @@ An archetype predicate is a shortcut of a standard predicate, i.e. the predicate
 
 --------
 FROM EHR [ehr_id/value='1234']
-  CONTAINS COMPOSITION c [openEHR-EHR-COMPOSITION.encounter.v1]
-    CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION.blood_pressure.v1]
+   CONTAINS COMPOSITION c [openEHR-EHR-COMPOSITION.encounter.v1]
+      CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION.blood_pressure.v1]
 --------
 
 This predicates could also be written as `Standard predicates`:
 
 --------
 FROM EHR e
-  CONTAINS COMPOSITION c
-    CONTAINS OBSERVATION o
+   CONTAINS COMPOSITION c
+      CONTAINS OBSERVATION o
 WHERE
-  e/ehr_id/value = '1234' AND
-  c/archetype_node_id = 'openEHR-EHR-COMPOSITION.encounter.v1' AND
-  o/archetype_node_id = 'openEHR-EHR-OBSERVATION.blood_pressure.v1'
+   e/ehr_id/value = '1234' AND
+   c/archetype_node_id = 'openEHR-EHR-COMPOSITION.encounter.v1' AND
+   o/archetype_node_id = 'openEHR-EHR-OBSERVATION.blood_pressure.v1'
 --------
 
 This equivalence could be used by implementers of AQL to transform predicates into their standard form, as a canonical representation of the query, which can simplified it's processing, validation, evaluation and transformation into specific database query languages.
@@ -231,27 +231,27 @@ The matches operator is used in the `WHERE` clause. This operator needs left ope
 +
 --------
 SELECT
-    o/data[at0002]/events[at0003]/data/items[at0015]/items[at0018]/name
+   o/data[at0002]/events[at0003]/data/items[at0015]/items[at0018]/name
 FROM
-    EHR [uid=$ehrUid]
-        CONTAINS Composition c
-            CONTAINS Observation o[openEHR-EHR-OBSERVATION.microbiology.v1]
+   EHR [uid=$ehrUid]
+      CONTAINS Composition c
+         CONTAINS Observation o[openEHR-EHR-OBSERVATION.microbiology.v1]
 WHERE
-    o/data[at0002]/events[at0003]/data/items[at0015]/items[at0018]/items[at0019]/items[at0021]/name/defining_code/code_string matches {'18919-1', '18961-3', '19000-9'}
+   o/data[at0002]/events[at0003]/data/items[at0015]/items[at0018]/items[at0019]/items[at0021]/name/defining_code/code_string matches {'18919-1', '18961-3', '19000-9'}
 --------
 
 . URI: can be a terminology URI, openEHR EHR URI, or other URI. An example with a terminology URI is shown below:
 +
 --------
 SELECT
-    e/ehr_status/subject/external_ref/id/value, diagnosis/data/items[at0002.1]/value
+   e/ehr_status/subject/external_ref/id/value, diagnosis/data/items[at0002.1]/value
 FROM
-    EHR e
-        CONTAINS Composition c[openEHR-EHR-COMPOSITION.problem_list.v1]
-            CONTAINS Evaluation diagnosis[openEHR-EHR-EVALUATION.problem-diagnosis.v1]
+   EHR e
+      CONTAINS Composition c[openEHR-EHR-COMPOSITION.problem_list.v1]
+         CONTAINS Evaluation diagnosis[openEHR-EHR-EVALUATION.problem-diagnosis.v1]
 WHERE
-    c/name/value='Current Problems'
-    AND diagnosis/data/items[at0002.1]/value/defining_code matches { terminology://Snomed-CT/hierarchy?rootConceptId=50043002 }
+   c/name/value='Current Problems' AND
+   diagnosis/data/items[at0002.1]/value/defining_code matches { terminology://Snomed-CT/hierarchy?rootConceptId=50043002 }
 --------
 
 
@@ -265,26 +265,26 @@ The example below means retrieving the identifiers of the EHRs which do not have
 
 --------
 SELECT
-    e/ehr_id/value
+   e/ehr_id/value
 FROM
-    EHR e
-        CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.administrative_encounter.v1]
-            CONTAINS ADMIN_ENTRY admission[openEHR-EHR-ADMIN_ENTRY.admission.v1]
+   EHR e
+      CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.administrative_encounter.v1]
+         CONTAINS ADMIN_ENTRY admission[openEHR-EHR-ADMIN_ENTRY.admission.v1]
 WHERE
-    NOT EXISTS c/content[openEHR-EHR-ADMIN_ENTRY.discharge.v1]
+   NOT EXISTS c/content[openEHR-EHR-ADMIN_ENTRY.discharge.v1]
 --------
 
 This example below means from a particular EHR, retrieving all composition uid values and the contained instruction instances if the instruction instances have links with particular EHR URI value.
 
 --------
 SELECT
-    c/uid/value, instruction
+   c/uid/value, instruction
 FROM
-    EHR e [ehr_id/value=$ehrid]
-        CONTAINS COMPOSITION c
-            CONTAINS INSTRUCTION instruction[openEHR-EHR-INSTRUCTION.referral.v1]
+   EHR e [ehr_id/value=$ehrid]
+      CONTAINS COMPOSITION c
+         CONTAINS INSTRUCTION instruction[openEHR-EHR-INSTRUCTION.referral.v1]
 WHERE
-    EXISTS instruction/links[target='ehr://327000002/87284370-2D4B-4e3d-A3F3-F303D2F4F34B@latest_trunk_version']
+   EXISTS instruction/links[target='ehr://327000002/87284370-2D4B-4e3d-A3F3-F303D2F4F34B@latest_trunk_version']
 --------
 
 ==== NOT
@@ -295,27 +295,27 @@ The example below uses the `NOT` operator followed by a single identified expres
 
 --------
 SELECT
-    e/ehr_id/value
+   e/ehr_id/value
 FROM
-    EHR e
-        CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.administrative_encounter.v1]
-            CONTAINS ADMIN_ENTRY admission[openEHR-EHR-ADMIN_ENTRY.admission.v1]
+   EHR e
+      CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.administrative_encounter.v1]
+         CONTAINS ADMIN_ENTRY admission[openEHR-EHR-ADMIN_ENTRY.admission.v1]
 WHERE
-    NOT EXISTS c/content[openEHR-EHR-ADMIN_ENTRY.discharge.v1]
+   NOT EXISTS c/content[openEHR-EHR-ADMIN_ENTRY.discharge.v1]
 --------
 
 The example below uses `NOT` operator followed by a boolean identified expression.
 
 --------
 SELECT
-    e/ehr_id/value
+   e/ehr_id/value
 FROM
-    EHR e
-        CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.administrative_encounter.v1]
-            CONTAINS ADMIN_ENTRY admission[openEHR-EHR-ADMIN_ENTRY.admission.v1]
+   EHR e
+      CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.administrative_encounter.v1]
+         CONTAINS ADMIN_ENTRY admission[openEHR-EHR-ADMIN_ENTRY.admission.v1]
 WHERE
-    NOT (EXISTS c/content[openEHR-EHR-ADMIN_ENTRY.discharge.v1]
-    AND e/ehr_status/subject/external_ref/namespace='CEC')
+   NOT (EXISTS c/content[openEHR-EHR-ADMIN_ENTRY.discharge.v1] AND
+   e/ehr_status/subject/external_ref/namespace = 'CEC')
 --------
 
 The above example is equivallent to the two expressions shown below:
@@ -328,19 +328,19 @@ FROM
         CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.administrative_encounter.v1]
             CONTAINS ADMIN_ENTRY admission[openEHR-EHR-ADMIN_ENTRY.admission.v1]
 WHERE
-    NOT EXISTS c/content[openEHR-EHR-ADMIN_ENTRY.discharge.v1]
-    OR NOT e/ehr_status/subject/external_ref/namespace = 'CEC'
+   NOT EXISTS c/content[openEHR-EHR-ADMIN_ENTRY.discharge.v1] OR
+   NOT e/ehr_status/subject/external_ref/namespace = 'CEC'
 
 
 SELECT
-    e/ehr_id/value
+   e/ehr_id/value
 FROM
-    EHR e
-        CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.administrative_encounter.v1]
-            CONTAINS ADMIN_ENTRY admission[openEHR-EHR-ADMIN_ENTRY.admission.v1]
+   EHR e
+      CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.administrative_encounter.v1]
+         CONTAINS ADMIN_ENTRY admission[openEHR-EHR-ADMIN_ENTRY.admission.v1]
 WHERE
-    NOT EXISTS c/content[openEHR-EHR-ADMIN_ENTRY.discharge.v1]
-    OR e/ehr_status/subject/external_ref/namespace != 'CEC'
+   NOT EXISTS c/content[openEHR-EHR-ADMIN_ENTRY.discharge.v1] OR
+   e/ehr_status/subject/external_ref/namespace != 'CEC'
 --------
 
 These advanced operators are not yet supported by the grammar. The operator syntax is borrowed from ADL specifications. These are proposed to improve the richness and flexibility of AQL so that AQL syntax supports more complicated query scenarios.
@@ -483,8 +483,8 @@ A simple `FROM` clause consists of three parts: keyword `FROM`, class expression
 
 --------
 FROM
-    EHR e [ehr_id/value=$ehrId]
-        CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]
+   EHR e [ehr_id/value=$ehrId]
+       CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]
 --------
 
 ==== Class expressions
@@ -492,8 +492,8 @@ FROM
 Two examples of a class expression are shown below:
 
 --------
-EHR e [ehr_id/value=$ehrId]                        \\EHR class, class identifier/variable, and a standard predicate
-COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]   \\COMPOSITION class, class identifier/variable, and an archetype predicate
+EHR e [ehr_id/value=$ehrId]                        -- EHR class, class identifier/variable, and a standard predicate
+COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]   -- COMPOSITION class, class identifier/variable, and an archetype predicate
 --------
 
 Class expressions are used for two purposes:
@@ -503,12 +503,12 @@ Class expressions are used for two purposes:
 +
 --------
 SELECT
-    e/ehr_id/value
+   e/ehr_id/value
 FROM
-    EHR e
-        CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.referral.v1]
+   EHR e
+      CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.referral.v1]
 WHERE
-    c/archetype_details/template_id/value=$templateId
+   c/archetype_details/template_id/value = $templateId
 --------
 
 Class expressions syntax include three parts. A class expression must have part one and at least one of part two or part three.
@@ -531,11 +531,11 @@ Boolean operators (`AND`, `OR`, `NOT`) and parentheses are used when multiple co
 
 --------
 EHR e
-    CONTAINS COMPOSITION c [openEHR-EHR-COMPOSITION.referral.v1] AND COMPOSITION c1 [openEHR-EHR-COMPOSITION.report.v1]
+   CONTAINS COMPOSITION c [openEHR-EHR-COMPOSITION.referral.v1] AND COMPOSITION c1 [openEHR-EHR-COMPOSITION.report.v1]
 
 EHR e
-    CONTAINS COMPOSITION c [openEHR-EHR-COMPOSITION.referral.v1]
-        CONTAINS (OBSERVATION o [openEHR-EHR-OBSERVATION-laboratory-hba1c.v1] AND OBSERVATION o1 [openEHR-EHR-OBSERVATION-laboratory-glucose.v1])
+   CONTAINS COMPOSITION c [openEHR-EHR-COMPOSITION.referral.v1]
+      CONTAINS (OBSERVATION o [openEHR-EHR-OBSERVATION-laboratory-hba1c.v1] AND OBSERVATION o1 [openEHR-EHR-OBSERVATION-laboratory-glucose.v1])
 --------
 
 === WHERE
@@ -548,11 +548,10 @@ The `WHERE` clause syntax has the following parts (in order): keyword `WHERE` an
 
 --------
 WHERE
-    c/name/value=$nameValue AND c/archetype_details/template_id/value=$templateId
-
+   c/name/value=$nameValue AND c/archetype_details/template_id/value=$templateId
 WHERE
-    (c/name/value=$nameValue OR c/archetype_details/template_id/value=$templateId)
-    AND o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value >= 140
+   (c/name/value = $nameValue OR c/archetype_details/template_id/value = $templateId) AND
+   o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value >= 140
 --------
 
 ==== Identified expression
@@ -569,13 +568,13 @@ Examples:
 +
 --------
 o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value >= 140
-c/archetype_details/template_id/value='health_encounter'
+c/archetype_details/template_id/value = 'health_encounter'
 --------
 
 * Left operand is an identified path and right operand is a parameter:
 +
 --------
-c/archetype_details/template_id/value=$templateParameter
+c/archetype_details/template_id/value = $templateParameter
 --------
 
 * Both left operand and right operand are an identified path (this is an advanced feature):
@@ -599,18 +598,16 @@ Example 1: retrieve all compositions' name value, context start time and compose
 
 --------
 SELECT
-    c/name/value AS Name, c/context/start_time AS date_time, c/composer/name AS Composer
+   c/name/value AS Name, c/context/start_time AS date_time, c/composer/name AS Composer
 FROM
-    EHR e[ehr_id/value=$ehrUid] CONTAINS COMPOSITION c
+   EHR e[ehr_id/value=$ehrUid] CONTAINS COMPOSITION c
 --------
 
 Example 2: Retrieve all composition objects of a specific EHR.
 
 --------
-SELECT
-    c
-FROM
-    EHR e[ehr_id/value=$ehrUid] CONTAINS COMPOSITION c
+SELECT c
+FROM EHR e[ehr_id/value=$ehrUid] CONTAINS COMPOSITION c
 --------
 
 ==== TOP
@@ -621,10 +618,10 @@ It starts with keyword TOP, followed by an integer number and/or the direction (
 
 --------
 SELECT
-    TOP 10 c/name/value AS Name, c/context/start_time AS date_time, c/composer/name AS Composer
+   TOP 10 c/name/value AS Name, c/context/start_time AS date_time, c/composer/name AS Composer
 FROM
-    EHR e[ehr_id/value=$ehrUid]
-        CONTAINS COMPOSITION c
+   EHR e[ehr_id/value=$ehrUid]
+      CONTAINS COMPOSITION c
 --------
 
 ==== Name alias

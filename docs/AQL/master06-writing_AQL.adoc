@@ -51,10 +51,10 @@ The `WHERE` clause represents all query criteria that cannot be represented in t
 +
 --------
 FROM
-    EHR [ehr_id/value=$ehrUid] CONTAINS COMPOSITION [openEHR-EHR-COMPOSITION.encounter.v1]
-        CONTAINS OBSERVATION obs [openEHR-EHR-OBSERVATION.blood_pressure.v1]
+   EHR [ehr_id/value=$ehrUid] CONTAINS COMPOSITION [openEHR-EHR-COMPOSITION.encounter.v1]
+       CONTAINS OBSERVATION obs [openEHR-EHR-OBSERVATION.blood_pressure.v1]
 WHERE
-    obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value >= 140
+   obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value >= 140
 --------
 
 . Write an identified expression for criterion 2). Following the previous instruction to write the identified expression for criterion 2) which is shown as:
@@ -67,10 +67,11 @@ obs/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/value >= 90
 +
 --------
 FROM
-    EHR [ehr_id/value=$ehrUid] CONTAINS COMPOSITION [openEHR-EHR-COMPOSITION.encounter.v1]
-        CONTAINS OBSERVATION obs [openEHR-EHR-OBSERVATION.blood_pressure.v1]
-WHERE obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value >= 140 OR
-    obs/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/value >= 90
+   EHR [ehr_id/value=$ehrUid] CONTAINS COMPOSITION [openEHR-EHR-COMPOSITION.encounter.v1]
+      CONTAINS OBSERVATION obs [openEHR-EHR-OBSERVATION.blood_pressure.v1]
+WHERE
+   obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value >= 140 OR
+   obs/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/value >= 90
 --------
 
 == Step 3. The SELECT clause
@@ -86,8 +87,8 @@ SELECT
    obs/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude
 FROM
    EHR [ehr_id/value=$ehrUid] CONTAINS COMPOSITION [openEHR-EHR-COMPOSITION.encounter.v1]
-       CONTAINS OBSERVATION obs [openEHR-EHR-OBSERVATION.blood_pressure.v1]
+      CONTAINS OBSERVATION obs [openEHR-EHR-OBSERVATION.blood_pressure.v1]
 WHERE
-   obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude>= 140 OR
-   obs/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude>= 90
+   obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude >= 140 OR
+   obs/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude >= 90
 --------
