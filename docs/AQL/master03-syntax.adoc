@@ -54,11 +54,29 @@ Another type of openEHR path is the path pointing to an attribute of openEHR Ref
 
 == AQL variables
 
-AQL variables are used to refer a specific archetype or openEHR class defined within an AQL statement. It has the following features:
+AQL variables are used to refer a specific openEHR class defined within an AQL `FROM` clause. Consider this example:
+
+--------
+SELECT
+   o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude,
+   o/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude
+FROM
+   EHR [ehr_id/value='1234']
+      CONTAINS COMPOSITION [openEHR-EHR-COMPOSITION.encounter.v1]
+         CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION.blood_pressure.v1]
+WHERE
+   o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude >= 140 OR
+   o/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude >= 90
+--------
+
+This AQL example defines only one AQL variables: `o` that represents OBSERVATIONs that comply with the `openEHR-EHR-OBSERVATION.blood_pressure.v1` archetype.
+
+
+AQL variables have the following features:
 
 * AQL variable names must be defined in an AQL `FROM` clause.
 * A variable name must be unique within an AQL statement.
-* Not all classes or archetypes defined within an AQL statement need a variable name. It is required only when other clauses within the AQL statement need to refer to the class or archetype defined in the `FROM` clause. For instance, the example doesn't define a variable name for EHR class. It has a variable name `c` indicating the Composition archetype `openEHR-EHR-COMPOSITION.encounter.v1`, and varialbe name `o` referring to the Observation archetype `openEHR-EHR-OBSERVATION.blood_pressure.v1`. Variable name `o` is used by both `WHERE` clause and `SELECT` clause.
+* Not all classes defined within the `FROM` clause need a variable name. It is required only when other clauses within other AQL clauses need to refer to the class defined in the `FROM` clause. For instance, the example doesn't define a variable name for EHR or COMPOSITION classes. Variable name `o` is used by both `WHERE` clause and `SELECT` clause, as root object of the following paths.
 * Variable names are used by other clauses within the AQL statement along with openEHR path to form a complete AQL path - Identified path. Refer back to Section 2.2. example, `o/data[at0001/events[at0006]/data[at0003]/items[at0004]/value/value]` points to the systolic value node of the Observation archetype `openEHR-EHR-OBSERVATION.blood_pressure.v1`.
 * Except for the reserved words, any characters, whitespace, letters, Alphanumeric, and underscore can be used for a variable name. Variable names are not case sensitive. Digits are not recommended at the beginning of a variable name even though there is no formal restriction.
 

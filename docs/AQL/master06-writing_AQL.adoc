@@ -2,7 +2,7 @@
 
 This section describes how to build an AQL query manually. The process described here gives may provide some hints for AQL builder tools.
 
-== Query scenario 
+== Query scenario
 
 An example is used to illustrate how to write an AQL statement. The query scenario is:
 
@@ -30,7 +30,7 @@ COMPOSITION [openEHR-EHR-COMPOSITION.encounter.v1]
 OBSERVATION [openEHR-EHR-OBSERVATION.blood_pressure.v1]
 --------
 
-*Containment expression*. 
+*Containment expression*.
 
 The openEHR RM is used to identify the hierarchical relationships among the found archetypes so as to define the containment expression. For example, a Composition archetype is the parent of an Observation archetype, so the AQL query looks as follows:
 
@@ -45,15 +45,15 @@ The `WHERE` clause represents all query criteria that cannot be represented in t
 
 . Find the criteria. The criteria required by the scenario are abnormal blood pressure values. Different guidelines may have different definitions for abnormal blood pressure values. Here `abnormal blood pressure` is interpreted to mean mean 1) the 'systolic pressure' value is greater than or equal to 140; OR 2) the 'diastolic pressure' value is greater than or equal to 90.
 . Write an identified expression for criterion 1).
-.. Write the Identified path for the systolic data value. A class variable name is needed as the reference to the blood pressure class expression defined in the `FROM` clause, so a variable name `obs` is added into the `FROM` clause. A path to systolic data value is also required to form the identified path. Two tools can be used to get the path: the {openehr_awb}[openEHR ADL Workbench] or {template_designer}[Template Designer]. The path to the systolic data value is `/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value`.  
+.. Write the Identified path for the systolic data value. A class variable name is needed as the reference to the blood pressure class expression defined in the `FROM` clause, so a variable name `obs` is added into the `FROM` clause. A path to systolic data value is also required to form the identified path. Two tools can be used to get the path: the {openehr_awb}[openEHR ADL Workbench] or {template_designer}[Template Designer]. The path to the systolic data value is `/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value`.
 .. Get appropriate operator: `>=` is chosen for criterion 1.
 .. Get the criteria value - 140. The query statement including the identified expression for criterion 1) is shown below:
 +
 --------
-FROM 
+FROM
     EHR [ehr_id/value=$ehrUid] CONTAINS COMPOSITION [openEHR-EHR-COMPOSITION.encounter.v1]
         CONTAINS OBSERVATION obs [openEHR-EHR-OBSERVATION.blood_pressure.v1]
-WHERE 
+WHERE
     obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value >= 140
 --------
 
@@ -66,7 +66,7 @@ obs/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/value >= 90
 . Find the appropriate boolean operator to join criterion 1) and 2) - OR. The query statement looks like:
 +
 --------
-FROM 
+FROM
     EHR [ehr_id/value=$ehrUid] CONTAINS COMPOSITION [openEHR-EHR-COMPOSITION.encounter.v1]
         CONTAINS OBSERVATION obs [openEHR-EHR-OBSERVATION.blood_pressure.v1]
 WHERE obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value >= 140 OR
@@ -82,14 +82,12 @@ Writing a `SELECT` clause depends on determining:
 +
 --------
 SELECT
-    obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude,
-    obs/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude
-
-FROM 
-    EHR [ehr_id/value=$ehrUid] CONTAINS COMPOSITION [openEHR-EHR-COMPOSITION.encounter.v1]
-        CONTAINS OBSERVATION obs [openEHR-EHR-OBSERVATION.blood_pressure.v1]
-
-WHERE 
-    obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude>= 140 OR
-    obs/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude>= 90
+   obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude,
+   obs/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude
+FROM
+   EHR [ehr_id/value=$ehrUid] CONTAINS COMPOSITION [openEHR-EHR-COMPOSITION.encounter.v1]
+       CONTAINS OBSERVATION obs [openEHR-EHR-OBSERVATION.blood_pressure.v1]
+WHERE
+   obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude>= 140 OR
+   obs/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude>= 90
 --------
