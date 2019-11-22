@@ -340,19 +340,6 @@ WHERE
    NOT EXISTS c/content[openEHR-EHR-ADMIN_ENTRY.discharge.v1]
 --------
 
-This example below means from a particular EHR, retrieving all composition uid values and the contained instruction instances if the instruction instances have links with particular EHR URI value.
-
---------
-SELECT
-   c/uid/value, instruction
-FROM
-   EHR e [ehr_id/value=$ehrid]
-      CONTAINS COMPOSITION c
-         CONTAINS INSTRUCTION instruction[openEHR-EHR-INSTRUCTION.referral.v1]
-WHERE
-   EXISTS instruction/links[target='ehr://327000002/87284370-2D4B-4e3d-A3F3-F303D2F4F34B@latest_trunk_version']
---------
-
 
 == AQL identified paths
 
