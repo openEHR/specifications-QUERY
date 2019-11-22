@@ -4,14 +4,21 @@
 |===
 |Issue|Details|Raiser|Completed
 
-4+^h|*Release 1.0.2*
+4+^h|*Release 1.0.1 (unreleased)*
 
-|[[latest_issue]]1.0.0
+|[[latest_issue]]1.0.1
+|{spec_tickets}/SPECQUERY-15[SPECQUERY-15^] Add clarifications and fix typographical errors.
+|P Pazos
+|[[latest_issue_date]]22 Nov 2019
+
+4+^h|*Release 1.0.0*
+
+|1.0.0
 |{spec_tickets}/SPECQUERY-6[SPECQUERY-6^] Publish original AQL wiki page as formal specification; +
  Various reformatting, adjustment of headings; +
  Fix missing square brackets on query example. ({spec_tickets}/SPECPR-236[SPECPR-236^])
 |openEHR SEC
-|[[latest_issue_date]]10 Jan 2017
+|10 Jan 2017
 
 |
 |Add Antlr grammar for AQL
