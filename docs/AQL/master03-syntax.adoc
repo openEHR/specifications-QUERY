@@ -269,19 +269,6 @@ WHERE
 
 `NOT` is a unary Boolean operator and it is always followed by either a single identified expression or boolean identified expression. It returns Boolean results: `true` means the followed expression (single or Boolean expression) is false.
 
-The example below uses the `NOT` operator followed by a single identified expression:
-
---------
-SELECT
-   e/ehr_id/value
-FROM
-   EHR e
-      CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.administrative_encounter.v1]
-         CONTAINS ADMIN_ENTRY admission[openEHR-EHR-ADMIN_ENTRY.admission.v1]
-WHERE
-   NOT EXISTS c/content[openEHR-EHR-ADMIN_ENTRY.discharge.v1]
---------
-
 The example below uses `NOT` operator followed by a boolean identified expression:
 
 --------
@@ -327,7 +314,7 @@ These advanced operators are not yet supported by the grammar. The operator synt
 
 `EXISTS` is a unary operator, which is always followed by a single operand. The single operand is an AQL identified path. This operator returns Boolean results: `true` means the data associated with the specified path exists, `false` otherwise. An `EXISTS` expression is a single identified expression.
 
-The example below means retrieving the identifiers of the EHRs which do not have discharge admin entry instance.
+The example below means retrieving the identifiers of the EHRs which do not have discharge admin entry instance, using the `NOT` operator followed by a single identified expression:
 
 --------
 SELECT
