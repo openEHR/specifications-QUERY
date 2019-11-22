@@ -325,7 +325,7 @@ These advanced operators are not yet supported by the grammar. The operator synt
 
 ==== EXISTS
 
-`EXISTS` is a unary operator, which is always followed by a single operand. The single operand is an AQL identified path. This operator returns Boolean results: `true` means the data associated with the specified path exists, `false` otherwise. An `EXISTS` expression is a single identified expression. The latest grammar only allows this operator in `WHERE` clause. It may be required as part of openEHR path in future.
+`EXISTS` is a unary operator, which is always followed by a single operand. The single operand is an AQL identified path. This operator returns Boolean results: `true` means the data associated with the specified path exists, `false` otherwise. An `EXISTS` expression is a single identified expression.
 
 The example below means retrieving the identifiers of the EHRs which do not have discharge admin entry instance.
 
