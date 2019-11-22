@@ -58,7 +58,7 @@ ehr_path/value
                     magnitude = <|90..110|>
                 >
             >
-        > 
+        >
     }
 ----
 |===
@@ -100,9 +100,9 @@ Total cholesterol EHR path/value matches {
         magnitude matches {|>=5.0|}
     }
 }
- 
+
 OR
- 
+
 LDL-C EHR path/value matches {
     DV_QUANTITY matches {
         units matches {"mmol/L"}
@@ -250,23 +250,21 @@ The following example shows how arithmetic operators may be used within AQL stat
 ¦*AQL Fragment*             ¦
 ----
 SELECT e/ehr_id
- 
 FROM EHR e CONTAINS (COMPOSITION c1
-       CONTAINS ACTION a [openEHR-EHR-ACTION.medication.v1]
-           CONTAINS ITEM_TREE it [openEHR-EHR-ITEM_TREE.medication.v1]) AND
-       CONTAINS (COMPOSITION c2 CONTAINS EVALUATION eval [openEHR-EHR-EVALUATION.problem-diagnosis.v1])
- 
-WHERE 
-    it/description[openEHR-EHR-ITEM_TREE.medication.v1]/items[at0001]/value matches {"SNOMED::31087008"} AND
-    eval/data[at0001]/items[at0002.1]/value/value/defining_code matches {
-          CODE_PHRASE matches {[SNOMED::294506009, 21626009]}
-    } AND
-    eval/data[at0001]/items[at0010]/value - it/description[openEHR-EHR-ITEM_TREE.medication.v1]/items[at0018]/items[at0019]/value
-    matches {
+   CONTAINS ACTION a [openEHR-EHR-ACTION.medication.v1]
+      CONTAINS ITEM_TREE it [openEHR-EHR-ITEM_TREE.medication.v1]) AND
+      CONTAINS (COMPOSITION c2 CONTAINS EVALUATION eval [openEHR-EHR-EVALUATION.problem-diagnosis.v1])
+WHERE
+   it/description[openEHR-EHR-ITEM_TREE.medication.v1]/items[at0001]/value matches {"SNOMED::31087008"} AND
+   eval/data[at0001]/items[at0002.1]/value/value/defining_code matches {
+      CODE_PHRASE matches {[SNOMED::294506009, 21626009]}
+   } AND
+   eval/data[at0001]/items[at0010]/value - it/description[openEHR-EHR-ITEM_TREE.medication.v1]/items[at0018]/items[at0019]/value
+   matches {
       DV_DURATION matches {
-          value matches{<=P2d}
+         value matches{<=P2d}
       }
-    }
+   }
 ----
 |===
 
@@ -284,15 +282,15 @@ The following example shows the use of a nested query and the `not-in` operator.
 ----
 SELECT e/ehr_id
 FROM
-    EHR e CONTAINS 
-        ADMIN_ENTRY ae1 [openEHR-EHR-ADMIN_ENTRY.admission.v1]
-WHERE 
-    ae1/encounter_id/value not in (
-        SELECT ae2/encounter_id/value
-        FROM 
-            EHR e CONTAINS 
-                ADMIN_ENTRY ae2 [openEHR-EHR-ADMIN_ENTRY.discharge.v1]
-    )
+   EHR e CONTAINS
+      ADMIN_ENTRY ae1 [openEHR-EHR-ADMIN_ENTRY.admission.v1]
+WHERE
+   ae1/encounter_id/value not in (
+      SELECT ae2/encounter_id/value
+      FROM
+         EHR e CONTAINS
+            ADMIN_ENTRY ae2 [openEHR-EHR-ADMIN_ENTRY.discharge.v1]
+   )
 ----
 |===
 
@@ -309,11 +307,11 @@ The following example shows how the `exists` operator may be used within AQL sta
 ¦*AQL Fragment*             ¦
 ----
 SELECT o
-FROM 
-    EHR e CONTAINS 
-        COMPOSITION CONTAINS
-            OBSERVATION o [openEHR-EHR-OBSERVATION.blood_pressure.v1]
- WHERE 
-    exists {"o//*/state[at0007]/items[at0008]"}
+FROM
+   EHR e CONTAINS
+      COMPOSITION CONTAINS
+         OBSERVATION o [openEHR-EHR-OBSERVATION.blood_pressure.v1]
+WHERE 
+   exists {"o//*/state[at0007]/items[at0008]"}
 ----
 |===
