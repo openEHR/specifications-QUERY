@@ -11,7 +11,7 @@
 //
 :linkcss:
 :keywords: query languages
-:description: openEHR Query Specifications
+:description: openEHR Query Component
 :sectanchors:
 
 include::{ref_dir}/docs/boilerplate/global_vars.adoc[]
@@ -24,7 +24,7 @@ image::{openehr_logo}["openEHR logo",align="center"]
 
 image::openehr_block_diagram.svg["openEHR components",align="center",width="60%"]
 
-= Query Languages (QUERY) - {query_release}
+= Query Languages (QUERY) Component - {query_release}
 
 // Use the following version for 'latest'
 ifeval::["{query_release}" == "latest"]
