@@ -225,9 +225,9 @@ The table below shows the supported AQL comparison operators, meaning and exampl
 
 === matches operator definition
 
-The matches operator is used in the `WHERE` clause. This operator needs left operand and right operand. Left operand is an AQL identified path. Right operand is enclosed within curly braces. Right operand of matches operator has three forms:
+The matches operator is used in the `WHERE` clause. This operator needs left operand and right operand. Left operand is an AQL identified path. Right operand is enclosed within curly braces. Right operand of matches operator has these forms:
 
-. type of constraint ADL (cADL): this type of right operand can be a value list or a value range. Value range is not supported in the current AQL grammar. Below is an example with matches a string value list:
+. *type of constraint ADL (cADL)*: this type of right operand can be a value list or a value range. Value range is not supported in the current AQL grammar. Below is an example with matches a string value list:
 +
 --------
 SELECT
@@ -239,6 +239,31 @@ FROM
 WHERE
    o/data[at0002]/events[at0003]/data/items[at0015]/items[at0018]/items[at0019]/items[at0021]/name/defining_code/code_string matches {'18919-1', '18961-3', '19000-9'}
 --------
++
+Value list data is enclosed within curly braces after a matches operator. Each item is separated by comma if there are multiple items in the list. Value list items can be string, date time, integer, or real. Quotes are required for strings and date times.
++
+A value list is only used in AQL `WHERE` clause when the criteria is to match one item of the list. The relationships among these value list items are "OR".
++
+Some examples of value list:
++
+--------
+matches {'string item 1', 'string item 2', 'string item3'}  // a string list. It Equivalent to
+                                                            // matches  string item1' or ..
+                                                            // matches 'string item 2' or ..
+                                                            // matches 'string item 3'
+matches {'20060101', '20070101', '20080101'}                // a date value list
+matches {1, 2, 3}                                           // a integer list
+matches {1.1, 2.5, 3.8}                                     // a real value list
+--------
++
+Value range data is enclosed within curly braces after matches operator. It is only used in AQL `WHERE` clause to specify a criteria within a range. The syntax is similar to intervals of ordered primitive types detailed in Section 4.5.2, adl.pdf. Some examples:
++
+----
+matches {|3.0..5.0|} // means 3.0 <= x <=5.0
+matches {|<8|}       // means x < 8
+----
++
+NOTE: Value range is not supported in the current AQL grammar.
 
 . URI: can be a terminology URI, openEHR EHR URI, or other URI. An example with a terminology URI is shown below:
 +
@@ -251,8 +276,29 @@ FROM
          CONTAINS Evaluation diagnosis[openEHR-EHR-EVALUATION.problem-diagnosis.v1]
 WHERE
    c/name/value='Current Problems' AND
-   diagnosis/data/items[at0002.1]/value/defining_code matches { terminology://Snomed-CT/hierarchy?rootConceptId=50043002 }
+   diagnosis/data/items[at0002.1]/value/defining_code matches { terminology://snomed-ct/hierarchy?rootConceptId=50043002 }
 --------
++
+URI data is enclosed within curly braces after `matches` operator. URI can be expressed as a normal URI described in {rfc3986}[IETF RFC 3986]. URIs are not case sensitive. In AQL, a URI can be either terminology URI or an EHR URI.
++
+A terminology URI consists of the following components:
++
+.. *terminology*: the URI schemes value;
+.. *terminology service*: the URI authority value, such as SNOMED-CT;
+.. *terminology function name*: the URI path, e.g. "hierarchy" is the function name in the example shown below;
+.. *argument values* required by the terminology functions - URI queries;
++
+This is an example of a terminology URI:
++
+----
+    terminology://snomed-CT/hierarchy?rootConceptId=50043002
+    \_________/   \_______/ \_______/ \___________/ \______/
+        |             |         |           |__________|
+     scheme       authority   path          | queries  |
+        |             |         |           |          |
+    terminology  terminology function    argument   argument
+       uri         service                 name      value
+----
 
 
 === Logical operators
@@ -386,61 +432,6 @@ WHERE composition/context/start_time < "120000+0930"  // ISO8601 time. AQL gramm
 WHERE composition/context/start_time <= '1986-01-01'  // complete calendar date in ISO8601 extended format. AQL grammar identifies this value as a date value.
 --------
 
-=== Other Built-in Types
-
-==== URI
-
-URI leaf data is enclosed within curly braces after `matches` operator. URI can be expressed as a normal URI described in {rfc3986}[IETF RFC 3986]. URIs are not case sensitive. In AQL, a URI can be either terminology URI or an EHR URI.
-
-==== Terminology URI
-
-A terminology URI consists of the following components:
-
-. *terminology*: the URI schemes value;
-. *terminology service*: the URI authority value, such as SNOMED-CT;
-. *terminology function name*: the URI path, e.g. "hierarchy" is the function name in the example shown below;
-. *argument values* required by the terminology functions - URI queries;
-
-This is an example of a terminology URI:
-
-----
-    terminology://snomed-CT/hierarchy?rootConceptId=50043002
-    \_________/   \_______/ \_______/ \___________/ \______/
-        |             |         |           |__________|
-     scheme       authority   path          | queries  |
-        |             |         |           |          |
-    terminology  terminology function    argument   argument
-       uri         service                 name      value
-----
-
-==== Value List
-
-Value list leaf data is enclosed within curly braces after matches operator. Each item is separated by comma if there are multiple items in the list. Value list can be string value list, date time value list, integer value list, and real value list. Quotes are required for string value list and date time value list.
-
-A value list is only used in AQL` WHERE` clause when the criteria is to match one item of the list. The relationships among these value list items are "OR".
-
-Some examples of value list:
-
---------
-matches {'string item 1', 'string item 2', 'string item3'}  // a string list. It Equivalent to
-                                                            // matches  string item1' or ..
-                                                            // matches 'string item 2' or ..
-                                                            // matches 'string item 3'
-matches {'20060101', '20070101', '20080101'}                // a date value list
-matches {1, 2, 3}                                           // a integer list
-matches {1.1, 2.5, 3.8}                                     // a real value list
---------
-
-==== Value Range
-
-It is not supported in the current AQL grammar.
-
-Value range leaf data is enclosed within curly braces after matches operator. It is only used in AQL `WHERE` clause to specify a criteria within a range. The syntax is similar to intervals of ordered primitive types detailed in Section 4.5.2, adl.pdf. Some examples:
-
-----
-matches {|3.0..5.0|} // means 3.0 <= x <=5.0
-matches {|<8|}       // means x < 8
-----
 
 == Query structure
 
