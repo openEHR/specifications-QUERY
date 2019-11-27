@@ -600,7 +600,7 @@ FROM
 
 ==== Name alias
 
-As in SQL, `AQL` supports the use of a name alias for the retrieved data. This is domne with the keyword `AS`, followed by the name which conforms to the syntax rule of AQL variable.
+As in SQL, `AQL` supports the use of a name alias for the retrieved data. This is done with the keyword `AS`, followed by the name which conforms to the syntax rule of AQL variable.
 
 === ORDER BY
 
