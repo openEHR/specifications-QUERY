@@ -451,7 +451,17 @@ AQL structure has the following clauses and these clauses must be listed in the 
 
 === FROM
 
-The `FROM` clause utilises class expressions and a set of containment criteria to specify the data source from which the query required data is to be retrieved.  Its function is similar as the `FROM` clause of an SQL expression.
+The `FROM` clause is used to specify the domain of the query, that is a subset of the universe of data that could be retrieve from a CDR. That universe is anything defined in the openEHR RM (that is a set of classes that models clinical records), and archetypes (that define specific data sets based on the openEHR RM). Because of that, the `FROM` clause uses `class expressions` to specify the subsets of data, giving context to the query.
+
+Then, the expressions in the `WHERE` clause will filter data, but only from the subset defined in the `FROM`, to get only the data that we need. And in the `SELECT` clause, a final projection is applied, selecting only the matched data that should be retrieved. In addition to the filtering done in the `WHERE` clause, the `class expressions` could hold predicates that also help filtering data.
+
+Ass a summary:
+
+. `FROM`: Defines the subset of data in which the query will be executed
+. `WHERE`: Filters data from the subset, leaving only the data that we need
+. predicates in `class expressions`: further filters for data in the subset (could be transformed into predicates for the `WHERE` clause)
+. `SELECT`: picks the exact data that we need to return from the query, taken from the matched data in the previous two points
+
 
 ==== FROM Syntax
 
@@ -460,7 +470,7 @@ A simple `FROM` clause consists of three parts: keyword `FROM`, class expression
 --------
 FROM
    EHR e [ehr_id/value=$ehrId]
-       CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]
+      CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]
 --------
 
 ==== Class expressions
