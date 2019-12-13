@@ -113,19 +113,6 @@ LDL-C EHR path/value matches {
 |===
 
 
-[cols="1,4a",options="header",separator=¦]
-|===
-
-¦*Clinical Scenario 10*     ¦Requires all reports composed by patient self
-
-¦*AQL Fragment*             ¦
-----
-SELECT c
-    FROM EHR e[ehr_id=$ehrUid] CONTAINS COMPOSITION c
-    WHERE c/composer matches {PARTY_SELF}
-----
-|===
-
 
 == Arithmetic operators
 
