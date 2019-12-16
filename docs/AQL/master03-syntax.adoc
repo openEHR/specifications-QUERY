@@ -404,12 +404,12 @@ Boolean values are indicated using the case-insensitive literals `true` or `fals
 
 ==== Dates and Times
 
-No matter whether the date/date time is complete or partial, it is allowed in AQL as long as it is in ISO8601 date/date time format. Quotes (either single quotes or double quotes) are required to enclose the date/date time value. In AQL grammar, it is treated as a date value if the value is a complete calendar date represented in ISO8601 extended format and if single quotes are used. If the value is in other ISO8601 date/date time format, AQL treats it as a string value, but the AQL query engine processes it differently from a normal string value. It is a temporary solution. In future, a date/date time value should be identified as date/date time value if it is a valid ISO8601 date/date time. Examples are as below:
+No matter whether the date/date time is complete or partial, it is allowed in AQL as long as it is in {iso_8601}[ISO 8601 date/date time format]. Quotes (either single quotes or double quotes) are required to enclose the date/date time value. In AQL grammar, it is treated as a date value if the value is a complete calendar date represented in ISO 8601 extended format and if single quotes are used. If the value is in other ISO 8601 date/date time format, AQL treats it as a string value, but the AQL query engine processes it differently from a normal string value. It is a temporary solution. In future, a date/date time value should be identified as date/date time value if it is a valid ISO 8601 date/date time. Examples are as below:
 
 --------
 WHERE composition/context/start_time > '19860101' // a complete date. AQL grammar identifies it as a string value.
-WHERE composition/context/start_time < "120000+0930"  // ISO8601 time. AQL grammar identifies it as a string value.
-WHERE composition/context/start_time <= '1986-01-01'  // complete calendar date in ISO8601 extended format. AQL grammar identifies this value as a date value.
+WHERE composition/context/start_time < "120000+0930"  // ISO 8601 time. AQL grammar identifies it as a string value.
+WHERE composition/context/start_time <= '1986-01-01'  // complete calendar date in ISO 8601 extended format. AQL grammar identifies this value as a date value.
 --------
 
 === Other Built-in Types
