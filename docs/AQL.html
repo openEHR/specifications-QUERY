@@ -2,14 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.6.1">
+<meta name="generator" content="Asciidoctor 2.0.10">
 <meta name="description" content="openEHR Archetype Query Language (AQL)">
 <meta name="keywords" content="query, AQL, archetype, Xpath">
 <title>Archetype Query Language (AQL)</title>
 <link rel="stylesheet" href="https://specifications.openehr.org/styles/openehr.css">
-<link rel="stylesheet" href="https://specifications.openehr.org/styles/pygments-default.css">
 </head>
 <body class="book toc2 toc-left">
 <div id="header">
@@ -166,7 +165,7 @@
 <div id="content">
 <div id="preamble">
 <div class="sectionbody">
-<div class="imageblock" style="text-align: center">
+<div class="imageblock text-center">
 <div class="content">
 <img src="https://specifications.openehr.org/images/openEHR_logo_RGB.svg" alt="openEHR logo">
 </div>
@@ -176,10 +175,10 @@
 <h1 id="_archetype_query_language_aql" class="sect0">Archetype Query Language (AQL)</h1>
 <div class="openblock partintro">
 <div class="content">
-<table class="tableblock frame-all grid-all spread">
+<table class="tableblock frame-all grid-all fit-content spread">
 <colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
+<col>
+<col>
 </colgroup>
 <thead>
 <tr>
@@ -200,12 +199,12 @@
 </tr>
 </tbody>
 </table>
-<div class="imageblock" style="text-align: center">
+<div class="imageblock text-center">
 <div class="content">
 <object type="image/svg+xml" data="openehr_block_diagram.svg" width="60%"><span class="alt">openEHR components</span></object>
 </div>
 </div>
-<table class="tableblock frame-all grid-all spread">
+<table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 80%;">
@@ -235,7 +234,7 @@
 <div class="sect1">
 <h2 id="_amendment_record">Amendment Record</h2>
 <div class="sectionbody">
-<table class="tableblock frame-all grid-all spread">
+<table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 9.0909%;">
 <col style="width: 54.5454%;">
@@ -579,7 +578,7 @@ If no <code>ORDER BY</code> clause is specified, then the query result doesn&#82
 <div class="paragraph">
 <p>An archetype path is the path referring to any node within an archetype. The following is an ADL workbench screen shot of apgar observation node map. The table below shows some examples.</p>
 </div>
-<table class="tableblock frame-all grid-all spread">
+<table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 20%;">
@@ -626,7 +625,7 @@ If no <code>ORDER BY</code> clause is specified, then the query result doesn&#82
 <div class="paragraph">
 <p>Another type of openEHR path is the path pointing to an attribute of openEHR Reference Model classes. The examples shown below uses the attributes from the <code>COMPOSITION</code> class.</p>
 </div>
-<table class="tableblock frame-all grid-all spread">
+<table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 66.6666%;">
 <col style="width: 33.3334%;">
@@ -897,7 +896,7 @@ WHERE
 <div class="paragraph">
 <p>The table below shows the supported AQL comparison operators, meaning and example.</p>
 </div>
-<table class="tableblock frame-all grid-all spread">
+<table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 25%;">
@@ -1183,13 +1182,13 @@ WHERE
 <div class="sect4">
 <h5 id="_dates_and_times"><a class="anchor" href="#_dates_and_times"></a>3.9.1.5. Dates and Times</h5>
 <div class="paragraph">
-<p>No matter whether the date/date time is complete or partial, it is allowed in AQL as long as it is in ISO8601 date/date time format. Quotes (either single quotes or double quotes) are required to enclose the date/date time value. In AQL grammar, it is treated as a date value if the value is a complete calendar date represented in ISO8601 extended format and if single quotes are used. If the value is in other ISO8601 date/date time format, AQL treats it as a string value, but the AQL query engine processes it differently from a normal string value. It is a temporary solution. In future, a date/date time value should be identified as date/date time value if it is a valid ISO8601 date/date time. Examples are as below:</p>
+<p>No matter whether the date/date time is complete or partial, it is allowed in AQL as long as it is in <a href="https://en.wikipedia.org/wiki//ISO_8601">ISO 8601 date/date time format</a>. Quotes (either single quotes or double quotes) are required to enclose the date/date time value. In AQL grammar, it is treated as a date value if the value is a complete calendar date represented in ISO 8601 extended format and if single quotes are used. If the value is in other ISO 8601 date/date time format, AQL treats it as a string value, but the AQL query engine processes it differently from a normal string value. It is a temporary solution. In future, a date/date time value should be identified as date/date time value if it is a valid ISO 8601 date/date time. Examples are as below:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre>WHERE composition/context/start_time &gt; '19860101' // a complete date. AQL grammar identifies it as a string value.
-WHERE composition/context/start_time &lt; "120000+0930"  // ISO8601 time. AQL grammar identifies it as a string value.
-WHERE composition/context/start_time &lt;= '1986-01-01'  // complete calendar date in ISO8601 extended format. AQL grammar identifies this value as a date value.</pre>
+WHERE composition/context/start_time &lt; "120000+0930"  // ISO 8601 time. AQL grammar identifies it as a string value.
+WHERE composition/context/start_time &lt;= '1986-01-01'  // complete calendar date in ISO 8601 extended format. AQL grammar identifies this value as a date value.</pre>
 </div>
 </div>
 </div>
@@ -1608,7 +1607,7 @@ the ADL expressions on the right-hand side of the <code>matches</code> operator 
 </tr>
 </table>
 </div>
-<table class="tableblock frame-all grid-all spread">
+<table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 80%;">
@@ -1622,13 +1621,13 @@ the ADL expressions on the right-hand side of the <code>matches</code> operator 
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>EHR path</strong></p></td>
-<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><code>o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]</code></p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment</strong></p></td>
-<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
 <div class="content">
 <pre>ehr_path/value
     matches {
@@ -1650,7 +1649,7 @@ the ADL expressions on the right-hand side of the <code>matches</code> operator 
 </tr>
 </tbody>
 </table>
-<table class="tableblock frame-all grid-all spread">
+<table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 80%;">
@@ -1664,13 +1663,13 @@ the ADL expressions on the right-hand side of the <code>matches</code> operator 
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>EHR path</strong></p></td>
-<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><code>o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]</code></p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment</strong></p></td>
-<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
 <div class="content">
 <pre>ehr_path/value
     matches {
@@ -1692,7 +1691,7 @@ the ADL expressions on the right-hand side of the <code>matches</code> operator 
 </tr>
 </tbody>
 </table>
-<table class="tableblock frame-all grid-all spread">
+<table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 80%;">
@@ -1706,13 +1705,13 @@ the ADL expressions on the right-hand side of the <code>matches</code> operator 
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>EHR path</strong></p></td>
-<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><code>o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]</code></p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment</strong></p></td>
-<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
 <div class="content">
 <pre>ehr_path/value matches {
     DV_PROPORTION matches {
@@ -1725,7 +1724,7 @@ the ADL expressions on the right-hand side of the <code>matches</code> operator 
 </tr>
 </tbody>
 </table>
-<table class="tableblock frame-all grid-all spread">
+<table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 80%;">
@@ -1739,20 +1738,20 @@ the ADL expressions on the right-hand side of the <code>matches</code> operator 
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Total cholesterol EHR path</strong></p></td>
-<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><code>o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]</code></p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>LDL-C EHR path</strong></p></td>
-<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><code>o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0011.1 and<br>
                                   name/value='Fractions']/items[at0013.4 and name/value='LDL-Cholesterol']</code></p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment</strong></p></td>
-<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
 <div class="content">
 <pre>Total cholesterol EHR path/value matches {
     DV_QUANTITY matches {
@@ -1774,7 +1773,7 @@ LDL-C EHR path/value matches {
 </tr>
 </tbody>
 </table>
-<table class="tableblock frame-all grid-all spread">
+<table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 80%;">
@@ -1788,14 +1787,14 @@ LDL-C EHR path/value matches {
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Total cholesterol EHR path</strong></p></td>
-<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><code>o/data/origin</code></p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment<br>
 (alt 1)</strong></p></td>
-<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
 <div class="content">
 <pre>EHR path/value matches {"^1999"}</pre>
 </div>
@@ -1804,7 +1803,7 @@ LDL-C EHR path/value matches {
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment<br>
 (alt 2)</strong></p></td>
-<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
 <div class="content">
 <pre>EHR path/value matches {|1999-??-??|</pre>
 </div>
@@ -1813,7 +1812,7 @@ LDL-C EHR path/value matches {
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment<br>
 (alt 3)</strong></p></td>
-<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
 <div class="content">
 <pre>EHR path/value matches {|1999-01-01..1999-12-31|</pre>
 </div>
@@ -1821,7 +1820,7 @@ LDL-C EHR path/value matches {
 </tr>
 </tbody>
 </table>
-<table class="tableblock frame-all grid-all spread">
+<table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 80%;">
@@ -1835,14 +1834,14 @@ LDL-C EHR path/value matches {
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>EHR path</strong></p></td>
-<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><code>o/data/origin</code></p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment<br>
 (alt 1)</strong></p></td>
-<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
 <div class="content">
 <pre>EHR path/value matches {"^19991201T(((0[0-9])|10|11|)(([0-5][0-9])?([0-5][0-9])?)|(1200))$"}</pre>
 </div>
@@ -1851,7 +1850,7 @@ LDL-C EHR path/value matches {
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment<br>
 (alt 2)</strong></p></td>
-<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
 <div class="content">
 <pre>EHR path/value matches {|1999-12-01T00:00:00..1999-12-01T11:59:59|}</pre>
 </div>
@@ -1859,7 +1858,7 @@ LDL-C EHR path/value matches {
 </tr>
 </tbody>
 </table>
-<table class="tableblock frame-all grid-all spread">
+<table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 80%;">
@@ -1873,14 +1872,14 @@ LDL-C EHR path/value matches {
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>EHR path</strong></p></td>
-<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><code>o/data/origin</code></p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment<br>
 (alt 1)</strong></p></td>
-<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
 <div class="content">
 <pre>EHR path/value matches {"^199912(([0-2][1-9])|10|20|30|31)?(T((0[0-5])|10|11)(([0-5][0-9])?([0-5][0-9])?))$"}</pre>
 </div>
@@ -1889,7 +1888,7 @@ LDL-C EHR path/value matches {
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment<br>
 (alt 2)</strong></p></td>
-<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
 <div class="content">
 <pre>EHR path/value matches {|1999-12-ddT00:00:00..1999-12-ddT11:59:59|}</pre>
 </div>
@@ -1897,7 +1896,7 @@ LDL-C EHR path/value matches {
 </tr>
 </tbody>
 </table>
-<table class="tableblock frame-all grid-all spread">
+<table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 80%;">
@@ -1911,14 +1910,14 @@ LDL-C EHR path/value matches {
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>EHR path</strong></p></td>
-<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><code>o/data/origin</code></p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment<br>
 (alt 1)</strong></p></td>
-<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
 <div class="content">
 <pre>EHR path/value matches {"^[2-9]\d\d\d"}</pre>
 </div>
@@ -1927,7 +1926,7 @@ LDL-C EHR path/value matches {
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment<br>
 (alt 2)</strong></p></td>
-<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
 <div class="content">
 <pre>EHR path/value matches {|&gt;1999-??-??|}</pre>
 </div>
@@ -1935,7 +1934,7 @@ LDL-C EHR path/value matches {
 </tr>
 </tbody>
 </table>
-<table class="tableblock frame-all grid-all spread">
+<table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 80%;">
@@ -1949,14 +1948,14 @@ LDL-C EHR path/value matches {
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>EHR path</strong></p></td>
-<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><code>o/data/origin</code></p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment<br>
 (alt 1)</strong></p></td>
-<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
 <div class="content">
 <pre>EHR path/value matches {"^1\d\d[0-8]"}</pre>
 </div>
@@ -1965,7 +1964,7 @@ LDL-C EHR path/value matches {
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment<br>
 (alt 2)</strong></p></td>
-<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
 <div class="content">
 <pre>EHR path/value matches {|&lt;1999-??-??|}</pre>
 </div>
@@ -1973,7 +1972,7 @@ LDL-C EHR path/value matches {
 </tr>
 </tbody>
 </table>
-<table class="tableblock frame-all grid-all spread">
+<table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 80%;">
@@ -1987,7 +1986,7 @@ LDL-C EHR path/value matches {
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment</strong></p></td>
-<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
 <div class="content">
 <pre>SELECT c
     FROM EHR e[ehr_id=$ehrUid] CONTAINS COMPOSITION c
@@ -2003,7 +2002,7 @@ LDL-C EHR path/value matches {
 <div class="paragraph">
 <p>The following example shows how arithmetic operators may be used within AQL statements.</p>
 </div>
-<table class="tableblock frame-all grid-all spread">
+<table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 80%;">
@@ -2017,7 +2016,7 @@ LDL-C EHR path/value matches {
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment</strong></p></td>
-<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
 <div class="content">
 <pre>SELECT e/ehr_id
 FROM EHR e CONTAINS (COMPOSITION c1
@@ -2046,7 +2045,7 @@ WHERE
 <div class="paragraph">
 <p>The following example shows the use of a nested query and the <code>not-in</code> operator.</p>
 </div>
-<table class="tableblock frame-all grid-all spread">
+<table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 80%;">
@@ -2060,7 +2059,7 @@ WHERE
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment</strong></p></td>
-<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
 <div class="content">
 <pre>SELECT e/ehr_id
 FROM
@@ -2084,7 +2083,7 @@ WHERE
 <div class="paragraph">
 <p>The following example shows how the <code>exists</code> operator may be used within AQL statements.</p>
 </div>
-<table class="tableblock frame-all grid-all spread">
+<table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 80%;">
@@ -2098,7 +2097,7 @@ WHERE
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment</strong></p></td>
-<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
 <div class="content">
 <pre>SELECT o
 FROM
@@ -2276,7 +2275,7 @@ WHERE
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="antlr-java"><span class="tok-c">// Author: Bostjan Lah</span><span class="tok-w"></span>
+<pre class="pygments highlight"><code data-lang="antlr-java"><span></span><span class="tok-c">// Author: Bostjan Lah</span><span class="tok-w"></span>
 <span class="tok-c">// (c) Copyright, Marand, http://www.marand.com</span><span class="tok-w"></span>
 <span class="tok-c">// Licensed under LGPL: http://www.gnu.org/copyleft/lesser.html</span><span class="tok-w"></span>
 <span class="tok-c">// Based on AQL grammar by Ocean Informatics: http://www.openehr.org/wiki/download/attachments/2949295/EQL_v0.6.grm?version=1&amp;modificationDate=1259650833000</span><span class="tok-w"></span>
@@ -2812,8 +2811,9 @@ WHERE
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-12-14 10:07:56 GMT
+Last updated 2019-12-16 11:35:48 UTC
 </div>
 </div>
+<link rel="stylesheet" href="https://specifications.openehr.org/styles/pygments-murphy.css">
 </body>
 </html>

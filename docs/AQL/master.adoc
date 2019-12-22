@@ -90,4 +90,5 @@ include::master07-grammar.adoc[leveloffset=+1]
 
 :sectnums!:
 //== References
-
+//
+//bibliography::[]
