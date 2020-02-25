@@ -451,14 +451,29 @@ AQL structure has the following clauses and these clauses must be listed in the 
 
 === FROM
 
-The `FROM` clause is used to specify the domain of the query, that is a subset of the universe of data that could be retrieve from a CDR. That universe is anything defined in the openEHR RM (that is a set of classes that models clinical records), and archetypes (that define specific data sets based on the openEHR RM). Because of that, the `FROM` clause uses `class expressions` to specify the subsets of data, giving context to the query.
+The `FROM` clause is used to specify the subset of all the data available in a repository,
+that will be available for the rest of the clauses to filter and return specific data (`WHERE`, `SELECT`, etc).
+The data available should be defined by a Reference Model (RM), using the dual-model approach,
+that is constraining the RM by the use of archetypes to define specific data structures.
 
-Then, the expressions in the `WHERE` clause will filter data, but only from the subset defined in the `FROM`, to get only the data that we need. And in the `SELECT` clause, a final projection is applied, selecting only the matched data that should be retrieved. In addition to the filtering done in the `WHERE` clause, the `class expressions` could hold predicates that also help filtering data.
+All the classes referenced by the FROM clause, should be defined by the RM. For instance,
+if the Reference Model is the openEHR EHR Model, the FROM should only include classes like
+EHR, COMPOSITION, OBSERVATION, EVALUATION, and so on.
 
-Ass a summary:
+NOTE: The AQL specification is not binded to a specific Reference Model, but to use a
+certain RM, it should comply with some requirements: it should be an Object Oriented
+Model and should follow the dual-model approach.
 
-. `FROM`: Defines the subset of data in which the query will be executed
-. `WHERE`: Filters data from the subset, leaving only the data that we need
+Then, the expressions in the `WHERE` clause will filter data, but only from the subset
+defined by the `FROM` clause. And in the `SELECT` clause, a final projection is applied,
+selecting only the matched data that should be retrieved in the query result. In addition
+to the filtering done in the `WHERE` clause, the `class expressions` could hold predicates
+that also allow filtering data.
+
+In summary:
+
+. `FROM`: Defines the subset of data over which the query will be executed
+. `WHERE`: Filters data from the defined subset, leaving only the data that we need
 . predicates in `class expressions`: further filters for data in the subset (could be transformed into predicates for the `WHERE` clause)
 . `SELECT`: picks the exact data that we need to return from the query, taken from the matched data in the previous two points
 
