@@ -460,8 +460,8 @@ All the classes referenced by the FROM clause, should be defined by the RM. For 
 if the Reference Model is the openEHR EHR Model, the FROM should only include classes like
 EHR, COMPOSITION, OBSERVATION, EVALUATION, and so on.
 
-NOTE: The AQL specification is not binded to a specific Reference Model, but to use a
-certain RM, it should comply with some requirements: it should be an Object Oriented
+NOTE: The AQL specification is not bound to a specific Reference Model, but to use a
+given RM, it should comply with some requirements: it should be an Object Oriented
 Model and should follow the dual-model approach.
 
 Then, the expressions in the `WHERE` clause will filter data, but only from the subset
