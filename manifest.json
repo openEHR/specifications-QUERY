@@ -3,32 +3,6 @@
     "title": "Query Languages",
     "description": "Query Languages Component",
     "keywords": "query languages, openehr",
-    "jira": {
-        "open_issues": "11103",
-        "releases": [
-            {
-                "id": "1.0.2",
-                "jira_refs": {
-                    "crs": "SPEC/versions/10030",
-                    "prs": "SPECPR/versions/10040"
-                }
-            },
-            {
-                "id": "1.0.3",
-                "jira_refs": {
-                    "crs": "SPECRM/versions/10860",
-                    "prs": "SPECPR/versions/10060"
-                }
-            },
-            {
-                "id": "1.0.4",
-                "jira_refs": {
-                    "crs": "SPECRM/versions/11074",
-                    "prs": "SPECPR/versions/10861"
-                }
-            }
-        ]
-    },
     "specifications": [
         {
             "id": "aql",
@@ -49,20 +23,34 @@
             "description": "Antlr 3 Grammar for AQL."
         }
     ],
+    "jira": {
+        "open_issues": "11103",
+        "roadmap": "SPECQUERY"
+    },
     "releases": [
         {
             "id": "1.1.0",
             "date": "",
-            "link": "https://openehr.atlassian.net/projects/SPECQUERY/versions/11262/tab/release-report-all-issues"
+            "jira": {
+                "crs": "SPECQUERY/versions/11262",
+                "prs": "SPECPR/versions/11565"
+            }
         },
         {
             "id": "1.0.1",
             "date": "",
-            "link": "https://openehr.atlassian.net/projects/SPECQUERY/versions/11261/tab/release-report-all-issues"
+            "jira": {
+                "crs": "SPECQUERY/versions/11261",
+                "prs": "SPECPR/versions/12530"
+            }
         },
         {
             "id": "1.0.0",
-            "date": "2017-11-25"
+            "date": "2017-11-25",
+            "jira": {
+                "crs": "SPECQUERY/versions/11260",
+                "prs": "SPECPR/versions/11564"
+            }
         }
     ]
 }
