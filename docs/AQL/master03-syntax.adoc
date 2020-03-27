@@ -665,8 +665,8 @@ TIMEWINDOW P2Y/2006-01-01
 
 === LIMIT row_count OFFSET offset
 
-The `LIMIT` and `OFFSET` clauses are used to constraint the number of results from a query. With `LIMIT row_count`,
-the result will have at most row_count items. And `OFFSET offset` is used to get results in a paginated way. For instance,
+The `LIMIT` and `OFFSET` clauses are used to constrain the number of results from a query. With `LIMIT row_count`,
+the result will have at most row_count items. The `OFFSET offset` is used to get results in a paginated way. For instance,
 when offset = 0 and row_count = 10, the result will have at most 10 items, starting with item 0. Then with offset = 10 and
 row_count = 10, the result will contain 10 items at most, now from item 10 to 19. So increasing `offset` by `row_count`,
 allows to get all the results when needed, or just a subset. This avoids to affect database performance by having dozens,
