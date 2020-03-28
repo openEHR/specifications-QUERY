@@ -293,25 +293,3 @@ WHERE
    )
 ----
 |===
-
-
-== Exists operator
-
-The following example shows how the `exists` operator may be used within AQL statements.
-
-[cols="1,4a",options="header",separator=¦]
-|===
-
-¦*Clinical Scenario 1*      ¦Require all blood pressure values with position recorded
-
-¦*AQL Fragment*             ¦
-----
-SELECT o
-FROM
-   EHR e CONTAINS
-      COMPOSITION CONTAINS
-         OBSERVATION o [openEHR-EHR-OBSERVATION.blood_pressure.v1]
-WHERE 
-   exists {"o//*/state[at0007]/items[at0008]"}
-----
-|===
