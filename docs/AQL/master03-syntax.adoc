@@ -251,7 +251,7 @@ matches {'string item 1', 'string item 2', 'string item3'}  // a string list. It
                                                             // matches  string item1' or ..
                                                             // matches 'string item 2' or ..
                                                             // matches 'string item 3'
-matches {'20060101', '20070101', '20080101'}                // a date value list
+matches {'2006-01-01', '2007-01-01', '2008-01-01'}          // a date value list
 matches {1, 2, 3}                                           // a integer list
 matches {1.1, 2.5, 3.8}                                     // a real value list
 --------
