@@ -1,0 +1,56 @@
+{
+    "id": "QUERY",
+    "title": "Query Languages",
+    "description": "Query Languages Component",
+    "keywords": "query languages, openehr",
+    "specifications": [
+        {
+            "id": "aql",
+            "title": "Archetype Query Language",
+            "title_short": "AQL",
+            "description": "Query language based on archetype paths and pattern matching.",
+            "copyright_year": "2008",
+            "spec_status": "STABLE",
+            "keywords": "query, AQL, archetype, Xpath, openehr"
+        }
+    ],
+    "expressions": [
+        {
+            "id": "Aql.g",
+            "type": "file",
+            "title": "Antlr file",
+            "link": "docs/AQL/Aql.g",
+            "description": "Antlr 3 Grammar for AQL."
+        }
+    ],
+    "jira": {
+        "open_issues": "11103",
+        "roadmap": "SPECQUERY"
+    },
+    "releases": [
+        {
+            "id": "1.1.0",
+            "date": "",
+            "jira": {
+                "crs": "SPECQUERY/versions/11262",
+                "prs": "SPECPR/versions/11565"
+            }
+        },
+        {
+            "id": "1.0.1",
+            "date": "",
+            "jira": {
+                "crs": "SPECQUERY/versions/11261",
+                "prs": "SPECPR/versions/12530"
+            }
+        },
+        {
+            "id": "1.0.0",
+            "date": "2017-11-25",
+            "jira": {
+                "crs": "SPECQUERY/versions/11260",
+                "prs": "SPECPR/versions/11564"
+            }
+        }
+    ]
+}
