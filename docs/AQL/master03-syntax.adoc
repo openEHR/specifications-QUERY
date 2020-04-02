@@ -422,16 +422,16 @@ All strings are enclosed in double or single quotes. Line breaks are not support
 
 === Dates and Times
 
-These types are treated as strings and should comply with the rules for string quoting. The format of the date, time and datetime types should comply with the {iso_8601}[ISO 8601 Date and Time] format specification. Complete or partial values are allowed.
+These types are treated as strings and should comply with the rules for string quoting. The format of the date, time and datetime types should comply with the {iso_8601}[ISO 8601 Date and Time] format specification, which allow the basic or extended formats to be used. In the openEHR specification it is recommended to use the extended format for dates, times and datetimes. Complete or partial values are allowed.
 
 NOTE: The underlying types of date/time strings are inferred by the AQL processor from the context (metadata associated with the path to which the date/time value is compared with, or by interpretation of the ISO 8601 format), enabling them to be processed as date/time quantities rather than literal strings by AQL engines.
 
 Examples are as below:
 
 --------
-WHERE composition/context/start_time > '19860101' // a complete date. AQL grammar identifies it as a string value.
-WHERE composition/context/start_time < "120000+0930"  // ISO8601 time. AQL grammar identifies it as a string value.
-WHERE composition/context/start_time <= '1986-01-01'  // complete calendar date in ISO8601 extended format. AQL grammar identifies this value as a date value.
+WHERE composition/context/start_time > '19860101'       // a complete date in ISO 8601 basic format. AQL grammar identifies it as a string value.
+WHERE composition/context/start_time < "12:00:00+0930"  // ISO 8601 time extended format. AQL grammar identifies it as a string value.
+WHERE composition/context/start_time <= '1986-01-01'    // complete date in ISO 8601 extended format. AQL grammar identifies this value as a date value.
 --------
 
 
