@@ -20,7 +20,7 @@ AQL has some other features which can be found from other query languages:
 
 . Supporting naming returned results.
 . Supporting query criteria parameters.
-. Supporting arithmetic operations (such as count, addition, subtraction, multiplication, and division), relational operations (`>`, `>=`, `=`, `!=`, `\<=`, `<`) and Boolean operations (`OR`, `AND`, `XOR`, `NOT`).
+. Supporting arithmetic operators (such as count, addition, subtraction, multiplication, and division), comparison operators (`>`, `>=`, `=`, `!=`, `\<=`, `<`) and Boolean operators (`OR`, `AND`, `XOR`, `NOT`).
 . Supporting some functions that are supported in XQuery, such as `current-date()`.
 . Users can specify their preference on the retrieved data, such as ordering preferences, or total number of retrieved results.
 . Supporting queries for individual clinical subjects at the point of care, administrative purposes and clinical research purposes.

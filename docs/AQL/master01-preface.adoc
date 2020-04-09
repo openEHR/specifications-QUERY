@@ -26,11 +26,8 @@ The text of this specification was originally posted on the {openehr_wiki_root}/
 
 === AQL features not yet supported
 
-The following features are likely to be needed, but are not yet implemented in tools:
+The following features are likely to be needed, but are not yet formalized by this specification:
 
-* `TOP`
-* `XOR`. Currently `AND`, `OR`, `NOT`, `EXISTS` are supported in `WHERE` clause.
+* `XOR` (currently `AND`, `OR`, `NOT`, `EXISTS` are supported in `WHERE` clause)
 * functions are not supported.
 * embedded query is not supported
-* `ORDER BY`
-* `TIMEWINDOW`

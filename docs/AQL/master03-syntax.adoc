@@ -95,7 +95,7 @@ A parameter can be used for any criteria values within an AQL statement, e.g.:
 * within a predicate: `[$archetypeId]`, `[at0003, $nameValue]`, `[ehr_id/value=$ehrId]`
 * withing a WHERE criteria: `o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value > $systolicCriteria`
 
-NOTE: In the WHERE criteria, when the value of the parameter is not a number or boolean value, it should be substituted with the correspondent quotes added to the value, for instance `o/../.. = $textVariable`, when substituted should look like this `o/../.. = "value"` (single or double quotes could be used).
+NOTE: In the WHERE criteria, when the value of the parameter is not a number or boolean value, it should be substituted with the correspondent quotes added to the value, for instance `o/../.. = $textVariable`, when substituted should look like this `o/../.. = "value"` (single or double quotes could be used). So substituted values follow the same rules as each type when the value is specified as a constant in the AQL expression: strings, dates, times and datetimes should be quoted, numbers and booleans are not quoted.
 
 === When parameters are needed
 
@@ -225,9 +225,9 @@ The table below shows the supported AQL comparison operators, meaning and exampl
 
 === matches operator definition
 
-The matches operator is used in the `WHERE` clause. This operator needs left operand and right operand. Left operand is an AQL identified path. Right operand is enclosed within curly braces. Right operand of matches operator has three forms:
+The matches operator is used in the `WHERE` clause. This operator needs left operand and right operand. Left operand is an AQL identified path. Right operand is enclosed within curly braces. Right operand of matches operator has these forms:
 
-. type of constraint ADL (cADL): this type of right operand can be a value list or a value range. Value range is not supported in the current AQL grammar. Below is an example with matches a string value list:
+. *type of constraint ADL (cADL)*: this type of right operand can be a value list or a value range. Value range is not supported in the current AQL grammar. Below is an example with matches a string value list:
 +
 --------
 SELECT
@@ -239,6 +239,31 @@ FROM
 WHERE
    o/data[at0002]/events[at0003]/data/items[at0015]/items[at0018]/items[at0019]/items[at0021]/name/defining_code/code_string matches {'18919-1', '18961-3', '19000-9'}
 --------
++
+Value list data is enclosed within curly braces after a matches operator. Each item is separated by comma if there are multiple items in the list. Value list items can be string, date time, integer, or real. Quotes are required for strings and date times.
++
+A value list is only used in AQL `WHERE` clause when the criteria is to match one item of the list. The relationships among these value list items are "OR".
++
+Some examples of value list:
++
+--------
+matches {'string item 1', 'string item 2', 'string item3'}  // a string list. It Equivalent to
+                                                            // matches  string item1' or ..
+                                                            // matches 'string item 2' or ..
+                                                            // matches 'string item 3'
+matches {'2006-01-01', '2007-01-01', '2008-01-01'}          // a date value list
+matches {1, 2, 3}                                           // a integer list
+matches {1.1, 2.5, 3.8}                                     // a real value list
+--------
++
+Value range data is enclosed within curly braces after matches operator. It is only used in AQL `WHERE` clause to specify a criteria within a range. The syntax is similar to intervals of ordered primitive types detailed in Section 4.5.2, adl.pdf. Some examples:
++
+----
+matches {|3.0..5.0|} // means 3.0 <= x <=5.0
+matches {|<8|}       // means x < 8
+----
++
+NOTE: Value range is not supported in the current AQL grammar.
 
 . URI: can be a terminology URI, openEHR EHR URI, or other URI. An example with a terminology URI is shown below:
 +
@@ -251,8 +276,29 @@ FROM
          CONTAINS Evaluation diagnosis[openEHR-EHR-EVALUATION.problem-diagnosis.v1]
 WHERE
    c/name/value='Current Problems' AND
-   diagnosis/data/items[at0002.1]/value/defining_code matches { terminology://Snomed-CT/hierarchy?rootConceptId=50043002 }
+   diagnosis/data/items[at0002.1]/value/defining_code matches { terminology://snomed-ct/hierarchy?rootConceptId=50043002 }
 --------
++
+URI data is enclosed within curly braces after `matches` operator. URI can be expressed as a normal URI described in {rfc3986}[IETF RFC 3986]. URIs are not case sensitive. In AQL, a URI can be either terminology URI or an EHR URI.
++
+A terminology URI consists of the following components:
++
+.. *terminology*: the URI schemes value;
+.. *terminology service*: the URI authority value, such as SNOMED-CT;
+.. *terminology function name*: the URI path, e.g. "hierarchy" is the function name in the example shown below;
+.. *argument values* required by the terminology functions - URI queries;
++
+This is an example of a terminology URI:
++
+----
+    terminology://snomed-CT/hierarchy?rootConceptId=50043002
+    \_________/   \_______/ \_______/ \___________/ \______/
+        |             |         |           |__________|
+     scheme       authority   path          | queries  |
+        |             |         |           |          |
+    terminology  terminology function    argument   argument
+       uri         service                 name      value
+----
 
 
 === Logical operators
@@ -268,19 +314,6 @@ WHERE
 ==== NOT
 
 `NOT` is a unary Boolean operator and it is always followed by either a single identified expression or boolean identified expression. It returns Boolean results: `true` means the followed expression (single or Boolean expression) is false.
-
-The example below uses the `NOT` operator followed by a single identified expression:
-
---------
-SELECT
-   e/ehr_id/value
-FROM
-   EHR e
-      CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.administrative_encounter.v1]
-         CONTAINS ADMIN_ENTRY admission[openEHR-EHR-ADMIN_ENTRY.admission.v1]
-WHERE
-   NOT EXISTS c/content[openEHR-EHR-ADMIN_ENTRY.discharge.v1]
---------
 
 The example below uses `NOT` operator followed by a boolean identified expression:
 
@@ -325,9 +358,9 @@ These advanced operators are not yet supported by the grammar. The operator synt
 
 ==== EXISTS
 
-`EXISTS` is a unary operator, which is always followed by a single operand. The single operand is an AQL identified path. This operator returns Boolean results: `true` means the data associated with the specified path exists, `false` otherwise. An `EXISTS` expression is a single identified expression. The latest grammar only allows this operator in `WHERE` clause. It may be required as part of openEHR path in future.
+`EXISTS` is a unary operator, which is always followed by a single operand. The single operand is an AQL identified path. This operator returns Boolean results: `true` means the data associated with the specified path exists, `false` otherwise. An `EXISTS` expression is a single identified expression.
 
-The example below means retrieving the identifiers of the EHRs which do not have discharge admin entry instance.
+The example below means retrieving the identifiers of the EHRs which do not have discharge admin entry instance, using the `NOT` operator followed by a single identified expression:
 
 --------
 SELECT
@@ -338,19 +371,6 @@ FROM
          CONTAINS ADMIN_ENTRY admission[openEHR-EHR-ADMIN_ENTRY.admission.v1]
 WHERE
    NOT EXISTS c/content[openEHR-EHR-ADMIN_ENTRY.discharge.v1]
---------
-
-This example below means from a particular EHR, retrieving all composition uid values and the contained instruction instances if the instruction instances have links with particular EHR URI value.
-
---------
-SELECT
-   c/uid/value, instruction
-FROM
-   EHR e [ehr_id/value=$ehrid]
-      CONTAINS COMPOSITION c
-         CONTAINS INSTRUCTION instruction[openEHR-EHR-INSTRUCTION.referral.v1]
-WHERE
-   EXISTS instruction/links[target='ehr://327000002/87284370-2D4B-4e3d-A3F3-F303D2F4F34B@latest_trunk_version']
 --------
 
 
@@ -382,91 +402,38 @@ o[name/value=$nameValue]
 o[name/value=$nameValue]/data[at0001]/.../data[at0003]/items[at0004]/value/value
 ----
 
-== Leaf Data
+== Built-in Types
 
-=== Primitive Types
+=== Integer data
 
-==== String Data
+Integers are represented as numeric literals, such as `1`, `2`, `365`. Commas or periods for breaking long numbers are not allowed. Hex integers are not supported.
 
-All strings are enclosed in double quotes or single quotes. Line breaks are not supported.
-
-==== Integer data
-
-Integers are represented as numberic literals, such as `1`, `2`, `365`. Commas or periods for breaking long numbers are not allowed. Hex integers are not supported.
-
-==== Real data
+=== Real data
 
 Real numbers are the decimal literals that include a decimal point, such as `3.1415926`. Commas or periods for breaking long numbers are not allowed.
 
-==== Boolean data
+=== Boolean data
 
 Boolean values are indicated using the case-insensitive literals `true` or `false`.
 
-==== Dates and Times
+=== String Data
 
-No matter whether the date/date time is complete or partial, it is allowed in AQL as long as it is in {iso_8601}[ISO 8601 date/date time format]. Quotes (either single quotes or double quotes) are required to enclose the date/date time value. In AQL grammar, it is treated as a date value if the value is a complete calendar date represented in ISO 8601 extended format and if single quotes are used. If the value is in other ISO 8601 date/date time format, AQL treats it as a string value, but the AQL query engine processes it differently from a normal string value. It is a temporary solution. In future, a date/date time value should be identified as date/date time value if it is a valid ISO 8601 date/date time. Examples are as below:
+All strings are enclosed in double or single quotes. Line breaks are not supported.
 
---------
-WHERE composition/context/start_time > '19860101' // a complete date. AQL grammar identifies it as a string value.
-WHERE composition/context/start_time < "120000+0930"  // ISO 8601 time. AQL grammar identifies it as a string value.
-WHERE composition/context/start_time <= '1986-01-01'  // complete calendar date in ISO 8601 extended format. AQL grammar identifies this value as a date value.
---------
+=== Dates and Times
 
-=== Other Built-in Types
+These types are treated as strings and should comply with the rules for string quoting. The format of the date, time and datetime types should comply with the {iso_8601}[ISO 8601 Date and Time] format specification, which allow the basic or extended formats to be used. In the openEHR specification it is recommended to use the extended format for dates, times and datetimes. Complete or partial values are allowed.
 
-==== URI
+NOTE: The underlying types of date/time strings are inferred by the AQL processor from the context (metadata associated with the path to which the date/time value is compared with, or by interpretation of the ISO 8601 format), enabling them to be processed as date/time quantities rather than literal strings by AQL engines.
 
-URI leaf data is enclosed within curly braces after `matches` operator. URI can be expressed as a normal URI described in {rfc3986}[IETF RFC 3986]. URIs are not case sensitive. In AQL, a URI can be either terminology URI or an EHR URI.
-
-==== Terminology URI
-
-A terminology URI consists of the following components:
-
-. *terminology*: the URI schemes value;
-. *terminology service*: the URI authority value, such as SNOMED-CT;
-. *terminology function name*: the URI path, e.g. "hierarchy" is the function name in the example shown below;
-. *argument values* required by the terminology functions - URI queries;
-
-This is an example of a terminology URI:
-
-----
-    terminology://snomed-CT/hierarchy?rootConceptId=50043002
-    \_________/   \_______/ \_______/ \___________/ \______/
-        |             |         |           |__________|
-     scheme       authority   path          | queries  |
-        |             |         |           |          |
-    terminology  terminology function    argument   argument
-       uri         service                 name      value
-----
-
-==== Value List
-
-Value list leaf data is enclosed within curly braces after matches operator. Each item is separated by comma if there are multiple items in the list. Value list can be string value list, date time value list, integer value list, and real value list. Quotes are required for string value list and date time value list.
-
-A value list is only used in AQL` WHERE` clause when the criteria is to match one item of the list. The relationships among these value list items are "OR".
-
-Some examples of value list:
+Examples are as below:
 
 --------
-matches {'string item 1', 'string item 2', 'string item3'}  // a string list. It Equivalent to
-                                                            // matches  string item1' or ..
-                                                            // matches 'string item 2' or ..
-                                                            // matches 'string item 3'
-matches {'20060101', '20070101', '20080101'}                // a date value list
-matches {1, 2, 3}                                           // a integer list
-matches {1.1, 2.5, 3.8}                                     // a real value list
+WHERE composition/context/start_time > '19860101'       // a complete date in ISO 8601 basic format. AQL grammar identifies it as a string value.
+WHERE composition/context/start_time < "12:00:00+0930"  // ISO 8601 time extended format. AQL grammar identifies it as a string value.
+WHERE composition/context/start_time <= '1986-01-01'    // complete date in ISO 8601 extended format. AQL grammar identifies this value as a date value.
 --------
 
-==== Value Range
-
-It is not supported in the current AQL grammar.
-
-Value range leaf data is enclosed within curly braces after matches operator. It is only used in AQL `WHERE` clause to specify a criteria within a range. The syntax is similar to intervals of ordered primitive types detailed in Section 4.5.2, adl.pdf. Some examples:
-
-----
-matches {|3.0..5.0|} // means 3.0 <= x <=5.0
-matches {|<8|}       // means x < 8
-----
 
 == Query structure
 
@@ -484,7 +451,32 @@ AQL structure has the following clauses and these clauses must be listed in the 
 
 === FROM
 
-The `FROM` clause utilises class expressions and a set of containment criteria to specify the data source from which the query required data is to be retrieved.  Its function is similar as the `FROM` clause of an SQL expression.
+The `FROM` clause is used to specify the subset of all the data available in a repository,
+that will be available for the rest of the clauses to filter and return specific data (`WHERE`, `SELECT`, etc).
+The data available should be defined by a Reference Model (RM), using the dual-model approach,
+that is constraining the RM by the use of archetypes to define specific data structures.
+
+All the classes referenced by the FROM clause, should be defined by the RM. For instance,
+if the Reference Model is the openEHR EHR Model, the FROM should only include classes like
+EHR, COMPOSITION, OBSERVATION, EVALUATION, and so on.
+
+NOTE: The AQL specification is not bound to a specific Reference Model, but to use a
+given RM, it should comply with some requirements: it should be an Object Oriented
+Model and should follow the dual-model approach.
+
+Then, the expressions in the `WHERE` clause will filter data, but only from the subset
+defined by the `FROM` clause. And in the `SELECT` clause, a final projection is applied,
+selecting only the matched data that should be retrieved in the query result. In addition
+to the filtering done in the `WHERE` clause, the `class expressions` could hold predicates
+that also allow filtering data.
+
+In summary:
+
+. `FROM`: Defines the subset of data over which the query will be executed
+. `WHERE`: Filters data from the defined subset, leaving only the data that we need
+. predicates in `class expressions`: further filters for data in the subset (could be transformed into predicates for the `WHERE` clause)
+. `SELECT`: picks the exact data that we need to return from the query, taken from the matched data in the previous two points
+
 
 ==== FROM Syntax
 
@@ -493,7 +485,7 @@ A simple `FROM` clause consists of three parts: keyword `FROM`, class expression
 --------
 FROM
    EHR e [ehr_id/value=$ehrId]
-       CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]
+      CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]
 --------
 
 ==== Class expressions
@@ -635,7 +627,7 @@ FROM
 
 ==== Name alias
 
-As in SQL, `AQL` supports the use of a name alias for the retrieved data. This is domne with the keyword `AS`, followed by the name which conforms to the syntax rule of AQL variable.
+As in SQL, `AQL` supports the use of a name alias for the retrieved data. This is done with the keyword `AS`, followed by the name which conforms to the syntax rule of AQL variable.
 
 === ORDER BY
 
