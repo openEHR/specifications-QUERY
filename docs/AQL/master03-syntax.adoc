@@ -54,7 +54,7 @@ Another type of openEHR path is the path pointing to an attribute of openEHR Ref
 
 == AQL variables
 
-AQL variables are used to refer a specific openEHR class defined within an AQL `FROM` clause. Consider this example:
+AQL variables are used to refer a specific openEHR class defined within an AQL `FROM` clause. Consider the following example:
 
 --------
 SELECT
@@ -69,22 +69,23 @@ WHERE
    o/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude >= 90
 --------
 
-This AQL example defines only one AQL variables: `o` that represents OBSERVATIONs that comply with the `openEHR-EHR-OBSERVATION.blood_pressure.v1` archetype.
-
+This example defines only one AQL variable: `o`, which represents `OBSERVATIONs` that conform to (i.e. created using) the `openEHR-EHR-OBSERVATION.blood_pressure.v1` archetype.
 
 AQL variables have the following features:
 
-* AQL variable names must be defined in an AQL `FROM` clause.
+* AQL variable names are defined in the AQL `FROM` clause.
 * A variable name must be unique within an AQL statement.
-* Not all classes defined within the `FROM` clause need a variable name. It is required only when other clauses within other AQL clauses need to refer to the class defined in the `FROM` clause. For instance, the example doesn't define a variable name for EHR or COMPOSITION classes. Variable name `o` is used by both `WHERE` clause and `SELECT` clause, as root object of the following paths.
-* Variable names are used by other clauses within the AQL statement along with openEHR path to form a complete AQL path - Identified path. Refer back to Section 2.2. example, `o/data[at0001/events[at0006]/data[at0003]/items[at0004]/value/value]` points to the systolic value node of the Observation archetype `openEHR-EHR-OBSERVATION.blood_pressure.v1`.
-* Except for the reserved words, any characters, whitespace, letters, Alphanumeric, and underscore can be used for a variable name. Variable names are not case sensitive. Digits are not recommended at the beginning of a variable name even though there is no formal restriction.
+* Not all classes defined within the `FROM` clause need a variable name. It is required only when other AQL clauses need to refer to the class identified in the `FROM` clause. The example above doesn't define a variable name for the `EHR` or `COMPOSITION` classes, only for the `OBSERVATION` class (variable `o`), to allow the latter to be referred to in the `WHERE` and `SELECT` clauses, as the root object of specific paths.
+
+The combination of a variable reference and a subordinate path forms one kind of _identified path_ (see <<AQL Identified Paths>>), used to specify a fine-grained data element within a larger object matched by the `FROM` clause. In the above example, `o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude` specifies the systolic value of the Observation archetype `openEHR-EHR-OBSERVATION.blood_pressure.v1`.
+
+A variable name is formed of an initial letter followed by any number of alphanumerics and underscores, as long as it does not clash with a reserved word. Variable names are not case-sensitive. Digits are not recommended at the beginning of a variable name although there is no formal restriction.
 
 == Parameters
 
 AQL syntax supports parameterisation. AQL parameters are used to indicate criteria, which will be substituted with values at run time. Supporting parameterisation is one of the mechanisms used to realise sharing AQL statements within a system or across system boundaries.
 
-The parameters can be EHR specific (such as the parameter of EHR identifier or EHR creation date time), archetype specific (such as an archetype identifier, or archetype constraints), or template specific (such as a template identifier or template constraints).
+The parameters can be EHR specific (such as the parameter of EHR identifier or EHR creation date/time), archetype specific (such as an archetype identifier, or archetype constraints), or template specific (such as a template identifier or template constraints).
 
 === Parameter syntax
 
@@ -95,7 +96,7 @@ A parameter can be used for any criteria values within an AQL statement, e.g.:
 * within a predicate: `[$archetypeId]`, `[at0003, $nameValue]`, `[ehr_id/value=$ehrId]`
 * withing a WHERE criteria: `o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value > $systolicCriteria`
 
-NOTE: In the WHERE criteria, when the value of the parameter is not a number or boolean value, it should be substituted with the correspondent quotes added to the value, for instance `o/../.. = $textVariable`, when substituted should look like this `o/../.. = "value"` (single or double quotes could be used). So substituted values follow the same rules as each type when the value is specified as a constant in the AQL expression: strings, dates, times and datetimes should be quoted, numbers and booleans are not quoted.
+NOTE: In the WHERE criteria, when the value of the parameter is not a number or boolean value, it should be substituted with the corresponding quotes added to the value, for instance `o/../.. = $textVariable`, when substituted should look like this `o/../.. = "value"` (single or double quotes could be used). So substituted values follow the same rules as each type when the value is specified as a constant in the AQL expression: strings, dates, times and datetimes should be quoted, numbers and booleans are not quoted.
 
 === When parameters are needed
 
@@ -128,7 +129,7 @@ Standard predicates always have a left operand, operator and right operand, e.g.
 
 === Archetype predicate
 
-An archetype predicate is a shortcut of a standard predicate, i.e. the predicate does not have the left operand and operator. It only has an archetype id, e.g. `[openEHR-EHR-COMPOSITION.encounter.v1]`. The archetype predicate is a specific type of query criterion indicating what archetype instances are relevant to this query. It is used to scope the the data source from which the query expected data is to be retrieved. Therefore, an archetype predicate is only used within an AQL `FROM` clause, for example,
+An archetype predicate is a shortcut of a standard predicate, i.e. the predicate does not have the left operand and operator. It only has an archetype id, e.g. `[openEHR-EHR-COMPOSITION.encounter.v1]`. The archetype predicate is a specific type of query criterion indicating which archetype instances are relevant to this query. It is used to scope the data source from which the query result data is to be retrieved. Therefore, an archetype predicate is only used within an AQL `FROM` clause, for example,
 
 --------
 FROM EHR [ehr_id/value='1234']
@@ -160,7 +161,7 @@ A node predicate is also a shortcut of a standard predicate. It has the followin
 [at0002]
 --------
 +
-The correspondent standard predicate would be:
+The corresponding standard predicate would be:
 +
 --------
 [archetype_node_id=at0002]
@@ -174,7 +175,7 @@ The correspondent standard predicate would be:
 [at0002 and name/value='real name value']
 --------
 +
-The correspondent standard predicates would be:
+The corresponding standard predicates would be:
 +
 --------
 [archetype_node_id=at0002 and name/value=$nameValue]
@@ -188,7 +189,7 @@ The correspondent standard predicates would be:
 [at0002, 'real name value']
 --------
 +
-The correspondent standard predicates would be:
+The corresponding standard predicates would be:
 +
 --------
 [archetype_node_id=at0002 and name/value=$nameValue]
@@ -201,7 +202,7 @@ The correspondent standard predicates would be:
 [at0002 and value/defining_code/terminology_id/value=$terminologyId]
 --------
 
-A node predicate defines criteria on fine-grained data. It is only used within an identified path.
+A node predicate defines criteria on fine-grained data.
 
 == Operators
 
@@ -225,9 +226,9 @@ The table below shows the supported AQL comparison operators, meaning and exampl
 
 === matches operator definition
 
-The matches operator is used in the `WHERE` clause. This operator needs left operand and right operand. Left operand is an AQL identified path. Right operand is enclosed within curly braces. Right operand of matches operator has these forms:
+The `matches` binary operator is used in the `WHERE` clause. The left operand is an AQL identified path. The right operand is enclosed within braces (`'{}'`), and may take the following forms:
 
-. *type of constraint ADL (cADL)*: this type of right operand can be a value list or a value range. Value range is not supported in the current AQL grammar. Below is an example with matches a string value list:
+. *cADL list constraint*: a comma-separated value list, which is one of the cADL constraint forms used in the {openehr_am}[Archetype Definition Language (ADL)^]. Below is an example using a string value list:
 +
 --------
 SELECT
@@ -240,7 +241,7 @@ WHERE
    o/data[at0002]/events[at0003]/data/items[at0015]/items[at0018]/items[at0019]/items[at0021]/name/defining_code/code_string matches {'18919-1', '18961-3', '19000-9'}
 --------
 +
-Value list data is enclosed within curly braces after a matches operator. Each item is separated by comma if there are multiple items in the list. Value list items can be string, date time, integer, or real. Quotes are required for strings and date times.
+Value list items may be of type string, date/time, integer, or real. Quotes are required for strings and date/times.
 +
 A value list is only used in AQL `WHERE` clause when the criteria is to match one item of the list. The relationships among these value list items are "OR".
 +
@@ -290,7 +291,7 @@ A terminology URI consists of the following components:
 +
 This is an example of a terminology URI:
 +
-----
+--------
     terminology://snomed-CT/hierarchy?rootConceptId=50043002
     \_________/   \_______/ \_______/ \___________/ \______/
         |             |         |           |__________|
@@ -298,8 +299,7 @@ This is an example of a terminology URI:
         |             |         |           |          |
     terminology  terminology function    argument   argument
        uri         service                 name      value
-----
-
+--------
 
 === Logical operators
 
@@ -313,9 +313,9 @@ This is an example of a terminology URI:
 
 ==== NOT
 
-`NOT` is a unary Boolean operator and it is always followed by either a single identified expression or boolean identified expression. It returns Boolean results: `true` means the followed expression (single or Boolean expression) is false.
+`NOT` is a unary Boolean operator which is always followed by either a Boolean identified expression (see <<Identified expression>>) or other Boolean-valued operand, such as an expression using the `EXISTS` operator. It returns a Boolean result: `true` means the operand is `false`. A `NOT` expression is a kind of identified expression (see <<Identified expression,below>>).
 
-The example below uses `NOT` operator followed by a boolean identified expression:
+The example below uses `NOT` operator followed by a Boolean identified expression:
 
 --------
 SELECT
@@ -329,20 +329,9 @@ WHERE
    e/ehr_status/subject/external_ref/namespace = 'CEC')
 --------
 
-The above example is equivalent to the two expressions shown below:
+The above example is equivalent to the two expressions shown in the following `WHERE` clause:
 
 --------
-SELECT
-   e/ehr_id/value
-FROM
-   EHR e
-      CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.administrative_encounter.v1]
-         CONTAINS ADMIN_ENTRY admission[openEHR-EHR-ADMIN_ENTRY.admission.v1]
-WHERE
-   NOT EXISTS c/content[openEHR-EHR-ADMIN_ENTRY.discharge.v1] OR
-   NOT e/ehr_status/subject/external_ref/namespace = 'CEC'
-
-
 SELECT
    e/ehr_id/value
 FROM
@@ -358,9 +347,9 @@ These advanced operators are not yet supported by the grammar. The operator synt
 
 ==== EXISTS
 
-`EXISTS` is a unary operator, which is always followed by a single operand. The single operand is an AQL identified path. This operator returns Boolean results: `true` means the data associated with the specified path exists, `false` otherwise. An `EXISTS` expression is a single identified expression.
+`EXISTS` is a unary operator, whose operand is an identified path (described in <<AQL Identified Paths>>). It returns a Boolean result: `true` means the data associated with the specified path exists, `false` otherwise. An `EXISTS` expression is a kind of identified expression (see <<Identified expression,below>>).
 
-The example below means retrieving the identifiers of the EHRs which do not have discharge admin entry instance, using the `NOT` operator followed by a single identified expression:
+In the AQL example below, `EXISTS` is used in negated form to filter out `COMPOSITIONs` (and therefore EHRs) that do not contain a discharge `ADMIN_ENTRY` instance:
 
 --------
 SELECT
@@ -373,30 +362,29 @@ WHERE
    NOT EXISTS c/content[openEHR-EHR-ADMIN_ENTRY.discharge.v1]
 --------
 
-
-== AQL identified paths
+== AQL Identified Paths
 
 === Usage
 
-Identified paths are used to locate data items within an archetype RM class. Except for the `FROM` clause, an identified path could appears in any clauses of an AQL statement. For example, it can be used to indicate the data to be returned in a `SELECT` clause, or the data item on which query criteria are applied in a `WHERE` clause.
+In AQL, an _identified path_ is the association of a variable reference (the identifier; see <<AQL variables,above>>) and an archetype path and/or predicate. Except for the `FROM` clause, an identified path may appear in any clause of an AQL statement. For example, it can be used to indicate the data to be returned in a `SELECT` clause, or the data item on which query criteria are applied in a `WHERE` clause.
 
 === Syntax
 
-AQL identified path can take any of the following forms:
+An AQL identified path can take any of the following forms:
 
-* an AQL variable name defined within the `FROM` clause, followed by an openEHR path, e.g.
+* a variable name defined in the `FROM` clause followed by an archetype path, which specifies a data item at that path within the object, as follows:
 +
 ----
 o/data[at0001]/.../data[at0003]/items[at0004]/value/value
 ----
 
-* an AQL variable name followed by a predicate, e.g.
+* a variable name followed by a predicate, which specifies an object that satisfies the predicate, as follows:
 +
 ----
 o[name/value=$nameValue]
 ----
 
-* an AQL variable name followed by a predicate and an openEHR path, e.g.
+* a variable name followed by a predicate and an archetype path, which specifies a data item at a path within an object satisfying the predicate, as follows:
 +
 ----
 o[name/value=$nameValue]/data[at0001]/.../data[at0003]/items[at0004]/value/value
@@ -433,7 +421,6 @@ WHERE composition/context/start_time > '19860101'       // a complete date in IS
 WHERE composition/context/start_time < "12:00:00+0930"  // ISO 8601 time extended format. AQL grammar identifies it as a string value.
 WHERE composition/context/start_time <= '1986-01-01'    // complete date in ISO 8601 extended format. AQL grammar identifies this value as a date value.
 --------
-
 
 == Query structure
 
@@ -541,7 +528,7 @@ EHR e
 
 === WHERE
 
-An AQL `WHERE` clause is used to represent further criteria applied to the data items within the objects declared in the FROM clause. A `WHERE` clause expresses the query criteria that cannot be represented in other AQL clauses, such as criteria on archetype id, composition committal date time, and the criteria on in which order the returned results should be listed.
+An AQL `WHERE` clause is used to represent further criteria applied to the data items within the objects declared in the FROM clause. A `WHERE` clause expresses the query criteria that cannot be represented in other AQL clauses, such as criteria on archetype id, composition committal date/time, and the criteria on in which order the returned results should be listed.
 
 ==== Syntax
 
@@ -557,18 +544,22 @@ WHERE
 
 ==== Identified expression
 
-Identified expression specifies the criteria within `WHERE` clause. It consists of left operand, operator and right operand.
+An _identified expression_ specifies matching criteria in the `WHERE` clause and comes in two forms. The first form is an expression formed by a unary operator, such as `NOT` or `EXISTS`, described earlier. The second is a binary operator expression, formed as follows:
 
-. Left operand is normally an identified path,
-. Operator is normally a comparison operator,
-. Right operand is the criteria value, which normally is primitive type, such as String, Integer, Boolean, Double, or Float. When it is a string value, single quotation marks or double quotation marks are required. Right operand can also be a parameter or an identified path as well.
+. _left operand_: an identified path;
+. _operator_: a comparison operator;
+. _right operand_: one of:
+** a value criterion, normally of a primitive type, such as `String`, `Integer`, `Boolean`, `Double`, or `Float`; if a `String` value, single or double quotation marks are required; OR
+** a replaceable parameter (identified with the `'$'` symbol); OR
+** an identified path.
 
-Examples:
+The following examples illustrate the binary form.
 
-* Left operand is an identified path and right operand is a real criteria value - primitive type:
+* Left operand is an identified path; right operand is a primitive value:
 +
 --------
 o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value >= 140
+
 c/archetype_details/template_id/value = 'health_encounter'
 --------
 
@@ -578,7 +569,7 @@ c/archetype_details/template_id/value = 'health_encounter'
 c/archetype_details/template_id/value = $templateParameter
 --------
 
-* Both left operand and right operand are an identified path (this is an advanced feature):
+* Both left operand and right operand are identified paths:
 +
 --------
 o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value >
@@ -587,15 +578,15 @@ o1/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value
 
 === SELECT
 
-A `SELECT` clause specifies what data is to be retrieved by the AQL query. The data can be any types from openEHR RM and any primitive data types. In addition, the `SELECT` clause uses `TOP` to indicate the number of result setS that should be returned and name alias to rename the retrieved data.
+A `SELECT` clause specifies what data is to be retrieved by the AQL query. The data can be any types from openEHR RM and any primitive data types. In addition, the `SELECT` clause uses `TOP` to indicate the number of result sets that should be returned and name alias to rename the retrieved data.
 
-The `SELECT` syntax always starts with keyword `SELECT`, followed by `TOP` (optional), and identified path(s) or variable name(s) defined in the `FROM` clause. Each variable name or an identified path may have a name alias renaming the associated data.
+The `SELECT` syntax always starts with the keyword `SELECT`, followed by `TOP` (optional), and identified path(s) or plain variable name(s) defined in the `FROM` clause. Each variable name or identified path may have a name alias renaming the associated data.
 
-If variable name(s) is(are) required, the full object of the type associated with the variable is retrieved, such as a `COMPOSITION`, an `OBSERVATION` object etc. If identified paths are required, the path-associated data items are returned. Multiple identifiers or identified paths are separated using a comma.
+Where a variable name is specified, the full object of the type associated with the variable is retrieved, such as a `COMPOSITION`, `OBSERVATION` etc. Where an identified path is specified, the data item(s) having that archetype path are returned. Multiple identifiers or identified paths are separated using a comma.
 
 Some examples are shown below.
 
-Example 1: retrieve all compositions' name value, context start time and composer name from a specific EHR.
+Example 1: retrieve all Compositions' name value, context start time and composer name from a specific EHR.
 
 --------
 SELECT
@@ -604,7 +595,7 @@ FROM
    EHR e[ehr_id/value=$ehrUid] CONTAINS COMPOSITION c
 --------
 
-Example 2: Retrieve all composition objects of a specific EHR.
+Example 2: Retrieve all Composition objects of a specific EHR.
 
 --------
 SELECT c
