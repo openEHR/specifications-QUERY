@@ -7,9 +7,16 @@
 4+^h|*Release 1.0.1 (unreleased)*
 
 |[[latest_issue]]1.0.1
-|{spec_tickets}/SPECQUERY-15[SPECQUERY-15^] Add clarifications and fix typographical errors.
-|P Pazos
-|[[latest_issue_date]]22 Nov 2019
+|{spec_tickets}/SPECQUERY-14[SPECQUERY-14^] Correct typographical errors; +
+ {spec_tickets}/SPECQUERY-15[SPECQUERY-15^] Add clarifications and fix typographical errors; +
+ {spec_tickets}/SPECQUERY-4[SPECQUERY-4^]  Improve documentation of 'matches' operator; +
+|P Pazos, +
+ B Næss, +
+ S Arikan, +
+ S Iancu, +
+ M Polajnar, +
+ T Beale
+|[[latest_issue_date]]10 Apr 2020
 
 4+^h|*Release 1.0.0*
 
