@@ -90,25 +90,13 @@
 <li><a href="#_syntax">3.8.2. Syntax</a></li>
 </ul>
 </li>
-<li><a href="#_leaf_data">3.9. Leaf Data</a>
+<li><a href="#_built_in_types">3.9. Built-in Types</a>
 <ul class="sectlevel3">
-<li><a href="#_primitive_types">3.9.1. Primitive Types</a>
-<ul class="sectlevel4">
-<li><a href="#_string_data">3.9.1.1. String Data</a></li>
-<li><a href="#_integer_data">3.9.1.2. Integer data</a></li>
-<li><a href="#_real_data">3.9.1.3. Real data</a></li>
-<li><a href="#_boolean_data">3.9.1.4. Boolean data</a></li>
-<li><a href="#_dates_and_times">3.9.1.5. Dates and Times</a></li>
-</ul>
-</li>
-<li><a href="#_other_built_in_types">3.9.2. Other Built-in Types</a>
-<ul class="sectlevel4">
-<li><a href="#_uri">3.9.2.1. URI</a></li>
-<li><a href="#_terminology_uri">3.9.2.2. Terminology URI</a></li>
-<li><a href="#_value_list">3.9.2.3. Value List</a></li>
-<li><a href="#_value_range">3.9.2.4. Value Range</a></li>
-</ul>
-</li>
+<li><a href="#_integer_data">3.9.1. Integer data</a></li>
+<li><a href="#_real_data">3.9.2. Real data</a></li>
+<li><a href="#_boolean_data">3.9.3. Boolean data</a></li>
+<li><a href="#_string_data">3.9.4. String Data</a></li>
+<li><a href="#_dates_and_times">3.9.5. Dates and Times</a></li>
 </ul>
 </li>
 <li><a href="#_query_structure">3.10. Query structure</a>
@@ -145,7 +133,6 @@
 <li><a href="#_adl_matches_operator">5.1. ADL matches operator</a></li>
 <li><a href="#_arithmetic_operators">5.2. Arithmetic operators</a></li>
 <li><a href="#_nest_query_and_not_in">5.3. Nest Query and 'Not in'</a></li>
-<li><a href="#_exists_operator">5.4. Exists operator</a></li>
 </ul>
 </li>
 <li><a href="#_how_to_write_an_aql_query_statement_manually">6. How to write an AQL query statement manually</a>
@@ -392,27 +379,18 @@
 <div class="sect3">
 <h4 id="_aql_features_not_yet_supported"><a class="anchor" href="#_aql_features_not_yet_supported"></a>1.4.1. AQL features not yet supported</h4>
 <div class="paragraph">
-<p>The following features are likely to be needed, but are not yet implemented in tools:</p>
+<p>The following features are likely to be needed, but are not yet formalized by this specification:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>TOP</code></p>
-</li>
-<li>
-<p><code>XOR</code>. Currently <code>AND</code>, <code>OR</code>, <code>NOT</code>, <code>EXISTS</code> are supported in <code>WHERE</code> clause.</p>
+<p><code>XOR</code> (currently <code>AND</code>, <code>OR</code>, <code>NOT</code>, <code>EXISTS</code> are supported in <code>WHERE</code> clause)</p>
 </li>
 <li>
 <p>functions are not supported.</p>
 </li>
 <li>
 <p>embedded query is not supported</p>
-</li>
-<li>
-<p><code>ORDER BY</code></p>
-</li>
-<li>
-<p><code>TIMEWINDOW</code></p>
 </li>
 </ul>
 </div>
@@ -468,7 +446,7 @@
 <p>Supporting query criteria parameters.</p>
 </li>
 <li>
-<p>Supporting arithmetic operations (such as count, addition, subtraction, multiplication, and division), relational operations (<code>&gt;</code>, <code>&gt;=</code>, <code>=</code>, <code>!=</code>, <code>&lt;=</code>, <code>&lt;</code>) and Boolean operations (<code>OR</code>, <code>AND</code>, <code>XOR</code>, <code>NOT</code>).</p>
+<p>Supporting arithmetic operators (such as count, addition, subtraction, multiplication, and division), comparison operators (<code>&gt;</code>, <code>&gt;=</code>, <code>=</code>, <code>!=</code>, <code>&lt;=</code>, <code>&lt;</code>) and Boolean operators (<code>OR</code>, <code>AND</code>, <code>XOR</code>, <code>NOT</code>).</p>
 </li>
 <li>
 <p>Supporting some functions that are supported in XQuery, such as <code>current-date()</code>.</p>
@@ -731,7 +709,7 @@ WHERE
 <div class="title">Note</div>
 </td>
 <td class="content">
-In the WHERE criteria, when the value of the parameter is not a number or boolean value, it should be substituted with the correspondent quotes added to the value, for instance <code>o/../.. = $textVariable</code>, when substituted should look like this <code>o/../.. = "value"</code> (single or double quotes could be used).
+In the WHERE criteria, when the value of the parameter is not a number or boolean value, it should be substituted with the correspondent quotes added to the value, for instance <code>o/../.. = $textVariable</code>, when substituted should look like this <code>o/../.. = "value"</code> (single or double quotes could be used). So substituted values follow the same rules as each type when the value is specified as a constant in the AQL expression: strings, dates, times and datetimes should be quoted, numbers and booleans are not quoted.
 </td>
 </tr>
 </table>
@@ -951,12 +929,12 @@ WHERE
 <div class="sect3">
 <h4 id="_matches_operator_definition"><a class="anchor" href="#_matches_operator_definition"></a>3.7.2. matches operator definition</h4>
 <div class="paragraph">
-<p>The matches operator is used in the <code>WHERE</code> clause. This operator needs left operand and right operand. Left operand is an AQL identified path. Right operand is enclosed within curly braces. Right operand of matches operator has three forms:</p>
+<p>The matches operator is used in the <code>WHERE</code> clause. This operator needs left operand and right operand. Left operand is an AQL identified path. Right operand is enclosed within curly braces. Right operand of matches operator has these forms:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>type of constraint ADL (cADL): this type of right operand can be a value list or a value range. Value range is not supported in the current AQL grammar. Below is an example with matches a string value list:</p>
+<p><strong>type of constraint ADL (cADL)</strong>: this type of right operand can be a value list or a value range. Value range is not supported in the current AQL grammar. Below is an example with matches a string value list:</p>
 <div class="listingblock">
 <div class="content">
 <pre>SELECT
@@ -968,6 +946,47 @@ FROM
 WHERE
    o/data[at0002]/events[at0003]/data/items[at0015]/items[at0018]/items[at0019]/items[at0021]/name/defining_code/code_string matches {'18919-1', '18961-3', '19000-9'}</pre>
 </div>
+</div>
+<div class="paragraph">
+<p>Value list data is enclosed within curly braces after a matches operator. Each item is separated by comma if there are multiple items in the list. Value list items can be string, date time, integer, or real. Quotes are required for strings and date times.</p>
+</div>
+<div class="paragraph">
+<p>A value list is only used in AQL <code>WHERE</code> clause when the criteria is to match one item of the list. The relationships among these value list items are "OR".</p>
+</div>
+<div class="paragraph">
+<p>Some examples of value list:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>matches {'string item 1', 'string item 2', 'string item3'}  // a string list. It Equivalent to
+                                                            // matches  string item1' or ..
+                                                            // matches 'string item 2' or ..
+                                                            // matches 'string item 3'
+matches {'2006-01-01', '2007-01-01', '2008-01-01'}          // a date value list
+matches {1, 2, 3}                                           // a integer list
+matches {1.1, 2.5, 3.8}                                     // a real value list</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Value range data is enclosed within curly braces after matches operator. It is only used in AQL <code>WHERE</code> clause to specify a criteria within a range. The syntax is similar to intervals of ordered primitive types detailed in Section 4.5.2, adl.pdf. Some examples:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>matches {|3.0..5.0|} // means 3.0 &lt;= x &lt;=5.0
+matches {|&lt;8|}       // means x &lt; 8</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Value range is not supported in the current AQL grammar.
+</td>
+</tr>
+</table>
 </div>
 </li>
 <li>
@@ -982,8 +1001,44 @@ FROM
          CONTAINS Evaluation diagnosis[openEHR-EHR-EVALUATION.problem-diagnosis.v1]
 WHERE
    c/name/value='Current Problems' AND
-   diagnosis/data/items[at0002.1]/value/defining_code matches { terminology://Snomed-CT/hierarchy?rootConceptId=50043002 }</pre>
+   diagnosis/data/items[at0002.1]/value/defining_code matches { terminology://snomed-ct/hierarchy?rootConceptId=50043002 }</pre>
 </div>
+</div>
+<div class="paragraph">
+<p>URI data is enclosed within curly braces after <code>matches</code> operator. URI can be expressed as a normal URI described in <a href="https://www.ietf.org/rfc/rfc3986">IETF RFC 3986</a>. URIs are not case sensitive. In AQL, a URI can be either terminology URI or an EHR URI.</p>
+</div>
+<div class="paragraph">
+<p>A terminology URI consists of the following components:</p>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><strong>terminology</strong>: the URI schemes value;</p>
+</li>
+<li>
+<p><strong>terminology service</strong>: the URI authority value, such as SNOMED-CT;</p>
+</li>
+<li>
+<p><strong>terminology function name</strong>: the URI path, e.g. "hierarchy" is the function name in the example shown below;</p>
+</li>
+<li>
+<p><strong>argument values</strong> required by the terminology functions - URI queries;</p>
+<div class="paragraph">
+<p>This is an example of a terminology URI:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>    terminology://snomed-CT/hierarchy?rootConceptId=50043002
+    \_________/   \_______/ \_______/ \___________/ \______/
+        |             |         |           |__________|
+     scheme       authority   path          | queries  |
+        |             |         |           |          |
+    terminology  terminology function    argument   argument
+       uri         service                 name      value</pre>
+</div>
+</div>
+</li>
+</ol>
 </div>
 </li>
 </ol>
@@ -1007,21 +1062,6 @@ WHERE
 <h5 id="_not"><a class="anchor" href="#_not"></a>3.7.3.3. NOT</h5>
 <div class="paragraph">
 <p><code>NOT</code> is a unary Boolean operator and it is always followed by either a single identified expression or boolean identified expression. It returns Boolean results: <code>true</code> means the followed expression (single or Boolean expression) is false.</p>
-</div>
-<div class="paragraph">
-<p>The example below uses the <code>NOT</code> operator followed by a single identified expression:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>SELECT
-   e/ehr_id/value
-FROM
-   EHR e
-      CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.administrative_encounter.v1]
-         CONTAINS ADMIN_ENTRY admission[openEHR-EHR-ADMIN_ENTRY.admission.v1]
-WHERE
-   NOT EXISTS c/content[openEHR-EHR-ADMIN_ENTRY.discharge.v1]</pre>
-</div>
 </div>
 <div class="paragraph">
 <p>The example below uses <code>NOT</code> operator followed by a boolean identified expression:</p>
@@ -1073,10 +1113,10 @@ WHERE
 <div class="sect4">
 <h5 id="_exists"><a class="anchor" href="#_exists"></a>3.7.3.4. EXISTS</h5>
 <div class="paragraph">
-<p><code>EXISTS</code> is a unary operator, which is always followed by a single operand. The single operand is an AQL identified path. This operator returns Boolean results: <code>true</code> means the data associated with the specified path exists, <code>false</code> otherwise. An <code>EXISTS</code> expression is a single identified expression. The latest grammar only allows this operator in <code>WHERE</code> clause. It may be required as part of openEHR path in future.</p>
+<p><code>EXISTS</code> is a unary operator, which is always followed by a single operand. The single operand is an AQL identified path. This operator returns Boolean results: <code>true</code> means the data associated with the specified path exists, <code>false</code> otherwise. An <code>EXISTS</code> expression is a single identified expression.</p>
 </div>
 <div class="paragraph">
-<p>The example below means retrieving the identifiers of the EHRs which do not have discharge admin entry instance.</p>
+<p>The example below means retrieving the identifiers of the EHRs which do not have discharge admin entry instance, using the <code>NOT</code> operator followed by a single identified expression:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1088,21 +1128,6 @@ FROM
          CONTAINS ADMIN_ENTRY admission[openEHR-EHR-ADMIN_ENTRY.admission.v1]
 WHERE
    NOT EXISTS c/content[openEHR-EHR-ADMIN_ENTRY.discharge.v1]</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>This example below means from a particular EHR, retrieving all composition uid values and the contained instruction instances if the instruction instances have links with particular EHR URI value.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>SELECT
-   c/uid/value, instruction
-FROM
-   EHR e [ehr_id/value=$ehrid]
-      CONTAINS COMPOSITION c
-         CONTAINS INSTRUCTION instruction[openEHR-EHR-INSTRUCTION.referral.v1]
-WHERE
-   EXISTS instruction/links[target='ehr://327000002/87284370-2D4B-4e3d-A3F3-F303D2F4F34B@latest_trunk_version']</pre>
 </div>
 </div>
 </div>
@@ -1152,127 +1177,56 @@ WHERE
 </div>
 </div>
 <div class="sect2">
-<h3 id="_leaf_data"><a class="anchor" href="#_leaf_data"></a>3.9. Leaf Data</h3>
+<h3 id="_built_in_types"><a class="anchor" href="#_built_in_types"></a>3.9. Built-in Types</h3>
 <div class="sect3">
-<h4 id="_primitive_types"><a class="anchor" href="#_primitive_types"></a>3.9.1. Primitive Types</h4>
-<div class="sect4">
-<h5 id="_string_data"><a class="anchor" href="#_string_data"></a>3.9.1.1. String Data</h5>
+<h4 id="_integer_data"><a class="anchor" href="#_integer_data"></a>3.9.1. Integer data</h4>
 <div class="paragraph">
-<p>All strings are enclosed in double quotes or single quotes. Line breaks are not supported.</p>
+<p>Integers are represented as numeric literals, such as <code>1</code>, <code>2</code>, <code>365</code>. Commas or periods for breaking long numbers are not allowed. Hex integers are not supported.</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_integer_data"><a class="anchor" href="#_integer_data"></a>3.9.1.2. Integer data</h5>
-<div class="paragraph">
-<p>Integers are represented as numberic literals, such as <code>1</code>, <code>2</code>, <code>365</code>. Commas or periods for breaking long numbers are not allowed. Hex integers are not supported.</p>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_real_data"><a class="anchor" href="#_real_data"></a>3.9.1.3. Real data</h5>
+<div class="sect3">
+<h4 id="_real_data"><a class="anchor" href="#_real_data"></a>3.9.2. Real data</h4>
 <div class="paragraph">
 <p>Real numbers are the decimal literals that include a decimal point, such as <code>3.1415926</code>. Commas or periods for breaking long numbers are not allowed.</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_boolean_data"><a class="anchor" href="#_boolean_data"></a>3.9.1.4. Boolean data</h5>
+<div class="sect3">
+<h4 id="_boolean_data"><a class="anchor" href="#_boolean_data"></a>3.9.3. Boolean data</h4>
 <div class="paragraph">
 <p>Boolean values are indicated using the case-insensitive literals <code>true</code> or <code>false</code>.</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_dates_and_times"><a class="anchor" href="#_dates_and_times"></a>3.9.1.5. Dates and Times</h5>
+<div class="sect3">
+<h4 id="_string_data"><a class="anchor" href="#_string_data"></a>3.9.4. String Data</h4>
 <div class="paragraph">
-<p>No matter whether the date/date time is complete or partial, it is allowed in AQL as long as it is in <a href="https://en.wikipedia.org/wiki//ISO_8601">ISO 8601 date/date time format</a>. Quotes (either single quotes or double quotes) are required to enclose the date/date time value. In AQL grammar, it is treated as a date value if the value is a complete calendar date represented in ISO 8601 extended format and if single quotes are used. If the value is in other ISO 8601 date/date time format, AQL treats it as a string value, but the AQL query engine processes it differently from a normal string value. It is a temporary solution. In future, a date/date time value should be identified as date/date time value if it is a valid ISO 8601 date/date time. Examples are as below:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>WHERE composition/context/start_time &gt; '19860101' // a complete date. AQL grammar identifies it as a string value.
-WHERE composition/context/start_time &lt; "120000+0930"  // ISO 8601 time. AQL grammar identifies it as a string value.
-WHERE composition/context/start_time &lt;= '1986-01-01'  // complete calendar date in ISO 8601 extended format. AQL grammar identifies this value as a date value.</pre>
-</div>
-</div>
+<p>All strings are enclosed in double or single quotes. Line breaks are not supported.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_other_built_in_types"><a class="anchor" href="#_other_built_in_types"></a>3.9.2. Other Built-in Types</h4>
-<div class="sect4">
-<h5 id="_uri"><a class="anchor" href="#_uri"></a>3.9.2.1. URI</h5>
+<h4 id="_dates_and_times"><a class="anchor" href="#_dates_and_times"></a>3.9.5. Dates and Times</h4>
 <div class="paragraph">
-<p>URI leaf data is enclosed within curly braces after <code>matches</code> operator. URI can be expressed as a normal URI described in <a href="https://www.ietf.org/rfc/rfc3986">IETF RFC 3986</a>. URIs are not case sensitive. In AQL, a URI can be either terminology URI or an EHR URI.</p>
+<p>These types are treated as strings and should comply with the rules for string quoting. The format of the date, time and datetime types should comply with the <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601 Date and Time</a> format specification, which allow the basic or extended formats to be used. In the openEHR specification it is recommended to use the extended format for dates, times and datetimes. Complete or partial values are allowed.</p>
 </div>
-</div>
-<div class="sect4">
-<h5 id="_terminology_uri"><a class="anchor" href="#_terminology_uri"></a>3.9.2.2. Terminology URI</h5>
-<div class="paragraph">
-<p>A terminology URI consists of the following components:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><strong>terminology</strong>: the URI schemes value;</p>
-</li>
-<li>
-<p><strong>terminology service</strong>: the URI authority value, such as SNOMED-CT;</p>
-</li>
-<li>
-<p><strong>terminology function name</strong>: the URI path, e.g. "hierarchy" is the function name in the example shown below;</p>
-</li>
-<li>
-<p><strong>argument values</strong> required by the terminology functions - URI queries;</p>
-</li>
-</ol>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+The underlying types of date/time strings are inferred by the AQL processor from the context (metadata associated with the path to which the date/time value is compared with, or by interpretation of the ISO 8601 format), enabling them to be processed as date/time quantities rather than literal strings by AQL engines.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>This is an example of a terminology URI:</p>
+<p>Examples are as below:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>    terminology://snomed-CT/hierarchy?rootConceptId=50043002
-    \_________/   \_______/ \_______/ \___________/ \______/
-        |             |         |           |__________|
-     scheme       authority   path          | queries  |
-        |             |         |           |          |
-    terminology  terminology function    argument   argument
-       uri         service                 name      value</pre>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_value_list"><a class="anchor" href="#_value_list"></a>3.9.2.3. Value List</h5>
-<div class="paragraph">
-<p>Value list leaf data is enclosed within curly braces after matches operator. Each item is separated by comma if there are multiple items in the list. Value list can be string value list, date time value list, integer value list, and real value list. Quotes are required for string value list and date time value list.</p>
-</div>
-<div class="paragraph">
-<p>A value list is only used in AQL` WHERE` clause when the criteria is to match one item of the list. The relationships among these value list items are "OR".</p>
-</div>
-<div class="paragraph">
-<p>Some examples of value list:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>matches {'string item 1', 'string item 2', 'string item3'}  // a string list. It Equivalent to
-                                                            // matches  string item1' or ..
-                                                            // matches 'string item 2' or ..
-                                                            // matches 'string item 3'
-matches {'20060101', '20070101', '20080101'}                // a date value list
-matches {1, 2, 3}                                           // a integer list
-matches {1.1, 2.5, 3.8}                                     // a real value list</pre>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_value_range"><a class="anchor" href="#_value_range"></a>3.9.2.4. Value Range</h5>
-<div class="paragraph">
-<p>It is not supported in the current AQL grammar.</p>
-</div>
-<div class="paragraph">
-<p>Value range leaf data is enclosed within curly braces after matches operator. It is only used in AQL <code>WHERE</code> clause to specify a criteria within a range. The syntax is similar to intervals of ordered primitive types detailed in Section 4.5.2, adl.pdf. Some examples:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>matches {|3.0..5.0|} // means 3.0 &lt;= x &lt;=5.0
-matches {|&lt;8|}       // means x &lt; 8</pre>
-</div>
+<pre>WHERE composition/context/start_time &gt; '19860101'       // a complete date in ISO 8601 basic format. AQL grammar identifies it as a string value.
+WHERE composition/context/start_time &lt; "12:00:00+0930"  // ISO 8601 time extended format. AQL grammar identifies it as a string value.
+WHERE composition/context/start_time &lt;= '1986-01-01'    // complete date in ISO 8601 extended format. AQL grammar identifies this value as a date value.</pre>
 </div>
 </div>
 </div>
@@ -1310,7 +1264,55 @@ matches {|&lt;8|}       // means x &lt; 8</pre>
 <div class="sect3">
 <h4 id="_from"><a class="anchor" href="#_from"></a>3.10.2. FROM</h4>
 <div class="paragraph">
-<p>The <code>FROM</code> clause utilises class expressions and a set of containment criteria to specify the data source from which the query required data is to be retrieved.  Its function is similar as the <code>FROM</code> clause of an SQL expression.</p>
+<p>The <code>FROM</code> clause is used to specify the subset of all the data available in a repository,
+that will be available for the rest of the clauses to filter and return specific data (<code>WHERE</code>, <code>SELECT</code>, etc).
+The data available should be defined by a Reference Model (RM), using the dual-model approach,
+that is constraining the RM by the use of archetypes to define specific data structures.</p>
+</div>
+<div class="paragraph">
+<p>All the classes referenced by the FROM clause, should be defined by the RM. For instance,
+if the Reference Model is the openEHR EHR Model, the FROM should only include classes like
+EHR, COMPOSITION, OBSERVATION, EVALUATION, and so on.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+The AQL specification is not bound to a specific Reference Model, but to use a
+given RM, it should comply with some requirements: it should be an Object Oriented
+Model and should follow the dual-model approach.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Then, the expressions in the <code>WHERE</code> clause will filter data, but only from the subset
+defined by the <code>FROM</code> clause. And in the <code>SELECT</code> clause, a final projection is applied,
+selecting only the matched data that should be retrieved in the query result. In addition
+to the filtering done in the <code>WHERE</code> clause, the <code>class expressions</code> could hold predicates
+that also allow filtering data.</p>
+</div>
+<div class="paragraph">
+<p>In summary:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>FROM</code>: Defines the subset of data over which the query will be executed</p>
+</li>
+<li>
+<p><code>WHERE</code>: Filters data from the defined subset, leaving only the data that we need</p>
+</li>
+<li>
+<p>predicates in <code>class expressions</code>: further filters for data in the subset (could be transformed into predicates for the <code>WHERE</code> clause)</p>
+</li>
+<li>
+<p><code>SELECT</code>: picks the exact data that we need to return from the query, taken from the matched data in the previous two points</p>
+</li>
+</ol>
 </div>
 <div class="sect4">
 <h5 id="_from_syntax"><a class="anchor" href="#_from_syntax"></a>3.10.2.1. FROM Syntax</h5>
@@ -1321,7 +1323,7 @@ matches {|&lt;8|}       // means x &lt; 8</pre>
 <div class="content">
 <pre>FROM
    EHR e [ehr_id/value=$ehrId]
-       CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]</pre>
+      CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]</pre>
 </div>
 </div>
 </div>
@@ -1533,7 +1535,7 @@ FROM
 <div class="sect4">
 <h5 id="_name_alias"><a class="anchor" href="#_name_alias"></a>3.10.4.2. Name alias</h5>
 <div class="paragraph">
-<p>As in SQL, <code>AQL</code> supports the use of a name alias for the retrieved data. This is domne with the keyword <code>AS</code>, followed by the name which conforms to the syntax rule of AQL variable.</p>
+<p>As in SQL, <code>AQL</code> supports the use of a name alias for the retrieved data. This is done with the keyword <code>AS</code>, followed by the name which conforms to the syntax rule of AQL variable.</p>
 </div>
 </div>
 </div>
@@ -1580,7 +1582,7 @@ FROM
 <h2 id="_result_structure"><a class="anchor" href="#_result_structure"></a>4. Result structure</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The result structure of an AQL query is described as part of the <a href="https://openehr.atlassian.net/wiki/display/spec/Ocean+Informatics+EHR+Service+Interface">openEHR EHR service definition</a>.</p>
+<p>The result structure of an AQL query is described as part of the <a href="https://specifications.openehr.org/releases/SM/latest/openehr_platform.html#_query_package">openEHR Service Model Specification</a>.</p>
 </div>
 </div>
 </div>
@@ -1773,229 +1775,6 @@ LDL-C EHR path/value matches {
 </tr>
 </tbody>
 </table>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 80%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top"><strong>Clinical Scenario 5</strong></th>
-<th class="tableblock halign-left valign-top">Require all HbA1c values done in 1999</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Total cholesterol EHR path</strong></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>o/data/origin</code></p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment<br>
-(alt 1)</strong></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
-<div class="content">
-<pre>EHR path/value matches {"^1999"}</pre>
-</div>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment<br>
-(alt 2)</strong></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
-<div class="content">
-<pre>EHR path/value matches {|1999-??-??|</pre>
-</div>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment<br>
-(alt 3)</strong></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
-<div class="content">
-<pre>EHR path/value matches {|1999-01-01..1999-12-31|</pre>
-</div>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 80%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top"><strong>Clinical Scenario 6</strong></th>
-<th class="tableblock halign-left valign-top">Require all blood glucose values done in the morning of 1st December, 1999</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>EHR path</strong></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>o/data/origin</code></p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment<br>
-(alt 1)</strong></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
-<div class="content">
-<pre>EHR path/value matches {"^19991201T(((0[0-9])|10|11|)(([0-5][0-9])?([0-5][0-9])?)|(1200))$"}</pre>
-</div>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment<br>
-(alt 2)</strong></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
-<div class="content">
-<pre>EHR path/value matches {|1999-12-01T00:00:00..1999-12-01T11:59:59|}</pre>
-</div>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 80%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top"><strong>Clinical Scenario 7</strong></th>
-<th class="tableblock halign-left valign-top">Require all blood glucose values done in the morning of December, 1999</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>EHR path</strong></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>o/data/origin</code></p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment<br>
-(alt 1)</strong></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
-<div class="content">
-<pre>EHR path/value matches {"^199912(([0-2][1-9])|10|20|30|31)?(T((0[0-5])|10|11)(([0-5][0-9])?([0-5][0-9])?))$"}</pre>
-</div>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment<br>
-(alt 2)</strong></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
-<div class="content">
-<pre>EHR path/value matches {|1999-12-ddT00:00:00..1999-12-ddT11:59:59|}</pre>
-</div>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 80%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top"><strong>Clinical Scenario 8</strong></th>
-<th class="tableblock halign-left valign-top">Require all HbA1c values done after 1999</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>EHR path</strong></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>o/data/origin</code></p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment<br>
-(alt 1)</strong></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
-<div class="content">
-<pre>EHR path/value matches {"^[2-9]\d\d\d"}</pre>
-</div>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment<br>
-(alt 2)</strong></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
-<div class="content">
-<pre>EHR path/value matches {|&gt;1999-??-??|}</pre>
-</div>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 80%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top"><strong>Clinical Scenario 9</strong></th>
-<th class="tableblock halign-left valign-top">Require all HbA1c values done before 1999</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>EHR path</strong></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>o/data/origin</code></p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment<br>
-(alt 1)</strong></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
-<div class="content">
-<pre>EHR path/value matches {"^1\d\d[0-8]"}</pre>
-</div>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment<br>
-(alt 2)</strong></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
-<div class="content">
-<pre>EHR path/value matches {|&lt;1999-??-??|}</pre>
-</div>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 80%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top"><strong>Clinical Scenario 10</strong></th>
-<th class="tableblock halign-left valign-top">Requires all reports composed by patient self</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment</strong></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
-<div class="content">
-<pre>SELECT c
-    FROM EHR e[ehr_id=$ehrUid] CONTAINS COMPOSITION c
-    WHERE c/composer matches {PARTY_SELF}</pre>
-</div>
-</div></div></td>
-</tr>
-</tbody>
-</table>
 </div>
 <div class="sect2">
 <h3 id="_arithmetic_operators"><a class="anchor" href="#_arithmetic_operators"></a>5.2. Arithmetic operators</h3>
@@ -2072,40 +1851,6 @@ WHERE
          EHR e CONTAINS
             ADMIN_ENTRY ae2 [openEHR-EHR-ADMIN_ENTRY.discharge.v1]
    )</pre>
-</div>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_exists_operator"><a class="anchor" href="#_exists_operator"></a>5.4. Exists operator</h3>
-<div class="paragraph">
-<p>The following example shows how the <code>exists</code> operator may be used within AQL statements.</p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 80%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top"><strong>Clinical Scenario 1</strong></th>
-<th class="tableblock halign-left valign-top">Require all blood pressure values with position recorded</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment</strong></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
-<div class="content">
-<pre>SELECT o
-FROM
-   EHR e CONTAINS
-      COMPOSITION CONTAINS
-         OBSERVATION o [openEHR-EHR-OBSERVATION.blood_pressure.v1]
-WHERE
-   exists {"o//*/state[at0007]/items[at0008]"}</pre>
 </div>
 </div></div></td>
 </tr>
