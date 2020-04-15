@@ -30,10 +30,11 @@
 <ul class="sectlevel2">
 <li><a href="#_purpose">1.1. Purpose</a></li>
 <li><a href="#_status">1.2. Status</a></li>
-<li><a href="#_feedback">1.3. Feedback</a></li>
-<li><a href="#_original_source">1.4. Original Source</a>
+<li><a href="#_tools">1.3. Tools</a></li>
+<li><a href="#_feedback">1.4. Feedback</a></li>
+<li><a href="#_original_source">1.5. Original Source</a>
 <ul class="sectlevel3">
-<li><a href="#_aql_features_not_yet_supported">1.4.1. AQL features not yet supported</a></li>
+<li><a href="#_aql_features_not_yet_supported">1.5.1. AQL features not yet supported</a></li>
 </ul>
 </li>
 </ul>
@@ -257,6 +258,7 @@
  S Arikan,<br>
  S Iancu,<br>
  M Polajnar,<br>
+ I McNicoll,<br>
  T Beale</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">10 Apr 2020</p></td>
 </tr>
@@ -374,7 +376,13 @@
 </div>
 </div>
 <div class="sect2">
-<h3 id="_feedback"><a class="anchor" href="#_feedback"></a>1.3. Feedback</h3>
+<h3 id="_tools"><a class="anchor" href="#_tools"></a>1.3. Tools</h3>
+<div class="paragraph">
+<p>Various tools that can be used to work with archetypes and templates, including extracting 'archetype paths' for use in AQL statements, are listed on the openEHR website <a href="https://www.openehr.org/downloads/modellingtools" target="_blank" rel="noopener">modelling tools page</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_feedback"><a class="anchor" href="#_feedback"></a>1.4. Feedback</h3>
 <div class="paragraph">
 <p>Feedback may be provided on the <a href="https://forums.openehr.org/c/specifications" target="_blank" rel="noopener">technical mailing list</a>.</p>
 </div>
@@ -386,25 +394,25 @@
 </div>
 </div>
 <div class="sect2">
-<h3 id="_original_source"><a class="anchor" href="#_original_source"></a>1.4. Original Source</h3>
+<h3 id="_original_source"><a class="anchor" href="#_original_source"></a>1.5. Original Source</h3>
 <div class="paragraph">
 <p>The text of this specification was originally posted on the <a href="https://specifications.openehr.org/wiki/spaces/spec/pages/4915203/AQL-+Archetype+Query+Language" target="_blank" rel="noopener">openEHR wiki</a>, and was used by the global openEHR community in that form.</p>
 </div>
 <div class="sect3">
-<h4 id="_aql_features_not_yet_supported"><a class="anchor" href="#_aql_features_not_yet_supported"></a>1.4.1. AQL features not yet supported</h4>
+<h4 id="_aql_features_not_yet_supported"><a class="anchor" href="#_aql_features_not_yet_supported"></a>1.5.1. AQL features not yet supported</h4>
 <div class="paragraph">
 <p>The following features are likely to be needed, but are not yet formalized by this specification:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>XOR</code> (currently <code>AND</code>, <code>OR</code>, <code>NOT</code>, <code>EXISTS</code> are supported in <code>WHERE</code> clause)</p>
+<p><code>XOR</code> operator;</p>
 </li>
 <li>
-<p>functions are not supported.</p>
+<p>functions;</p>
 </li>
 <li>
-<p>embedded query is not supported</p>
+<p>embedded queries.</p>
 </li>
 </ul>
 </div>
@@ -477,7 +485,7 @@
 <div class="sect2">
 <h3 id="_aql_example"><a class="anchor" href="#_aql_example"></a>2.3. AQL example</h3>
 <div class="paragraph">
-<p>Below is an example of AQL statement. This statement returns all blood pressure values, contained in COMPOSITIONs defined by the <code>openEHR-EHR-COMPOSITION.encounter.v1</code> archetype which contains OBSERVATIONs defined by the <code>openEHR-EHR-OBSERVATION.blood_pressure.v1</code> archetype, where the systolic value is greater or equal to 140 or whose diastolic value is greater or equal to 90, within a specified EHR (which ehr_id is equals to the value hold by the variable $ehrId). AQL syntax is a synthesis of SQL structural syntax and openEHR path syntax.</p>
+<p>Below is an example of AQL statement. This statement returns all blood pressure values, contained in <code>COMPOSITIONs</code> defined by the <code>openEHR-EHR-COMPOSITION.encounter.v1</code> archetype which contains <code>OBSERVATIONs</code> defined by the <code>openEHR-EHR-OBSERVATION.blood_pressure.v1</code> archetype, where the systolic value is greater than or equal to 140 or whose diastolic value is greater than or equal to 90, within a specified EHR (i.e. whose EHR id is the value of the variable <code>$ehrId</code>). The AQL syntax is a synthesis of SQL structural syntax and openEHR path syntax.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1880,7 +1888,7 @@ WHERE
 <h2 id="_how_to_write_an_aql_query_statement_manually"><a class="anchor" href="#_how_to_write_an_aql_query_statement_manually"></a>6. How to write an AQL query statement manually</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This section describes how to build an AQL query manually. The process described here gives may provide some hints for AQL builder tools.</p>
+<p>This section describes how to build an AQL query manually. The process described here may provide some hints for constructing AQL builder tools.</p>
 </div>
 <div class="sect2">
 <h3 id="_query_scenario"><a class="anchor" href="#_query_scenario"></a>6.1. Query scenario</h3>
@@ -1954,7 +1962,7 @@ CONTAINS OBSERVATION [openEHR-EHR-OBSERVATION.blood_pressure.v1]</pre>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>state the identified path for the systolic data value. A class variable name is needed as the reference to the blood pressure class expression defined in the <code>FROM</code> clause, so a variable name <code>obs</code> is added into the <code>FROM</code> clause. A path to systolic data value is also required to form the identified path. Two tools can be used to get the path: the <a href="https://www.openehr.org/downloads/ADLworkbench">openEHR ADL Workbench</a> or <a href="https://www.openehr.org/downloads/modellingtools">Template Designer</a>. The path to the systolic data value is <code>/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value</code>.</p>
+<p>state the identified path for the systolic data value. A class variable name is needed as the reference to the blood pressure class expression defined in the <code>FROM</code> clause, so a variable name <code>obs</code> is added into the <code>FROM</code> clause. A path to systolic data value is also required to form the identified path. The path to the systolic data value is <code>/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value</code>.</p>
 </li>
 <li>
 <p>choose the appropriate operator: <code>&gt;=</code> is used for criterion 1.</p>
