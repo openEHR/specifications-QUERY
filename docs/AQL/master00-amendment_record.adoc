@@ -18,9 +18,10 @@
 |10 Apr 2020
 
 |
-|{spec_tickets}/SPECQUERY-14[SPECQUERY-14^] Correct typographical errors; +
- {spec_tickets}/SPECQUERY-15[SPECQUERY-15^] Add clarifications and fix typographical errors; +
- {spec_tickets}/SPECQUERY-4[SPECQUERY-4^]  Improve documentation of 'matches' operator; +
+|{spec_tickets}/SPECQUERY-14[SPECQUERY-14^]: Correct typographical errors; +
+ {spec_tickets}/SPECQUERY-15[SPECQUERY-15^]: Add clarifications and fix typographical errors; +
+ {spec_tickets}/SPECQUERY-4[SPECQUERY-4^]: Improve documentation of 'matches' operator; +
+ {spec_tickets}/SPECQUERY-2[SPECQUERY-2^]: Clarify the return structure of an AQL query.
 |P Pazos, +
  B Næss, +
  S Arikan, +
