@@ -435,7 +435,7 @@
 <p>Currently mainstream database query languages such as <a href="https://en.wikipedia.org/wiki/SQL" target="_blank" rel="noopener">Structured Query Language (SQL)</a>, <a href="https://www.w3.org/XML/Query/" target="_blank" rel="noopener">W3C XQuery</a>, and <a href="https://en.wikipedia.org/wiki/Object_Query_Language" target="_blank" rel="noopener">Object Query Language (OQL)</a> have dependencies on particular data schemas and physical representations (e.g. relational tables). Users must know the physical data schema of a particular database in order to write a valid query. A query statement written for one schema will not usually work in other systems, which have generally have different data schemas, even for storing the same data. These languages therefore do not support <em>query portability</em> across systems.</p>
 </div>
 <div class="paragraph">
-<p>More modern web-oriented languages such as <a href="https://www.w3.org/TR/sparql11-query/" target="_blank" rel="noopener">W3C Sparql</a> and <a href="http://graphql.org">GraphQL</a> are not database- or system-oriented as such, and do not suffer from the problem of portability. However, both the database- languages and web-oriented languages suffer from another problem, which is being limited to a single level of semantic representation, i.e. they effectively assume an Entity-Attribute-Value (EAV) data meta-model. This prevents their direct use with multi-level models, such as those based on <a href="https://specifications.openehr.org/releases/AM/latest/index" target="_blank" rel="noopener">openEHR Archetype model</a>, or its ISO equivalent <a href="https://www.iso.org/standard/62305.html" target="_blank" rel="noopener">ISO 13606-2:2019</a>.</p>
+<p>More modern web-oriented languages such as <a href="https://www.w3.org/TR/sparql11-query/" target="_blank" rel="noopener">W3C Sparql</a> and <a href="http://graphql.org">GraphQL</a> are not database- or system-oriented as such, and do not suffer from the problem of portability. However, both the database- and web-oriented languages suffer from another problem, which is being limited to a single level of semantic representation, i.e. they effectively assume an Entity-Attribute-Value (EAV) data meta-model. This prevents their direct use with multi-level models, such as those based on <a href="https://specifications.openehr.org/releases/AM/latest/index" target="_blank" rel="noopener">openEHR Archetype model</a>, or its ISO equivalent <a href="https://www.iso.org/standard/62305.html" target="_blank" rel="noopener">ISO 13606-2:2019</a>.</p>
 </div>
 <div class="paragraph">
 <p>In order to overcome these limitations, this specification describes a query language designed to support <em>portable queries based on multi-level models</em>.</p>
@@ -455,16 +455,19 @@
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>the utilization of openEHR archetype path syntax in AQL. openEHR path syntax is used to locate clinical statements and data values within them using Archetypes. This path syntax is used to represent the query criteria and returned results. It allows setting query criteria using archetype and node identifiers, data values within the archetypes, and class attributes defined within the openEHR RM. It also allows the returned results to be top-level archetyped RM objects, data items within the archetypes or RM attribute values.</p>
+<p>the utilization of <a href="https://specifications.openehr.org/releases/BASE/latest/architecture_overview.html#_paths_and_locators" target="_blank" rel="noopener">openEHR path syntax</a> in AQL: the path syntax is used to locate clinical statements and data values within them using archetypes; this syntax is used to represent the query criteria and returned results, and allows stating query criteria using archetype and node identifiers, data values within the archetypes, and class attributes defined within the Reference Model;</p>
 </li>
 <li>
-<p>the utilization of containment mechanisms to indicate the data hierarchy and constrain the source data to which the query is applied.</p>
+<p>returned results may be objects of any granularity from 'top-level' RM objects to primitive data items;</p>
 </li>
 <li>
-<p>the utilization of ADL-like operator syntaxes, such as matches, exists, in, negation.</p>
+<p>the utilization of a <code>contains</code> operator to match data hierarchy relationships in order to constrain the source data to which the query is applied;</p>
 </li>
 <li>
-<p>Neutral expression syntax. AQL does not have any dependencies on the underlying RM of the archetypes. It is neutral to system implementation and environment.</p>
+<p>the utilization of ADL-like operator syntaxes, such as <code>matches</code>, <code>exists</code>, <code>in</code>, and <code>not</code>;</p>
+</li>
+<li>
+<p>model-neutral syntax: AQL does not have any dependency on a Reference Model; it is also neutral to system implementation and environment;</p>
 </li>
 <li>
 <p>supports time-based conditions to query historical versions of data.</p>
@@ -472,27 +475,24 @@
 </ol>
 </div>
 <div class="paragraph">
-<p>AQL has some other features which can be found in other query languages:</p>
+<p>AQL also has features found in other query languages, including:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Supporting naming returned results;</p>
+<p>naming returned results;</p>
 </li>
 <li>
-<p>Supporting query criteria parameters;</p>
+<p>query criteria parameters;</p>
 </li>
 <li>
-<p>Supporting arithmetic operators (such as count, addition, subtraction, multiplication, and division), comparison operators (<code>&gt;</code>, <code>&gt;=</code>, <code>=</code>, <code>!=</code>, <code>&lt;=</code>, <code>&lt;</code>) and Boolean operators (<code>OR</code>, <code>AND</code>, <code>XOR</code>, <code>NOT</code>).</p>
+<p>arithmetic operators (such as count, addition, subtraction, multiplication, and division), comparison operators (<code>&gt;</code>, <code>&gt;=</code>, <code>=</code>, <code>!=</code>, <code>&lt;=</code>, <code>&lt;</code>) and Boolean operators (<code>OR</code>, <code>AND</code>, <code>XOR</code>, <code>NOT</code>).</p>
 </li>
 <li>
-<p>Supporting some functions that are supported in <a href="https://www.w3.org/XML/Query/" target="_blank" rel="noopener">W3C XQuery</a>, such as <code>current-date()</code>;</p>
+<p>some built-in functions that are supported in <a href="https://www.w3.org/XML/Query/" target="_blank" rel="noopener">W3C XQuery</a>, such as <code>current-date()</code>;</p>
 </li>
 <li>
-<p>Users can specify their preference on the retrieved data, such as ordering preferences, or total number of retrieved results;</p>
-</li>
-<li>
-<p>Supporting queries for individual clinical subjects at the point of care, administrative purposes and clinical research purposes.</p>
+<p>preferences on the result retrieval and structuring, such as ordering and total number of retrieved results.</p>
 </li>
 </ol>
 </div>
@@ -500,7 +500,7 @@
 <div class="sect2">
 <h3 id="_aql_example"><a class="anchor" href="#_aql_example"></a>2.3. AQL example</h3>
 <div class="paragraph">
-<p>Below is an example of an AQL statement. This statement returns all blood pressure values contained in <code>COMPOSITION</code> instances defined by the <code>openEHR-EHR-COMPOSITION.encounter.v1</code> archetype, which contain <code>OBSERVATION</code> instances defined by the <code>openEHR-EHR-OBSERVATION.blood_pressure.v1</code> archetype, where the systolic value is greater than or equal to 140 or whose diastolic value is greater than or equal to 90, within a specified EHR (i.e. whose EHR id is the value of the variable <code>$ehrId</code>). The AQL syntax is a synthesis of SQL structural syntax and openEHR path syntax.</p>
+<p>Below is an example of an AQL statement. This statement returns all blood pressure values contained in <code>COMPOSITION</code> instances defined by the <code>openEHR-EHR-COMPOSITION.encounter.v1</code> archetype, which contain <code>OBSERVATION</code> instances defined by the <code>openEHR-EHR-OBSERVATION.blood_pressure.v1</code> archetype, where the systolic value is greater than or equal to 140 or whose diastolic value is greater than or equal to 90, within a specified EHR (i.e. whose EHR id is the value of the variable <code>$ehrId</code>). The AQL syntax is a synthesis of SQL structural syntax and the <a href="https://specifications.openehr.org/releases/BASE/latest/architecture_overview.html#_paths_and_locators" target="_blank" rel="noopener">openEHR path syntax</a>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
