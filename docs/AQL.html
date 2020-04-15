@@ -84,7 +84,7 @@
 </li>
 </ul>
 </li>
-<li><a href="#_aql_identified_paths">3.8. AQL identified paths</a>
+<li><a href="#_aql_identified_paths">3.8. AQL Identified Paths</a>
 <ul class="sectlevel3">
 <li><a href="#_usage">3.8.1. Usage</a></li>
 <li><a href="#_syntax">3.8.2. Syntax</a></li>
@@ -242,6 +242,13 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="latest_issue"></a>1.0.1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://specifications.openehr.org/tickets/SPECQUERY-19" target="_blank" rel="noopener">SPECQUERY-19</a> Clarify use of terminology 'identified path'.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">P Pazos,<br>
+ T Beale</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="latest_issue_date"></a>10 Apr 2020</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://specifications.openehr.org/tickets/SPECQUERY-14" target="_blank" rel="noopener">SPECQUERY-14</a> Correct typographical errors;<br>
  <a href="https://specifications.openehr.org/tickets/SPECQUERY-15" target="_blank" rel="noopener">SPECQUERY-15</a> Add clarifications and fix typographical errors;<br>
  <a href="https://specifications.openehr.org/tickets/SPECQUERY-4" target="_blank" rel="noopener">SPECQUERY-4</a>  Improve documentation of 'matches' operator;<br></p></td>
@@ -251,7 +258,7 @@
  S Iancu,<br>
  M Polajnar,<br>
  T Beale</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="latest_issue_date"></a>10 Apr 2020</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10 Apr 2020</p></td>
 </tr>
 <tr>
 <th class="tableblock halign-center valign-top" colspan="4"><p class="tableblock"><strong>Release 1.0.0</strong></p></th>
@@ -475,7 +482,7 @@
 <div class="listingblock">
 <div class="content">
 <pre>SELECT                                                       -- Select clause
-   o/data[at0001]/.../items[at0004]/value AS systolic,       -- Identified path with named result
+   o/data[at0001]/.../items[at0004]/value AS systolic,       -- Identified path with alias
    o/data[at0001]/.../items[at0005]/value AS diastolic,
 FROM                                                         -- From clause
    EHR[ehr_id=$ehrId]                                        -- RM class expression
@@ -641,7 +648,7 @@ If no <code>ORDER BY</code> clause is specified, then the query result doesn&#82
 <div class="sect2">
 <h3 id="_aql_variables"><a class="anchor" href="#_aql_variables"></a>3.4. AQL variables</h3>
 <div class="paragraph">
-<p>AQL variables are used to refer a specific openEHR class defined within an AQL <code>FROM</code> clause. Consider this example:</p>
+<p>AQL variables are used to refer a specific openEHR class defined within an AQL <code>FROM</code> clause. Consider the following example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -658,7 +665,7 @@ WHERE
 </div>
 </div>
 <div class="paragraph">
-<p>This AQL example defines only one AQL variables: <code>o</code> that represents OBSERVATIONs that comply with the <code>openEHR-EHR-OBSERVATION.blood_pressure.v1</code> archetype.</p>
+<p>This example defines only one AQL variable: <code>o</code>, which represents <code>OBSERVATIONs</code> that conform to (i.e. created using) the <code>openEHR-EHR-OBSERVATION.blood_pressure.v1</code> archetype.</p>
 </div>
 <div class="paragraph">
 <p>AQL variables have the following features:</p>
@@ -666,21 +673,21 @@ WHERE
 <div class="ulist">
 <ul>
 <li>
-<p>AQL variable names must be defined in an AQL <code>FROM</code> clause.</p>
+<p>AQL variable names are defined in the AQL <code>FROM</code> clause.</p>
 </li>
 <li>
 <p>A variable name must be unique within an AQL statement.</p>
 </li>
 <li>
-<p>Not all classes defined within the <code>FROM</code> clause need a variable name. It is required only when other clauses within other AQL clauses need to refer to the class defined in the <code>FROM</code> clause. For instance, the example doesn&#8217;t define a variable name for EHR or COMPOSITION classes. Variable name <code>o</code> is used by both <code>WHERE</code> clause and <code>SELECT</code> clause, as root object of the following paths.</p>
-</li>
-<li>
-<p>Variable names are used by other clauses within the AQL statement along with openEHR path to form a complete AQL path - Identified path. Refer back to Section 2.2. example, <code>o/data[at0001/events[at0006]/data[at0003]/items[at0004]/value/value]</code> points to the systolic value node of the Observation archetype <code>openEHR-EHR-OBSERVATION.blood_pressure.v1</code>.</p>
-</li>
-<li>
-<p>Except for the reserved words, any characters, whitespace, letters, Alphanumeric, and underscore can be used for a variable name. Variable names are not case sensitive. Digits are not recommended at the beginning of a variable name even though there is no formal restriction.</p>
+<p>Not all classes defined within the <code>FROM</code> clause need a variable name. It is required only when other AQL clauses need to refer to the class identified in the <code>FROM</code> clause. The example above doesn&#8217;t define a variable name for the <code>EHR</code> or <code>COMPOSITION</code> classes, only for the <code>OBSERVATION</code> class (variable <code>o</code>), to allow the latter to be referred to in the <code>WHERE</code> and <code>SELECT</code> clauses, as the root object of specific paths.</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>The combination of a variable reference and a subordinate path forms one kind of <em>identified path</em> (see <a href="#_aql_identified_paths">Section 3.8</a>), used to specify a fine-grained data element within a larger object matched by the <code>FROM</code> clause. In the above example, <code>o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude</code> specifies the systolic value of the Observation archetype <code>openEHR-EHR-OBSERVATION.blood_pressure.v1</code>.</p>
+</div>
+<div class="paragraph">
+<p>A variable name is formed of an initial letter followed by any number of alphanumerics and underscores, as long as it does not clash with a reserved word. Variable names are not case-sensitive. Digits are not recommended at the beginning of a variable name although there is no formal restriction.</p>
 </div>
 </div>
 <div class="sect2">
@@ -689,7 +696,7 @@ WHERE
 <p>AQL syntax supports parameterisation. AQL parameters are used to indicate criteria, which will be substituted with values at run time. Supporting parameterisation is one of the mechanisms used to realise sharing AQL statements within a system or across system boundaries.</p>
 </div>
 <div class="paragraph">
-<p>The parameters can be EHR specific (such as the parameter of EHR identifier or EHR creation date time), archetype specific (such as an archetype identifier, or archetype constraints), or template specific (such as a template identifier or template constraints).</p>
+<p>The parameters can be EHR specific (such as the parameter of EHR identifier or EHR creation date/time), archetype specific (such as an archetype identifier, or archetype constraints), or template specific (such as a template identifier or template constraints).</p>
 </div>
 <div class="sect3">
 <h4 id="_parameter_syntax"><a class="anchor" href="#_parameter_syntax"></a>3.5.1. Parameter syntax</h4>
@@ -716,7 +723,7 @@ WHERE
 <div class="title">Note</div>
 </td>
 <td class="content">
-In the WHERE criteria, when the value of the parameter is not a number or boolean value, it should be substituted with the correspondent quotes added to the value, for instance <code>o/../.. = $textVariable</code>, when substituted should look like this <code>o/../.. = "value"</code> (single or double quotes could be used). So substituted values follow the same rules as each type when the value is specified as a constant in the AQL expression: strings, dates, times and datetimes should be quoted, numbers and booleans are not quoted.
+In the WHERE criteria, when the value of the parameter is not a number or boolean value, it should be substituted with the corresponding quotes added to the value, for instance <code>o/../.. = $textVariable</code>, when substituted should look like this <code>o/../.. = "value"</code> (single or double quotes could be used). So substituted values follow the same rules as each type when the value is specified as a constant in the AQL expression: strings, dates, times and datetimes should be quoted, numbers and booleans are not quoted.
 </td>
 </tr>
 </table>
@@ -773,7 +780,7 @@ In the WHERE criteria, when the value of the parameter is not a number or boolea
 <div class="sect3">
 <h4 id="_archetype_predicate"><a class="anchor" href="#_archetype_predicate"></a>3.6.2. Archetype predicate</h4>
 <div class="paragraph">
-<p>An archetype predicate is a shortcut of a standard predicate, i.e. the predicate does not have the left operand and operator. It only has an archetype id, e.g. <code>[openEHR-EHR-COMPOSITION.encounter.v1]</code>. The archetype predicate is a specific type of query criterion indicating what archetype instances are relevant to this query. It is used to scope the the data source from which the query expected data is to be retrieved. Therefore, an archetype predicate is only used within an AQL <code>FROM</code> clause, for example,</p>
+<p>An archetype predicate is a shortcut of a standard predicate, i.e. the predicate does not have the left operand and operator. It only has an archetype id, e.g. <code>[openEHR-EHR-COMPOSITION.encounter.v1]</code>. The archetype predicate is a specific type of query criterion indicating which archetype instances are relevant to this query. It is used to scope the data source from which the query result data is to be retrieved. Therefore, an archetype predicate is only used within an AQL <code>FROM</code> clause, for example,</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -815,7 +822,7 @@ WHERE
 </div>
 </div>
 <div class="paragraph">
-<p>The correspondent standard predicate would be:</p>
+<p>The corresponding standard predicate would be:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -832,7 +839,7 @@ WHERE
 </div>
 </div>
 <div class="paragraph">
-<p>The correspondent standard predicates would be:</p>
+<p>The corresponding standard predicates would be:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -850,7 +857,7 @@ WHERE
 </div>
 </div>
 <div class="paragraph">
-<p>The correspondent standard predicates would be:</p>
+<p>The corresponding standard predicates would be:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -870,7 +877,7 @@ WHERE
 </ul>
 </div>
 <div class="paragraph">
-<p>A node predicate defines criteria on fine-grained data. It is only used within an identified path.</p>
+<p>A node predicate defines criteria on fine-grained data.</p>
 </div>
 </div>
 </div>
@@ -936,12 +943,12 @@ WHERE
 <div class="sect3">
 <h4 id="_matches_operator_definition"><a class="anchor" href="#_matches_operator_definition"></a>3.7.2. matches operator definition</h4>
 <div class="paragraph">
-<p>The matches operator is used in the <code>WHERE</code> clause. This operator needs left operand and right operand. Left operand is an AQL identified path. Right operand is enclosed within curly braces. Right operand of matches operator has these forms:</p>
+<p>The <code>matches</code> binary operator is used in the <code>WHERE</code> clause. The left operand is an AQL identified path. The right operand is enclosed within braces (<code>'{}'</code>), and may take the following forms:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>type of constraint ADL (cADL)</strong>: this type of right operand can be a value list or a value range. Value range is not supported in the current AQL grammar. Below is an example with matches a string value list:</p>
+<p><strong>cADL list constraint</strong>: a comma-separated value list, which is one of the cADL constraint forms used in the <a href="https://specifications.openehr.org/releases/AM/latest/index" target="_blank" rel="noopener">Archetype Definition Language (ADL)</a>. Below is an example using a string value list:</p>
 <div class="listingblock">
 <div class="content">
 <pre>SELECT
@@ -955,7 +962,7 @@ WHERE
 </div>
 </div>
 <div class="paragraph">
-<p>Value list data is enclosed within curly braces after a matches operator. Each item is separated by comma if there are multiple items in the list. Value list items can be string, date time, integer, or real. Quotes are required for strings and date times.</p>
+<p>Value list items may be of type string, date/time, integer, or real. Quotes are required for strings and date/times.</p>
 </div>
 <div class="paragraph">
 <p>A value list is only used in AQL <code>WHERE</code> clause when the criteria is to match one item of the list. The relationships among these value list items are "OR".</p>
@@ -1068,10 +1075,10 @@ WHERE
 <div class="sect4">
 <h5 id="_not"><a class="anchor" href="#_not"></a>3.7.3.3. NOT</h5>
 <div class="paragraph">
-<p><code>NOT</code> is a unary Boolean operator and it is always followed by either a single identified expression or boolean identified expression. It returns Boolean results: <code>true</code> means the followed expression (single or Boolean expression) is false.</p>
+<p><code>NOT</code> is a unary Boolean operator which is always followed by either a Boolean identified expression (see <a href="#_identified_expression">Section 3.10.3.2</a>) or other Boolean-valued operand, such as an expression using the <code>EXISTS</code> operator. It returns a Boolean result: <code>true</code> means the operand is <code>false</code>. A <code>NOT</code> expression is a kind of identified expression (see <a href="#_identified_expression">below</a>).</p>
 </div>
 <div class="paragraph">
-<p>The example below uses <code>NOT</code> operator followed by a boolean identified expression:</p>
+<p>The example below uses <code>NOT</code> operator followed by a Boolean identified expression:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1087,22 +1094,11 @@ WHERE
 </div>
 </div>
 <div class="paragraph">
-<p>The above example is equivalent to the two expressions shown below:</p>
+<p>The above example is equivalent to the two expressions shown in the following <code>WHERE</code> clause:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre>SELECT
-   e/ehr_id/value
-FROM
-   EHR e
-      CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.administrative_encounter.v1]
-         CONTAINS ADMIN_ENTRY admission[openEHR-EHR-ADMIN_ENTRY.admission.v1]
-WHERE
-   NOT EXISTS c/content[openEHR-EHR-ADMIN_ENTRY.discharge.v1] OR
-   NOT e/ehr_status/subject/external_ref/namespace = 'CEC'
-
-
-SELECT
    e/ehr_id/value
 FROM
    EHR e
@@ -1120,10 +1116,10 @@ WHERE
 <div class="sect4">
 <h5 id="_exists"><a class="anchor" href="#_exists"></a>3.7.3.4. EXISTS</h5>
 <div class="paragraph">
-<p><code>EXISTS</code> is a unary operator, which is always followed by a single operand. The single operand is an AQL identified path. This operator returns Boolean results: <code>true</code> means the data associated with the specified path exists, <code>false</code> otherwise. An <code>EXISTS</code> expression is a single identified expression.</p>
+<p><code>EXISTS</code> is a unary operator, whose operand is an identified path (described in <a href="#_aql_identified_paths">Section 3.8</a>). It returns a Boolean result: <code>true</code> means the data associated with the specified path exists, <code>false</code> otherwise. An <code>EXISTS</code> expression is a kind of identified expression (see <a href="#_identified_expression">below</a>).</p>
 </div>
 <div class="paragraph">
-<p>The example below means retrieving the identifiers of the EHRs which do not have discharge admin entry instance, using the <code>NOT</code> operator followed by a single identified expression:</p>
+<p>In the AQL example below, <code>EXISTS</code> is used in negated form to filter out <code>COMPOSITIONs</code> (and therefore EHRs) that do not contain a discharge <code>ADMIN_ENTRY</code> instance:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1141,22 +1137,22 @@ WHERE
 </div>
 </div>
 <div class="sect2">
-<h3 id="_aql_identified_paths"><a class="anchor" href="#_aql_identified_paths"></a>3.8. AQL identified paths</h3>
+<h3 id="_aql_identified_paths"><a class="anchor" href="#_aql_identified_paths"></a>3.8. AQL Identified Paths</h3>
 <div class="sect3">
 <h4 id="_usage"><a class="anchor" href="#_usage"></a>3.8.1. Usage</h4>
 <div class="paragraph">
-<p>Identified paths are used to locate data items within an archetype RM class. Except for the <code>FROM</code> clause, an identified path could appears in any clauses of an AQL statement. For example, it can be used to indicate the data to be returned in a <code>SELECT</code> clause, or the data item on which query criteria are applied in a <code>WHERE</code> clause.</p>
+<p>In AQL, an <em>identified path</em> is the association of a variable reference (the identifier; see <a href="#_aql_variables">above</a>) and an archetype path and/or predicate. Except for the <code>FROM</code> clause, an identified path may appear in any clause of an AQL statement. For example, it can be used to indicate the data to be returned in a <code>SELECT</code> clause, or the data item on which query criteria are applied in a <code>WHERE</code> clause.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_syntax"><a class="anchor" href="#_syntax"></a>3.8.2. Syntax</h4>
 <div class="paragraph">
-<p>AQL identified path can take any of the following forms:</p>
+<p>An AQL identified path can take any of the following forms:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>an AQL variable name defined within the <code>FROM</code> clause, followed by an openEHR path, e.g.</p>
+<p>a variable name defined in the <code>FROM</code> clause followed by an archetype path, which specifies a data item at that path within the object, as follows:</p>
 <div class="listingblock">
 <div class="content">
 <pre>o/data[at0001]/.../data[at0003]/items[at0004]/value/value</pre>
@@ -1164,7 +1160,7 @@ WHERE
 </div>
 </li>
 <li>
-<p>an AQL variable name followed by a predicate, e.g.</p>
+<p>a variable name followed by a predicate, which specifies an object that satisfies the predicate, as follows:</p>
 <div class="listingblock">
 <div class="content">
 <pre>o[name/value=$nameValue]</pre>
@@ -1172,7 +1168,7 @@ WHERE
 </div>
 </li>
 <li>
-<p>an AQL variable name followed by a predicate and an openEHR path, e.g.</p>
+<p>a variable name followed by a predicate and an archetype path, which specifies a data item at a path within an object satisfying the predicate, as follows:</p>
 <div class="listingblock">
 <div class="content">
 <pre>o[name/value=$nameValue]/data[at0001]/.../data[at0003]/items[at0004]/value/value</pre>
@@ -1417,7 +1413,7 @@ EHR e
 <div class="sect3">
 <h4 id="_where"><a class="anchor" href="#_where"></a>3.10.3. WHERE</h4>
 <div class="paragraph">
-<p>An AQL <code>WHERE</code> clause is used to represent further criteria applied to the data items within the objects declared in the FROM clause. A <code>WHERE</code> clause expresses the query criteria that cannot be represented in other AQL clauses, such as criteria on archetype id, composition committal date time, and the criteria on in which order the returned results should be listed.</p>
+<p>An AQL <code>WHERE</code> clause is used to represent further criteria applied to the data items within the objects declared in the FROM clause. A <code>WHERE</code> clause expresses the query criteria that cannot be represented in other AQL clauses, such as criteria on archetype id, composition committal date/time, and the criteria on in which order the returned results should be listed.</p>
 </div>
 <div class="sect4">
 <h5 id="_syntax_2"><a class="anchor" href="#_syntax_2"></a>3.10.3.1. Syntax</h5>
@@ -1437,31 +1433,45 @@ WHERE
 <div class="sect4">
 <h5 id="_identified_expression"><a class="anchor" href="#_identified_expression"></a>3.10.3.2. Identified expression</h5>
 <div class="paragraph">
-<p>Identified expression specifies the criteria within <code>WHERE</code> clause. It consists of left operand, operator and right operand.</p>
+<p>An <em>identified expression</em> specifies matching criteria in the <code>WHERE</code> clause and comes in two forms. The first form is an expression formed by a unary operator, such as <code>NOT</code> or <code>EXISTS</code>, described earlier. The second is a binary operator expression, formed as follows:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Left operand is normally an identified path,</p>
+<p><em>left operand</em>: an identified path;</p>
 </li>
 <li>
-<p>Operator is normally a comparison operator,</p>
+<p><em>operator</em>: a comparison operator;</p>
 </li>
 <li>
-<p>Right operand is the criteria value, which normally is primitive type, such as String, Integer, Boolean, Double, or Float. When it is a string value, single quotation marks or double quotation marks are required. Right operand can also be a parameter or an identified path as well.</p>
+<p><em>right operand</em>: one of:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>a value criterion, normally of a primitive type, such as <code>String</code>, <code>Integer</code>, <code>Boolean</code>, <code>Double</code>, or <code>Float</code>; if a <code>String</code> value, single or double quotation marks are required; OR</p>
+</li>
+<li>
+<p>a replaceable parameter (identified with the <code>'$'</code> symbol); OR</p>
+</li>
+<li>
+<p>an identified path.</p>
+</li>
+</ul>
+</div>
 </li>
 </ol>
 </div>
 <div class="paragraph">
-<p>Examples:</p>
+<p>The following examples illustrate the binary form.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Left operand is an identified path and right operand is a real criteria value - primitive type:</p>
+<p>Left operand is an identified path; right operand is a primitive value:</p>
 <div class="listingblock">
 <div class="content">
 <pre>o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value &gt;= 140
+
 c/archetype_details/template_id/value = 'health_encounter'</pre>
 </div>
 </div>
@@ -1475,7 +1485,7 @@ c/archetype_details/template_id/value = 'health_encounter'</pre>
 </div>
 </li>
 <li>
-<p>Both left operand and right operand are an identified path (this is an advanced feature):</p>
+<p>Both left operand and right operand are identified paths:</p>
 <div class="listingblock">
 <div class="content">
 <pre>o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value &gt;
@@ -1490,19 +1500,19 @@ o1/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value</pre>
 <div class="sect3">
 <h4 id="_select"><a class="anchor" href="#_select"></a>3.10.4. SELECT</h4>
 <div class="paragraph">
-<p>A <code>SELECT</code> clause specifies what data is to be retrieved by the AQL query. The data can be any types from openEHR RM and any primitive data types. In addition, the <code>SELECT</code> clause uses <code>TOP</code> to indicate the number of result setS that should be returned and name alias to rename the retrieved data.</p>
+<p>A <code>SELECT</code> clause specifies what data is to be retrieved by the AQL query. The data can be any types from openEHR RM and any primitive data types. In addition, the <code>SELECT</code> clause uses <code>TOP</code> to indicate the number of result sets that should be returned and name alias to rename the retrieved data.</p>
 </div>
 <div class="paragraph">
-<p>The <code>SELECT</code> syntax always starts with keyword <code>SELECT</code>, followed by <code>TOP</code> (optional), and identified path(s) or variable name(s) defined in the <code>FROM</code> clause. Each variable name or an identified path may have a name alias renaming the associated data.</p>
+<p>The <code>SELECT</code> syntax always starts with the keyword <code>SELECT</code>, followed by <code>TOP</code> (optional), and identified path(s) or plain variable name(s) defined in the <code>FROM</code> clause. Each variable name or identified path may have a name alias renaming the associated data.</p>
 </div>
 <div class="paragraph">
-<p>If variable name(s) is(are) required, the full object of the type associated with the variable is retrieved, such as a <code>COMPOSITION</code>, an <code>OBSERVATION</code> object etc. If identified paths are required, the path-associated data items are returned. Multiple identifiers or identified paths are separated using a comma.</p>
+<p>Where a variable name is specified, the full object of the type associated with the variable is retrieved, such as a <code>COMPOSITION</code>, <code>OBSERVATION</code> etc. Where an identified path is specified, the data item(s) having that archetype path are returned. Multiple identifiers or identified paths are separated using a comma.</p>
 </div>
 <div class="paragraph">
 <p>Some examples are shown below.</p>
 </div>
 <div class="paragraph">
-<p>Example 1: retrieve all compositions' name value, context start time and composer name from a specific EHR.</p>
+<p>Example 1: retrieve all Compositions' name value, context start time and composer name from a specific EHR.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1513,7 +1523,7 @@ FROM
 </div>
 </div>
 <div class="paragraph">
-<p>Example 2: Retrieve all composition objects of a specific EHR.</p>
+<p>Example 2: Retrieve all Composition objects of a specific EHR.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1932,25 +1942,25 @@ CONTAINS OBSERVATION [openEHR-EHR-OBSERVATION.blood_pressure.v1]</pre>
 <div class="sect2">
 <h3 id="_step_2_the_where_clause"><a class="anchor" href="#_step_2_the_where_clause"></a>6.3. Step 2. The WHERE clause</h3>
 <div class="paragraph">
-<p>The <code>WHERE</code> clause represents all query criteria that cannot be represented in the <code>FROM</code> clause. To write <code>WHERE</code> clause expression, the following is needed:</p>
+<p>The <code>WHERE</code> clause represents all query criteria that cannot be represented in the <code>FROM</code> clause. To write a <code>WHERE</code> clause expression, the following is needed:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Find the criteria. The criteria required by the scenario are abnormal blood pressure values. Different guidelines may have different definitions for abnormal blood pressure values. Here <code>abnormal blood pressure</code> is interpreted to mean mean 1) the 'systolic pressure' value is greater than or equal to 140; OR 2) the 'diastolic pressure' value is greater than or equal to 90.</p>
+<p>Determine the criteria. The criteria required by the scenario are abnormal blood pressure values. Different guidelines may have different definitions for abnormal blood pressure values. Here <code>abnormal blood pressure</code> is interpreted to mean mean 1) the 'systolic pressure' value is greater than or equal to 140; OR 2) the 'diastolic pressure' value is greater than or equal to 90.</p>
 </li>
 <li>
-<p>Write an identified expression for criterion 1).</p>
+<p>State an identified expression for criterion 1), as follows:</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>Write the Identified path for the systolic data value. A class variable name is needed as the reference to the blood pressure class expression defined in the <code>FROM</code> clause, so a variable name <code>obs</code> is added into the <code>FROM</code> clause. A path to systolic data value is also required to form the identified path. Two tools can be used to get the path: the <a href="https://www.openehr.org/downloads/ADLworkbench">openEHR ADL Workbench</a> or <a href="https://www.openehr.org/downloads/modellingtools">Template Designer</a>. The path to the systolic data value is <code>/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value</code>.</p>
+<p>state the identified path for the systolic data value. A class variable name is needed as the reference to the blood pressure class expression defined in the <code>FROM</code> clause, so a variable name <code>obs</code> is added into the <code>FROM</code> clause. A path to systolic data value is also required to form the identified path. Two tools can be used to get the path: the <a href="https://www.openehr.org/downloads/ADLworkbench">openEHR ADL Workbench</a> or <a href="https://www.openehr.org/downloads/modellingtools">Template Designer</a>. The path to the systolic data value is <code>/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value</code>.</p>
 </li>
 <li>
-<p>Get appropriate operator: <code>&gt;=</code> is chosen for criterion 1.</p>
+<p>choose the appropriate operator: <code>&gt;=</code> is used for criterion 1.</p>
 </li>
 <li>
-<p>Get the criteria value - 140. The query statement including the identified expression for criterion 1) is shown below:</p>
+<p>add the criteria value, here, 140. The query statement including the identified expression for criterion 1) is shown below:</p>
 <div class="listingblock">
 <div class="content">
 <pre>FROM
@@ -1999,7 +2009,7 @@ WHERE
 <p>What return data is required. The afore-mentioned scenario requires abnormal blood pressure values as return values, including both systolic pressure and diastolic pressure.</p>
 </li>
 <li>
-<p>Write the appropriate identified path to the required item (variable name is required if the class object is required). Multiple identified path is separated using comma. For this particular scenario, two identified paths are found for systolic and diastolic data value by following Step 2. The completed query statement looks like:</p>
+<p>Write the appropriate identified path to the required item (variable name is required if the containing object is required). Multiple identified paths are separated using commas. For this particular scenario, two identified paths are found for systolic and diastolic data value by following Step 2. The completed query statement looks as follows:</p>
 <div class="listingblock">
 <div class="content">
 <pre>SELECT

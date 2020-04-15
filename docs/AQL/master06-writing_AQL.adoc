@@ -41,13 +41,13 @@ CONTAINS OBSERVATION [openEHR-EHR-OBSERVATION.blood_pressure.v1]
 
 == Step 2. The WHERE clause
 
-The `WHERE` clause represents all query criteria that cannot be represented in the `FROM` clause. To write `WHERE` clause expression, the following is needed:
+The `WHERE` clause represents all query criteria that cannot be represented in the `FROM` clause. To write a `WHERE` clause expression, the following is needed:
 
-. Find the criteria. The criteria required by the scenario are abnormal blood pressure values. Different guidelines may have different definitions for abnormal blood pressure values. Here `abnormal blood pressure` is interpreted to mean mean 1) the 'systolic pressure' value is greater than or equal to 140; OR 2) the 'diastolic pressure' value is greater than or equal to 90.
-. Write an identified expression for criterion 1).
-.. Write the Identified path for the systolic data value. A class variable name is needed as the reference to the blood pressure class expression defined in the `FROM` clause, so a variable name `obs` is added into the `FROM` clause. A path to systolic data value is also required to form the identified path. Two tools can be used to get the path: the {openehr_awb}[openEHR ADL Workbench] or {template_designer}[Template Designer]. The path to the systolic data value is `/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value`.
-.. Get appropriate operator: `>=` is chosen for criterion 1.
-.. Get the criteria value - 140. The query statement including the identified expression for criterion 1) is shown below:
+. Determine the criteria. The criteria required by the scenario are abnormal blood pressure values. Different guidelines may have different definitions for abnormal blood pressure values. Here `abnormal blood pressure` is interpreted to mean mean 1) the 'systolic pressure' value is greater than or equal to 140; OR 2) the 'diastolic pressure' value is greater than or equal to 90.
+. State an identified expression for criterion 1), as follows:
+.. state the identified path for the systolic data value. A class variable name is needed as the reference to the blood pressure class expression defined in the `FROM` clause, so a variable name `obs` is added into the `FROM` clause. A path to systolic data value is also required to form the identified path. Two tools can be used to get the path: the {openehr_awb}[openEHR ADL Workbench] or {template_designer}[Template Designer]. The path to the systolic data value is `/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value`.
+.. choose the appropriate operator: `>=` is used for criterion 1.
+.. add the criteria value, here, 140. The query statement including the identified expression for criterion 1) is shown below:
 +
 --------
 FROM
@@ -79,7 +79,7 @@ WHERE
 Writing a `SELECT` clause depends on determining:
 
 . What return data is required. The afore-mentioned scenario requires abnormal blood pressure values as return values, including both systolic pressure and diastolic pressure.
-. Write the appropriate identified path to the required item (variable name is required if the class object is required). Multiple identified path is separated using comma. For this particular scenario, two identified paths are found for systolic and diastolic data value by following Step 2. The completed query statement looks like:
+. Write the appropriate identified path to the required item (variable name is required if the containing object is required). Multiple identified paths are separated using commas. For this particular scenario, two identified paths are found for systolic and diastolic data value by following Step 2. The completed query statement looks as follows:
 +
 --------
 SELECT
