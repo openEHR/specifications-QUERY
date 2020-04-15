@@ -394,7 +394,7 @@ o[name/value=$nameValue]/data[at0001]/.../data[at0003]/items[at0004]/value/value
 
 === Integer data
 
-Integers are represented as numeric literals, such as `1`, `2`, `365`. Commas or periods for breaking long numbers are not allowed. Hex integers are not supported.
+Integers are represented as numeric literals, such as `1`, `2`, `365`. Commas or periods for breaking long numbers are not allowed. Hexadecimal representation is not supported.
 
 === Real data
 
@@ -459,10 +459,10 @@ that also allow filtering data.
 
 In summary:
 
-. `FROM`: Defines the subset of data over which the query will be executed
-. `WHERE`: Filters data from the defined subset, leaving only the data that we need
-. predicates in `class expressions`: further filters for data in the subset (could be transformed into predicates for the `WHERE` clause)
-. `SELECT`: picks the exact data that we need to return from the query, taken from the matched data in the previous two points
+. `FROM`: Defines the subset of data over which the query will be executed;
+. `WHERE`: Filters data from the defined subset, leaving only the data that we need;
+. predicates in _class expressions_: further filters for data in the subset;
+. `SELECT`: picks the exact data that we need to return from the query, taken from the matched data in the previous two points.
 
 
 ==== FROM Syntax
@@ -486,8 +486,8 @@ COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]   -- COMPOSITION class, class i
 
 Class expressions are used for two purposes:
 
-. indicating the constraints on RM classes so as to scope the data source for the query. For instance, `EHR e[ehr_id/value='123456']` indicates that the required data must be from a specific EHR with `ehr_id` value '123456'; while `COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]` indicates the required data must be from or must be associated with a Composition instance with archetype id - `openEHR-EHR-COMPOSITION.report.v1`.
-. defining a RM class variable that may be used by other clauses to indicate the required data or data items on which query criteria are applied. The example below uses the class expression to define a variable e which is used by the `SELECT` clause indicating all relevant ehr_id values are retrieved, and a variable c used by WHERE clause indicating that the query criteria is set on the composition template id value.
+. indicating the constraints on RM classes so as to scope the data source for the query. For instance, `EHR e[ehr_id/value='123456']` indicates that the required data must be from a specific EHR with `ehr_id` value `'123456'`; while `COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]` indicates the required data must be from or must be associated with a Composition instance with archetype id - `openEHR-EHR-COMPOSITION.report.v1`.
+. defining an RM class variable that may be used by other clauses to indicate the required data or data items on which query criteria are applied. The example below uses the class expression to define a variable e which is used by the `SELECT` clause indicating all relevant `ehr_id` values are retrieved, and a variable `c` used by the `WHERE` clause indicating that the query criteria is set on the Composition `template_id` value.
 +
 --------
 SELECT
