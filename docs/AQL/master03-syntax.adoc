@@ -440,12 +440,11 @@ AQL structure has the following clauses and these clauses must be listed in the 
 
 The `FROM` clause is used to specify the subset of all the data available in a repository,
 that will be available for the rest of the clauses to filter and return specific data (`WHERE`, `SELECT`, etc).
-The data available should be defined by a Reference Model (RM), using the dual-model approach,
-that is constraining the RM by the use of archetypes to define specific data structures.
+The data available should be defined by an information model, known here as the _Reference Model (RM)_, that supports the use of archetype- and template-based constraint models, as described in the {openehr_overview}[openEHR Architecture Overview^] and the {openehr_am_overview}[Archetype Technology Overview^].
 
-All the classes referenced by the FROM clause, should be defined by the RM. For instance,
-if the Reference Model is the openEHR EHR Model, the FROM should only include classes like
-EHR, COMPOSITION, OBSERVATION, EVALUATION, and so on.
+All the classes referenced by the `FROM` clause should be defined by the RM. For instance,
+if the Reference Model is the {openehr_rm}[openEHR Reference Model^], the `FROM` clause should only include classes like
+`EHR`, `COMPOSITION`, `OBSERVATION`, `EVALUATION`, and so on.
 
 NOTE: The AQL specification is not bound to a specific Reference Model, but to use a
 given RM, it should comply with some requirements: it should be an Object Oriented

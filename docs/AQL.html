@@ -243,10 +243,16 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="latest_issue"></a>1.0.1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://specifications.openehr.org/tickets/SPECQUERY-23" target="_blank" rel="noopener">SPECQUERY-23</a> Improve introductory text; update section 2.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">T Beale</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="latest_issue_date"></a>15 Apr 2020</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://specifications.openehr.org/tickets/SPECQUERY-19" target="_blank" rel="noopener">SPECQUERY-19</a> Clarify use of terminology 'identified path'.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">P Pazos,<br>
  T Beale</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="latest_issue_date"></a>10 Apr 2020</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10 Apr 2020</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"></td>
@@ -426,13 +432,22 @@
 <div class="sect2">
 <h3 id="_existing_query_languages"><a class="anchor" href="#_existing_query_languages"></a>2.1. Existing Query Languages</h3>
 <div class="paragraph">
-<p>Currently, the available query languages, such as SQL, XQuery, or Object-Oriented Query Language, have dependencies on particular system data structure and working environment. Users must know the persistence data structure of an EHR in order to write an appropriate query. The query statement cannot be used by other systems which have different data store. Consequently, none of the these languages meet the aforementioned requirements and none of these can be used directly as the query language required by integrated care EHRs</p>
+<p>Currently mainstream database query languages such as <a href="https://en.wikipedia.org/wiki/SQL" target="_blank" rel="noopener">Structured Query Language (SQL)</a>, <a href="https://www.w3.org/XML/Query/" target="_blank" rel="noopener">W3C XQuery</a>, and <a href="https://en.wikipedia.org/wiki/Object_Query_Language" target="_blank" rel="noopener">Object Query Language (OQL)</a> have dependencies on particular data schemas and physical representations (e.g. relational tables). Users must know the physical data schema of a particular database in order to write a valid query. A query statement written for one schema will not usually work in other systems, which have generally have different data schemas, even for storing the same data. These languages therefore do not support <em>query portability</em> across systems.</p>
+</div>
+<div class="paragraph">
+<p>More modern web-oriented languages such as <a href="https://www.w3.org/TR/sparql11-query/" target="_blank" rel="noopener">W3C Sparql</a> and <a href="http://graphql.org">GraphQL</a> are not database- or system-oriented as such, and do not suffer from the problem of portability. However, both the database- languages and web-oriented languages suffer from another problem, which is being limited to a single level of semantic representation, i.e. they effectively assume an Entity-Attribute-Value (EAV) data meta-model. This prevents their direct use with multi-level models, such as those based on <a href="https://specifications.openehr.org/releases/AM/latest/index" target="_blank" rel="noopener">openEHR Archetype model</a>, or its ISO equivalent <a href="https://www.iso.org/standard/62305.html" target="_blank" rel="noopener">ISO 13606-2:2019</a>.</p>
+</div>
+<div class="paragraph">
+<p>In order to overcome these limitations, this specification describes a query language designed to support <em>portable queries based on multi-level models</em>.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_what_is_aql"><a class="anchor" href="#_what_is_aql"></a>2.2. What is AQL?</h3>
 <div class="paragraph">
-<p>Archetype Query Language (AQL) is a declarative query language developed specifically for expressing queries used for searching and retrieving the clinical data found in archetype-based EHRs. It is applied to the openEHR EHR Reference Model (RM) and the openEHR clinical archetypes, but the syntax is independent of applications, programming languages, system environment, and storage models. The minimum requirement for data to be queried with AQL (including with archetype structures and terminology) is for the data to be marked at a fine granularity with the appropriate archetype codes and terminology codes. This may be native openEHR-structured data, or legacy system data to which the relevant data markers (mainly archetype paths and terminology codes) have been added. Unlike other query languages, such as SQL or XQuery, AQL expresses the queries at the archetype level, i.e. semantic level, other than at the data instance level. This is the key in achieving sharing queries across system boundaries or enterprise boundaries.</p>
+<p>Archetype Query Language (AQL) is a declarative query language developed specifically for expressing queries used for searching and retrieving the clinical data found in archetype-based EHRs. The examples used here relate to the <a href="https://specifications.openehr.org/releases/RM/latest/index" target="_blank" rel="noopener">openEHR Reference Model (RM)</a> and the <a href="https://www.openehr.org/ckm" target="_blank" rel="noopener">openEHR clinical archetypes</a>, but the syntax is independent of information model, application, programming language, system environment, and storage model.</p>
+</div>
+<div class="paragraph">
+<p>The minimum requirement for data to be queried using AQL (including with archetype structures and terminology) is that it be based on <a href="https://specifications.openehr.org/releases/AM/latest/index" target="_blank" rel="noopener">archetypes</a>, which concretely means that it contains fine-grained semantic markings in the form of archetype and terminology codes. This may be native openEHR RM data, or legacy system data to which the relevant semantic markers (i.e. archetype and terminology codes) have been added. Consequently, AQL expresses queries in terms of a combination of archetype semantic elements and RM data structure elements on which the archetypes are based, rather than solely the latter, which is the case for EAV-based query languages such as SQL. This is the key in developing and sharing semantic queries across system and enterprise boundaries.</p>
 </div>
 <div class="paragraph">
 <p>AQL has the following distinctive features:</p>
@@ -457,24 +472,24 @@
 </ol>
 </div>
 <div class="paragraph">
-<p>AQL has some other features which can be found from other query languages:</p>
+<p>AQL has some other features which can be found in other query languages:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Supporting naming returned results.</p>
+<p>Supporting naming returned results;</p>
 </li>
 <li>
-<p>Supporting query criteria parameters.</p>
+<p>Supporting query criteria parameters;</p>
 </li>
 <li>
 <p>Supporting arithmetic operators (such as count, addition, subtraction, multiplication, and division), comparison operators (<code>&gt;</code>, <code>&gt;=</code>, <code>=</code>, <code>!=</code>, <code>&lt;=</code>, <code>&lt;</code>) and Boolean operators (<code>OR</code>, <code>AND</code>, <code>XOR</code>, <code>NOT</code>).</p>
 </li>
 <li>
-<p>Supporting some functions that are supported in XQuery, such as <code>current-date()</code>.</p>
+<p>Supporting some functions that are supported in <a href="https://www.w3.org/XML/Query/" target="_blank" rel="noopener">W3C XQuery</a>, such as <code>current-date()</code>;</p>
 </li>
 <li>
-<p>Users can specify their preference on the retrieved data, such as ordering preferences, or total number of retrieved results.</p>
+<p>Users can specify their preference on the retrieved data, such as ordering preferences, or total number of retrieved results;</p>
 </li>
 <li>
 <p>Supporting queries for individual clinical subjects at the point of care, administrative purposes and clinical research purposes.</p>
@@ -485,7 +500,7 @@
 <div class="sect2">
 <h3 id="_aql_example"><a class="anchor" href="#_aql_example"></a>2.3. AQL example</h3>
 <div class="paragraph">
-<p>Below is an example of AQL statement. This statement returns all blood pressure values, contained in <code>COMPOSITIONs</code> defined by the <code>openEHR-EHR-COMPOSITION.encounter.v1</code> archetype which contains <code>OBSERVATIONs</code> defined by the <code>openEHR-EHR-OBSERVATION.blood_pressure.v1</code> archetype, where the systolic value is greater than or equal to 140 or whose diastolic value is greater than or equal to 90, within a specified EHR (i.e. whose EHR id is the value of the variable <code>$ehrId</code>). The AQL syntax is a synthesis of SQL structural syntax and openEHR path syntax.</p>
+<p>Below is an example of an AQL statement. This statement returns all blood pressure values contained in <code>COMPOSITION</code> instances defined by the <code>openEHR-EHR-COMPOSITION.encounter.v1</code> archetype, which contain <code>OBSERVATION</code> instances defined by the <code>openEHR-EHR-OBSERVATION.blood_pressure.v1</code> archetype, where the systolic value is greater than or equal to 140 or whose diastolic value is greater than or equal to 90, within a specified EHR (i.e. whose EHR id is the value of the variable <code>$ehrId</code>). The AQL syntax is a synthesis of SQL structural syntax and openEHR path syntax.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1277,13 +1292,12 @@ WHERE composition/context/start_time &lt;= '1986-01-01'    // complete date in I
 <div class="paragraph">
 <p>The <code>FROM</code> clause is used to specify the subset of all the data available in a repository,
 that will be available for the rest of the clauses to filter and return specific data (<code>WHERE</code>, <code>SELECT</code>, etc).
-The data available should be defined by a Reference Model (RM), using the dual-model approach,
-that is constraining the RM by the use of archetypes to define specific data structures.</p>
+The data available should be defined by an information model, known here as the <em>Reference Model (RM)</em>, that supports the use of archetype- and template-based constraint models, as described in the <a href="https://specifications.openehr.org/releases/BASE/latest/architecture_overview.html" target="_blank" rel="noopener">openEHR Architecture Overview</a> and the <a href="https://specifications.openehr.org/releases/AM/latest/Overview.html" target="_blank" rel="noopener">Archetype Technology Overview</a>.</p>
 </div>
 <div class="paragraph">
-<p>All the classes referenced by the FROM clause, should be defined by the RM. For instance,
-if the Reference Model is the openEHR EHR Model, the FROM should only include classes like
-EHR, COMPOSITION, OBSERVATION, EVALUATION, and so on.</p>
+<p>All the classes referenced by the <code>FROM</code> clause should be defined by the RM. For instance,
+if the Reference Model is the <a href="https://specifications.openehr.org/releases/RM/latest/index" target="_blank" rel="noopener">openEHR Reference Model</a>, the <code>FROM</code> clause should only include classes like
+<code>EHR</code>, <code>COMPOSITION</code>, <code>OBSERVATION</code>, <code>EVALUATION</code>, and so on.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1312,16 +1326,16 @@ that also allow filtering data.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><code>FROM</code>: Defines the subset of data over which the query will be executed</p>
+<p><code>FROM</code>: Defines the subset of data over which the query will be executed;</p>
 </li>
 <li>
-<p><code>WHERE</code>: Filters data from the defined subset, leaving only the data that we need</p>
+<p><code>WHERE</code>: Filters data from the defined subset, leaving only the data that we need;</p>
 </li>
 <li>
 <p>predicates in <em>class expressions</em>: further filters for data in the subset;</p>
 </li>
 <li>
-<p><code>SELECT</code>: picks the exact data that we need to return from the query, taken from the matched data in the previous two points</p>
+<p><code>SELECT</code>: picks the exact data that we need to return from the query, taken from the matched data in the previous two points.</p>
 </li>
 </ol>
 </div>
@@ -1358,7 +1372,7 @@ COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]   -- COMPOSITION class, class i
 <p>indicating the constraints on RM classes so as to scope the data source for the query. For instance, <code>EHR e[ehr_id/value='123456']</code> indicates that the required data must be from a specific EHR with <code>ehr_id</code> value <code>'123456'</code>; while <code>COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]</code> indicates the required data must be from or must be associated with a Composition instance with archetype id - <code>openEHR-EHR-COMPOSITION.report.v1</code>.</p>
 </li>
 <li>
-<p>defining a RM class variable that may be used by other clauses to indicate the required data or data items on which query criteria are applied. The example below uses the class expression to define a variable e which is used by the <code>SELECT</code> clause indicating all relevant ehr_id values are retrieved, and a variable c used by WHERE clause indicating that the query criteria is set on the composition template id value.</p>
+<p>defining an RM class variable that may be used by other clauses to indicate the required data or data items on which query criteria are applied. The example below uses the class expression to define a variable e which is used by the <code>SELECT</code> clause indicating all relevant <code>ehr_id</code> values are retrieved, and a variable <code>c</code> used by the <code>WHERE</code> clause indicating that the query criteria is set on the Composition <code>template_id</code> value.</p>
 <div class="listingblock">
 <div class="content">
 <pre>SELECT
