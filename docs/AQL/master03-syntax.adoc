@@ -417,9 +417,9 @@ NOTE: The underlying types of date/time strings are inferred by the AQL processo
 Examples are as below:
 
 --------
+WHERE composition/context/start_time <= '1986-01-01'    // complete date in ISO 8601 extended format. AQL grammar identifies this value as a date value.
 WHERE composition/context/start_time > '19860101'       // a complete date in ISO 8601 basic format. AQL grammar identifies it as a string value.
 WHERE composition/context/start_time < "12:00:00+0930"  // ISO 8601 time extended format. AQL grammar identifies it as a string value.
-WHERE composition/context/start_time <= '1986-01-01'    // complete date in ISO 8601 extended format. AQL grammar identifies this value as a date value.
 --------
 
 == Query structure
@@ -479,8 +479,11 @@ FROM
 Two examples of a class expression are shown below:
 
 --------
-EHR e [ehr_id/value=$ehrId]                        -- EHR class, class identifier/variable, and a standard predicate
-COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]   -- COMPOSITION class, class identifier/variable, and an archetype predicate
+-- EHR class, class identifier/variable, and a standard predicate
+EHR e [ehr_id/value=$ehrId]
+
+-- COMPOSITION class, class identifier/variable, and an archetype predicate
+COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]
 --------
 
 Class expressions are used for two purposes:
@@ -591,14 +594,16 @@ Example 1: retrieve all Compositions' name value, context start time and compose
 SELECT
    c/name/value AS Name, c/context/start_time AS date_time, c/composer/name AS Composer
 FROM
-   EHR e[ehr_id/value=$ehrUid] CONTAINS COMPOSITION c
+   EHR e[ehr_id/value=$ehrUid] 
+       CONTAINS COMPOSITION c
 --------
 
 Example 2: Retrieve all Composition objects of a specific EHR.
 
 --------
 SELECT c
-FROM EHR e[ehr_id/value=$ehrUid] CONTAINS COMPOSITION c
+FROM EHR e[ehr_id/value=$ehrUid] 
+    CONTAINS COMPOSITION c
 --------
 
 ==== TOP

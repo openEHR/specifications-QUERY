@@ -1251,9 +1251,9 @@ The underlying types of date/time strings are inferred by the AQL processor from
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>WHERE composition/context/start_time &gt; '19860101'       // a complete date in ISO 8601 basic format. AQL grammar identifies it as a string value.
-WHERE composition/context/start_time &lt; "12:00:00+0930"  // ISO 8601 time extended format. AQL grammar identifies it as a string value.
-WHERE composition/context/start_time &lt;= '1986-01-01'    // complete date in ISO 8601 extended format. AQL grammar identifies this value as a date value.</pre>
+<pre>WHERE composition/context/start_time &lt;= '1986-01-01'    // complete date in ISO 8601 extended format. AQL grammar identifies this value as a date value.
+WHERE composition/context/start_time &gt; '19860101'       // a complete date in ISO 8601 basic format. AQL grammar identifies it as a string value.
+WHERE composition/context/start_time &lt; "12:00:00+0930"  // ISO 8601 time extended format. AQL grammar identifies it as a string value.</pre>
 </div>
 </div>
 </div>
@@ -1360,8 +1360,11 @@ that also allow filtering data.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>EHR e [ehr_id/value=$ehrId]                        -- EHR class, class identifier/variable, and a standard predicate
-COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]   -- COMPOSITION class, class identifier/variable, and an archetype predicate</pre>
+<pre>-- EHR class, class identifier/variable, and a standard predicate
+EHR e [ehr_id/value=$ehrId]
+
+-- COMPOSITION class, class identifier/variable, and an archetype predicate
+COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1542,7 +1545,8 @@ o1/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value</pre>
 <pre>SELECT
    c/name/value AS Name, c/context/start_time AS date_time, c/composer/name AS Composer
 FROM
-   EHR e[ehr_id/value=$ehrUid] CONTAINS COMPOSITION c</pre>
+   EHR e[ehr_id/value=$ehrUid]
+       CONTAINS COMPOSITION c</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1551,7 +1555,8 @@ FROM
 <div class="listingblock">
 <div class="content">
 <pre>SELECT c
-FROM EHR e[ehr_id/value=$ehrUid] CONTAINS COMPOSITION c</pre>
+FROM EHR e[ehr_id/value=$ehrUid]
+    CONTAINS COMPOSITION c</pre>
 </div>
 </div>
 <div class="sect4">
