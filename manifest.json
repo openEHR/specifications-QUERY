@@ -10,6 +10,7 @@
             "title_short": "AQL",
             "description": "openEHR Archetype Query Language (AQL)",
             "summary": "Query language based on archetype paths and pattern matching.",
+            "micro_summary": "Archetype Query Language",
             "copyright_year": "2008",
             "spec_status": "STABLE",
             "keywords": "query, AQL, archetype, Xpath, openehr"
