@@ -27,7 +27,7 @@ AQL also has features found in other query languages, including:
 
 . naming returned results;
 . query criteria parameters;
-. arithmetic operators (such as count, addition, subtraction, multiplication, and division), comparison operators (`>`, `>=`, `=`, `!=`, `\<=`, `<`) and Boolean operators (`OR`, `AND`, `XOR`, `NOT`).
+. arithmetic operators (such as `+`, `-`, `*`, and `/`), comparison operators (`>`, `>=`, `=`, `!=`, `\<=`, `<`) and Boolean operators (`OR`, `AND`, `XOR`, `NOT`).
 . some built-in functions that are supported in {xquery}[W3C XQuery^], such as `current-date()`;
 . preferences on the result retrieval and structuring, such as ordering and total number of retrieved results.
 
