@@ -7,6 +7,11 @@
 4+^h|*Release 1.0.1 (unreleased)*
 
 |[[latest_issue]]1.0.1
+|{spec_tickets}/SPECQUERY-20[SPECQUERY-20^] Clarify major keyword documentation and semantics; remove `TIMEWINDOW`.
+|openEHR SEC
+|[[latest_issue_date]]15 Jun 2020
+
+|
 |{spec_tickets}/SPECQUERY-23[SPECQUERY-23^] Improve introductory text; update section 2.
 |T Beale
 |[[latest_issue_date]]15 Apr 2020

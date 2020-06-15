@@ -2,7 +2,7 @@
 
 == Overview
 
-AQL has five clauses: `SELECT`, `FROM`, `WHERE`, `ORDER BY`, and `TIMEWINDOW`. The `SELECT` clause specifies the data elements to be returned. The `FROM` clause specifies the result source and the corresponding containment criteria. The `WHERE` clause specifies data value criteria within the result source. The `ORDER BY` clause indicates the data items used to order the returned result set. `TIMEWINDOW` clause is to constrain the query to data that was available in the system within the specified time criteria.
+AQL has five clauses: `SELECT`, `FROM`, `WHERE`, and `ORDER BY`. The `SELECT` clause specifies the data elements to be returned. The `FROM` clause specifies the result source and the corresponding containment criteria. The `WHERE` clause specifies data value criteria within the result source. The `ORDER BY` clause indicates the data items used to order the returned result set.
 
 In AQL, openEHR path syntax is used to locate any node or data values defined within archetypes. In the `SELECT` clause, the openEHR path syntax can be used to indicate expected objects or data values to be returned (similarly to how SQL 'projections' work). The `FROM` clause uses containment mechanisms indicating the scope of the query data source. `WHERE` clause uses archetype path to set query criteria on archetypes or any node within the archetypes. The following sections introduce the AQL syntax in detail.
 
@@ -12,7 +12,7 @@ NOTE: If no `ORDER BY` clause is specified, then the query result doesn't have a
 
 Keywords in AQL are not case sensitive, so `SELECT`, `Select`, `select`, `SeLeCt`, etc. are processed in the same way. AQL has the following reserved keywords and characters:
 
-* `SELECT`, `FROM`, `WHERE`, `ORDER BY`, `TIMEWINDOW`
+* `SELECT`, `FROM`, `WHERE`, `ORDER BY`
 * `TOP`, `AND`, `OR`, `NOT`, `CONTAINS`
 * `max`, `now`, `current-date`, `current-date-time`
 * `matches`, `in`, `exists`, `not in`
@@ -426,15 +426,14 @@ WHERE composition/context/start_time < "12:00:00+0930"  // ISO 8601 time extende
 
 === Overview
 
-AQL structure has been briefly introduced in Section 2.2. This section describes the syntax in more formal detail.
-
-AQL structure has the following clauses and these clauses must be listed in the same order as the list below in an AQL statement. An AQL statement must contain `SELECT` and `FROM` clauses.
+AQL structure was briefly introduced in <<_aql_example>>. This section describes the syntax in more formal detail. An AQL query may include the following clauses which must occur in the order shown. 
 
 * `SELECT` (mandatory)
 * `FROM` (mandatory)
 * `WHERE` (optional)
 * `ORDER BY` (optional)
-* `TIMEWINDOW` (optional)
+
+An AQL statement must at least contain the `SELECT` and `FROM` clauses.
 
 === FROM
 
@@ -632,20 +631,3 @@ The `ORDER BY` clause is used to sort the returned results. The keyword `ORDER B
 ORDER BY c/name/value
 --------
 
-=== TIMEWINDOW
-
-In addition to the `FROM` clause, `TIMEWINDOW` helps to scope the data source from which the required data is retrieved. `TIMEWINDOW` is an addition query clause used in AQL to constrain the query to data that was available in the system (also know the data committal time) within the specified time criteria. This supports a time-based conditions to query historical versions of data, allowing a query to be executed as though it was performed at that specified time, which is essential for medico-legal reporting.
-
-It starts with the keyword `TIMEWINDOW`, and followed by a string compatible with the ISO 8601 representation of time interval.
-
-The first example below constrains the query source to data committed to the system before 2006-01-01.
-
---------
-TIMEWINDOW /2006-01-01
---------
-
-The second example constrains the query source to data committed within the period of two years before 2006-01-01.
-
---------
-TIMEWINDOW P2Y/2006-01-01
---------

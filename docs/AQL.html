@@ -123,7 +123,6 @@
 </ul>
 </li>
 <li><a href="#_order_by">3.10.5. ORDER BY</a></li>
-<li><a href="#_timewindow">3.10.6. TIMEWINDOW</a></li>
 </ul>
 </li>
 </ul>
@@ -243,6 +242,12 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="latest_issue"></a>1.0.1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://specifications.openehr.org/tickets/SPECQUERY-20" target="_blank" rel="noopener">SPECQUERY-20</a> Clarify major keyword documentation and semantics; remove <code>TIMEWINDOW</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">openEHR SEC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="latest_issue_date"></a>15 Jun 2020</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://specifications.openehr.org/tickets/SPECQUERY-23" target="_blank" rel="noopener">SPECQUERY-23</a> Improve introductory text; update section 2.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">T Beale</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="latest_issue_date"></a>15 Apr 2020</p></td>
@@ -529,7 +534,7 @@ WHERE                                                        -- Where clause
 <div class="sect2">
 <h3 id="_overview_2"><a class="anchor" href="#_overview_2"></a>3.1. Overview</h3>
 <div class="paragraph">
-<p>AQL has five clauses: <code>SELECT</code>, <code>FROM</code>, <code>WHERE</code>, <code>ORDER BY</code>, and <code>TIMEWINDOW</code>. The <code>SELECT</code> clause specifies the data elements to be returned. The <code>FROM</code> clause specifies the result source and the corresponding containment criteria. The <code>WHERE</code> clause specifies data value criteria within the result source. The <code>ORDER BY</code> clause indicates the data items used to order the returned result set. <code>TIMEWINDOW</code> clause is to constrain the query to data that was available in the system within the specified time criteria.</p>
+<p>AQL has five clauses: <code>SELECT</code>, <code>FROM</code>, <code>WHERE</code>, and <code>ORDER BY</code>. The <code>SELECT</code> clause specifies the data elements to be returned. The <code>FROM</code> clause specifies the result source and the corresponding containment criteria. The <code>WHERE</code> clause specifies data value criteria within the result source. The <code>ORDER BY</code> clause indicates the data items used to order the returned result set.</p>
 </div>
 <div class="paragraph">
 <p>In AQL, openEHR path syntax is used to locate any node or data values defined within archetypes. In the <code>SELECT</code> clause, the openEHR path syntax can be used to indicate expected objects or data values to be returned (similarly to how SQL 'projections' work). The <code>FROM</code> clause uses containment mechanisms indicating the scope of the query data source. <code>WHERE</code> clause uses archetype path to set query criteria on archetypes or any node within the archetypes. The following sections introduce the AQL syntax in detail.</p>
@@ -555,7 +560,7 @@ If no <code>ORDER BY</code> clause is specified, then the query result doesn&#82
 <div class="ulist">
 <ul>
 <li>
-<p><code>SELECT</code>, <code>FROM</code>, <code>WHERE</code>, <code>ORDER BY</code>, <code>TIMEWINDOW</code></p>
+<p><code>SELECT</code>, <code>FROM</code>, <code>WHERE</code>, <code>ORDER BY</code></p>
 </li>
 <li>
 <p><code>TOP</code>, <code>AND</code>, <code>OR</code>, <code>NOT</code>, <code>CONTAINS</code></p>
@@ -1263,10 +1268,7 @@ WHERE composition/context/start_time &lt; "12:00:00+0930"  // ISO 8601 time exte
 <div class="sect3">
 <h4 id="_overview_3"><a class="anchor" href="#_overview_3"></a>3.10.1. Overview</h4>
 <div class="paragraph">
-<p>AQL structure has been briefly introduced in Section 2.2. This section describes the syntax in more formal detail.</p>
-</div>
-<div class="paragraph">
-<p>AQL structure has the following clauses and these clauses must be listed in the same order as the list below in an AQL statement. An AQL statement must contain <code>SELECT</code> and <code>FROM</code> clauses.</p>
+<p>AQL structure was briefly introduced in <a href="#_aql_example">Section 2.3</a>. This section describes the syntax in more formal detail. An AQL query may include the following clauses which must occur in the order shown.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1282,10 +1284,10 @@ WHERE composition/context/start_time &lt; "12:00:00+0930"  // ISO 8601 time exte
 <li>
 <p><code>ORDER BY</code> (optional)</p>
 </li>
-<li>
-<p><code>TIMEWINDOW</code> (optional)</p>
-</li>
 </ul>
+</div>
+<div class="paragraph">
+<p>An AQL statement must at least contain the <code>SELECT</code> and <code>FROM</code> clauses.</p>
 </div>
 </div>
 <div class="sect3">
@@ -1592,31 +1594,6 @@ FROM
 <div class="listingblock">
 <div class="content">
 <pre>ORDER BY c/name/value</pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_timewindow"><a class="anchor" href="#_timewindow"></a>3.10.6. TIMEWINDOW</h4>
-<div class="paragraph">
-<p>In addition to the <code>FROM</code> clause, <code>TIMEWINDOW</code> helps to scope the data source from which the required data is retrieved. <code>TIMEWINDOW</code> is an addition query clause used in AQL to constrain the query to data that was available in the system (also know the data committal time) within the specified time criteria. This supports a time-based conditions to query historical versions of data, allowing a query to be executed as though it was performed at that specified time, which is essential for medico-legal reporting.</p>
-</div>
-<div class="paragraph">
-<p>It starts with the keyword <code>TIMEWINDOW</code>, and followed by a string compatible with the ISO 8601 representation of time interval.</p>
-</div>
-<div class="paragraph">
-<p>The first example below constrains the query source to data committed to the system before 2006-01-01.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>TIMEWINDOW /2006-01-01</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The second example constrains the query source to data committed within the period of two years before 2006-01-01.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>TIMEWINDOW P2Y/2006-01-01</pre>
 </div>
 </div>
 </div>
