@@ -248,23 +248,14 @@ A value list is only used in AQL `WHERE` clause when the criteria is to match on
 Some examples of value list:
 +
 --------
-matches {'string item 1', 'string item 2', 'string item3'}  // a string list. It Equivalent to
-                                                            // matches  string item1' or ..
+matches {'string item 1', 'string item 2', 'string item3'}  // A string list, equivalent to
+                                                            // matches 'string item1' or ..
                                                             // matches 'string item 2' or ..
                                                             // matches 'string item 3'
 matches {'2006-01-01', '2007-01-01', '2008-01-01'}          // a date value list
-matches {1, 2, 3}                                           // a integer list
+matches {1, 2, 3}                                           // an integer list
 matches {1.1, 2.5, 3.8}                                     // a real value list
 --------
-+
-Value range data is enclosed within curly braces after matches operator. It is only used in AQL `WHERE` clause to specify a criteria within a range. The syntax is similar to intervals of ordered primitive types detailed in Section 4.5.2, adl.pdf. Some examples:
-+
-----
-matches {|3.0..5.0|} // means 3.0 <= x <=5.0
-matches {|<8|}       // means x < 8
-----
-+
-NOTE: Value range is not supported in the current AQL grammar.
 
 . URI: can be a terminology URI, openEHR EHR URI, or other URI. An example with a terminology URI is shown below:
 +
@@ -280,7 +271,7 @@ WHERE
    diagnosis/data/items[at0002.1]/value/defining_code matches { terminology://snomed-ct/hierarchy?rootConceptId=50043002 }
 --------
 +
-URI data is enclosed within curly braces after `matches` operator. URI can be expressed as a normal URI described in {rfc3986}[IETF RFC 3986]. URIs are not case sensitive. In AQL, a URI can be either terminology URI or an EHR URI.
+URI data is enclosed within curly braces after `matches` operator. A URI is expressed in {rfc3986}[IETF RFC 3986] format. URIs are not case sensitive.
 +
 A terminology URI consists of the following components:
 +

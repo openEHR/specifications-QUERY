@@ -1001,35 +1001,14 @@ WHERE
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>matches {'string item 1', 'string item 2', 'string item3'}  // a string list. It Equivalent to
-                                                            // matches  string item1' or ..
+<pre>matches {'string item 1', 'string item 2', 'string item3'}  // A string list, equivalent to
+                                                            // matches 'string item1' or ..
                                                             // matches 'string item 2' or ..
                                                             // matches 'string item 3'
 matches {'2006-01-01', '2007-01-01', '2008-01-01'}          // a date value list
-matches {1, 2, 3}                                           // a integer list
+matches {1, 2, 3}                                           // an integer list
 matches {1.1, 2.5, 3.8}                                     // a real value list</pre>
 </div>
-</div>
-<div class="paragraph">
-<p>Value range data is enclosed within curly braces after matches operator. It is only used in AQL <code>WHERE</code> clause to specify a criteria within a range. The syntax is similar to intervals of ordered primitive types detailed in Section 4.5.2, adl.pdf. Some examples:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>matches {|3.0..5.0|} // means 3.0 &lt;= x &lt;=5.0
-matches {|&lt;8|}       // means x &lt; 8</pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-Value range is not supported in the current AQL grammar.
-</td>
-</tr>
-</table>
 </div>
 </li>
 <li>
@@ -1048,7 +1027,7 @@ WHERE
 </div>
 </div>
 <div class="paragraph">
-<p>URI data is enclosed within curly braces after <code>matches</code> operator. URI can be expressed as a normal URI described in <a href="https://www.ietf.org/rfc/rfc3986">IETF RFC 3986</a>. URIs are not case sensitive. In AQL, a URI can be either terminology URI or an EHR URI.</p>
+<p>URI data is enclosed within curly braces after <code>matches</code> operator. A URI is expressed in <a href="https://www.ietf.org/rfc/rfc3986">IETF RFC 3986</a> format. URIs are not case sensitive.</p>
 </div>
 <div class="paragraph">
 <p>A terminology URI consists of the following components:</p>
