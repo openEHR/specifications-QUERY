@@ -14,7 +14,7 @@
 |
 |{spec_tickets}/SPECQUERY-23[SPECQUERY-23^] Improve introductory text; update section 2.
 |T Beale
-|[[latest_issue_date]]15 Apr 2020
+|15 Apr 2020
 
 |
 |{spec_tickets}/SPECQUERY-19[SPECQUERY-19^] Clarify use of terminology 'identified path'.
