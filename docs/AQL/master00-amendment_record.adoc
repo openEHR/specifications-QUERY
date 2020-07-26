@@ -4,7 +4,7 @@
 |===
 |Issue|Details|Raiser|Completed
 
-4+^h|*Release 1.0.1 (unreleased)*
+4+^h|*Release 1.0.1*
 
 |[[latest_issue]]1.0.1
 |{spec_tickets}/SPECQUERY-20[SPECQUERY-20^] Clarify major keyword documentation and semantics; remove `TIMEWINDOW`.
@@ -23,10 +23,10 @@
 |10 Apr 2020
 
 |
-|{spec_tickets}/SPECQUERY-14[SPECQUERY-14^]: Correct typographical errors; +
- {spec_tickets}/SPECQUERY-15[SPECQUERY-15^]: Add clarifications and fix typographical errors; +
+|{spec_tickets}/SPECQUERY-14[SPECQUERY-14^]: Correct typographical errors ({spec_tickets}/SPECPR-320[SPECPR-320^], {spec_tickets}/SPECPR-345[SPECPR-345^], {spec_tickets}/SPECPR-212[SPECPR-212^], {spec_tickets}/SPECPR-332[SPECPR-332^], {spec_tickets}/SPECPR-331[SPECPR-331^]); +
+ {spec_tickets}/SPECQUERY-15[SPECQUERY-15^]: Add clarifications and fix typographical errors ({spec_tickets}/SPECPR-359[SPECPR-359^]); +
  {spec_tickets}/SPECQUERY-4[SPECQUERY-4^]: Improve documentation of 'matches' operator; +
- {spec_tickets}/SPECQUERY-2[SPECQUERY-2^]: Clarify the return structure of an AQL query.
+ {spec_tickets}/SPECQUERY-2[SPECQUERY-2^]: Clarify the return structure of an AQL query ({spec_tickets}/SPECPR-320[SPECPR-320^]).
 |P Pazos, +
  B Næss, +
  S Arikan, +
