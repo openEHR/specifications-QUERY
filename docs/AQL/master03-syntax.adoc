@@ -622,3 +622,16 @@ The `ORDER BY` clause is used to sort the returned results. The keyword `ORDER B
 ORDER BY c/name/value
 --------
 
+=== LIMIT row_count OFFSET offset
+
+The `LIMIT` and `OFFSET` clauses are used to constrain the number of results from a query. With `LIMIT row_count`,
+the result will have at most row_count items. The `OFFSET offset` is used to get results in a paginated way. For instance,
+when offset = 0 and row_count = 10, the result will have at most 10 items, starting with item 0. Then with offset = 10 and
+row_count = 10, the result will contain 10 items at most, now from item 10 to 19. So increasing `offset` by `row_count`,
+allows to get all the results when needed, or just a subset. This avoids to affect database performance by having dozens,
+or even millions, of records showing up in the query results, getting more items only when it's needed.
+
+Both `row_count` and `offset` are integer numbers, `row_count` minimal value is 1, while minimal value for `offset` is 0.
+
+If OFFSET offset is not specified, offset = 0 is assumed.
+
