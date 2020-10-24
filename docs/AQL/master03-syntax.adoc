@@ -600,7 +600,7 @@ FROM EHR e[ehr_id/value=$ehrUid]
 
 The `TOP` syntax was borrowed from SQL language for representing the number of result sets that should be returned by the AQL query. It uses `BACKWARD` and `FORWARD` to indicate the direction where to start to get the number of results to be returned.
 
-It starts with keyword TOP, followed by an integer number and/or the direction (i.e. `BACKWARD`, `FORWARD`), e.g.
+It starts with keyword `TOP`, followed by an integer number and/or the direction (i.e. `BACKWARD`, `FORWARD`), e.g.
 
 --------
 SELECT
@@ -609,6 +609,10 @@ FROM
    EHR e[ehr_id/value=$ehrUid]
       CONTAINS COMPOSITION c
 --------
+
+[.deprecated]
+*Deprecated*: Starting with Release 1.1.0, the use of `TOP` modifier is deprecated in favour of the `LIMIT` clause combined with `ORDER BY`.
+The `TOP` will be removed in a future major release of AQL specification.
 
 ==== Name alias
 
@@ -629,6 +633,8 @@ The `LIMIT` and `OFFSET` clauses are used to constrain the result sets generated
 The `OFFSET` specifies the number of rows to skip before it starts to return rows from the query.
 The `LIMIT` specifies the number of rows to return after the `OFFSET` clause has been processed.
 Note that when using `LIMIT`, deterministic behavior requires that the `ORDER BY` clause is also used to constrain the result in a unique order.
+
+NOTE: The use of `LIMIT` in combination with `ORDER BY` clause is recommended instead of the deprecated `TOP` alternative.
 
 ==== Syntax
 
