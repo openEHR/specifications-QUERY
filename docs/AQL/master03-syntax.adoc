@@ -2,7 +2,13 @@
 
 == Overview
 
-AQL has five clauses: `SELECT`, `FROM`, `WHERE`, and `ORDER BY`. The `SELECT` clause specifies the data elements to be returned. The `FROM` clause specifies the result source and the corresponding containment criteria. The `WHERE` clause specifies data value criteria within the result source. The `ORDER BY` clause indicates the data items used to order the returned result set.
+AQL has the following clauses:
+
+* The `SELECT` clause specifies the data elements to be returned.
+* The `FROM` clause specifies the result source and the corresponding containment criteria.
+* The `WHERE` clause specifies data value criteria within the result source.
+* The `ORDER BY` clause indicates the data items used to order the returned result set.
+* The `LIMIT` and `OFFSET` clause indicates which portion of the result set will be returned.
 
 In AQL, openEHR path syntax is used to locate any node or data values defined within archetypes. In the `SELECT` clause, the openEHR path syntax can be used to indicate expected objects or data values to be returned (similarly to how SQL 'projections' work). The `FROM` clause uses containment mechanisms indicating the scope of the query data source. `WHERE` clause uses archetype path to set query criteria on archetypes or any node within the archetypes. The following sections introduce the AQL syntax in detail.
 
@@ -12,8 +18,10 @@ NOTE: If no `ORDER BY` clause is specified, then the query result doesn't have a
 
 Keywords in AQL are not case sensitive, so `SELECT`, `Select`, `select`, `SeLeCt`, etc. are processed in the same way. AQL has the following reserved keywords and characters:
 
-* `SELECT`, `FROM`, `WHERE`, `ORDER BY`
-* `TOP`, `AND`, `OR`, `NOT`, `CONTAINS`
+* `SELECT`, `FROM`, `CONTAINS`, `WHERE`
+* `TOP`: deprecated as of Release 1.1.0
+* `ORDER BY`, `LIMIT`, `OFFSET`
+* `AND`, `OR`, `NOT`
 * `max`, `now`, `current-date`, `current-date-time`
 * `matches`, `in`, `exists`, `not in`
 * `"` and `'`: double and single quote characters are used to delimit string values;
