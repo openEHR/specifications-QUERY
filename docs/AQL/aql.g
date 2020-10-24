@@ -37,13 +37,16 @@ public void displayRecognitionError(String[] tokenNames, RecognitionException e)
 //<Query> ::= <Select> <From>
 //           | <Select> <From> <Where>
 //            | <Select> <From> <OrderBy>   ! is this allowed?
+//            | <Select> <From> <OrderBy> <Limit>
 //            | <Select> <From> <Where> <OrderBy>
-query	:	select from where? orderBy? ';'!? EOF!;
+//            | <Select> <From> <Where> <OrderBy> <Limit>
+query	:	select from where? orderBy? limit? ';'!? EOF!;
 
 //<Select> ::= 'SELECT' <SelectExpr>
-//         | 'SELECT' <TOP> <SelectExpr>
+//         | 'SELECT' <TOP> <SelectExpr>   deprecated!
 select	:	SELECT top? selectExpr -> ^(SELECT top? selectExpr);
 
+// (deprecated)
 //<Top> ::= 'TOP' Integer
 //          | 'TOP' Integer 'BACKWARD'
 //          | 'TOP' Integer 'FORWARD'
@@ -70,6 +73,11 @@ orderBySeq
 orderByExpr
 	:	identifiedPath (DESCENDING|DESC) -> ^(ORDERDESC identifiedPath)
 	|	identifiedPath (ASCENDING|ASC)? -> ^(ORDERASC identifiedPath);
+
+//<Limit> ::= 'LIMIT' NonNegativeInteger
+//          | 'LIMIT' NonNegativeInteger 'OFFSET' NonNegativeInteger
+limit : LIMIT NN_INTEGER -> ^(LIMIT NN_INTEGER)
+      | LIMIT NN_INTEGER OFFSET NN_INTEGER -> ^(LIMIT NN_INTEGER OFFSET NN_INTEGER);
 
 //<SelectExpr> ::= <IdentifiedPathSeq>
 selectExpr
@@ -361,6 +369,8 @@ AS : ('A'|'a')('S'|'s') ;
 CONTAINS : ('C'|'c')('O'|'o')('N'|'n')('T'|'t')('A'|'a')('I'|'i')('N'|'n')('S'|'s') ;
 WHERE : ('W'|'w')('H'|'h')('E'|'e')('R'|'r')('E'|'e') ;
 ORDERBY : ('O'|'o')('R'|'r')('D'|'d')('E'|'e')('R'|'r')(' ')('B'|'b')('Y'|'y') ;
+LIMIT : ('L'|'l')('I'|'i')('M'|'m')('I'|'i')('T'|'t') ;
+OFFSET : ('O'|'o')('F'|'f')('F'|'f')('S'|'s')('E'|'e')('T'|'t') ;
 FROM : ('F'|'f')('R'|'r')('O'|'o')('M'|'m') ;
 DESCENDING : ('D'|'d')('E'|'e')('S'|'s')('C'|'c')('E'|'e')('N'|'n')('D'|'d')('I'|'i')('N'|'n')('G'|'g') ;
 ASCENDING : ('A'|'a')('S'|'s')('C'|'c')('E'|'e')('N'|'n')('D'|'d')('I'|'i')('N'|'n')('G'|'g') ;
@@ -467,6 +477,9 @@ IDENTIFIER
 
 //Integer     = {Digit}+
 INTEGER	:	'-'? DIGIT+;
+
+//NonNegativeInteger  = {Digit}+
+NN_INTEGER	:	DIGIT+;
 
 //Float       = {Digit}+'.'{Digit}+
 FLOAT	:	'-'? DIGIT+ '.' DIGIT+;
