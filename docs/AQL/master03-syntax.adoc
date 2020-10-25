@@ -610,6 +610,7 @@ FROM EHR e[ehr_id/value=$ehrUid]
 [.deprecated]
 *Deprecated*: Starting with Release 1.1.0, the use of `TOP` modifier is deprecated in favour of the `LIMIT` clause combined with `ORDER BY` (see <<LIMIT and OFFSET, below>>).
 The `TOP` will be removed in a future major release of AQL specification.
+It is not allowed to use `TOP` while also using `LIMIT` clause in the same query.
 
 The `TOP` syntax was borrowed from SQL language for representing the number of result sets that should be returned by the AQL query. It uses `BACKWARD` and `FORWARD` to indicate the direction where to start to get the number of results to be returned.
 
@@ -644,10 +645,12 @@ The `LIMIT` specifies the number of rows to return after the `OFFSET` clause has
 Note that when using `LIMIT`, deterministic behavior requires that the `ORDER BY` clause is also used to constrain the result in a unique order.
 
 NOTE: As of Release 1.1.0, the use of the `LIMIT` clause in combination with the `ORDER BY` clause is recommended instead of the deprecated `TOP` alternative.
+It is not allowed to use `LIMIT` while also using `TOP` clause in the same query.
 
 ==== Syntax
 
 The syntax was borrowed from SQL language, similar to PostgreSQL and MySQL implementation.
+It consists of two parts: keyword `LIMIT` followed by number, optionally followed by `OFFSET` followed by a number:
 --------
 `LIMIT row_count [OFFSET offset]`
 --------
@@ -661,7 +664,7 @@ when `offset` = 0 and `row_count` = 10, the result will have at most 10 items, s
 `row_count` = 10, the result will contain 10 items at most, now from item 10 to 19. So increasing `offset` by `row_count`,
 allows to get all the results in a paginated way.
 
-The following example will return 10 rows, representing the 2nd page of result sets, order by event start_time:
+The following example will return 10 rows, representing the 2nd page of result sets, ordered by event start time:
 --------
 SELECT
    c/name/value AS Name, c/context/start_time AS date_time, c/composer/name AS Composer
