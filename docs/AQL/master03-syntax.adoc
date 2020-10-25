@@ -664,7 +664,7 @@ allows to get all the results in a paginated way.
 The following example will return 10 rows, representing the 2nd page of result sets, order by event start_time:
 --------
 SELECT
-   TOP c/name/value AS Name, c/context/start_time AS date_time, c/composer/name AS Composer
+   c/name/value AS Name, c/context/start_time AS date_time, c/composer/name AS Composer
 FROM
    EHR e[ehr_id/value=$ehrUid]
       CONTAINS COMPOSITION c
