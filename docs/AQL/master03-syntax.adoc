@@ -219,9 +219,9 @@ The table below shows the supported AQL comparison operators, meaning and exampl
 |>=         |Greater than or equal to   |`o/data[at0001]/..../data[at0003]/items[at0004]/value/value >=140`
 |<          |Smaller than               |`o/data[at0001]/.../data[at0003]/items[at0004]/value/value <160`
 |\<=        |Smaller than or equal to   |`o/data[at0001]/.../data[at0003]/items[at0004]/value/value <=160`
-|!=         |not equals to              |`c/archetype_details/template_id/value != ''`
+|!=         |Not equal to               |`c/archetype_details/template_id/value != ''`
 |LIKE       |Simple pattern matching    |`o/data[at0001]/.../name/value LIKE 'left %'`
-|matches    |advanced matcher           |`o/data[at0002]/.../name/defining_code/code_string matches {'18919-1', '18961-3', '19000-9'}`
+|matches    |Advanced matcher           |`o/data[at0002]/.../name/defining_code/code_string matches {'18919-1', '18961-3', '19000-9'}`
 |===
 
 ==== LIKE
@@ -248,7 +248,7 @@ The `LIKE` operator always try to match the entire string value, therefore if th
 
 To match a literal underscore "_" or percent sign "%", the respective character in pattern must be escaped by using the backslash "\" sign.
 
-=== matches operator definition
+==== matches
 
 The `matches` binary operator is used in the `WHERE` clause. The left operand is an AQL identified path. The right operand is enclosed within braces (`'{}'`), and may take the following forms:
 
@@ -281,7 +281,7 @@ matches {1, 2, 3}                                           // an integer list
 matches {1.1, 2.5, 3.8}                                     // a real value list
 --------
 
-. URI: can be a terminology URI, openEHR EHR URI, or other URI. An example with a terminology URI is shown below:
+. *URI*: this can be a terminology URI, an openEHR EHR URI, or other URI. An example with a terminology URI is shown below:
 +
 --------
 SELECT
@@ -299,10 +299,10 @@ URI data is enclosed within curly braces after `matches` operator. A URI is expr
 +
 A terminology URI consists of the following components:
 +
-.. *terminology*: the URI schemes value;
-.. *terminology service*: the URI authority value, such as SNOMED-CT;
-.. *terminology function name*: the URI path, e.g. "hierarchy" is the function name in the example shown below;
-.. *argument values* required by the terminology functions - URI queries;
+.. _terminology_: the URI schemes value;
+.. _terminology service_: the URI authority value, such as SNOMED-CT;
+.. _terminology function name_: the URI path, e.g. "hierarchy" is the function name in the example shown below;
+.. _argument values_ required by the terminology functions - URI queries;
 +
 This is an example of a terminology URI:
 +
