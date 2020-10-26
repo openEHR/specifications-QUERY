@@ -126,11 +126,12 @@ identifiedExprAnd
 
 
 //<IdentifiedEquality> ::= <IdentifiedOperand> ComparableOperator <IdentifiedOperand>
+//			     | <IdentifiedOperand> 'LIKE' LikePattern
 //			     | <IdentifiedOperand> 'matches' '{' <MatchesOperand> '}'
 //                          | <IdentifiedOperand> 'matches' RegExPattern
 //                          | 'EXISTS' <IdentifiedPath>
 identifiedEquality
- 	: identifiedOperand ((MATCHES^ '{'! matchesOperand '}'!)|(COMPARABLEOPERATOR^ identifiedOperand))
+ 	: identifiedOperand ((LIKE^ LIKEPATTERN)|(MATCHES^ '{'! matchesOperand '}'!)|(COMPARABLEOPERATOR^ identifiedOperand))
         | EXISTS identifiedPath -> ^(EXISTS identifiedPath)
         | '('! identifiedExpr ')'!
         | NOT^ identifiedEquality
@@ -371,6 +372,7 @@ AND : ('A'|'a')('N'|'n')('D'|'d') ;
 OR : ('O'|'o')('R'|'r') ;
 XOR : ('X'|'x')('O'|'o')('R'|'r') ;
 NOT : ('N'|'n')('O'|'o')('T'|'t') ;
+LIKE : ('L'|'l')('I'|'i')('K'|'k')('E'|'e') ;
 MATCHES : ('M'|'m')('A'|'a')('T'|'t')('C'|'c')('H'|'h')('E'|'e')('S'|'s') ;
 EXISTS: ('E'|'e')('X'|'x')('I'|'i')('S'|'s')('T'|'t')('S'|'s') ;
 VERSION	:	'VERSION';
@@ -507,6 +509,10 @@ URIVALUE: LETTER+ '://' (URISTRING|'['|']'|', \''|'\'')*
 //RegExPattern = '{/'{RegExChar}+'/}'
 REGEXPATTERN
 	:	'{/' REGEXCHAR+ '/}';
+
+//LikePattern = String
+LIKEPATTERN
+	:	STRING;
 
 //String      = '"'{String Char}*'"'
   //          | ''{String Char}*''
