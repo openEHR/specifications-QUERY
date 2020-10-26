@@ -15,7 +15,7 @@ Keywords in AQL are not case sensitive, so `SELECT`, `Select`, `select`, `SeLeCt
 * `SELECT`, `FROM`, `WHERE`, `ORDER BY`
 * `TOP`, `AND`, `OR`, `NOT`, `CONTAINS`
 * `max`, `now`, `current-date`, `current-date-time`
-* `matches`, `in`, `exists`, `not in`
+* `LIKE`, `matches`, `in`, `exists`, `not in`
 * `"` and `'`: double and single quote characters are used to delimit string values;
 * `|`: bar characters are used to delimit intervals;
 * `[]`: brackets are used to delimit coded terms, archetype id values or openEHR reference model class attribute values.
@@ -220,9 +220,33 @@ The table below shows the supported AQL comparison operators, meaning and exampl
 |<          |Smaller than               |`o/data[at0001]/.../data[at0003]/items[at0004]/value/value <160`
 |\<=        |Smaller than or equal to   |`o/data[at0001]/.../data[at0003]/items[at0004]/value/value <=160`
 |!=         |not equals to              |`c/archetype_details/template_id/value != ''`
+|LIKE       |Simple pattern matching    |`o/data[at0001]/.../name/value LIKE 'left %'`
 |matches    |advanced matcher           |`o/data[at0002]/.../name/defining_code/code_string matches {'18919-1', '18961-3', '19000-9'}`
 |===
 
+==== LIKE
+
+The `LIKE` binary operator is used to compare a value of type string (or dates and times) against a simple pattern.
+The left operand is an AQL identified path, while the right operand is string value representing the pattern to be matched.
+The `LIKE` expression returns `true` if the value matches the supplied pattern.
+
+Below is an example using a simple pattern matching:
+--------
+SELECT
+   e/ehr_id/value, c/context/start_time
+FROM
+   EHR e
+      CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.administrative_encounter.v1]
+         CONTAINS ADMIN_ENTRY admission[openEHR-EHR-ADMIN_ENTRY.admission.v1]
+WHERE
+   c/context/start_time LIKE '2019-%'
+--------
+
+An underscore "_" in pattern matches any single character, while a percent sign "%" matches any sequence of zero or more characters.
+If pattern does not contain percent signs or underscores, then `LIKE` acts like the equal "=" operator.
+The `LIKE` operator always try to match the entire string value, therefore if the intention is to match a sequence anywhere within the string, the pattern must start and end with a percent sign, e.g. "%test%".
+
+To match a literal underscore "_" or percent sign "%", the respective character in pattern must be escaped by using the backslash "\" sign.
 
 === matches operator definition
 
@@ -543,6 +567,7 @@ An _identified expression_ specifies matching criteria in the `WHERE` clause and
 . _right operand_: one of:
 ** a value criterion, normally of a primitive type, such as `String`, `Integer`, `Boolean`, `Double`, or `Float`; if a `String` value, single or double quotation marks are required; OR
 ** a replaceable parameter (identified with the `'$'` symbol); OR
+** a string pattern, in case the operator `LIKE` is used; OR
 ** an identified path.
 
 The following examples illustrate the binary form.
@@ -559,6 +584,12 @@ c/archetype_details/template_id/value = 'health_encounter'
 +
 --------
 c/archetype_details/template_id/value = $templateParameter
+--------
+
+* Left operand is an identified path; right operand is a pattern:
++
+--------
+c/archetype_details/template_id/value LIKE '%encounter%'
 --------
 
 * Both left operand and right operand are identified paths:
