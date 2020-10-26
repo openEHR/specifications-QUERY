@@ -14,12 +14,13 @@ Keywords in AQL are not case sensitive, so `SELECT`, `Select`, `select`, `SeLeCt
 
 * `SELECT`, `FROM`, `WHERE`, `ORDER BY`
 * `TOP`, `AND`, `OR`, `NOT`, `CONTAINS`
-* `max`, `now`, `current-date`, `current-date-time`
+* functions: `count`, min`, max`, sum`, avg`, `now`, `current-date`, `current-date-time`
 * `matches`, `in`, `exists`, `not in`
 * `"` and `'`: double and single quote characters are used to delimit string values;
 * `|`: bar characters are used to delimit intervals;
 * `[]`: brackets are used to delimit coded terms, archetype id values or openEHR reference model class attribute values.
 * `{}`: brackets are used with `matches` delimiting matches criteria
+* `()`: paranthesis are used with function calls or to separate logic or group expressions and enforce precedence
 * `<`, `>`, `=`, `%`, `!`, `$`
 
 == openEHR path syntax
@@ -352,6 +353,91 @@ FROM
 WHERE
    NOT EXISTS c/content[openEHR-EHR-ADMIN_ENTRY.discharge.v1]
 --------
+
+== Functions
+
+=== Aggregate functions
+
+Aggregate functions calculates a single result from a set of _input values_, aggregated from an _expression_ over the result set.
+These expressions are using <<_aql_identified_paths, identified paths>>
+so that the functions operates on a set of <<_built_in_types,built in (primitive)>> type values.
+Some of these functions uses a `DISTINCT` keyword to consider only distinct values from the set.
+Unless specified, this functions omits the `NULL` values.
+
+The table below shows the supported AQL aggregate functions:
+
+[width="100%",cols="1,5",options="header",]
+|===
+|Function   |Description
+
+|COUNT()    |Returns the count of the number of rows returned or of the input values
+|MIN()      |Returns the minimum of the non-null input values
+|MAX()      |Returns the maximum of the non-null input values
+|SUM()      |Returns the sum of the non-null input values
+|AVG()      |Returns the average (arithmetic mean) of all the non-null input values
+|===
+
+The example below uses `MIN()`, `MAX()` and `AVG()` functions to determine edge and mean values for systolic value:
+--------
+SELECT
+    MAX(o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude),
+    MIN(o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude),
+    AVG(o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude),
+FROM
+    EHR e CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.encounter.v1]
+        CONTAINS OBSERVATION o[openEHR-EHR-OBSERVATION.blood_pressure.v1]
+--------
+
+In this example `COUNT()` and `MIN()` are used to return the number of discharge letters and the date of their oldest event:
+--------
+SELECT
+   count(*), min(c/context/start_time)
+FROM
+   EHR e
+      CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.administrative_encounter.v1]
+         CONTAINS ADMIN_ENTRY admission[openEHR-EHR-ADMIN_ENTRY.admission.v1]
+--------
+
+==== COUNT
+
+The `COUNT()` function returns the number of values of given _expression_ argument.
+The syntax is `COUNT([DISTINCT] expression |\*)`.
+The `COUNT(*)` is used to calculate and return the number of rows of the result set, whether or not they contain `NULL`.
+
+The `DISTINCT` keyword can be used to return the number of the distinct values of _expression_.
+If there are no matching rows, `COUNT()` returns `0`.
+Input values type can be anything, while the return type is always an Integer.
+
+==== MIN
+
+The `MIN()` function returns the minimum value of given _expression_ argument. The syntax is `MIN(expression)`.
+
+If there are no matching rows, `MIN()` returns `NULL`.
+Input values type should be either String, Date, Time, Integer of Real, and it will also determine the return type.
+
+==== MAX
+
+The `MAX()` function returns the maximum value of given _expression_ argument. The syntax is `MAX(expression)`.
+
+If there are no matching rows, `MAX()` returns `NULL`.
+Input values type should be either String, Date, Time, Integer of Real, and it will also determine the return type.
+
+==== SUM
+
+The `SUM()` function returns the sum value of given _expression_ argument. The syntax is `SUM([DISTINCT] expression)`.
+
+The `DISTINCT` keyword can be used to return the sum of the distinct values of _expression_.
+If there are no matching rows, `SUM()` returns `NULL`.
+Input values type should be either Integer of Real, and it will also determine the return type.
+
+==== AVG
+
+The `AVG()` function returns the average value of given _expression_ argument. The syntax is `AVG([DISTINCT] expression)`.
+
+The `DISTINCT` keyword can be used to return the average of the distinct values of _expression_.
+If there are no matching rows, `AVG()` returns `NULL`.
+Input values type should be either Integer of Real, and it will also determine the return type.
+
 
 == AQL Identified Paths
 
