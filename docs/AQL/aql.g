@@ -127,7 +127,6 @@ identifiedExprAnd
 
 //<IdentifiedEquality> ::= <IdentifiedOperand> ComparableOperator <IdentifiedOperand>
 //			     | <IdentifiedOperand> 'matches' '{' <MatchesOperand> '}'
-//                          | <IdentifiedOperand> 'matches' RegExPattern
 //                          | 'EXISTS' <IdentifiedPath>
 identifiedEquality
  	: identifiedOperand ((MATCHES^ '{'! matchesOperand '}'!)|(COMPARABLEOPERATOR^ identifiedOperand))
@@ -135,9 +134,6 @@ identifiedEquality
         | '('! identifiedExpr ')'!
         | NOT^ identifiedEquality
  	;
-// 	| identifiedOperand 'matches' '{' matchesOperand '}'
-//        | identifiedOperand 'matches' REGEXPATTERN
-//        | 'EXISTS' identifiedPath;
 
 //<IdentifiedOperand> ::= <Operand> | <IdentifiedPath>
 identifiedOperand
@@ -176,22 +172,17 @@ nodePredicateAnd
 //                          | NodeId
 //                          | NodeId ',' String        ! <NodeId> and name/value = <String> shortcut
 //                          | NodeId ',' parameter     ! <NodeId> and name/value = <Parameter> shortcut
-//                          | <NodePredicateRegEx>     ! /items[{/at0001.*/}], /items[at0001 and name/value matches {//}]
+//                          | RegExPattern             ! /items[{/at0001.*/}]
+//                          | <PredicateOperand> 'matches' RegExPattern     ! /items[at0001 and name/value matches {//}]
 //                          | ArchetypeId
 //                          | ArchetypeId ',' String        ! <NodeId> and name/value = <String> shortcut
 //                          | ArchetypeId ',' parameter     ! <NodeId> and name/value = <Parameter> shortcut
 nodePredicateComparable
  	: NODEID (COMMA^ (STRING|PARAMETER))?
  	| ARCHETYPEID (COMMA^ (STRING|PARAMETER))?
- 	| predicateOperand ((COMPARABLEOPERATOR^ predicateOperand)|(MATCHES^ REGEXPATTERN)) 
-        | REGEXPATTERN     //! /items[{/at0001.*/}], /items[at0001 and name/value matches {//}]
+ 	| predicateOperand ((COMPARABLEOPERATOR^ predicateOperand)|(MATCHES^ REGEXPATTERN))
+    | REGEXPATTERN
         ;
-
-//<NodePredicateRegEx>    ::= RegExPattern
-//                          | <PredicateOperand> 'matches' RegExPattern
-nodePredicateRegEx
- 	: REGEXPATTERN
- 	| predicateOperand MATCHES^ REGEXPATTERN;
 
 //<MatchesOperand> ::= <ValueListItems>
 //			| UriValue
