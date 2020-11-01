@@ -19,7 +19,6 @@ NOTE: If no `ORDER BY` clause is specified, then the query result doesn't have a
 Keywords in AQL are not case sensitive, so `SELECT`, `Select`, `select`, `SeLeCt`, etc. are processed in the same way. AQL has the following reserved keywords and characters:
 
 * `SELECT`, `FROM`, `CONTAINS`, `WHERE`
-* `TOP`: deprecated as of Release 1.1.0
 * `ORDER BY`, `LIMIT`, `OFFSET`
 * `AND`, `OR`, `NOT`
 * `max`, `now`, `current-date`, `current-date-time`
@@ -29,6 +28,8 @@ Keywords in AQL are not case sensitive, so `SELECT`, `Select`, `select`, `SeLeCt
 * `[]`: brackets are used to delimit coded terms, archetype id values or openEHR reference model class attribute values.
 * `{}`: brackets are used with `matches` delimiting matches criteria
 * `<`, `>`, `=`, `%`, `!`, `$`
+
+NOTE: `TOP` modifier is deprecated in favour of the `LIMIT` clause combined with `ORDER BY` (see <<LIMIT, below>>).
 
 == openEHR path syntax
 
