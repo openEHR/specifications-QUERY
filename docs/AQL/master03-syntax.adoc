@@ -580,9 +580,9 @@ o1/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value
 
 === SELECT
 
-A `SELECT` clause specifies what data is to be retrieved by the AQL query. The data can be any types from openEHR RM and any primitive data types. In addition, the `SELECT` clause uses `TOP` to indicate the number of result sets that should be returned and name alias to rename the retrieved data.
+A `SELECT` clause specifies what data is to be retrieved by the AQL query. The data can be any types from openEHR RM and any primitive data types.
 
-The `SELECT` syntax always starts with the keyword `SELECT`, followed by `TOP` (optional), and identified path(s) or plain variable name(s) defined in the `FROM` clause. Each variable name or identified path may have a name alias renaming the associated data.
+The `SELECT` syntax always starts with the keyword `SELECT`, followed by `TOP` (optional, deprecated - see <<TOP, below>>), and identified path(s) or plain variable name(s) defined in the `FROM` clause. Each variable name or identified path may have a name alias renaming the associated data.
 
 Where a variable name is specified, the full object of the type associated with the variable is retrieved, such as a `COMPOSITION`, `OBSERVATION` etc. Where an identified path is specified, the data item(s) having that archetype path are returned. Multiple identifiers or identified paths are separated using a comma.
 
