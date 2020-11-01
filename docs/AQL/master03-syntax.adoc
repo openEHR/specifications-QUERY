@@ -608,7 +608,7 @@ FROM EHR e[ehr_id/value=$ehrUid]
 ==== TOP
 
 [.deprecated]
-*Deprecated*: Starting with Release 1.1.0, the use of `TOP` modifier is deprecated in favour of the `LIMIT` clause combined with `ORDER BY` (see <<LIMIT and OFFSET, below>>).
+*Deprecated*: Starting with Release 1.1.0, the use of `TOP` modifier is deprecated in favour of the `LIMIT` clause combined with `ORDER BY` (see <<LIMIT, below>>).
 The `TOP` will be removed in a future major release of AQL specification.
 It is not allowed to use `TOP` while also using `LIMIT` clause in the same query.
 
