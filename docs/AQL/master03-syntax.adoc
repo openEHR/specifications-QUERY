@@ -2,7 +2,13 @@
 
 == Overview
 
-AQL has five clauses: `SELECT`, `FROM`, `WHERE`, and `ORDER BY`. The `SELECT` clause specifies the data elements to be returned. The `FROM` clause specifies the result source and the corresponding containment criteria. The `WHERE` clause specifies data value criteria within the result source. The `ORDER BY` clause indicates the data items used to order the returned result set.
+AQL has the following clauses:
+
+* The `SELECT` clause specifies the data elements to be returned.
+* The `FROM` clause specifies the result source and the corresponding containment criteria.
+* The `WHERE` clause specifies data value criteria within the result source.
+* The `ORDER BY` clause indicates the data items used to order the returned result set.
+* The `LIMIT` clause indicates which portion of the result set will be returned.
 
 In AQL, openEHR path syntax is used to locate any node or data values defined within archetypes. In the `SELECT` clause, the openEHR path syntax can be used to indicate expected objects or data values to be returned (similarly to how SQL 'projections' work). The `FROM` clause uses containment mechanisms indicating the scope of the query data source. `WHERE` clause uses archetype path to set query criteria on archetypes or any node within the archetypes. The following sections introduce the AQL syntax in detail.
 
@@ -12,8 +18,9 @@ NOTE: If no `ORDER BY` clause is specified, then the query result doesn't have a
 
 Keywords in AQL are not case sensitive, so `SELECT`, `Select`, `select`, `SeLeCt`, etc. are processed in the same way. AQL has the following reserved keywords and characters:
 
-* `SELECT`, `FROM`, `WHERE`, `ORDER BY`
-* `TOP`, `AND`, `OR`, `NOT`, `CONTAINS`
+* `SELECT`, `FROM`, `CONTAINS`, `WHERE`
+* `ORDER BY`, `LIMIT`, `OFFSET`
+* `AND`, `OR`, `NOT`
 * `max`, `now`, `current-date`, `current-date-time`
 * `matches`, `in`, `exists`, `not in`
 * `"` and `'`: double and single quote characters are used to delimit string values;
@@ -21,6 +28,8 @@ Keywords in AQL are not case sensitive, so `SELECT`, `Select`, `select`, `SeLeCt
 * `[]`: brackets are used to delimit coded terms, archetype id values or openEHR reference model class attribute values.
 * `{}`: brackets are used with `matches` delimiting matches criteria
 * `<`, `>`, `=`, `%`, `!`, `$`
+
+NOTE: `TOP` modifier is deprecated in favour of the `LIMIT` clause combined with `ORDER BY` (see <<LIMIT, below>>).
 
 == openEHR path syntax
 
@@ -423,6 +432,7 @@ AQL structure was briefly introduced in <<_aql_example>>. This section describes
 * `FROM` (mandatory)
 * `WHERE` (optional)
 * `ORDER BY` (optional)
+* `LIMIT` (optional)
 
 An AQL statement must at least contain the `SELECT` and `FROM` clauses.
 
@@ -570,9 +580,9 @@ o1/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value
 
 === SELECT
 
-A `SELECT` clause specifies what data is to be retrieved by the AQL query. The data can be any types from openEHR RM and any primitive data types. In addition, the `SELECT` clause uses `TOP` to indicate the number of result sets that should be returned and name alias to rename the retrieved data.
+A `SELECT` clause specifies what data is to be retrieved by the AQL query. The data can be any types from openEHR RM and any primitive data types.
 
-The `SELECT` syntax always starts with the keyword `SELECT`, followed by `TOP` (optional), and identified path(s) or plain variable name(s) defined in the `FROM` clause. Each variable name or identified path may have a name alias renaming the associated data.
+The `SELECT` syntax always starts with the keyword `SELECT`, followed by `TOP` (optional, deprecated - see <<TOP, below>>), and identified path(s) or plain variable name(s) defined in the `FROM` clause. Each variable name or identified path may have a name alias renaming the associated data.
 
 Where a variable name is specified, the full object of the type associated with the variable is retrieved, such as a `COMPOSITION`, `OBSERVATION` etc. Where an identified path is specified, the data item(s) having that archetype path are returned. Multiple identifiers or identified paths are separated using a comma.
 
@@ -598,9 +608,14 @@ FROM EHR e[ehr_id/value=$ehrUid]
 
 ==== TOP
 
+[.deprecated]
+*Deprecated*: Starting with Release 1.1.0, the use of `TOP` modifier is deprecated in favour of the `LIMIT` clause combined with `ORDER BY` (see <<LIMIT, below>>).
+The `TOP` will be removed in a future major release of AQL specification.
+It is not allowed to use `TOP` while also using `LIMIT` clause in the same query.
+
 The `TOP` syntax was borrowed from SQL language for representing the number of result sets that should be returned by the AQL query. It uses `BACKWARD` and `FORWARD` to indicate the direction where to start to get the number of results to be returned.
 
-It starts with keyword TOP, followed by an integer number and/or the direction (i.e. `BACKWARD`, `FORWARD`), e.g.
+It starts with keyword `TOP`, followed by an integer number and/or the direction (i.e. `BACKWARD`, `FORWARD`), e.g.
 
 --------
 SELECT
@@ -620,5 +635,45 @@ The `ORDER BY` clause is used to sort the returned results. The keyword `ORDER B
 
 --------
 ORDER BY c/name/value
+--------
+
+=== LIMIT
+
+The `LIMIT` clause is used to constrain the result sets generated by the rest of the query.
+It is often used together with an `OFFSET` subclause.
+
+The `OFFSET` specifies the number of rows to skip before it starts to return rows from the query.
+The `LIMIT` specifies the number of rows to return after the `OFFSET` clause has been processed.
+Note that when using `LIMIT`, deterministic behavior requires that the `ORDER BY` clause is also used to constrain the result in a unique order.
+
+NOTE: As of Release 1.1.0, the use of the `LIMIT` clause in combination with the `ORDER BY` clause is recommended instead of the deprecated `TOP` alternative.
+It is not allowed to use `LIMIT` while also using `TOP` clause in the same query.
+
+==== Syntax
+
+The syntax was borrowed from SQL language, similar to PostgreSQL and MySQL implementation.
+It consists of two parts: keyword `LIMIT` followed by number, optionally followed by `OFFSET` followed by a number:
+--------
+`LIMIT row_count [OFFSET offset]`
+--------
+Both `row_count` and `offset` are integer numbers, `row_count` minimal value is 1, while minimal value for `offset` is 0.
+
+If a `LIMIT row_count` is given, no more than that many rows will be returned (but possibly fewer, if the query itself yields fewer rows).
+The `OFFSET offset` is optional, and when not specified then `offset` = 0 is assumed.
+
+The `LIMIT row_count OFFSET offset` is used to get results in a paginated way. For instance,
+when `offset` = 0 and `row_count` = 10, the result will have at most 10 items, starting with item 0. Then with `offset` = 10 and
+`row_count` = 10, the result will contain 10 items at most, now from item 10 to 19. So increasing `offset` by `row_count`,
+allows to get all the results in a paginated way.
+
+The following example will return 10 rows, representing the 2nd page of result sets, ordered by event start time:
+--------
+SELECT
+   c/name/value AS Name, c/context/start_time AS date_time, c/composer/name AS Composer
+FROM
+   EHR e[ehr_id/value=$ehrUid]
+      CONTAINS COMPOSITION c
+ORDER BY c/context/start_time
+LIMIT 10 OFFSET 10
 --------
 

@@ -8,7 +8,7 @@ An example is used to illustrate how to write an AQL statement. The query scenar
 
 *"Get all abnormal blood pressure values that are recorded in a health encounter for a specific patient."*
 
-== Step 1. The FROM clause
+=== Step 1. The FROM clause
 
 A `FROM` clause is to scope the data source for the query. Normally the first step is to determine the `FROM` clause, which has EHR class expression and archetype class expressions.
 
@@ -39,7 +39,7 @@ FROM EHR [ehr_id/value=$ehrUid] CONTAINS COMPOSITION [openEHR-EHR-COMPOSITION.en
 CONTAINS OBSERVATION [openEHR-EHR-OBSERVATION.blood_pressure.v1]
 --------
 
-== Step 2. The WHERE clause
+=== Step 2. The WHERE clause
 
 The `WHERE` clause represents all query criteria that cannot be represented in the `FROM` clause. To write a `WHERE` clause expression, the following is needed:
 
@@ -74,7 +74,7 @@ WHERE
    obs/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/value >= 90
 --------
 
-== Step 3. The SELECT clause
+=== Step 3. The SELECT clause
 
 Writing a `SELECT` clause depends on determining:
 
@@ -91,4 +91,49 @@ FROM
 WHERE
    obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude >= 140 OR
    obs/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude >= 90
+--------
+
+== Another query scenario
+
+Similar to previous scenario, but with some extra features, the query scenario is:
+
+*"Get the latest 5 abnormal blood pressure values that are recorded in a health encounter for a specific patient."*
+
+=== Step 1. Order results
+
+Using the query from the first example we can add an extra column and order the results based on event start_time values:
+
+--------
+SELECT
+   obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude AS systolic,
+   obs/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude AS diastlic,
+   c/context/start_time AS date_time
+FROM
+   EHR [ehr_id/value=$ehrUid] CONTAINS COMPOSITION c [openEHR-EHR-COMPOSITION.encounter.v1]
+      CONTAINS OBSERVATION obs [openEHR-EHR-OBSERVATION.blood_pressure.v1]
+WHERE
+   obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude >= 140 OR
+   obs/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude >= 90
+ORDER BY
+   c/context/start_time DESC
+--------
+
+=== Step 2. Return the first 5 rows
+
+The addition of `LIMIT` clause will retrieve only the first needed rows, i.e. the latest 5 rows:
+
+--------
+SELECT
+   obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude AS systolic,
+   obs/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude AS diastlic,
+   c/context/start_time AS date_time
+FROM
+   EHR [ehr_id/value=$ehrUid] CONTAINS COMPOSITION c [openEHR-EHR-COMPOSITION.encounter.v1]
+      CONTAINS OBSERVATION obs [openEHR-EHR-OBSERVATION.blood_pressure.v1]
+WHERE
+   obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude >= 140 OR
+   obs/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude >= 90
+ORDER BY
+   c/context/start_time DESC
+LIMIT 5
 --------
