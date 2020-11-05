@@ -2,7 +2,13 @@
 
 == Overview
 
-AQL has five clauses: `SELECT`, `FROM`, `WHERE`, and `ORDER BY`. The `SELECT` clause specifies the data elements to be returned. The `FROM` clause specifies the result source and the corresponding containment criteria. The `WHERE` clause specifies data value criteria within the result source. The `ORDER BY` clause indicates the data items used to order the returned result set.
+AQL has the following clauses:
+
+* The `SELECT` clause specifies the data elements to be returned.
+* The `FROM` clause specifies the result source and the corresponding containment criteria.
+* The `WHERE` clause specifies data value criteria within the result source.
+* The `ORDER BY` clause indicates the data items used to order the returned result set.
+* The `LIMIT` clause indicates which portion of the result set will be returned.
 
 In AQL, openEHR path syntax is used to locate any node or data values defined within archetypes. In the `SELECT` clause, the openEHR path syntax can be used to indicate expected objects or data values to be returned (similarly to how SQL 'projections' work). The `FROM` clause uses containment mechanisms indicating the scope of the query data source. `WHERE` clause uses archetype path to set query criteria on archetypes or any node within the archetypes. The following sections introduce the AQL syntax in detail.
 
@@ -12,8 +18,9 @@ NOTE: If no `ORDER BY` clause is specified, then the query result doesn't have a
 
 Keywords in AQL are not case sensitive, so `SELECT`, `Select`, `select`, `SeLeCt`, etc. are processed in the same way. AQL has the following reserved keywords and characters:
 
-* `SELECT`, `FROM`, `WHERE`, `ORDER BY`
-* `TOP`, `AND`, `OR`, `NOT`, `CONTAINS`
+* `SELECT`, `AS`, `FROM`, `CONTAINS`, `WHERE`
+* `ORDER BY`, `LIMIT`, `OFFSET`
+* `AND`, `OR`, `NOT`
 * functions: `count`, `min`, `max`, `sum`, `avg`, `now`, `current-date`, `current-date-time`
 * `matches`, `in`, `exists`, `not in`
 * `"` and `'`: double and single quote characters are used to delimit string values;
@@ -23,9 +30,11 @@ Keywords in AQL are not case sensitive, so `SELECT`, `Select`, `select`, `SeLeCt
 * `()`: parantheses are used with function calls or to separate logic or group expressions and enforce precedence
 * `<`, `>`, `=`, `%`, `!`, `$`
 
+NOTE: `TOP` modifier is deprecated in favour of the `LIMIT` clause combined with `ORDER BY` (see <<LIMIT, below>>).
+
 == openEHR path syntax
 
-The openEHR path syntax has been described in detail (see the {openehr_overview}[Architecture Overview specification]). AQL utilises the basic openEHR path syntax to reference both coarse-grainedand fine-grained archetype nodes (objects and data values, respectively), and openEHR class instances and attributes, when referencing something that is not defined in an archetype but is part of the openEHR Reference Model. A set of openEHR path examples are provided on this section.
+The openEHR path syntax has been described in detail (see the {openehr_overview}[Architecture Overview specification]). AQL utilises the basic openEHR path syntax to reference both coarse-grained and fine-grained archetype nodes (objects and data values, respectively), and openEHR class instances and attributes, when referencing something that is not defined in an archetype but is part of the openEHR Reference Model. A set of openEHR path examples are provided on this section.
 
 === openEHR path examples - archetype path
 
@@ -95,9 +104,9 @@ A parameter always starts with a dollar sign `$` followed by the parameter name,
 A parameter can be used for any criteria values within an AQL statement, e.g.:
 
 * within a predicate: `[$archetypeId]`, `[at0003, $nameValue]`, `[ehr_id/value=$ehrId]`
-* withing a WHERE criteria: `o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value > $systolicCriteria`
+* withing a `WHERE` criteria: `o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value > $systolicCriteria`
 
-NOTE: In the WHERE criteria, when the value of the parameter is not a number or boolean value, it should be substituted with the corresponding quotes added to the value, for instance `o/../.. = $textVariable`, when substituted should look like this `o/../.. = "value"` (single or double quotes could be used). So substituted values follow the same rules as each type when the value is specified as a constant in the AQL expression: strings, dates, times and datetimes should be quoted, numbers and booleans are not quoted.
+NOTE: In the `WHERE` criteria, when the value of the parameter is not a number or boolean value, it should be substituted with the corresponding quotes added to the value, for instance `o/../.. = $textVariable`, when substituted should look like this `o/../.. = "value"` (single or double quotes could be used). So substituted values follow the same rules as each type when the value is specified as a constant in the AQL expression: strings, dates, times and datetimes should be quoted, numbers and booleans are not quoted.
 
 === When parameters are needed
 
@@ -297,15 +306,15 @@ This is an example of a terminology URI:
 
 ==== AND
 
-`AND` is a binary boolean operator used to link two boolean expressions. It evaluates to `true` when both operands evaluate to `true`, and it evaluates to `false` otherwise.
+`AND` is a binary operator used to link two boolean expressions. It evaluates to `true` when both operands evaluate to `true`, and it evaluates to `false` otherwise.
 
 ==== OR
 
-`OR` is a binary boolean operator used to link two boolean expressions. It evaluates to `true` when any of the operands evaluate to `true`, and it evaluates to `false` otherwise.
+`OR` is a binary operator used to link two boolean expressions. It evaluates to `true` when any of the operands evaluate to `true`, and it evaluates to `false` otherwise.
 
 ==== NOT
 
-`NOT` is a unary Boolean operator which is always followed by either a Boolean identified expression (see <<Identified expression>>) or other Boolean-valued operand, such as an expression using the `EXISTS` operator. It returns a Boolean result: `true` means the operand is `false`. A `NOT` expression is a kind of identified expression (see <<Identified expression,below>>).
+`NOT` is a unary operator which is always followed by either a Boolean identified expression (see <<Identified expression>>) or other Boolean-valued operand, such as an expression using the `EXISTS` operator. It returns a Boolean result: `true` means the operand is `false`. A `NOT` expression is a kind of identified expression (see <<Identified expression,below>>).
 
 The example below uses `NOT` operator followed by a Boolean identified expression:
 
@@ -443,6 +452,7 @@ Input values type should be either Integer of Real, and it will also determine t
 
 In AQL, an _identified path_ is the association of a variable reference (the identifier; see <<AQL variables,above>>) and an archetype path and/or predicate. Except for the `FROM` clause, an identified path may appear in any clause of an AQL statement. For example, it can be used to indicate the data to be returned in a `SELECT` clause, or the data item on which query criteria are applied in a `WHERE` clause.
 
+[#_aql_identified_paths_syntax]
 === Syntax
 
 An AQL identified path can take any of the following forms:
@@ -479,7 +489,7 @@ Real numbers are the decimal literals that include a decimal point, such as `3.1
 
 Boolean values are indicated using the case-insensitive literals `true` or `false`.
 
-=== String Data
+=== String data
 
 All strings are enclosed in double or single quotes. Line breaks are not supported.
 
@@ -492,9 +502,16 @@ NOTE: The underlying types of date/time strings are inferred by the AQL processo
 Examples are as below:
 
 --------
-WHERE composition/context/start_time <= '1986-01-01'    // complete date in ISO 8601 extended format. AQL grammar identifies this value as a date value.
-WHERE composition/context/start_time > '19860101'       // a complete date in ISO 8601 basic format. AQL grammar identifies it as a string value.
-WHERE composition/context/start_time < "12:00:00+0930"  // ISO 8601 time extended format. AQL grammar identifies it as a string value.
+// complete date in ISO 8601 extended format: AQL grammar identifies this value as a date value.
+WHERE composition/context/start_time <= '1986-01-01'
+--------
+--------
+// a complete date in ISO 8601 basic format: AQL grammar identifies it as a string value.
+WHERE composition/context/start_time > '19860101'
+--------
+--------
+// ISO 8601 time extended format: AQL grammar identifies it as a string value.
+WHERE composition/context/start_time < "12:00:00+0930"
 --------
 
 == Query structure
@@ -507,6 +524,7 @@ AQL structure was briefly introduced in <<_aql_example>>. This section describes
 * `FROM` (mandatory)
 * `WHERE` (optional)
 * `ORDER BY` (optional)
+* `LIMIT` (optional)
 
 An AQL statement must at least contain the `SELECT` and `FROM` clauses.
 
@@ -537,8 +555,8 @@ In summary:
 . predicates in _class expressions_: further filters for data in the subset;
 . `SELECT`: picks the exact data that we need to return from the query, taken from the matched data in the previous two points.
 
-
-==== FROM Syntax
+[#_from_syntax]
+==== Syntax
 
 A simple `FROM` clause consists of three parts: keyword `FROM`, class expression and/or containment constraints, e.g.
 
@@ -553,17 +571,19 @@ FROM
 Two examples of a class expression are shown below:
 
 --------
--- EHR class, class identifier/variable, and a standard predicate
-EHR e [ehr_id/value=$ehrId]
+// EHR class, class identifier/variable, and a standard predicate
+EHR e[ehr_id/value=$ehrId]
+--------
 
--- COMPOSITION class, class identifier/variable, and an archetype predicate
+--------
+// COMPOSITION class, class identifier/variable, and an archetype predicate
 COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]
 --------
 
 Class expressions are used for two purposes:
 
 . indicating the constraints on RM classes so as to scope the data source for the query. For instance, `EHR e[ehr_id/value='123456']` indicates that the required data must be from a specific EHR with `ehr_id` value `'123456'`; while `COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]` indicates the required data must be from or must be associated with a Composition instance with archetype id - `openEHR-EHR-COMPOSITION.report.v1`.
-. defining an RM class variable that may be used by other clauses to indicate the required data or data items on which query criteria are applied. The example below uses the class expression to define a variable e which is used by the `SELECT` clause indicating all relevant `ehr_id` values are retrieved, and a variable `c` used by the `WHERE` clause indicating that the query criteria is set on the Composition `template_id` value.
+. defining an RM class variable that may be used by other clauses to indicate the required data or data items on which query criteria are applied. The example below uses the class expression to define a variable `e` which is used by the `SELECT` clause indicating all relevant `ehr_id` values are retrieved, and a variable `c` used by the `WHERE` clause indicating that the query criteria is set on the Composition `template_id` value.
 +
 --------
 SELECT
@@ -577,7 +597,7 @@ WHERE
 
 Class expressions syntax include three parts. A class expression must have part one and at least one of part two or part three.
 
-. part one (mandatory): openEHR RM class name, such as `EHR`, `COMPOSITION`, `OBSERVATION` etc.
+. part one (mandatory): RM class name, such as `EHR`, `COMPOSITION`, `OBSERVATION` etc.
 . part two (optional): AQL variable name
 . part three (optional): a standard predicate or an archetype predicate.
 
@@ -585,18 +605,20 @@ Class expressions syntax include three parts. A class expression must have part 
 
 Since archetypes are in hierarchical structure, AQL has a containment constraint which specifies the hierarchical relationships between parent and child data items. The `FROM` clause utilises this hierarchical constraint along with class expression to determine the data source to which the AQL query is applied.
 
-The syntax of containment constraint is very simple: using keyword `CONTAINS` between two class expressions. Left class expression is the the parent object of the right class expression, e.g.
+The syntax of containment constraint is very simple: using keyword `CONTAINS` between two class expressions. Left class expression is the parent object of the right class expression, e.g.
 
 --------
 EHR e CONTAINS COMPOSITION c [openEHR-EHR-COMPOSITION.referral.v1]
 --------
 
-Boolean operators (`AND`, `OR`, `NOT`) and parentheses are used when multiple containment constrains are required, e.g.
+Logical operators (`AND`, `OR`, `NOT`) and parentheses are used when multiple containment constrains are required, e.g.
 
 --------
 EHR e
    CONTAINS COMPOSITION c [openEHR-EHR-COMPOSITION.referral.v1] AND COMPOSITION c1 [openEHR-EHR-COMPOSITION.report.v1]
+--------
 
+--------
 EHR e
    CONTAINS COMPOSITION c [openEHR-EHR-COMPOSITION.referral.v1]
       CONTAINS (OBSERVATION o [openEHR-EHR-OBSERVATION-laboratory-hba1c.v1] AND OBSERVATION o1 [openEHR-EHR-OBSERVATION-laboratory-glucose.v1])
@@ -604,11 +626,12 @@ EHR e
 
 === WHERE
 
-An AQL `WHERE` clause is used to represent further criteria applied to the data items within the objects declared in the FROM clause. A `WHERE` clause expresses the query criteria that cannot be represented in other AQL clauses, such as criteria on archetype id, composition committal date/time, and the criteria on in which order the returned results should be listed.
+An AQL `WHERE` clause is used to represent further criteria applied to the data items within the objects declared in the `FROM` clause. A `WHERE` clause expresses the query criteria that cannot be represented in other AQL clauses, such as criteria on archetype id, composition committal date/time, and the criteria on in which order the returned results should be listed.
 
+[#_where_syntax]
 ==== Syntax
 
-The `WHERE` clause syntax has the following parts (in order): keyword `WHERE` and identified expression(s). Boolean operators (`AND`, `OR`, `NOT`) and parenthesis can be used to represent multiple identified expressions. Examples:
+The `WHERE` clause syntax has the following parts (in order): keyword `WHERE` and identified expression(s). Logical operators (`AND`, `OR`, `NOT`) and parenthesis can be used to represent multiple identified expressions. Examples:
 
 --------
 WHERE
@@ -654,9 +677,9 @@ o1/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value
 
 === SELECT
 
-A `SELECT` clause specifies what data is to be retrieved by the AQL query. The data can be any types from openEHR RM and any primitive data types. In addition, the `SELECT` clause uses `TOP` to indicate the number of result sets that should be returned and name alias to rename the retrieved data.
+A `SELECT` clause specifies what data is to be retrieved by the AQL query. The data can be any types from openEHR RM and any primitive data types.
 
-The `SELECT` syntax always starts with the keyword `SELECT`, followed by `TOP` (optional), and identified path(s) or plain variable name(s) defined in the `FROM` clause. Each variable name or identified path may have a name alias renaming the associated data.
+The `SELECT` syntax always starts with the keyword `SELECT`, followed by `TOP` (optional, deprecated - see <<TOP, below>>), and identified path(s) or plain variable name(s) defined in the `FROM` clause. Each variable name or identified path may have a name alias renaming the associated data.
 
 Where a variable name is specified, the full object of the type associated with the variable is retrieved, such as a `COMPOSITION`, `OBSERVATION` etc. Where an identified path is specified, the data item(s) having that archetype path are returned. Multiple identifiers or identified paths are separated using a comma.
 
@@ -682,9 +705,14 @@ FROM EHR e[ehr_id/value=$ehrUid]
 
 ==== TOP
 
+[.deprecated]
+*Deprecated*: Starting with Release 1.1.0, the use of `TOP` modifier is deprecated in favour of the `LIMIT` clause combined with `ORDER BY` (see <<LIMIT, below>>).
+The `TOP` will be removed in a future major release of AQL specification.
+It is not allowed to use `TOP` while also using `LIMIT` clause in the same query.
+
 The `TOP` syntax was borrowed from SQL language for representing the number of result sets that should be returned by the AQL query. It uses `BACKWARD` and `FORWARD` to indicate the direction where to start to get the number of results to be returned.
 
-It starts with keyword TOP, followed by an integer number and/or the direction (i.e. `BACKWARD`, `FORWARD`), e.g.
+It starts with keyword `TOP`, followed by an integer number and/or the direction (i.e. `BACKWARD`, `FORWARD`), e.g.
 
 --------
 SELECT
@@ -700,8 +728,49 @@ As in SQL, `AQL` supports the use of a name alias for the retrieved data. This i
 
 === ORDER BY
 
-The `ORDER BY` clause is used to sort the returned results. The keyword `ORDER BY` is followed by an identified path and the keyword `DESC`, `DESCENDING`, `ASCE`, or `ASCENDING`, e.g.
+The `ORDER BY` clause is used to sort the returned results. The keyword `ORDER BY` is followed by an identified path and the keyword `DESC`, `DESCENDING`, `ASC`, or `ASCENDING`, e.g.
 
 --------
 ORDER BY c/name/value
+--------
+
+=== LIMIT
+
+The `LIMIT` clause is used to constrain the result sets generated by the rest of the query.
+It is often used together with an `OFFSET` subclause.
+
+The `OFFSET` specifies the number of rows to skip before it starts to return rows from the query.
+The `LIMIT` specifies the number of rows to return after the `OFFSET` clause has been processed.
+Note that when using `LIMIT`, deterministic behavior requires that the `ORDER BY` clause is also used to constrain the result in a unique order.
+
+NOTE: As of Release 1.1.0, the use of the `LIMIT` clause in combination with the `ORDER BY` clause is recommended instead of the deprecated `TOP` alternative.
+It is not allowed to use `LIMIT` while also using `TOP` clause in the same query.
+
+[#_limit_syntax]
+==== Syntax
+
+The syntax was borrowed from SQL language, similar to PostgreSQL and MySQL implementation.
+It consists of two parts: keyword `LIMIT` followed by number, optionally followed by `OFFSET` followed by a number:
+--------
+`LIMIT row_count [OFFSET offset]`
+--------
+Both `row_count` and `offset` are integer numbers, `row_count` minimal value is 1, while minimal value for `offset` is 0.
+
+If a `LIMIT row_count` is given, no more than that many rows will be returned (but possibly fewer, if the query itself yields fewer rows).
+The `OFFSET offset` is optional, and when not specified then `offset` = 0 is assumed.
+
+The `LIMIT row_count OFFSET offset` is used to get results in a paginated way. For instance,
+when `offset` = 0 and `row_count` = 10, the result will have at most 10 items, starting with item 0. Then with `offset` = 10 and
+`row_count` = 10, the result will contain 10 items at most, now from item 10 to 19. So increasing `offset` by `row_count`,
+allows to get all the results in a paginated way.
+
+The following example will return 10 rows, representing the 2nd page of result sets, ordered by event start time:
+--------
+SELECT
+   c/name/value AS Name, c/context/start_time AS date_time, c/composer/name AS Composer
+FROM
+   EHR e[ehr_id/value=$ehrUid]
+      CONTAINS COMPOSITION c
+ORDER BY c/context/start_time
+LIMIT 10 OFFSET 10
 --------
