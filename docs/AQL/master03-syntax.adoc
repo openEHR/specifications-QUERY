@@ -305,15 +305,15 @@ This is an example of a terminology URI:
 
 ==== AND
 
-`AND` is a binary boolean operator used to link two boolean expressions. It evaluates to `true` when both operands evaluate to `true`, and it evaluates to `false` otherwise.
+`AND` is a binary operator used to link two boolean expressions. It evaluates to `true` when both operands evaluate to `true`, and it evaluates to `false` otherwise.
 
 ==== OR
 
-`OR` is a binary boolean operator used to link two boolean expressions. It evaluates to `true` when any of the operands evaluate to `true`, and it evaluates to `false` otherwise.
+`OR` is a binary operator used to link two boolean expressions. It evaluates to `true` when any of the operands evaluate to `true`, and it evaluates to `false` otherwise.
 
 ==== NOT
 
-`NOT` is a unary Boolean operator which is always followed by either a Boolean identified expression (see <<Identified expression>>) or other Boolean-valued operand, such as an expression using the `EXISTS` operator. It returns a Boolean result: `true` means the operand is `false`. A `NOT` expression is a kind of identified expression (see <<Identified expression,below>>).
+`NOT` is a unary operator which is always followed by either a Boolean identified expression (see <<Identified expression>>) or other Boolean-valued operand, such as an expression using the `EXISTS` operator. It returns a Boolean result: `true` means the operand is `false`. A `NOT` expression is a kind of identified expression (see <<Identified expression,below>>).
 
 The example below uses `NOT` operator followed by a Boolean identified expression:
 
@@ -527,7 +527,7 @@ The syntax of containment constraint is very simple: using keyword `CONTAINS` be
 EHR e CONTAINS COMPOSITION c [openEHR-EHR-COMPOSITION.referral.v1]
 --------
 
-Boolean operators (`AND`, `OR`, `NOT`) and parentheses are used when multiple containment constrains are required, e.g.
+Logical operators (`AND`, `OR`, `NOT`) and parentheses are used when multiple containment constrains are required, e.g.
 
 --------
 EHR e
@@ -547,7 +547,7 @@ An AQL `WHERE` clause is used to represent further criteria applied to the data 
 [#_where_syntax]
 ==== Syntax
 
-The `WHERE` clause syntax has the following parts (in order): keyword `WHERE` and identified expression(s). Boolean operators (`AND`, `OR`, `NOT`) and parenthesis can be used to represent multiple identified expressions. Examples:
+The `WHERE` clause syntax has the following parts (in order): keyword `WHERE` and identified expression(s). Logical operators (`AND`, `OR`, `NOT`) and parenthesis can be used to represent multiple identified expressions. Examples:
 
 --------
 WHERE
