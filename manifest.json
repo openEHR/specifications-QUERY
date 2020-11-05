@@ -6,7 +6,7 @@
     "specifications": [
         {
             "id": "AQL",
-            "title": "Archetype Query Language",
+            "title": "Archetype Query Language (AQL)",
             "title_short": "AQL",
             "description": "openEHR Archetype Query Language (AQL)",
             "summary": "Query language based on archetype paths and pattern matching.",

@@ -1,4 +1,4 @@
-:spec_title: Archetype Query Language
+:spec_title: Archetype Query Language (AQL)
 :copyright_year: 2008
 :spec_status: STABLE
 :keywords: query, AQL, archetype, Xpath, openehr
