@@ -18,7 +18,7 @@ NOTE: If no `ORDER BY` clause is specified, then the query result doesn't have a
 
 Keywords in AQL are not case sensitive, so `SELECT`, `Select`, `select`, `SeLeCt`, etc. are processed in the same way. AQL has the following reserved keywords and characters:
 
-* `SELECT`, `FROM`, `CONTAINS`, `WHERE`
+* `SELECT`, `AS`, `FROM`, `CONTAINS`, `WHERE`
 * `ORDER BY`, `LIMIT`, `OFFSET`
 * `AND`, `OR`, `NOT`
 * `max`, `now`, `current-date`, `current-date-time`
