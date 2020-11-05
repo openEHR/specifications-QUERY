@@ -14,13 +14,13 @@ Keywords in AQL are not case sensitive, so `SELECT`, `Select`, `select`, `SeLeCt
 
 * `SELECT`, `FROM`, `WHERE`, `ORDER BY`
 * `TOP`, `AND`, `OR`, `NOT`, `CONTAINS`
-* functions: `count`, min`, max`, sum`, avg`, `now`, `current-date`, `current-date-time`
+* functions: `count`, `min`, `max`, `sum`, `avg`, `now`, `current-date`, `current-date-time`
 * `matches`, `in`, `exists`, `not in`
 * `"` and `'`: double and single quote characters are used to delimit string values;
 * `|`: bar characters are used to delimit intervals;
 * `[]`: brackets are used to delimit coded terms, archetype id values or openEHR reference model class attribute values.
 * `{}`: brackets are used with `matches` delimiting matches criteria
-* `()`: paranthesis are used with function calls or to separate logic or group expressions and enforce precedence
+* `()`: parantheses are used with function calls or to separate logic or group expressions and enforce precedence
 * `<`, `>`, `=`, `%`, `!`, `$`
 
 == openEHR path syntax
