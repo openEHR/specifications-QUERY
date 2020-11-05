@@ -358,11 +358,11 @@ WHERE
 
 === Aggregate functions
 
-Aggregate functions calculates a single result from a set of _input values_, aggregated from an _expression_ over the result set.
+Aggregate functions calculate a single result from a set of _input values_, aggregated from an _expression_ over the result set.
 These expressions are using <<_aql_identified_paths, identified paths>>
-so that the functions operates on a set of <<_built_in_types,built in (primitive)>> type values.
-Some of these functions uses a `DISTINCT` keyword to consider only distinct values from the set.
-Unless specified, this functions omits the `NULL` values.
+so that the functions operate on a set of <<_built_in_types,built in (primitive)>> type values.
+Some of these functions support the `DISTINCT` keyword to consider only distinct values from the set.
+Unless specified otherwise, these functions ignore `NULL` values.
 
 The table below shows the supported AQL aggregate functions:
 
@@ -377,7 +377,7 @@ The table below shows the supported AQL aggregate functions:
 |AVG()      |Returns the average (arithmetic mean) of all the non-null input values
 |===
 
-The example below uses `MIN()`, `MAX()` and `AVG()` functions to determine edge and mean values for systolic value:
+The example below uses `MIN()`, `MAX()` and `AVG()` functions to determine edge and mean values for systolic blood pressure:
 --------
 SELECT
     MAX(o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude),
@@ -707,4 +707,3 @@ The `ORDER BY` clause is used to sort the returned results. The keyword `ORDER B
 --------
 ORDER BY c/name/value
 --------
-
