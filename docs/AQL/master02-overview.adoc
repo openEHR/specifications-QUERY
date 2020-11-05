@@ -18,7 +18,7 @@ AQL has the following distinctive features:
 
 . the utilization of {openehr_path_syntax}[openEHR path syntax^] in AQL: the path syntax is used to locate clinical statements and data values within them using archetypes; this syntax is used to represent the query criteria and returned results, and allows stating query criteria using archetype and node identifiers, data values within the archetypes, and class attributes defined within the Reference Model;
 . returned results may be objects of any granularity from 'top-level' RM objects to primitive data items;
-. the utilization of a `contains` operator to match data hierarchy relationships in order to constrain the source data to which the query is applied;
+. the utilization of a `CONTAINS` operator to match data hierarchy relationships in order to constrain the source data to which the query is applied;
 . the utilization of ADL-like operator syntaxes, such as `matches`, `exists`, `in`, and `not`;
 . model-neutral syntax: AQL does not have any dependency on a Reference Model; it is also neutral to system implementation and environment;
 . supports time-based conditions to query historical versions of data.

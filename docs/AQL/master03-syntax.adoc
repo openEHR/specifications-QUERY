@@ -33,7 +33,7 @@ NOTE: `TOP` modifier is deprecated in favour of the `LIMIT` clause combined with
 
 == openEHR path syntax
 
-The openEHR path syntax has been described in detail (see the {openehr_overview}[Architecture Overview specification]). AQL utilises the basic openEHR path syntax to reference both coarse-grainedand fine-grained archetype nodes (objects and data values, respectively), and openEHR class instances and attributes, when referencing something that is not defined in an archetype but is part of the openEHR Reference Model. A set of openEHR path examples are provided on this section.
+The openEHR path syntax has been described in detail (see the {openehr_overview}[Architecture Overview specification]). AQL utilises the basic openEHR path syntax to reference both coarse-grained and fine-grained archetype nodes (objects and data values, respectively), and openEHR class instances and attributes, when referencing something that is not defined in an archetype but is part of the openEHR Reference Model. A set of openEHR path examples are provided on this section.
 
 === openEHR path examples - archetype path
 
@@ -511,7 +511,7 @@ Class expressions syntax include three parts. A class expression must have part 
 
 Since archetypes are in hierarchical structure, AQL has a containment constraint which specifies the hierarchical relationships between parent and child data items. The `FROM` clause utilises this hierarchical constraint along with class expression to determine the data source to which the AQL query is applied.
 
-The syntax of containment constraint is very simple: using keyword `CONTAINS` between two class expressions. Left class expression is the the parent object of the right class expression, e.g.
+The syntax of containment constraint is very simple: using keyword `CONTAINS` between two class expressions. Left class expression is the parent object of the right class expression, e.g.
 
 --------
 EHR e CONTAINS COMPOSITION c [openEHR-EHR-COMPOSITION.referral.v1]
@@ -530,7 +530,7 @@ EHR e
 
 === WHERE
 
-An AQL `WHERE` clause is used to represent further criteria applied to the data items within the objects declared in the FROM clause. A `WHERE` clause expresses the query criteria that cannot be represented in other AQL clauses, such as criteria on archetype id, composition committal date/time, and the criteria on in which order the returned results should be listed.
+An AQL `WHERE` clause is used to represent further criteria applied to the data items within the objects declared in the `FROM` clause. A `WHERE` clause expresses the query criteria that cannot be represented in other AQL clauses, such as criteria on archetype id, composition committal date/time, and the criteria on in which order the returned results should be listed.
 
 ==== Syntax
 
@@ -631,7 +631,7 @@ As in SQL, `AQL` supports the use of a name alias for the retrieved data. This i
 
 === ORDER BY
 
-The `ORDER BY` clause is used to sort the returned results. The keyword `ORDER BY` is followed by an identified path and the keyword `DESC`, `DESCENDING`, `ASCE`, or `ASCENDING`, e.g.
+The `ORDER BY` clause is used to sort the returned results. The keyword `ORDER BY` is followed by an identified path and the keyword `DESC`, `DESCENDING`, `ASC`, or `ASCENDING`, e.g.
 
 --------
 ORDER BY c/name/value
