@@ -424,17 +424,15 @@ Input values type should be either String, Date, Time, Integer of Real, and it w
 
 ==== SUM
 
-The `SUM()` function returns the sum value of given _expression_ argument. The syntax is `SUM([DISTINCT] expression)`.
+The `SUM()` function returns the sum value of given _expression_ argument. The syntax is `SUM(expression)`.
 
-The `DISTINCT` keyword can be used to return the sum of the distinct values of _expression_.
 If there are no matching rows, `SUM()` returns `NULL`.
 Input values type should be either Integer of Real, and it will also determine the return type.
 
 ==== AVG
 
-The `AVG()` function returns the average value of given _expression_ argument. The syntax is `AVG([DISTINCT] expression)`.
+The `AVG()` function returns the average value of given _expression_ argument. The syntax is `AVG(expression)`.
 
-The `DISTINCT` keyword can be used to return the average of the distinct values of _expression_.
 If there are no matching rows, `AVG()` returns `NULL`.
 Input values type should be either Integer of Real, and it will also determine the return type.
 
