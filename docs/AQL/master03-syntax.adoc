@@ -103,9 +103,9 @@ A parameter always starts with a dollar sign `$` followed by the parameter name,
 A parameter can be used for any criteria values within an AQL statement, e.g.:
 
 * within a predicate: `[$archetypeId]`, `[at0003, $nameValue]`, `[ehr_id/value=$ehrId]`
-* withing a WHERE criteria: `o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value > $systolicCriteria`
+* withing a `WHERE` criteria: `o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value > $systolicCriteria`
 
-NOTE: In the WHERE criteria, when the value of the parameter is not a number or boolean value, it should be substituted with the corresponding quotes added to the value, for instance `o/../.. = $textVariable`, when substituted should look like this `o/../.. = "value"` (single or double quotes could be used). So substituted values follow the same rules as each type when the value is specified as a constant in the AQL expression: strings, dates, times and datetimes should be quoted, numbers and booleans are not quoted.
+NOTE: In the `WHERE` criteria, when the value of the parameter is not a number or boolean value, it should be substituted with the corresponding quotes added to the value, for instance `o/../.. = $textVariable`, when substituted should look like this `o/../.. = "value"` (single or double quotes could be used). So substituted values follow the same rules as each type when the value is specified as a constant in the AQL expression: strings, dates, times and datetimes should be quoted, numbers and booleans are not quoted.
 
 === When parameters are needed
 
@@ -368,6 +368,7 @@ WHERE
 
 In AQL, an _identified path_ is the association of a variable reference (the identifier; see <<AQL variables,above>>) and an archetype path and/or predicate. Except for the `FROM` clause, an identified path may appear in any clause of an AQL statement. For example, it can be used to indicate the data to be returned in a `SELECT` clause, or the data item on which query criteria are applied in a `WHERE` clause.
 
+[#_aql_identified_paths_syntax]
 === Syntax
 
 An AQL identified path can take any of the following forms:
@@ -404,7 +405,7 @@ Real numbers are the decimal literals that include a decimal point, such as `3.1
 
 Boolean values are indicated using the case-insensitive literals `true` or `false`.
 
-=== String Data
+=== String data
 
 All strings are enclosed in double or single quotes. Line breaks are not supported.
 
@@ -417,9 +418,16 @@ NOTE: The underlying types of date/time strings are inferred by the AQL processo
 Examples are as below:
 
 --------
-WHERE composition/context/start_time <= '1986-01-01'    // complete date in ISO 8601 extended format. AQL grammar identifies this value as a date value.
-WHERE composition/context/start_time > '19860101'       // a complete date in ISO 8601 basic format. AQL grammar identifies it as a string value.
-WHERE composition/context/start_time < "12:00:00+0930"  // ISO 8601 time extended format. AQL grammar identifies it as a string value.
+// complete date in ISO 8601 extended format: AQL grammar identifies this value as a date value.
+WHERE composition/context/start_time <= '1986-01-01'
+--------
+--------
+// a complete date in ISO 8601 basic format: AQL grammar identifies it as a string value.
+WHERE composition/context/start_time > '19860101'
+--------
+--------
+// ISO 8601 time extended format: AQL grammar identifies it as a string value.
+WHERE composition/context/start_time < "12:00:00+0930"
 --------
 
 == Query structure
@@ -463,8 +471,8 @@ In summary:
 . predicates in _class expressions_: further filters for data in the subset;
 . `SELECT`: picks the exact data that we need to return from the query, taken from the matched data in the previous two points.
 
-
-==== FROM Syntax
+[#_from_syntax]
+==== Syntax
 
 A simple `FROM` clause consists of three parts: keyword `FROM`, class expression and/or containment constraints, e.g.
 
@@ -479,17 +487,19 @@ FROM
 Two examples of a class expression are shown below:
 
 --------
--- EHR class, class identifier/variable, and a standard predicate
-EHR e [ehr_id/value=$ehrId]
+// EHR class, class identifier/variable, and a standard predicate
+EHR e[ehr_id/value=$ehrId]
+--------
 
--- COMPOSITION class, class identifier/variable, and an archetype predicate
+--------
+// COMPOSITION class, class identifier/variable, and an archetype predicate
 COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]
 --------
 
 Class expressions are used for two purposes:
 
 . indicating the constraints on RM classes so as to scope the data source for the query. For instance, `EHR e[ehr_id/value='123456']` indicates that the required data must be from a specific EHR with `ehr_id` value `'123456'`; while `COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]` indicates the required data must be from or must be associated with a Composition instance with archetype id - `openEHR-EHR-COMPOSITION.report.v1`.
-. defining an RM class variable that may be used by other clauses to indicate the required data or data items on which query criteria are applied. The example below uses the class expression to define a variable e which is used by the `SELECT` clause indicating all relevant `ehr_id` values are retrieved, and a variable `c` used by the `WHERE` clause indicating that the query criteria is set on the Composition `template_id` value.
+. defining an RM class variable that may be used by other clauses to indicate the required data or data items on which query criteria are applied. The example below uses the class expression to define a variable `e` which is used by the `SELECT` clause indicating all relevant `ehr_id` values are retrieved, and a variable `c` used by the `WHERE` clause indicating that the query criteria is set on the Composition `template_id` value.
 +
 --------
 SELECT
@@ -503,7 +513,7 @@ WHERE
 
 Class expressions syntax include three parts. A class expression must have part one and at least one of part two or part three.
 
-. part one (mandatory): openEHR RM class name, such as `EHR`, `COMPOSITION`, `OBSERVATION` etc.
+. part one (mandatory): RM class name, such as `EHR`, `COMPOSITION`, `OBSERVATION` etc.
 . part two (optional): AQL variable name
 . part three (optional): a standard predicate or an archetype predicate.
 
@@ -522,7 +532,9 @@ Boolean operators (`AND`, `OR`, `NOT`) and parentheses are used when multiple co
 --------
 EHR e
    CONTAINS COMPOSITION c [openEHR-EHR-COMPOSITION.referral.v1] AND COMPOSITION c1 [openEHR-EHR-COMPOSITION.report.v1]
+--------
 
+--------
 EHR e
    CONTAINS COMPOSITION c [openEHR-EHR-COMPOSITION.referral.v1]
       CONTAINS (OBSERVATION o [openEHR-EHR-OBSERVATION-laboratory-hba1c.v1] AND OBSERVATION o1 [openEHR-EHR-OBSERVATION-laboratory-glucose.v1])
@@ -532,6 +544,7 @@ EHR e
 
 An AQL `WHERE` clause is used to represent further criteria applied to the data items within the objects declared in the `FROM` clause. A `WHERE` clause expresses the query criteria that cannot be represented in other AQL clauses, such as criteria on archetype id, composition committal date/time, and the criteria on in which order the returned results should be listed.
 
+[#_where_syntax]
 ==== Syntax
 
 The `WHERE` clause syntax has the following parts (in order): keyword `WHERE` and identified expression(s). Boolean operators (`AND`, `OR`, `NOT`) and parenthesis can be used to represent multiple identified expressions. Examples:
@@ -649,6 +662,7 @@ Note that when using `LIMIT`, deterministic behavior requires that the `ORDER BY
 NOTE: As of Release 1.1.0, the use of the `LIMIT` clause in combination with the `ORDER BY` clause is recommended instead of the deprecated `TOP` alternative.
 It is not allowed to use `LIMIT` while also using `TOP` clause in the same query.
 
+[#_limit_syntax]
 ==== Syntax
 
 The syntax was borrowed from SQL language, similar to PostgreSQL and MySQL implementation.
