@@ -88,7 +88,7 @@
 <li><a href="#_aql_identified_paths">3.8. AQL Identified Paths</a>
 <ul class="sectlevel3">
 <li><a href="#_usage">3.8.1. Usage</a></li>
-<li><a href="#_syntax">3.8.2. Syntax</a></li>
+<li><a href="#_aql_identified_paths_syntax">3.8.2. Syntax</a></li>
 </ul>
 </li>
 <li><a href="#_built_in_types">3.9. Built-in Types</a>
@@ -96,7 +96,7 @@
 <li><a href="#_integer_data">3.9.1. Integer data</a></li>
 <li><a href="#_real_data">3.9.2. Real data</a></li>
 <li><a href="#_boolean_data">3.9.3. Boolean data</a></li>
-<li><a href="#_string_data">3.9.4. String Data</a></li>
+<li><a href="#_string_data">3.9.4. String data</a></li>
 <li><a href="#_dates_and_times">3.9.5. Dates and Times</a></li>
 </ul>
 </li>
@@ -105,14 +105,14 @@
 <li><a href="#_overview_3">3.10.1. Overview</a></li>
 <li><a href="#_from">3.10.2. FROM</a>
 <ul class="sectlevel4">
-<li><a href="#_from_syntax">3.10.2.1. FROM Syntax</a></li>
+<li><a href="#_from_syntax">3.10.2.1. Syntax</a></li>
 <li><a href="#_class_expressions">3.10.2.2. Class expressions</a></li>
 <li><a href="#_containment">3.10.2.3. Containment</a></li>
 </ul>
 </li>
 <li><a href="#_where">3.10.3. WHERE</a>
 <ul class="sectlevel4">
-<li><a href="#_syntax_2">3.10.3.1. Syntax</a></li>
+<li><a href="#_where_syntax">3.10.3.1. Syntax</a></li>
 <li><a href="#_identified_expression">3.10.3.2. Identified expression</a></li>
 </ul>
 </li>
@@ -123,6 +123,11 @@
 </ul>
 </li>
 <li><a href="#_order_by">3.10.5. ORDER BY</a></li>
+<li><a href="#_limit">3.10.6. LIMIT</a>
+<ul class="sectlevel4">
+<li><a href="#_limit_syntax">3.10.6.1. Syntax</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -137,10 +142,19 @@
 </li>
 <li><a href="#_how_to_write_an_aql_query_statement_manually">6. How to write an AQL query statement manually</a>
 <ul class="sectlevel2">
-<li><a href="#_query_scenario">6.1. Query scenario</a></li>
-<li><a href="#_step_1_the_from_clause">6.2. Step 1. The FROM clause</a></li>
-<li><a href="#_step_2_the_where_clause">6.3. Step 2. The WHERE clause</a></li>
-<li><a href="#_step_3_the_select_clause">6.4. Step 3. The SELECT clause</a></li>
+<li><a href="#_query_scenario">6.1. Query scenario</a>
+<ul class="sectlevel3">
+<li><a href="#_step_1_the_from_clause">6.1.1. Step 1. The FROM clause</a></li>
+<li><a href="#_step_2_the_where_clause">6.1.2. Step 2. The WHERE clause</a></li>
+<li><a href="#_step_3_the_select_clause">6.1.3. Step 3. The SELECT clause</a></li>
+</ul>
+</li>
+<li><a href="#_another_query_scenario">6.2. Another query scenario</a>
+<ul class="sectlevel3">
+<li><a href="#_step_1_order_results">6.2.1. Step 1. Order results</a></li>
+<li><a href="#_step_2_return_the_first_5_rows">6.2.2. Step 2. Return the first 5 rows</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#_aql_syntax_specification">7. AQL Syntax Specification</a></li>
@@ -174,7 +188,7 @@
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Release</strong>: QUERY Release-1.0.1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Release</strong>: QUERY latest</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Status</strong>: STABLE</p></td>
 </tr>
 <tr>
@@ -232,19 +246,29 @@
 <tr>
 <th class="tableblock halign-left valign-top">Issue</th>
 <th class="tableblock halign-left valign-top">Details</th>
-<th class="tableblock halign-left valign-top">Raiser</th>
+<th class="tableblock halign-left valign-top">Raiser, Implementer</th>
 <th class="tableblock halign-left valign-top">Completed</th>
 </tr>
 </thead>
 <tbody>
 <tr>
+<th class="tableblock halign-center valign-top" colspan="4"><p class="tableblock"><strong>Release 1.1.0 (unreleased)</strong></p></th>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="latest_issue"></a>1.1.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://specifications.openehr.org/tickets/SPECQUERY-16" target="_blank" rel="noopener">SPECQUERY-16</a> Add support for LIMIT and OFFSET; deprecate <code>TOP</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">P Pazos,<br>
+S Iancu</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="latest_issue_date"></a>05 Nov 2020</p></td>
+</tr>
+<tr>
 <th class="tableblock halign-center valign-top" colspan="4"><p class="tableblock"><strong>Release 1.0.1</strong></p></th>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="latest_issue"></a>1.0.1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.0.1</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://specifications.openehr.org/tickets/SPECQUERY-20" target="_blank" rel="noopener">SPECQUERY-20</a> Clarify major keyword documentation and semantics; remove <code>TIMEWINDOW</code>.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">openEHR SEC</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="latest_issue_date"></a>15 Jun 2020</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">15 Jun 2020</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"></td>
@@ -378,7 +402,7 @@
 <div class="sect2">
 <h3 id="_status"><a class="anchor" href="#_status"></a>1.2. Status</h3>
 <div class="paragraph">
-<p>This specification is in the STABLE state. The latest development version of this document can be found at <a href="https://specifications.openehr.org/releases/QUERY/Release-1.0.1/AQL.html" target="_blank" rel="noopener">https://specifications.openehr.org/releases/QUERY/Release-1.0.1/AQL.html</a>.</p>
+<p>This specification is in the STABLE state. The latest development version of this document can be found at <a href="https://specifications.openehr.org/releases/QUERY/latest/AQL.html" target="_blank" rel="noopener">https://specifications.openehr.org/releases/QUERY/latest/AQL.html</a>.</p>
 </div>
 <div class="paragraph">
 <p>Known omissions or questions are indicated in the text with a 'to be determined' paragraph, as follows:</p>
@@ -467,7 +491,7 @@
 <p>returned results may be objects of any granularity from 'top-level' RM objects to primitive data items;</p>
 </li>
 <li>
-<p>the utilization of a <code>contains</code> operator to match data hierarchy relationships in order to constrain the source data to which the query is applied;</p>
+<p>the utilization of a <code>CONTAINS</code> operator to match data hierarchy relationships in order to constrain the source data to which the query is applied;</p>
 </li>
 <li>
 <p>the utilization of ADL-like operator syntaxes, such as <code>matches</code>, <code>exists</code>, <code>in</code>, and <code>not</code>;</p>
@@ -492,7 +516,7 @@
 <p>query criteria parameters;</p>
 </li>
 <li>
-<p>arithmetic operators (such as <code>+</code>, <code>-</code>, <code>*</code>, and <code>/</code>), comparison operators (<code>&gt;</code>, <code>&gt;=</code>, <code>=</code>, <code>!=</code>, <code>&lt;=</code>, <code>&lt;</code>) and Boolean operators (<code>OR</code>, <code>AND</code>, <code>XOR</code>, <code>NOT</code>).</p>
+<p>arithmetic, comparison and logical operators;</p>
 </li>
 <li>
 <p>some built-in functions that are supported in <a href="https://www.w3.org/XML/Query/" target="_blank" rel="noopener">W3C XQuery</a>, such as <code>current-date()</code>;</p>
@@ -534,7 +558,26 @@ WHERE                                                        -- Where clause
 <div class="sect2">
 <h3 id="_overview_2"><a class="anchor" href="#_overview_2"></a>3.1. Overview</h3>
 <div class="paragraph">
-<p>AQL has five clauses: <code>SELECT</code>, <code>FROM</code>, <code>WHERE</code>, and <code>ORDER BY</code>. The <code>SELECT</code> clause specifies the data elements to be returned. The <code>FROM</code> clause specifies the result source and the corresponding containment criteria. The <code>WHERE</code> clause specifies data value criteria within the result source. The <code>ORDER BY</code> clause indicates the data items used to order the returned result set.</p>
+<p>AQL has the following clauses:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The <code>SELECT</code> clause specifies the data elements to be returned.</p>
+</li>
+<li>
+<p>The <code>FROM</code> clause specifies the result source and the corresponding containment criteria.</p>
+</li>
+<li>
+<p>The <code>WHERE</code> clause specifies data value criteria within the result source.</p>
+</li>
+<li>
+<p>The <code>ORDER BY</code> clause indicates the data items used to order the returned result set.</p>
+</li>
+<li>
+<p>The <code>LIMIT</code> clause indicates which portion of the result set will be returned.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
 <p>In AQL, openEHR path syntax is used to locate any node or data values defined within archetypes. In the <code>SELECT</code> clause, the openEHR path syntax can be used to indicate expected objects or data values to be returned (similarly to how SQL 'projections' work). The <code>FROM</code> clause uses containment mechanisms indicating the scope of the query data source. <code>WHERE</code> clause uses archetype path to set query criteria on archetypes or any node within the archetypes. The following sections introduce the AQL syntax in detail.</p>
@@ -560,10 +603,13 @@ If no <code>ORDER BY</code> clause is specified, then the query result doesn&#82
 <div class="ulist">
 <ul>
 <li>
-<p><code>SELECT</code>, <code>FROM</code>, <code>WHERE</code>, <code>ORDER BY</code></p>
+<p><code>SELECT</code>, <code>AS</code>, <code>FROM</code>, <code>CONTAINS</code>, <code>WHERE</code></p>
 </li>
 <li>
-<p><code>TOP</code>, <code>AND</code>, <code>OR</code>, <code>NOT</code>, <code>CONTAINS</code></p>
+<p><code>ORDER BY</code>, <code>LIMIT</code>, <code>OFFSET</code></p>
+</li>
+<li>
+<p><code>AND</code>, <code>OR</code>, <code>NOT</code></p>
 </li>
 <li>
 <p><code>max</code>, <code>now</code>, <code>current-date</code>, <code>current-date-time</code></p>
@@ -588,11 +634,23 @@ If no <code>ORDER BY</code> clause is specified, then the query result doesn&#82
 </li>
 </ul>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<code>TOP</code> modifier is deprecated in favour of the <code>LIMIT</code> clause combined with <code>ORDER BY</code> (see <a href="#_limit">below</a>).
+</td>
+</tr>
+</table>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_openehr_path_syntax"><a class="anchor" href="#_openehr_path_syntax"></a>3.3. openEHR path syntax</h3>
 <div class="paragraph">
-<p>The openEHR path syntax has been described in detail (see the <a href="https://specifications.openehr.org/releases/BASE/latest/architecture_overview.html">Architecture Overview specification</a>). AQL utilises the basic openEHR path syntax to reference both coarse-grainedand fine-grained archetype nodes (objects and data values, respectively), and openEHR class instances and attributes, when referencing something that is not defined in an archetype but is part of the openEHR Reference Model. A set of openEHR path examples are provided on this section.</p>
+<p>The openEHR path syntax has been described in detail (see the <a href="https://specifications.openehr.org/releases/BASE/latest/architecture_overview.html">Architecture Overview specification</a>). AQL utilises the basic openEHR path syntax to reference both coarse-grained and fine-grained archetype nodes (objects and data values, respectively), and openEHR class instances and attributes, when referencing something that is not defined in an archetype but is part of the openEHR Reference Model. A set of openEHR path examples are provided on this section.</p>
 </div>
 <div class="sect3">
 <h4 id="_openehr_path_examples_archetype_path"><a class="anchor" href="#_openehr_path_examples_archetype_path"></a>3.3.1. openEHR path examples - archetype path</h4>
@@ -741,7 +799,7 @@ WHERE
 <p>within a predicate: <code>[$archetypeId]</code>, <code>[at0003, $nameValue]</code>, <code>[ehr_id/value=$ehrId]</code></p>
 </li>
 <li>
-<p>withing a WHERE criteria: <code>o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value &gt; $systolicCriteria</code></p>
+<p>withing a <code>WHERE</code> criteria: <code>o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value &gt; $systolicCriteria</code></p>
 </li>
 </ul>
 </div>
@@ -752,7 +810,7 @@ WHERE
 <div class="title">Note</div>
 </td>
 <td class="content">
-In the WHERE criteria, when the value of the parameter is not a number or boolean value, it should be substituted with the corresponding quotes added to the value, for instance <code>o/../.. = $textVariable</code>, when substituted should look like this <code>o/../.. = "value"</code> (single or double quotes could be used). So substituted values follow the same rules as each type when the value is specified as a constant in the AQL expression: strings, dates, times and datetimes should be quoted, numbers and booleans are not quoted.
+In the <code>WHERE</code> criteria, when the value of the parameter is not a number or boolean value, it should be substituted with the corresponding quotes added to the value, for instance <code>o/../.. = $textVariable</code>, when substituted should look like this <code>o/../.. = "value"</code> (single or double quotes could be used). So substituted values follow the same rules as each type when the value is specified as a constant in the AQL expression: strings, dates, times and datetimes should be quoted, numbers and booleans are not quoted.
 </td>
 </tr>
 </table>
@@ -1071,19 +1129,19 @@ WHERE
 <div class="sect4">
 <h5 id="_and"><a class="anchor" href="#_and"></a>3.7.3.1. AND</h5>
 <div class="paragraph">
-<p><code>AND</code> is a binary boolean operator used to link two boolean expressions. It evaluates to <code>true</code> when both operands evaluate to <code>true</code>, and it evaluates to <code>false</code> otherwise.</p>
+<p><code>AND</code> is a binary operator used to link two boolean expressions. It evaluates to <code>true</code> when both operands evaluate to <code>true</code>, and it evaluates to <code>false</code> otherwise.</p>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_or"><a class="anchor" href="#_or"></a>3.7.3.2. OR</h5>
 <div class="paragraph">
-<p><code>OR</code> is a binary boolean operator used to link two boolean expressions. It evaluates to <code>true</code> when any of the operands evaluate to <code>true</code>, and it evaluates to <code>false</code> otherwise.</p>
+<p><code>OR</code> is a binary operator used to link two boolean expressions. It evaluates to <code>true</code> when any of the operands evaluate to <code>true</code>, and it evaluates to <code>false</code> otherwise.</p>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_not"><a class="anchor" href="#_not"></a>3.7.3.3. NOT</h5>
 <div class="paragraph">
-<p><code>NOT</code> is a unary Boolean operator which is always followed by either a Boolean identified expression (see <a href="#_identified_expression">Section 3.10.3.2</a>) or other Boolean-valued operand, such as an expression using the <code>EXISTS</code> operator. It returns a Boolean result: <code>true</code> means the operand is <code>false</code>. A <code>NOT</code> expression is a kind of identified expression (see <a href="#_identified_expression">below</a>).</p>
+<p><code>NOT</code> is a unary operator which is always followed by either a Boolean identified expression (see <a href="#_identified_expression">Section 3.10.3.2</a>) or other Boolean-valued operand, such as an expression using the <code>EXISTS</code> operator. It returns a Boolean result: <code>true</code> means the operand is <code>false</code>. A <code>NOT</code> expression is a kind of identified expression (see <a href="#_identified_expression">below</a>).</p>
 </div>
 <div class="paragraph">
 <p>The example below uses <code>NOT</code> operator followed by a Boolean identified expression:</p>
@@ -1153,7 +1211,7 @@ WHERE
 </div>
 </div>
 <div class="sect3">
-<h4 id="_syntax"><a class="anchor" href="#_syntax"></a>3.8.2. Syntax</h4>
+<h4 id="_aql_identified_paths_syntax"><a class="anchor" href="#_aql_identified_paths_syntax"></a>3.8.2. Syntax</h4>
 <div class="paragraph">
 <p>An AQL identified path can take any of the following forms:</p>
 </div>
@@ -1208,7 +1266,7 @@ WHERE
 </div>
 </div>
 <div class="sect3">
-<h4 id="_string_data"><a class="anchor" href="#_string_data"></a>3.9.4. String Data</h4>
+<h4 id="_string_data"><a class="anchor" href="#_string_data"></a>3.9.4. String data</h4>
 <div class="paragraph">
 <p>All strings are enclosed in double or single quotes. Line breaks are not supported.</p>
 </div>
@@ -1235,9 +1293,20 @@ The underlying types of date/time strings are inferred by the AQL processor from
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>WHERE composition/context/start_time &lt;= '1986-01-01'    // complete date in ISO 8601 extended format. AQL grammar identifies this value as a date value.
-WHERE composition/context/start_time &gt; '19860101'       // a complete date in ISO 8601 basic format. AQL grammar identifies it as a string value.
-WHERE composition/context/start_time &lt; "12:00:00+0930"  // ISO 8601 time extended format. AQL grammar identifies it as a string value.</pre>
+<pre>// complete date in ISO 8601 extended format: AQL grammar identifies this value as a date value.
+WHERE composition/context/start_time &lt;= '1986-01-01'</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>// a complete date in ISO 8601 basic format: AQL grammar identifies it as a string value.
+WHERE composition/context/start_time &gt; '19860101'</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>// ISO 8601 time extended format: AQL grammar identifies it as a string value.
+WHERE composition/context/start_time &lt; "12:00:00+0930"</pre>
 </div>
 </div>
 </div>
@@ -1262,6 +1331,9 @@ WHERE composition/context/start_time &lt; "12:00:00+0930"  // ISO 8601 time exte
 </li>
 <li>
 <p><code>ORDER BY</code> (optional)</p>
+</li>
+<li>
+<p><code>LIMIT</code> (optional)</p>
 </li>
 </ul>
 </div>
@@ -1322,7 +1394,7 @@ that also allow filtering data.</p>
 </ol>
 </div>
 <div class="sect4">
-<h5 id="_from_syntax"><a class="anchor" href="#_from_syntax"></a>3.10.2.1. FROM Syntax</h5>
+<h5 id="_from_syntax"><a class="anchor" href="#_from_syntax"></a>3.10.2.1. Syntax</h5>
 <div class="paragraph">
 <p>A simple <code>FROM</code> clause consists of three parts: keyword <code>FROM</code>, class expression and/or containment constraints, e.g.</p>
 </div>
@@ -1341,10 +1413,13 @@ that also allow filtering data.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>-- EHR class, class identifier/variable, and a standard predicate
-EHR e [ehr_id/value=$ehrId]
-
--- COMPOSITION class, class identifier/variable, and an archetype predicate
+<pre>// EHR class, class identifier/variable, and a standard predicate
+EHR e[ehr_id/value=$ehrId]</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>// COMPOSITION class, class identifier/variable, and an archetype predicate
 COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]</pre>
 </div>
 </div>
@@ -1357,7 +1432,7 @@ COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]</pre>
 <p>indicating the constraints on RM classes so as to scope the data source for the query. For instance, <code>EHR e[ehr_id/value='123456']</code> indicates that the required data must be from a specific EHR with <code>ehr_id</code> value <code>'123456'</code>; while <code>COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]</code> indicates the required data must be from or must be associated with a Composition instance with archetype id - <code>openEHR-EHR-COMPOSITION.report.v1</code>.</p>
 </li>
 <li>
-<p>defining an RM class variable that may be used by other clauses to indicate the required data or data items on which query criteria are applied. The example below uses the class expression to define a variable e which is used by the <code>SELECT</code> clause indicating all relevant <code>ehr_id</code> values are retrieved, and a variable <code>c</code> used by the <code>WHERE</code> clause indicating that the query criteria is set on the Composition <code>template_id</code> value.</p>
+<p>defining an RM class variable that may be used by other clauses to indicate the required data or data items on which query criteria are applied. The example below uses the class expression to define a variable <code>e</code> which is used by the <code>SELECT</code> clause indicating all relevant <code>ehr_id</code> values are retrieved, and a variable <code>c</code> used by the <code>WHERE</code> clause indicating that the query criteria is set on the Composition <code>template_id</code> value.</p>
 <div class="listingblock">
 <div class="content">
 <pre>SELECT
@@ -1378,7 +1453,7 @@ WHERE
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>part one (mandatory): openEHR RM class name, such as <code>EHR</code>, <code>COMPOSITION</code>, <code>OBSERVATION</code> etc.</p>
+<p>part one (mandatory): RM class name, such as <code>EHR</code>, <code>COMPOSITION</code>, <code>OBSERVATION</code> etc.</p>
 </li>
 <li>
 <p>part two (optional): AQL variable name</p>
@@ -1395,7 +1470,7 @@ WHERE
 <p>Since archetypes are in hierarchical structure, AQL has a containment constraint which specifies the hierarchical relationships between parent and child data items. The <code>FROM</code> clause utilises this hierarchical constraint along with class expression to determine the data source to which the AQL query is applied.</p>
 </div>
 <div class="paragraph">
-<p>The syntax of containment constraint is very simple: using keyword <code>CONTAINS</code> between two class expressions. Left class expression is the the parent object of the right class expression, e.g.</p>
+<p>The syntax of containment constraint is very simple: using keyword <code>CONTAINS</code> between two class expressions. Left class expression is the parent object of the right class expression, e.g.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1403,14 +1478,17 @@ WHERE
 </div>
 </div>
 <div class="paragraph">
-<p>Boolean operators (<code>AND</code>, <code>OR</code>, <code>NOT</code>) and parentheses are used when multiple containment constrains are required, e.g.</p>
+<p>Logical operators (<code>AND</code>, <code>OR</code>, <code>NOT</code>) and parentheses are used when multiple containment constrains are required, e.g.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre>EHR e
-   CONTAINS COMPOSITION c [openEHR-EHR-COMPOSITION.referral.v1] AND COMPOSITION c1 [openEHR-EHR-COMPOSITION.report.v1]
-
-EHR e
+   CONTAINS COMPOSITION c [openEHR-EHR-COMPOSITION.referral.v1] AND COMPOSITION c1 [openEHR-EHR-COMPOSITION.report.v1]</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>EHR e
    CONTAINS COMPOSITION c [openEHR-EHR-COMPOSITION.referral.v1]
       CONTAINS (OBSERVATION o [openEHR-EHR-OBSERVATION-laboratory-hba1c.v1] AND OBSERVATION o1 [openEHR-EHR-OBSERVATION-laboratory-glucose.v1])</pre>
 </div>
@@ -1420,12 +1498,12 @@ EHR e
 <div class="sect3">
 <h4 id="_where"><a class="anchor" href="#_where"></a>3.10.3. WHERE</h4>
 <div class="paragraph">
-<p>An AQL <code>WHERE</code> clause is used to represent further criteria applied to the data items within the objects declared in the FROM clause. A <code>WHERE</code> clause expresses the query criteria that cannot be represented in other AQL clauses, such as criteria on archetype id, composition committal date/time, and the criteria on in which order the returned results should be listed.</p>
+<p>An AQL <code>WHERE</code> clause is used to represent further criteria applied to the data items within the objects declared in the <code>FROM</code> clause. A <code>WHERE</code> clause expresses the query criteria that cannot be represented in other AQL clauses, such as criteria on archetype id, composition committal date/time, and the criteria on in which order the returned results should be listed.</p>
 </div>
 <div class="sect4">
-<h5 id="_syntax_2"><a class="anchor" href="#_syntax_2"></a>3.10.3.1. Syntax</h5>
+<h5 id="_where_syntax"><a class="anchor" href="#_where_syntax"></a>3.10.3.1. Syntax</h5>
 <div class="paragraph">
-<p>The <code>WHERE</code> clause syntax has the following parts (in order): keyword <code>WHERE</code> and identified expression(s). Boolean operators (<code>AND</code>, <code>OR</code>, <code>NOT</code>) and parenthesis can be used to represent multiple identified expressions. Examples:</p>
+<p>The <code>WHERE</code> clause syntax has the following parts (in order): keyword <code>WHERE</code> and identified expression(s). Logical operators (<code>AND</code>, <code>OR</code>, <code>NOT</code>) and parenthesis can be used to represent multiple identified expressions. Examples:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1507,10 +1585,10 @@ o1/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value</pre>
 <div class="sect3">
 <h4 id="_select"><a class="anchor" href="#_select"></a>3.10.4. SELECT</h4>
 <div class="paragraph">
-<p>A <code>SELECT</code> clause specifies what data is to be retrieved by the AQL query. The data can be any types from openEHR RM and any primitive data types. In addition, the <code>SELECT</code> clause uses <code>TOP</code> to indicate the number of result sets that should be returned and name alias to rename the retrieved data.</p>
+<p>A <code>SELECT</code> clause specifies what data is to be retrieved by the AQL query. The data can be any types from openEHR RM and any primitive data types.</p>
 </div>
 <div class="paragraph">
-<p>The <code>SELECT</code> syntax always starts with the keyword <code>SELECT</code>, followed by <code>TOP</code> (optional), and identified path(s) or plain variable name(s) defined in the <code>FROM</code> clause. Each variable name or identified path may have a name alias renaming the associated data.</p>
+<p>The <code>SELECT</code> syntax always starts with the keyword <code>SELECT</code>, followed by <code>TOP</code> (optional, deprecated - see <a href="#_top">below</a>), and identified path(s) or plain variable name(s) defined in the <code>FROM</code> clause. Each variable name or identified path may have a name alias renaming the associated data.</p>
 </div>
 <div class="paragraph">
 <p>Where a variable name is specified, the full object of the type associated with the variable is retrieved, such as a <code>COMPOSITION</code>, <code>OBSERVATION</code> etc. Where an identified path is specified, the data item(s) having that archetype path are returned. Multiple identifiers or identified paths are separated using a comma.</p>
@@ -1542,11 +1620,16 @@ FROM EHR e[ehr_id/value=$ehrUid]
 </div>
 <div class="sect4">
 <h5 id="_top"><a class="anchor" href="#_top"></a>3.10.4.1. TOP</h5>
+<div class="paragraph deprecated">
+<p><strong>Deprecated</strong>: Starting with Release 1.1.0, the use of <code>TOP</code> modifier is deprecated in favour of the <code>LIMIT</code> clause combined with <code>ORDER BY</code> (see <a href="#_limit">below</a>).
+The <code>TOP</code> will be removed in a future major release of AQL specification.
+It is not allowed to use <code>TOP</code> while also using <code>LIMIT</code> clause in the same query.</p>
+</div>
 <div class="paragraph">
 <p>The <code>TOP</code> syntax was borrowed from SQL language for representing the number of result sets that should be returned by the AQL query. It uses <code>BACKWARD</code> and <code>FORWARD</code> to indicate the direction where to start to get the number of results to be returned.</p>
 </div>
 <div class="paragraph">
-<p>It starts with keyword TOP, followed by an integer number and/or the direction (i.e. <code>BACKWARD</code>, <code>FORWARD</code>), e.g.</p>
+<p>It starts with keyword <code>TOP</code>, followed by an integer number and/or the direction (i.e. <code>BACKWARD</code>, <code>FORWARD</code>), e.g.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1568,11 +1651,75 @@ FROM
 <div class="sect3">
 <h4 id="_order_by"><a class="anchor" href="#_order_by"></a>3.10.5. ORDER BY</h4>
 <div class="paragraph">
-<p>The <code>ORDER BY</code> clause is used to sort the returned results. The keyword <code>ORDER BY</code> is followed by an identified path and the keyword <code>DESC</code>, <code>DESCENDING</code>, <code>ASCE</code>, or <code>ASCENDING</code>, e.g.</p>
+<p>The <code>ORDER BY</code> clause is used to sort the returned results. The keyword <code>ORDER BY</code> is followed by an identified path and the keyword <code>DESC</code>, <code>DESCENDING</code>, <code>ASC</code>, or <code>ASCENDING</code>, e.g.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre>ORDER BY c/name/value</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_limit"><a class="anchor" href="#_limit"></a>3.10.6. LIMIT</h4>
+<div class="paragraph">
+<p>The <code>LIMIT</code> clause is used to constrain the result sets generated by the rest of the query.
+It is often used together with an <code>OFFSET</code> subclause.</p>
+</div>
+<div class="paragraph">
+<p>The <code>OFFSET</code> specifies the number of rows to skip before it starts to return rows from the query.
+The <code>LIMIT</code> specifies the number of rows to return after the <code>OFFSET</code> clause has been processed.
+Note that when using <code>LIMIT</code>, deterministic behavior requires that the <code>ORDER BY</code> clause is also used to constrain the result in a unique order.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+As of Release 1.1.0, the use of the <code>LIMIT</code> clause in combination with the <code>ORDER BY</code> clause is recommended instead of the deprecated <code>TOP</code> alternative.
+It is not allowed to use <code>LIMIT</code> while also using <code>TOP</code> clause in the same query.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_limit_syntax"><a class="anchor" href="#_limit_syntax"></a>3.10.6.1. Syntax</h5>
+<div class="paragraph">
+<p>The syntax was borrowed from SQL language, similar to PostgreSQL and MySQL implementation.
+It consists of two parts: keyword <code>LIMIT</code> followed by number, optionally followed by <code>OFFSET</code> followed by a number:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>`LIMIT row_count [OFFSET offset]`</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Both <code>row_count</code> and <code>offset</code> are integer numbers, <code>row_count</code> minimal value is 1, while minimal value for <code>offset</code> is 0.</p>
+</div>
+<div class="paragraph">
+<p>If a <code>LIMIT row_count</code> is given, no more than that many rows will be returned (but possibly fewer, if the query itself yields fewer rows).
+The <code>OFFSET offset</code> is optional, and when not specified then <code>offset</code> = 0 is assumed.</p>
+</div>
+<div class="paragraph">
+<p>The <code>LIMIT row_count OFFSET offset</code> is used to get results in a paginated way. For instance,
+when <code>offset</code> = 0 and <code>row_count</code> = 10, the result will have at most 10 items, starting with item 0. Then with <code>offset</code> = 10 and
+<code>row_count</code> = 10, the result will contain 10 items at most, now from item 10 to 19. So increasing <code>offset</code> by <code>row_count</code>,
+allows to get all the results in a paginated way.</p>
+</div>
+<div class="paragraph">
+<p>The following example will return 10 rows, representing the 2nd page of result sets, ordered by event start time:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>SELECT
+   c/name/value AS Name, c/context/start_time AS date_time, c/composer/name AS Composer
+FROM
+   EHR e[ehr_id/value=$ehrUid]
+      CONTAINS COMPOSITION c
+ORDER BY c/context/start_time
+LIMIT 10 OFFSET 10</pre>
+</div>
 </div>
 </div>
 </div>
@@ -1880,9 +2027,8 @@ WHERE
 <div class="paragraph">
 <p><strong>"Get all abnormal blood pressure values that are recorded in a health encounter for a specific patient."</strong></p>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_step_1_the_from_clause"><a class="anchor" href="#_step_1_the_from_clause"></a>6.2. Step 1. The FROM clause</h3>
+<div class="sect3">
+<h4 id="_step_1_the_from_clause"><a class="anchor" href="#_step_1_the_from_clause"></a>6.1.1. Step 1. The FROM clause</h4>
 <div class="paragraph">
 <p>A <code>FROM</code> clause is to scope the data source for the query. Normally the first step is to determine the <code>FROM</code> clause, which has EHR class expression and archetype class expressions.</p>
 </div>
@@ -1929,8 +2075,8 @@ CONTAINS OBSERVATION [openEHR-EHR-OBSERVATION.blood_pressure.v1]</pre>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_step_2_the_where_clause"><a class="anchor" href="#_step_2_the_where_clause"></a>6.3. Step 2. The WHERE clause</h3>
+<div class="sect3">
+<h4 id="_step_2_the_where_clause"><a class="anchor" href="#_step_2_the_where_clause"></a>6.1.2. Step 2. The WHERE clause</h4>
 <div class="paragraph">
 <p>The <code>WHERE</code> clause represents all query criteria that cannot be represented in the <code>FROM</code> clause. To write a <code>WHERE</code> clause expression, the following is needed:</p>
 </div>
@@ -1988,8 +2134,8 @@ WHERE
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_step_3_the_select_clause"><a class="anchor" href="#_step_3_the_select_clause"></a>6.4. Step 3. The SELECT clause</h3>
+<div class="sect3">
+<h4 id="_step_3_the_select_clause"><a class="anchor" href="#_step_3_the_select_clause"></a>6.1.3. Step 3. The SELECT clause</h4>
 <div class="paragraph">
 <p>Writing a <code>SELECT</code> clause depends on determining:</p>
 </div>
@@ -2015,6 +2161,61 @@ WHERE
 </div>
 </li>
 </ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_another_query_scenario"><a class="anchor" href="#_another_query_scenario"></a>6.2. Another query scenario</h3>
+<div class="paragraph">
+<p>Similar to previous scenario, but with some extra features, the query scenario is:</p>
+</div>
+<div class="paragraph">
+<p><strong>"Get the latest 5 abnormal blood pressure values that are recorded in a health encounter for a specific patient."</strong></p>
+</div>
+<div class="sect3">
+<h4 id="_step_1_order_results"><a class="anchor" href="#_step_1_order_results"></a>6.2.1. Step 1. Order results</h4>
+<div class="paragraph">
+<p>Using the query from the first example we can add an extra column and order the results based on event start_time values:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>SELECT
+   obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude AS systolic,
+   obs/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude AS diastlic,
+   c/context/start_time AS date_time
+FROM
+   EHR [ehr_id/value=$ehrUid] CONTAINS COMPOSITION c [openEHR-EHR-COMPOSITION.encounter.v1]
+      CONTAINS OBSERVATION obs [openEHR-EHR-OBSERVATION.blood_pressure.v1]
+WHERE
+   obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude &gt;= 140 OR
+   obs/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude &gt;= 90
+ORDER BY
+   c/context/start_time DESC</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_step_2_return_the_first_5_rows"><a class="anchor" href="#_step_2_return_the_first_5_rows"></a>6.2.2. Step 2. Return the first 5 rows</h4>
+<div class="paragraph">
+<p>The addition of <code>LIMIT</code> clause will retrieve only the first needed rows, i.e. the latest 5 rows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>SELECT
+   obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude AS systolic,
+   obs/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude AS diastlic,
+   c/context/start_time AS date_time
+FROM
+   EHR [ehr_id/value=$ehrUid] CONTAINS COMPOSITION c [openEHR-EHR-COMPOSITION.encounter.v1]
+      CONTAINS OBSERVATION obs [openEHR-EHR-OBSERVATION.blood_pressure.v1]
+WHERE
+   obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude &gt;= 140 OR
+   obs/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude &gt;= 90
+ORDER BY
+   c/context/start_time DESC
+LIMIT 5</pre>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -2066,13 +2267,16 @@ WHERE
 <span class="tok-c">//&lt;Query&gt; ::= &lt;Select&gt; &lt;From&gt;</span><span class="tok-w"></span>
 <span class="tok-c">//           | &lt;Select&gt; &lt;From&gt; &lt;Where&gt;</span><span class="tok-w"></span>
 <span class="tok-c">//            | &lt;Select&gt; &lt;From&gt; &lt;OrderBy&gt;   ! is this allowed?</span><span class="tok-w"></span>
+<span class="tok-c">//            | &lt;Select&gt; &lt;From&gt; &lt;OrderBy&gt; &lt;Limit&gt;</span><span class="tok-w"></span>
 <span class="tok-c">//            | &lt;Select&gt; &lt;From&gt; &lt;Where&gt; &lt;OrderBy&gt;</span><span class="tok-w"></span>
-<span class="tok-nl">query</span><span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-nv">select</span><span class="tok-w"> </span><span class="tok-nv">from</span><span class="tok-w"> </span><span class="tok-nv">where</span><span class="tok-o">?</span><span class="tok-w"> </span><span class="tok-nv">orderBy</span><span class="tok-o">?</span><span class="tok-w"> </span><span class="tok-s">&#39;;&#39;</span><span class="tok-o">!?</span><span class="tok-w"> </span><span class="tok-no">EOF</span><span class="tok-o">!</span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-c">//            | &lt;Select&gt; &lt;From&gt; &lt;Where&gt; &lt;OrderBy&gt; &lt;Limit&gt;</span><span class="tok-w"></span>
+<span class="tok-nl">query</span><span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-nv">select</span><span class="tok-w"> </span><span class="tok-nv">from</span><span class="tok-w"> </span><span class="tok-nv">where</span><span class="tok-o">?</span><span class="tok-w"> </span><span class="tok-nv">orderBy</span><span class="tok-o">?</span><span class="tok-w"> </span><span class="tok-nv">limit</span><span class="tok-o">?</span><span class="tok-w"> </span><span class="tok-s">&#39;;&#39;</span><span class="tok-o">!?</span><span class="tok-w"> </span><span class="tok-no">EOF</span><span class="tok-o">!</span><span class="tok-p">;</span><span class="tok-w"></span>
 
 <span class="tok-c">//&lt;Select&gt; ::= &#39;SELECT&#39; &lt;SelectExpr&gt;</span><span class="tok-w"></span>
-<span class="tok-c">//         | &#39;SELECT&#39; &lt;TOP&gt; &lt;SelectExpr&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//         | &#39;SELECT&#39; &lt;TOP&gt; &lt;SelectExpr&gt;   deprecated!</span><span class="tok-w"></span>
 <span class="tok-nl">select</span><span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-no">SELECT</span><span class="tok-w"> </span><span class="tok-nv">top</span><span class="tok-o">?</span><span class="tok-w"> </span><span class="tok-nv">selectExpr</span><span class="tok-w"> </span><span class="tok-o">-&gt;</span><span class="tok-w"> </span><span class="tok-o">^(</span><span class="tok-no">SELECT</span><span class="tok-w"> </span><span class="tok-nv">top</span><span class="tok-o">?</span><span class="tok-w"> </span><span class="tok-nv">selectExpr</span><span class="tok-o">)</span><span class="tok-p">;</span><span class="tok-w"></span>
 
+<span class="tok-c">// (deprecated)</span><span class="tok-w"></span>
 <span class="tok-c">//&lt;Top&gt; ::= &#39;TOP&#39; Integer</span><span class="tok-w"></span>
 <span class="tok-c">//          | &#39;TOP&#39; Integer &#39;BACKWARD&#39;</span><span class="tok-w"></span>
 <span class="tok-c">//          | &#39;TOP&#39; Integer &#39;FORWARD&#39;</span><span class="tok-w"></span>
@@ -2099,6 +2303,11 @@ WHERE
 <span class="tok-nl">orderByExpr</span><span class="tok-w"></span>
 <span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-nv">identifiedPath</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-no">DESCENDING</span><span class="tok-o">|</span><span class="tok-no">DESC</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-o">-&gt;</span><span class="tok-w"> </span><span class="tok-o">^(</span><span class="tok-no">ORDERDESC</span><span class="tok-w"> </span><span class="tok-nv">identifiedPath</span><span class="tok-o">)</span><span class="tok-w"></span>
 <span class="tok-w">	</span><span class="tok-o">|</span><span class="tok-w">	</span><span class="tok-nv">identifiedPath</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-no">ASCENDING</span><span class="tok-o">|</span><span class="tok-no">ASC</span><span class="tok-o">)?</span><span class="tok-w"> </span><span class="tok-o">-&gt;</span><span class="tok-w"> </span><span class="tok-o">^(</span><span class="tok-no">ORDERASC</span><span class="tok-w"> </span><span class="tok-nv">identifiedPath</span><span class="tok-o">)</span><span class="tok-p">;</span><span class="tok-w"></span>
+
+<span class="tok-c">//&lt;Limit&gt; ::= &#39;LIMIT&#39; NonNegativeInteger</span><span class="tok-w"></span>
+<span class="tok-c">//          | &#39;LIMIT&#39; NonNegativeInteger &#39;OFFSET&#39; NonNegativeInteger</span><span class="tok-w"></span>
+<span class="tok-nl">limit</span><span class="tok-w"> </span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-no">LIMIT</span><span class="tok-w"> </span><span class="tok-no">NN_INTEGER</span><span class="tok-w"> </span><span class="tok-o">-&gt;</span><span class="tok-w"> </span><span class="tok-o">^(</span><span class="tok-no">LIMIT</span><span class="tok-w"> </span><span class="tok-no">NN_INTEGER</span><span class="tok-o">)</span><span class="tok-w"></span>
+<span class="tok-w">      </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-no">LIMIT</span><span class="tok-w"> </span><span class="tok-no">NN_INTEGER</span><span class="tok-w"> </span><span class="tok-no">OFFSET</span><span class="tok-w"> </span><span class="tok-no">NN_INTEGER</span><span class="tok-w"> </span><span class="tok-o">-&gt;</span><span class="tok-w"> </span><span class="tok-o">^(</span><span class="tok-no">LIMIT</span><span class="tok-w"> </span><span class="tok-no">NN_INTEGER</span><span class="tok-w"> </span><span class="tok-no">OFFSET</span><span class="tok-w"> </span><span class="tok-no">NN_INTEGER</span><span class="tok-o">)</span><span class="tok-p">;</span><span class="tok-w"></span>
 
 <span class="tok-c">//&lt;SelectExpr&gt; ::= &lt;IdentifiedPathSeq&gt;</span><span class="tok-w"></span>
 <span class="tok-nl">selectExpr</span><span class="tok-w"></span>
@@ -2156,7 +2365,6 @@ WHERE
 
 <span class="tok-c">//&lt;IdentifiedEquality&gt; ::= &lt;IdentifiedOperand&gt; ComparableOperator &lt;IdentifiedOperand&gt;</span><span class="tok-w"></span>
 <span class="tok-c">//			     | &lt;IdentifiedOperand&gt; &#39;matches&#39; &#39;{&#39; &lt;MatchesOperand&gt; &#39;}&#39;</span><span class="tok-w"></span>
-<span class="tok-c">//                          | &lt;IdentifiedOperand&gt; &#39;matches&#39; RegExPattern</span><span class="tok-w"></span>
 <span class="tok-c">//                          | &#39;EXISTS&#39; &lt;IdentifiedPath&gt;</span><span class="tok-w"></span>
 <span class="tok-nl">identifiedEquality</span><span class="tok-w"></span>
 <span class="tok-w"> 	</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-nv">identifiedOperand</span><span class="tok-w"> </span><span class="tok-o">((</span><span class="tok-no">MATCHES</span><span class="tok-o">^</span><span class="tok-w"> </span><span class="tok-s">&#39;{&#39;</span><span class="tok-o">!</span><span class="tok-w"> </span><span class="tok-nv">matchesOperand</span><span class="tok-w"> </span><span class="tok-s">&#39;}&#39;</span><span class="tok-o">!)|(</span><span class="tok-no">COMPARABLEOPERATOR</span><span class="tok-o">^</span><span class="tok-w"> </span><span class="tok-nv">identifiedOperand</span><span class="tok-o">))</span><span class="tok-w"></span>
@@ -2164,9 +2372,6 @@ WHERE
 <span class="tok-w">        </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-s">&#39;(&#39;</span><span class="tok-o">!</span><span class="tok-w"> </span><span class="tok-nv">identifiedExpr</span><span class="tok-w"> </span><span class="tok-s">&#39;)&#39;</span><span class="tok-o">!</span><span class="tok-w"></span>
 <span class="tok-w">        </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-no">NOT</span><span class="tok-o">^</span><span class="tok-w"> </span><span class="tok-nv">identifiedEquality</span><span class="tok-w"></span>
 <span class="tok-w"> 	</span><span class="tok-p">;</span><span class="tok-w"></span>
-<span class="tok-c">// 	| identifiedOperand &#39;matches&#39; &#39;{&#39; matchesOperand &#39;}&#39;</span><span class="tok-w"></span>
-<span class="tok-c">//        | identifiedOperand &#39;matches&#39; REGEXPATTERN</span><span class="tok-w"></span>
-<span class="tok-c">//        | &#39;EXISTS&#39; identifiedPath;</span><span class="tok-w"></span>
 
 <span class="tok-c">//&lt;IdentifiedOperand&gt; ::= &lt;Operand&gt; | &lt;IdentifiedPath&gt;</span><span class="tok-w"></span>
 <span class="tok-nl">identifiedOperand</span><span class="tok-w"></span>
@@ -2205,7 +2410,8 @@ WHERE
 <span class="tok-c">//                          | NodeId</span><span class="tok-w"></span>
 <span class="tok-c">//                          | NodeId &#39;,&#39; String        ! &lt;NodeId&gt; and name/value = &lt;String&gt; shortcut</span><span class="tok-w"></span>
 <span class="tok-c">//                          | NodeId &#39;,&#39; parameter     ! &lt;NodeId&gt; and name/value = &lt;Parameter&gt; shortcut</span><span class="tok-w"></span>
-<span class="tok-c">//                          | &lt;NodePredicateRegEx&gt;     ! /items[{/at0001.*/}], /items[at0001 and name/value matches {//}]</span><span class="tok-w"></span>
+<span class="tok-c">//                          | RegExPattern             ! /items[{/at0001.*/}]</span><span class="tok-w"></span>
+<span class="tok-c">//                          | &lt;PredicateOperand&gt; &#39;matches&#39; RegExPattern     ! /items[at0001 and name/value matches {//}]</span><span class="tok-w"></span>
 <span class="tok-c">//                          | ArchetypeId</span><span class="tok-w"></span>
 <span class="tok-c">//                          | ArchetypeId &#39;,&#39; String        ! &lt;NodeId&gt; and name/value = &lt;String&gt; shortcut</span><span class="tok-w"></span>
 <span class="tok-c">//                          | ArchetypeId &#39;,&#39; parameter     ! &lt;NodeId&gt; and name/value = &lt;Parameter&gt; shortcut</span><span class="tok-w"></span>
@@ -2213,14 +2419,8 @@ WHERE
 <span class="tok-w"> 	</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-no">NODEID</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-no">COMMA</span><span class="tok-o">^</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-no">STRING</span><span class="tok-o">|</span><span class="tok-no">PARAMETER</span><span class="tok-o">))?</span><span class="tok-w"></span>
 <span class="tok-w"> 	</span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-no">ARCHETYPEID</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-no">COMMA</span><span class="tok-o">^</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-no">STRING</span><span class="tok-o">|</span><span class="tok-no">PARAMETER</span><span class="tok-o">))?</span><span class="tok-w"></span>
 <span class="tok-w"> 	</span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-nv">predicateOperand</span><span class="tok-w"> </span><span class="tok-o">((</span><span class="tok-no">COMPARABLEOPERATOR</span><span class="tok-o">^</span><span class="tok-w"> </span><span class="tok-nv">predicateOperand</span><span class="tok-o">)|(</span><span class="tok-no">MATCHES</span><span class="tok-o">^</span><span class="tok-w"> </span><span class="tok-no">REGEXPATTERN</span><span class="tok-o">))</span><span class="tok-w"></span>
-<span class="tok-w">        </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-no">REGEXPATTERN</span><span class="tok-w">     </span><span class="tok-c">//! /items[{/at0001.*/}], /items[at0001 and name/value matches {//}]</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-no">REGEXPATTERN</span><span class="tok-w"></span>
 <span class="tok-w">        </span><span class="tok-p">;</span><span class="tok-w"></span>
-
-<span class="tok-c">//&lt;NodePredicateRegEx&gt;    ::= RegExPattern</span><span class="tok-w"></span>
-<span class="tok-c">//                          | &lt;PredicateOperand&gt; &#39;matches&#39; RegExPattern</span><span class="tok-w"></span>
-<span class="tok-nl">nodePredicateRegEx</span><span class="tok-w"></span>
-<span class="tok-w"> 	</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-no">REGEXPATTERN</span><span class="tok-w"></span>
-<span class="tok-w"> 	</span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-nv">predicateOperand</span><span class="tok-w"> </span><span class="tok-no">MATCHES</span><span class="tok-o">^</span><span class="tok-w"> </span><span class="tok-no">REGEXPATTERN</span><span class="tok-p">;</span><span class="tok-w"></span>
 
 <span class="tok-c">//&lt;MatchesOperand&gt; ::= &lt;ValueListItems&gt;</span><span class="tok-w"></span>
 <span class="tok-c">//			| UriValue</span><span class="tok-w"></span>
@@ -2390,6 +2590,8 @@ WHERE
 <span class="tok-nl">CONTAINS</span><span class="tok-w"> </span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;C&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;c&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;O&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;o&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;N&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;n&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;T&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;t&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;A&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;a&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;I&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;i&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;N&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;n&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;S&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;s&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"></span>
 <span class="tok-nl">WHERE</span><span class="tok-w"> </span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;W&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;w&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;H&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;h&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;E&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;e&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;R&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;r&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;E&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;e&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"></span>
 <span class="tok-nl">ORDERBY</span><span class="tok-w"> </span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;O&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;o&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;R&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;r&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;D&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;d&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;E&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;e&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;R&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;r&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39; &#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;B&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;b&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;Y&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;y&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-nl">LIMIT</span><span class="tok-w"> </span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;L&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;l&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;I&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;i&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;M&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;m&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;I&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;i&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;T&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;t&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-nl">OFFSET</span><span class="tok-w"> </span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;O&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;o&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;F&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;f&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;F&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;f&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;S&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;s&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;E&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;e&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;T&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;t&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"></span>
 <span class="tok-nl">FROM</span><span class="tok-w"> </span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;F&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;f&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;R&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;r&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;O&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;o&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;M&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;m&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"></span>
 <span class="tok-nl">DESCENDING</span><span class="tok-w"> </span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;D&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;d&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;E&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;e&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;S&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;s&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;C&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;c&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;E&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;e&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;N&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;n&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;D&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;d&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;I&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;i&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;N&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;n&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;G&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;g&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"></span>
 <span class="tok-nl">ASCENDING</span><span class="tok-w"> </span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;A&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;a&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;S&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;s&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;C&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;c&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;E&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;e&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;N&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;n&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;D&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;d&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;I&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;i&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;N&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;n&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;G&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;g&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"></span>
@@ -2497,6 +2699,9 @@ WHERE
 <span class="tok-c">//Integer     = {Digit}+</span><span class="tok-w"></span>
 <span class="tok-nl">INTEGER</span><span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-s">&#39;-&#39;</span><span class="tok-o">?</span><span class="tok-w"> </span><span class="tok-no">DIGIT</span><span class="tok-o">+</span><span class="tok-p">;</span><span class="tok-w"></span>
 
+<span class="tok-c">//NonNegativeInteger  = {Digit}+</span><span class="tok-w"></span>
+<span class="tok-nl">NN_INTEGER</span><span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-no">DIGIT</span><span class="tok-o">+</span><span class="tok-p">;</span><span class="tok-w"></span>
+
 <span class="tok-c">//Float       = {Digit}+&#39;.&#39;{Digit}+</span><span class="tok-w"></span>
 <span class="tok-nl">FLOAT</span><span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-s">&#39;-&#39;</span><span class="tok-o">?</span><span class="tok-w"> </span><span class="tok-no">DIGIT</span><span class="tok-o">+</span><span class="tok-w"> </span><span class="tok-s">&#39;.&#39;</span><span class="tok-w"> </span><span class="tok-no">DIGIT</span><span class="tok-o">+</span><span class="tok-p">;</span><span class="tok-w"></span>
 
@@ -2563,7 +2768,7 @@ WHERE
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-07-26 10:59:04 UTC
+Last updated 2020-10-22 09:59:55 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://specifications.openehr.org/styles/pygments-default.css">
