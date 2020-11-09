@@ -73,14 +73,18 @@
 </li>
 <li><a href="#_operators">3.7. Operators</a>
 <ul class="sectlevel3">
-<li><a href="#_comparison_operators">3.7.1. Comparison operators</a></li>
-<li><a href="#_matches_operator_definition">3.7.2. matches operator definition</a></li>
-<li><a href="#_logical_operators">3.7.3. Logical operators</a>
+<li><a href="#_comparison_operators">3.7.1. Comparison operators</a>
 <ul class="sectlevel4">
-<li><a href="#_and">3.7.3.1. AND</a></li>
-<li><a href="#_or">3.7.3.2. OR</a></li>
-<li><a href="#_not">3.7.3.3. NOT</a></li>
-<li><a href="#_exists">3.7.3.4. EXISTS</a></li>
+<li><a href="#_like">3.7.1.1. LIKE</a></li>
+<li><a href="#_matches">3.7.1.2. matches</a></li>
+</ul>
+</li>
+<li><a href="#_logical_operators">3.7.2. Logical operators</a>
+<ul class="sectlevel4">
+<li><a href="#_and">3.7.2.1. AND</a></li>
+<li><a href="#_or">3.7.2.2. OR</a></li>
+<li><a href="#_not">3.7.2.3. NOT</a></li>
+<li><a href="#_exists">3.7.2.4. EXISTS</a></li>
 </ul>
 </li>
 </ul>
@@ -255,11 +259,17 @@
 <th class="tableblock halign-center valign-top" colspan="4"><p class="tableblock"><strong>Release 1.1.0 (unreleased)</strong></p></th>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="latest_issue"></a>1.1.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://specifications.openehr.org/tickets/SPECQUERY-16" target="_blank" rel="noopener">SPECQUERY-16</a> Add support for LIMIT and OFFSET; deprecate <code>TOP</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="latest_issue"></a>1.1.1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://specifications.openehr.org/tickets/SPECQUERY-17" target="_blank" rel="noopener">SPECQUERY-17</a> Add support for <code>LIKE</code> operator.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">openEHR SEC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="latest_issue_date"></a>09 Nov 2020</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.1.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://specifications.openehr.org/tickets/SPECQUERY-16" target="_blank" rel="noopener">SPECQUERY-16</a> Add support for <code>LIMIT</code> and <code>OFFSET</code>; deprecate <code>TOP</code>.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">P Pazos,<br>
 S Iancu</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="latest_issue_date"></a>05 Nov 2020</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">05 Nov 2020</p></td>
 </tr>
 <tr>
 <th class="tableblock halign-center valign-top" colspan="4"><p class="tableblock"><strong>Release 1.0.1</strong></p></th>
@@ -615,7 +625,7 @@ If no <code>ORDER BY</code> clause is specified, then the query result doesn&#82
 <p><code>max</code>, <code>now</code>, <code>current-date</code>, <code>current-date-time</code></p>
 </li>
 <li>
-<p><code>matches</code>, <code>in</code>, <code>exists</code>, <code>not in</code></p>
+<p><code>LIKE</code>, <code>matches</code>, <code>in</code>, <code>exists</code>, <code>not in</code></p>
 </li>
 <li>
 <p><code>"</code> and <code>'</code>: double and single quote characters are used to delimit string values;</p>
@@ -1016,19 +1026,55 @@ WHERE
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">!=</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">not equals to</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Not equal to</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>c/archetype_details/template_id/value != ''</code></p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">LIKE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Simple pattern matching</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>o/data[at0001]/&#8230;&#8203;/name/value LIKE 'left *'</code></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">matches</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">advanced matcher</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Advanced matcher</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>o/data[at0002]/&#8230;&#8203;/name/defining_code/code_string matches {'18919-1', '18961-3', '19000-9'}</code></p></td>
 </tr>
 </tbody>
 </table>
+<div class="sect4">
+<h5 id="_like"><a class="anchor" href="#_like"></a>3.7.1.1. LIKE</h5>
+<div class="paragraph">
+<p>The <code>LIKE</code> binary operator is used to compare a value of type string (or dates and times) against a simple pattern.
+The left operand is an AQL identified path, while the right operand is a string value, representing the pattern to be matched.
+The <code>LIKE</code> expression returns <code>true</code> if the value matches the supplied pattern.</p>
 </div>
-<div class="sect3">
-<h4 id="_matches_operator_definition"><a class="anchor" href="#_matches_operator_definition"></a>3.7.2. matches operator definition</h4>
+<div class="paragraph">
+<p>Below is an example using a simple pattern matching:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>SELECT
+   e/ehr_id/value, c/context/start_time
+FROM
+   EHR e
+      CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.administrative_encounter.v1]
+         CONTAINS ADMIN_ENTRY admission[openEHR-EHR-ADMIN_ENTRY.admission.v1]
+WHERE
+   c/context/start_time LIKE '2019-0?-*'</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>?</code> wildcard in pattern matches any single character, while the <code>*</code> wildcard matches any sequence of zero or more characters.
+If the pattern does not contain any of these wildcards, then <code>LIKE</code> acts like the <code>=</code> (equal) operator.
+The <code>LIKE</code> operator always try to match the entire string value, therefore if the intention is to match a sequence anywhere within the string,
+the pattern must start and end with <code>*</code> wildcard, e.g. <code>"*test*"</code>.</p>
+</div>
+<div class="paragraph">
+<p>To match a literal <code>?</code> or <code>*</code>, the respective character in pattern must be escaped by using the backslash <code>\</code> character.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_matches"><a class="anchor" href="#_matches"></a>3.7.1.2. matches</h5>
 <div class="paragraph">
 <p>The <code>matches</code> binary operator is used in the <code>WHERE</code> clause. The left operand is an AQL identified path. The right operand is enclosed within braces (<code>'{}'</code>), and may take the following forms:</p>
 </div>
@@ -1070,7 +1116,7 @@ matches {1.1, 2.5, 3.8}                                     // a real value list
 </div>
 </li>
 <li>
-<p>URI: can be a terminology URI, openEHR EHR URI, or other URI. An example with a terminology URI is shown below:</p>
+<p><strong>URI</strong>: this can be a terminology URI, an openEHR EHR URI, or other URI. An example with a terminology URI is shown below:</p>
 <div class="listingblock">
 <div class="content">
 <pre>SELECT
@@ -1093,16 +1139,16 @@ WHERE
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p><strong>terminology</strong>: the URI schemes value;</p>
+<p><em>terminology</em>: the URI schemes value;</p>
 </li>
 <li>
-<p><strong>terminology service</strong>: the URI authority value, such as SNOMED-CT;</p>
+<p><em>terminology service</em>: the URI authority value, such as SNOMED-CT;</p>
 </li>
 <li>
-<p><strong>terminology function name</strong>: the URI path, e.g. "hierarchy" is the function name in the example shown below;</p>
+<p><em>terminology function name</em>: the URI path, e.g. "hierarchy" is the function name in the example shown below;</p>
 </li>
 <li>
-<p><strong>argument values</strong> required by the terminology functions - URI queries;</p>
+<p><em>argument values</em> required by the terminology functions - URI queries;</p>
 <div class="paragraph">
 <p>This is an example of a terminology URI:</p>
 </div>
@@ -1124,22 +1170,23 @@ WHERE
 </ol>
 </div>
 </div>
+</div>
 <div class="sect3">
-<h4 id="_logical_operators"><a class="anchor" href="#_logical_operators"></a>3.7.3. Logical operators</h4>
+<h4 id="_logical_operators"><a class="anchor" href="#_logical_operators"></a>3.7.2. Logical operators</h4>
 <div class="sect4">
-<h5 id="_and"><a class="anchor" href="#_and"></a>3.7.3.1. AND</h5>
+<h5 id="_and"><a class="anchor" href="#_and"></a>3.7.2.1. AND</h5>
 <div class="paragraph">
 <p><code>AND</code> is a binary operator used to link two boolean expressions. It evaluates to <code>true</code> when both operands evaluate to <code>true</code>, and it evaluates to <code>false</code> otherwise.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_or"><a class="anchor" href="#_or"></a>3.7.3.2. OR</h5>
+<h5 id="_or"><a class="anchor" href="#_or"></a>3.7.2.2. OR</h5>
 <div class="paragraph">
 <p><code>OR</code> is a binary operator used to link two boolean expressions. It evaluates to <code>true</code> when any of the operands evaluate to <code>true</code>, and it evaluates to <code>false</code> otherwise.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_not"><a class="anchor" href="#_not"></a>3.7.3.3. NOT</h5>
+<h5 id="_not"><a class="anchor" href="#_not"></a>3.7.2.3. NOT</h5>
 <div class="paragraph">
 <p><code>NOT</code> is a unary operator which is always followed by either a Boolean identified expression (see <a href="#_identified_expression">Section 3.10.3.2</a>) or other Boolean-valued operand, such as an expression using the <code>EXISTS</code> operator. It returns a Boolean result: <code>true</code> means the operand is <code>false</code>. A <code>NOT</code> expression is a kind of identified expression (see <a href="#_identified_expression">below</a>).</p>
 </div>
@@ -1180,7 +1227,7 @@ WHERE
 </div>
 </div>
 <div class="sect4">
-<h5 id="_exists"><a class="anchor" href="#_exists"></a>3.7.3.4. EXISTS</h5>
+<h5 id="_exists"><a class="anchor" href="#_exists"></a>3.7.2.4. EXISTS</h5>
 <div class="paragraph">
 <p><code>EXISTS</code> is a unary operator, whose operand is an identified path (described in <a href="#_aql_identified_paths">Section 3.8</a>). It returns a Boolean result: <code>true</code> means the data associated with the specified path exists, <code>false</code> otherwise. An <code>EXISTS</code> expression is a kind of identified expression (see <a href="#_identified_expression">below</a>).</p>
 </div>
@@ -1539,6 +1586,9 @@ WHERE
 <p>a replaceable parameter (identified with the <code>'$'</code> symbol); OR</p>
 </li>
 <li>
+<p>a string pattern, in case the operator <code>LIKE</code> is used; OR</p>
+</li>
+<li>
 <p>an identified path.</p>
 </li>
 </ul>
@@ -1566,6 +1616,14 @@ c/archetype_details/template_id/value = 'health_encounter'</pre>
 <div class="listingblock">
 <div class="content">
 <pre>c/archetype_details/template_id/value = $templateParameter</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Left operand is an identified path; right operand is a pattern:</p>
+<div class="listingblock">
+<div class="content">
+<pre>c/archetype_details/template_id/value LIKE '*encounter*'</pre>
 </div>
 </div>
 </li>
@@ -2364,10 +2422,11 @@ LIMIT 5</pre>
 
 
 <span class="tok-c">//&lt;IdentifiedEquality&gt; ::= &lt;IdentifiedOperand&gt; ComparableOperator &lt;IdentifiedOperand&gt;</span><span class="tok-w"></span>
+<span class="tok-c">//			     | &lt;IdentifiedOperand&gt; &#39;LIKE&#39; LikePattern</span><span class="tok-w"></span>
 <span class="tok-c">//			     | &lt;IdentifiedOperand&gt; &#39;matches&#39; &#39;{&#39; &lt;MatchesOperand&gt; &#39;}&#39;</span><span class="tok-w"></span>
 <span class="tok-c">//                          | &#39;EXISTS&#39; &lt;IdentifiedPath&gt;</span><span class="tok-w"></span>
 <span class="tok-nl">identifiedEquality</span><span class="tok-w"></span>
-<span class="tok-w"> 	</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-nv">identifiedOperand</span><span class="tok-w"> </span><span class="tok-o">((</span><span class="tok-no">MATCHES</span><span class="tok-o">^</span><span class="tok-w"> </span><span class="tok-s">&#39;{&#39;</span><span class="tok-o">!</span><span class="tok-w"> </span><span class="tok-nv">matchesOperand</span><span class="tok-w"> </span><span class="tok-s">&#39;}&#39;</span><span class="tok-o">!)|(</span><span class="tok-no">COMPARABLEOPERATOR</span><span class="tok-o">^</span><span class="tok-w"> </span><span class="tok-nv">identifiedOperand</span><span class="tok-o">))</span><span class="tok-w"></span>
+<span class="tok-w"> 	</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-nv">identifiedOperand</span><span class="tok-w"> </span><span class="tok-o">((</span><span class="tok-no">LIKE</span><span class="tok-o">^</span><span class="tok-w"> </span><span class="tok-no">LIKEPATTERN</span><span class="tok-o">)|(</span><span class="tok-no">MATCHES</span><span class="tok-o">^</span><span class="tok-w"> </span><span class="tok-s">&#39;{&#39;</span><span class="tok-o">!</span><span class="tok-w"> </span><span class="tok-nv">matchesOperand</span><span class="tok-w"> </span><span class="tok-s">&#39;}&#39;</span><span class="tok-o">!)|(</span><span class="tok-no">COMPARABLEOPERATOR</span><span class="tok-o">^</span><span class="tok-w"> </span><span class="tok-nv">identifiedOperand</span><span class="tok-o">))</span><span class="tok-w"></span>
 <span class="tok-w">        </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-no">EXISTS</span><span class="tok-w"> </span><span class="tok-nv">identifiedPath</span><span class="tok-w"> </span><span class="tok-o">-&gt;</span><span class="tok-w"> </span><span class="tok-o">^(</span><span class="tok-no">EXISTS</span><span class="tok-w"> </span><span class="tok-nv">identifiedPath</span><span class="tok-o">)</span><span class="tok-w"></span>
 <span class="tok-w">        </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-s">&#39;(&#39;</span><span class="tok-o">!</span><span class="tok-w"> </span><span class="tok-nv">identifiedExpr</span><span class="tok-w"> </span><span class="tok-s">&#39;)&#39;</span><span class="tok-o">!</span><span class="tok-w"></span>
 <span class="tok-w">        </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-no">NOT</span><span class="tok-o">^</span><span class="tok-w"> </span><span class="tok-nv">identifiedEquality</span><span class="tok-w"></span>
@@ -2602,6 +2661,7 @@ LIMIT 5</pre>
 <span class="tok-nl">OR</span><span class="tok-w"> </span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;O&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;o&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;R&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;r&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"></span>
 <span class="tok-nl">XOR</span><span class="tok-w"> </span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;X&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;x&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;O&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;o&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;R&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;r&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"></span>
 <span class="tok-nl">NOT</span><span class="tok-w"> </span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;N&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;n&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;O&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;o&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;T&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;t&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-nl">LIKE</span><span class="tok-w"> </span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;L&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;l&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;I&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;i&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;K&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;k&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;E&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;e&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"></span>
 <span class="tok-nl">MATCHES</span><span class="tok-w"> </span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;M&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;m&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;A&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;a&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;T&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;t&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;C&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;c&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;H&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;h&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;E&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;e&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;S&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;s&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"></span>
 <span class="tok-nl">EXISTS</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-o">(</span><span class="tok-s">&#39;E&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;e&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;X&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;x&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;I&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;i&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;S&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;s&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;T&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;t&#39;</span><span class="tok-o">)(</span><span class="tok-s">&#39;S&#39;</span><span class="tok-o">|</span><span class="tok-s">&#39;s&#39;</span><span class="tok-o">)</span><span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"></span>
 <span class="tok-nl">VERSION</span><span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-s">&#39;VERSION&#39;</span><span class="tok-p">;</span><span class="tok-w"></span>
@@ -2742,6 +2802,10 @@ LIMIT 5</pre>
 <span class="tok-nl">REGEXPATTERN</span><span class="tok-w"></span>
 <span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-s">&#39;{/&#39;</span><span class="tok-w"> </span><span class="tok-no">REGEXCHAR</span><span class="tok-o">+</span><span class="tok-w"> </span><span class="tok-s">&#39;/}&#39;</span><span class="tok-p">;</span><span class="tok-w"></span>
 
+<span class="tok-c">//LikePattern = String</span><span class="tok-w"></span>
+<span class="tok-nl">LIKEPATTERN</span><span class="tok-w"></span>
+<span class="tok-w">	</span><span class="tok-p">:</span><span class="tok-w">	</span><span class="tok-no">STRING</span><span class="tok-p">;</span><span class="tok-w"></span>
+
 <span class="tok-c">//String      = &#39;&quot;&#39;{String Char}*&#39;&quot;&#39;</span><span class="tok-w"></span>
 <span class="tok-w">  </span><span class="tok-c">//          | &#39;&#39;{String Char}*&#39;&#39;</span><span class="tok-w"></span>
 <span class="tok-nl">STRING</span><span class="tok-w"></span>
@@ -2768,7 +2832,7 @@ LIMIT 5</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-10-22 09:59:55 UTC
+Last updated 2020-11-09 08:21:43 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://specifications.openehr.org/styles/pygments-default.css">
