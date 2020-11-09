@@ -220,14 +220,14 @@ The table below shows the supported AQL comparison operators, meaning and exampl
 |<          |Smaller than               |`o/data[at0001]/.../data[at0003]/items[at0004]/value/value <160`
 |\<=        |Smaller than or equal to   |`o/data[at0001]/.../data[at0003]/items[at0004]/value/value <=160`
 |!=         |Not equal to               |`c/archetype_details/template_id/value != ''`
-|LIKE       |Simple pattern matching    |`o/data[at0001]/.../name/value LIKE 'left %'`
+|LIKE       |Simple pattern matching    |`o/data[at0001]/.../name/value LIKE 'left *'`
 |matches    |Advanced matcher           |`o/data[at0002]/.../name/defining_code/code_string matches {'18919-1', '18961-3', '19000-9'}`
 |===
 
 ==== LIKE
 
 The `LIKE` binary operator is used to compare a value of type string (or dates and times) against a simple pattern.
-The left operand is an AQL identified path, while the right operand is string value representing the pattern to be matched.
+The left operand is an AQL identified path, while the right operand is a string value, representing the pattern to be matched.
 The `LIKE` expression returns `true` if the value matches the supplied pattern.
 
 Below is an example using a simple pattern matching:
@@ -239,14 +239,15 @@ FROM
       CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.administrative_encounter.v1]
          CONTAINS ADMIN_ENTRY admission[openEHR-EHR-ADMIN_ENTRY.admission.v1]
 WHERE
-   c/context/start_time LIKE '2019-%'
+   c/context/start_time LIKE '2019-0?-*'
 --------
 
-An underscore "_" in pattern matches any single character, while a percent sign "%" matches any sequence of zero or more characters.
-If pattern does not contain percent signs or underscores, then `LIKE` acts like the equal "=" operator.
-The `LIKE` operator always try to match the entire string value, therefore if the intention is to match a sequence anywhere within the string, the pattern must start and end with a percent sign, e.g. "%test%".
+The `?` wildcard in pattern matches any single character, while the `\*` wildcard matches any sequence of zero or more characters.
+If the pattern does not contain any of these wildcards, then `LIKE` acts like the `=` (equal) operator.
+The `LIKE` operator always try to match the entire string value, therefore if the intention is to match a sequence anywhere within the string,
+the pattern must start and end with `*` wildcard, e.g. `"\*test*"`.
 
-To match a literal underscore "_" or percent sign "%", the respective character in pattern must be escaped by using the backslash "\" sign.
+To match a literal `?` or `*`, the respective character in pattern must be escaped by using the backslash `\` character.
 
 ==== matches
 
@@ -589,7 +590,7 @@ c/archetype_details/template_id/value = $templateParameter
 * Left operand is an identified path; right operand is a pattern:
 +
 --------
-c/archetype_details/template_id/value LIKE '%encounter%'
+c/archetype_details/template_id/value LIKE '*encounter*'
 --------
 
 * Both left operand and right operand are identified paths:
