@@ -14,6 +14,17 @@
             "copyright_year": "2008",
             "spec_status": "STABLE",
             "keywords": "query, AQL, archetype, Xpath, openehr"
+        },
+        {
+            "id": "AQL-examples",
+            "title": "Archetype Query Language Examples",
+            "title_short": "AQL Examples",
+            "description": "openEHR Archetype Query Language (AQL) examples.",
+            "summary": "Examples of AQL use.",
+            "micro_summary": "AQL Examples",
+            "copyright_year": "2020",
+            "spec_status": "DEVELOPMENT",
+            "keywords": "query, AQL, example, openehr"
         }
     ],
     "expressions": [
