@@ -6,7 +6,7 @@ This document describes the syntax of the openEHR Archetype Query Language (AQL)
 
 == Status
 
-This specification is in the {spec_status} state. The latest development version of this document can be found at {openehr_query_aql}[{openehr_query_aql}^].
+This specification is in the {spec_status} state. The latest development version of this document can be found at {openehr_query_latest_aql}[{openehr_query_latest_aql}^].
 
 Known omissions or questions are indicated in the text with a 'to be determined' paragraph, as follows:
 [.tbd]
@@ -18,7 +18,7 @@ Various tools that can be used to work with archetypes and templates, including 
 
 == Feedback
 
-Feedback may be provided on the {openehr_technical_list}[technical mailing list^].
+Feedback may be provided on the {openehr_aql_forum}[openEHR AQL forum^].
 
 Issues may be raised on the {component_prs}[specifications Problem Report tracker^].
 
