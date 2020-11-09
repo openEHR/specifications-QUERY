@@ -16,7 +16,7 @@
             "keywords": "query, AQL, archetype, Xpath, openehr"
         },
         {
-            "id": "AQL-examples",
+            "id": "AQL_examples",
             "title": "Archetype Query Language Examples",
             "title_short": "AQL Examples",
             "description": "openEHR Archetype Query Language (AQL) examples.",

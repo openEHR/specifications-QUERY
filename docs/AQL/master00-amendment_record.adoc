@@ -6,12 +6,17 @@
 
 4+^h|*Release 1.1.0 (unreleased)*
 
-|[[latest_issue]]1.1.1
+|[[latest_issue]]1.1.0
 |{spec_tickets}/SPECQUERY-17[SPECQUERY-17^] Add support for `LIKE` operator.
 |openEHR SEC
 |[[latest_issue_date]]09 Nov 2020
 
-|1.1.0
+|
+|{spec_tickets}/SPECQUERY-31[SPECQUERY-31^] Move AQL examples to a new separate specification.
+|openEHR SEC
+|09 Nov 2020
+
+|
 |{spec_tickets}/SPECQUERY-16[SPECQUERY-16^] Add support for `LIMIT` and `OFFSET`; deprecate `TOP`.
 |P Pazos, +
 S Iancu

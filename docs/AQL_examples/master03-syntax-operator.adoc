@@ -1,8 +1,8 @@
-= AQL Operator Syntax Examples
+== Operator Syntax Examples
 
 The following sub-sections illustrate various AQL operators with examples.
 
-== ADL matches operator
+=== matches
 
 The following examples show how the ADL `matches` operator may be used within AQL statements.
 
@@ -113,17 +113,11 @@ LDL-C EHR path/value matches {
 |===
 
 
-
-== Arithmetic operators
+=== Arithmetic operators
 
 The following example shows how arithmetic operators may be used within AQL statements.
 
-[cols="1,4a",options="header",separator=¦]
-|===
-
-¦*Clinical Scenario 1*      ¦For each recorded administration of ampicillin check for problem diagnosis of skin rash that is within 2 days of the administration date
-
-¦*AQL Fragment*             ¦
+.Scenario: *For each recorded administration of ampicillin check for problem diagnosis of skin rash that is within 2 days of the administration date*
 ----
 SELECT e/ehr_id
 FROM EHR e CONTAINS (COMPOSITION c1
@@ -135,26 +129,19 @@ WHERE
    eval/data[at0001]/items[at0002.1]/value/value/defining_code matches {
       CODE_PHRASE matches {[SNOMED::294506009, 21626009]}
    } AND
-   eval/data[at0001]/items[at0010]/value - it/description[openEHR-EHR-ITEM_TREE.medication.v1]/items[at0018]/items[at0019]/value
-   matches {
+   eval/data[at0001]/items[at0010]/value - it/description[openEHR-EHR-ITEM_TREE.medication.v1]/items[at0018]/items[at0019]/value matches {
       DV_DURATION matches {
          value matches{<=P2d}
       }
    }
 ----
-|===
 
 
-== Nest Query and 'Not in'
+=== Nest Query and 'Not in'
 
 The following example shows the use of a nested query and the `not-in` operator.
 
-[cols="1,4a",options="header",separator=¦]
-|===
-
-¦*Clinical Scenario 1*      ¦All patients who have not been discharged
-
-¦*AQL Fragment*             ¦
+.Scenario: *All patients who have not been discharged*
 ----
 SELECT e/ehr_id
 FROM
@@ -168,4 +155,3 @@ WHERE
             ADMIN_ENTRY ae2 [openEHR-EHR-ADMIN_ENTRY.discharge.v1]
    )
 ----
-|===

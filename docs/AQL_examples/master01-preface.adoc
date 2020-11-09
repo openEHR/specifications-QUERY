@@ -2,7 +2,7 @@
 
 == Purpose
 
-This document documents examples of use of the openEHR Archetype Query Language (AQL) for both subject-specific and ppopulation querying.
+This document documents examples of use of the openEHR Archetype Query Language (AQL).
 
 == Status
 
@@ -18,7 +18,7 @@ Various tools that can be used to work with archetypes and templates, including 
 
 == Feedback
 
-Feedback may be provided on the {openehr_aql_forum}[openEHR AQL forum^].
+Feedback may be provided on the {openehr_technical_list}/aql[openEHR AQL forum^].
 
 Issues may be raised on the {component_prs}[specifications Problem Report tracker^].
 

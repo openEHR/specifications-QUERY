@@ -50,3 +50,5 @@ WHERE                                                        -- Where clause
    o/data[at0001]/.../items[at0004]/value/value >= 140 OR    -- value comparison
    o/data[at0001]/.../items[at0005]/value/value >= 90
 ----
+
+More examples can be found in the {openehr_query_aql_examples}[openEHR AQL examples^] document.

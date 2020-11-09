@@ -1,3 +1,0 @@
-= Overview
-
-This document provides examples of use of AQL in common scenarios, divided into single-subject and population queries.
