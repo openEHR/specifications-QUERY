@@ -27,7 +27,7 @@ Keywords in AQL are not case sensitive, so `SELECT`, `Select`, `select`, `SeLeCt
 * `|`: bar characters are used to delimit intervals;
 * `[]`: brackets are used to delimit coded terms, archetype id values or openEHR reference model class attribute values.
 * `{}`: brackets are used with `matches` delimiting matches criteria
-* `()`: parantheses are used with function calls or to separate logic or group expressions and enforce precedence
+* `()`: parentheses are used with function calls or to separate logic or group expressions and enforce precedence
 * `<`, `>`, `=`, `%`, `!`, `$`
 
 NOTE: `TOP` modifier is deprecated in favour of the `LIMIT` clause combined with `ORDER BY` (see <<LIMIT, below>>).
