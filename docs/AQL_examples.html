@@ -164,7 +164,13 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Sebastian Iancu, senior engineer, Code24, Netherlands</p>
+<p>Thomas Beale, Ars Semantica UK, openEHR Foundation Management Board</p>
+</li>
+<li>
+<p>Ian McNicoll MD, FreshEHR, UK</p>
+</li>
+<li>
+<p>Sebastian Iancu, Architect, Code24, Netherlands</p>
 </li>
 </ul>
 </div>
@@ -282,30 +288,19 @@ the ADL expressions on the right-hand side of the <code>matches</code> operator 
 </tr>
 </table>
 </div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 80%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top"><strong>Clinical Scenario 1</strong></th>
-<th class="tableblock halign-left valign-top">Blood glucose &gt; 11 mmol/L or blood glucose &gt;= 200 mg/dL</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>EHR path</strong></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]</code></p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment</strong></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
+<div class="paragraph">
+<p>Get all abnormal blood pressure values that are recorded in a health encounter for a specific patient.</p>
+</div>
+<div class="listingblock">
+<div class="title">Scenario: <strong>Get all blood glucose values and their corresponding subject ids, where blood glucose &gt; 11 mmol/L or blood glucose &gt;= 200 mg/dL</strong></div>
 <div class="content">
-<pre>ehr_path/value
-    matches {
+<pre>SELECT
+    e/ehr_status/subject/external_ref/id/value,
+    o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]/value
+FROM EHR e CONTAINS COMPOSITION c
+    CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION-laboratory-glucose.v1]
+WHERE
+    o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]/value matches {
         C_DV_QUANTITY&lt;
             list = &lt;
                ["1"] = &lt;
@@ -320,34 +315,17 @@ the ADL expressions on the right-hand side of the <code>matches</code> operator 
         &gt;
     }</pre>
 </div>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 80%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top"><strong>Clinical Scenario 2</strong></th>
-<th class="tableblock halign-left valign-top">Blood glucose level is between 5-6 mmol/L or between 90-110 mg/dL</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>EHR path</strong></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]</code></p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment</strong></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
+</div>
+<div class="listingblock">
+<div class="title">Scenario: <strong>Get all blood glucose values and their corresponding ehr ids, where blood glucose level is between 5-6 mmol/L or between 90-110 mg/dL</strong></div>
 <div class="content">
-<pre>ehr_path/value
-    matches {
+<pre>SELECT
+    e/ehr_id,
+    o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]/value
+EHR e CONTAINS COMPOSITION c
+    CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION-laboratory-glucose.v1]
+WHERE
+    o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]/value matches {
         C_DV_QUANTITY&lt;
             list = &lt;
                 ["1"] = &lt;
@@ -362,92 +340,49 @@ the ADL expressions on the right-hand side of the <code>matches</code> operator 
         &gt;
     }</pre>
 </div>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 80%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top"><strong>Clinical Scenario 3</strong></th>
-<th class="tableblock halign-left valign-top">HbA1c &gt; 7.0%</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>EHR path</strong></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]</code></p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment</strong></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
-<div class="content">
-<pre>ehr_path/value matches {
-    DV_PROPORTION matches {
-        numerator matches {|&gt;7.0|}
-        denominator matches {|100.0|}
-    }
-}</pre>
 </div>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 80%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top"><strong>Clinical Scenario 4</strong></th>
-<th class="tableblock halign-left valign-top">Total cholesterol &gt;= 5.0 mmol/L or LDL-C &gt;= 3.0 mmol/L</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Total cholesterol EHR path</strong></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]</code></p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>LDL-C EHR path</strong></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0011.1 and<br>
-                                  name/value='Fractions']/items[at0013.4 and name/value='LDL-Cholesterol']</code></p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AQL Fragment</strong></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
+<div class="listingblock">
+<div class="title">Scenario: <strong>HbA1c &gt; 7.0%</strong></div>
 <div class="content">
-<pre>Total cholesterol EHR path/value matches {
-    DV_QUANTITY matches {
-        units matches {"mmol/L"}
-        magnitude matches {|&gt;=5.0|}
-    }
-}
-
-OR
-
-LDL-C EHR path/value matches {
-    DV_QUANTITY matches {
-        units matches {"mmol/L"}
-        magnitude matches {|&gt;=3.0|}
-    }
-}</pre>
+<pre>SELECT
+    e/ehr_id,
+    o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]/value
+EHR e CONTAINS COMPOSITION c
+    CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION-laboratory-glucose.v1]
+WHERE
+    o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]/value matches {
+        DV_PROPORTION matches {
+            numerator matches {|&gt;7.0|}
+            denominator matches {|100.0|}
+        }
+    }</pre>
 </div>
-</div></div></td>
-</tr>
-</tbody>
-</table>
+</div>
+<div class="listingblock">
+<div class="title">Scenario: <strong>Total cholesterol &gt;= 5.0 mmol/L or LDL-C &gt;= 3.0 mmol/L</strong></div>
+<div class="content">
+<pre>SELECT
+    e/ehr_id,
+    o/data[at0001]/events[at0002]/data[at0003]/items[at0013.1] AS TotalC,
+    o/data[at0001]/events[at0002]/data[at0003]/items[at0011.1, 'Fractions']/items[at0013.4, 'LDL-Cholesterol'] AS LDLC
+EHR e CONTAINS COMPOSITION c
+    CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION-laboratory-hba1c.v1]
+WHERE
+    o/data[at0001]/events[at0002, 'Any event']/data[at0003]/items[at0013.1]/value matches {
+        DV_QUANTITY matches {
+            units matches {"mmol/L"}
+            magnitude matches {|&gt;=5.0|}
+        }
+    }
+    OR
+    o/data[at0001]/events[at0002]/data[at0003]/items[at0011.1, 'Fractions']/items[at0013.4, 'LDL-Cholesterol']/value matches {
+        DV_QUANTITY matches {
+            units matches {"mmol/L"}
+            magnitude matches {|&gt;=3.0|}
+        }
+    }</pre>
+</div>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_arithmetic_operators"><a class="anchor" href="#_arithmetic_operators"></a>2.1.2. Arithmetic operators</h4>
@@ -533,7 +468,7 @@ LIMIT 5</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-11-09 19:54:00 UTC
+Last updated 2020-11-10 10:48:10 UTC
 </div>
 </div>
 </body>

@@ -8,17 +8,17 @@ The following examples show how the ADL `matches` operator may be used within AQ
 
 NOTE: the ADL expressions on the right-hand side of the `matches` operator are in ADL 1.4 format.
 
-[cols="1,4a",options="header",separator=¦]
-|===
+Get all abnormal blood pressure values that are recorded in a health encounter for a specific patient.
 
-¦*Clinical Scenario 1*      ¦Blood glucose > 11 mmol/L or blood glucose >= 200 mg/dL
-
-¦*EHR path*                 ¦`o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]`
-
-¦*AQL Fragment*             ¦
+.Scenario: *Get all blood glucose values and their corresponding subject ids, where blood glucose > 11 mmol/L or blood glucose >= 200 mg/dL*
 ----
-ehr_path/value
-    matches {
+SELECT
+    e/ehr_status/subject/external_ref/id/value,
+    o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]/value
+FROM EHR e CONTAINS COMPOSITION c
+    CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION-laboratory-glucose.v1]
+WHERE
+    o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]/value matches {
         C_DV_QUANTITY<
             list = <
                ["1"] = <
@@ -33,20 +33,16 @@ ehr_path/value
         >
     }
 ----
-|===
 
-
-[cols="1,4a",options="header",separator=¦]
-|===
-
-¦*Clinical Scenario 2*      ¦Blood glucose level is between 5-6 mmol/L or between 90-110 mg/dL
-
-¦*EHR path*                 ¦`o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]`
-
-¦*AQL Fragment*             ¦
+.Scenario: *Get all blood glucose values and their corresponding ehr ids, where blood glucose level is between 5-6 mmol/L or between 90-110 mg/dL*
 ----
-ehr_path/value
-    matches {
+SELECT
+    e/ehr_id,
+    o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]/value
+EHR e CONTAINS COMPOSITION c
+    CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION-laboratory-glucose.v1]
+WHERE
+    o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]/value matches {
         C_DV_QUANTITY<
             list = <
                 ["1"] = <
@@ -61,56 +57,46 @@ ehr_path/value
         >
     }
 ----
-|===
 
-
-[cols="1,4a",options="header",separator=¦]
-|===
-
-¦*Clinical Scenario 3*      ¦HbA1c > 7.0%
-
-¦*EHR path*                 ¦`o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]`
-
-¦*AQL Fragment*             ¦
+.Scenario: *HbA1c > 7.0%*
 ----
-ehr_path/value matches {
-    DV_PROPORTION matches {
-        numerator matches {|>7.0|}
-        denominator matches {|100.0|}
+SELECT
+    e/ehr_id,
+    o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]/value
+EHR e CONTAINS COMPOSITION c
+    CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION-laboratory-glucose.v1]
+WHERE
+    o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]/value matches {
+        DV_PROPORTION matches {
+            numerator matches {|>7.0|}
+            denominator matches {|100.0|}
+        }
     }
-}
 ----
-|===
 
-
-[cols="1,4a",options="header",separator=¦]
-|===
-
-¦*Clinical Scenario 4*          ¦Total cholesterol >= 5.0 mmol/L or LDL-C >= 3.0 mmol/L
-
-¦*Total cholesterol EHR path*   ¦`o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]`
-¦*LDL-C EHR path*               ¦`o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0011.1 and +
-                                  name/value='Fractions']/items[at0013.4 and name/value='LDL-Cholesterol']`
-
-¦*AQL Fragment*                 ¦
+.Scenario: *Total cholesterol >= 5.0 mmol/L or LDL-C >= 3.0 mmol/L*
 ----
-Total cholesterol EHR path/value matches {
-    DV_QUANTITY matches {
-        units matches {"mmol/L"}
-        magnitude matches {|>=5.0|}
+SELECT
+    e/ehr_id,
+    o/data[at0001]/events[at0002]/data[at0003]/items[at0013.1] AS TotalC,
+    o/data[at0001]/events[at0002]/data[at0003]/items[at0011.1, 'Fractions']/items[at0013.4, 'LDL-Cholesterol'] AS LDLC
+EHR e CONTAINS COMPOSITION c
+    CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION-laboratory-hba1c.v1]
+WHERE
+    o/data[at0001]/events[at0002, 'Any event']/data[at0003]/items[at0013.1]/value matches {
+        DV_QUANTITY matches {
+            units matches {"mmol/L"}
+            magnitude matches {|>=5.0|}
+        }
     }
-}
-
-OR
-
-LDL-C EHR path/value matches {
-    DV_QUANTITY matches {
-        units matches {"mmol/L"}
-        magnitude matches {|>=3.0|}
+    OR
+    o/data[at0001]/events[at0002]/data[at0003]/items[at0011.1, 'Fractions']/items[at0013.4, 'LDL-Cholesterol']/value matches {
+        DV_QUANTITY matches {
+            units matches {"mmol/L"}
+            magnitude matches {|>=3.0|}
+        }
     }
-}
 ----
-|===
 
 
 === Arithmetic operators
