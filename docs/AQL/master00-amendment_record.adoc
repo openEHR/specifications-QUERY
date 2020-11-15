@@ -17,7 +17,7 @@
 |09 Nov 2020
 
 |
-|{spec_tickets}/SPECQUERY-16[SPECQUERY-16^] Add support for `LIMIT` and `OFFSET`; deprecate `TOP`.
+|{spec_tickets}/SPECQUERY-16[SPECQUERY-16^] Add support for `LIMIT` and `OFFSET`; deprecate `TOP` ({spec_tickets}/SPECPR-346[SPECPR-346^]).
 |P Pazos, +
 S Iancu
 |05 Nov 2020
