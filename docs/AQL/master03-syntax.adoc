@@ -98,24 +98,38 @@ A variable name is formed of an initial letter followed by any number of alphanu
 
 AQL syntax supports parameterisation. AQL parameters are used to indicate criteria, which will be substituted with values at run time. Supporting parameterisation is one of the mechanisms used to realise sharing AQL statements within a system or across system boundaries.
 
-The parameters can be EHR specific (such as the parameter of EHR identifier or EHR creation date/time), archetype specific (such as an archetype identifier, or archetype constraints), or template specific (such as a template identifier or template constraints).
+The parameters can be class specific (such as the parameter of EHR identifier or EHR creation date/time), archetype specific (such as an archetype identifier, or archetype constraints), or template specific (such as a template identifier or template constraints).
 
-=== Parameter syntax
+[#_parameter_syntax]
+=== Syntax
 
-A parameter always starts with a dollar sign `$` followed by the parameter name, e.g. `$ehrUid`. The parameter name can consist of letters, digits and underscores. It cannot have spaces and it cannot be an AQL reserved word.
+A parameter always starts with a dollar sign `$` followed by the parameter name, e.g. `$ehrUid`. The parameter name can consist of letters, digits and underscores. It cannot have spaces and it cannot be an <<_reserved_words_and_characters,AQL reserved word>>.
 
 A parameter can be used for any criteria values within an AQL statement, e.g.:
 
-* within a predicate: `[$archetypeId]`, `[at0003, $nameValue]`, `[ehr_id/value=$ehrId]`
+* within a predicate: `[$archetypeId]`, `[at0003, $nameValue]`, `[ehr_id/value=$ehrUid]`
 * withing a `WHERE` criteria: `o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value > $systolicCriteria`
 
 NOTE: In the `WHERE` criteria, when the value of the parameter is not a number or boolean value, it should be substituted with the corresponding quotes added to the value, for instance `o/../.. = $textVariable`, when substituted should look like this `o/../.. = "value"` (single or double quotes could be used). So substituted values follow the same rules as each type when the value is specified as a constant in the AQL expression: strings, dates, times and datetimes should be quoted, numbers and booleans are not quoted.
 
-=== When parameters are needed
+=== Parameters use case
 
-Parameters are needed when the same AQL query statement is used with different criteria values. This AQL example is to return all abnormal blood pressure values for a single specific EHR. This query has a parameter `$ehrUid`. This parameter will be substituted by a specific `EHR.ehr_id` value at run time. Consequently, this query can be reused for all EHRs either within an EHR system or by other EHR systems (assuming these EHR systems support AQL).
+Parameters are needed when the same AQL query statement is used with different criteria values. This AQL example is to return all abnormal blood pressure values for a single specific EHR, indicated by `$ehrUid` parameter:
+--------
+SELECT
+   o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude,
+   o/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude
+FROM
+   EHR [ehr_id/value=$ehrUid]
+      CONTAINS COMPOSITION [openEHR-EHR-COMPOSITION.encounter.v1]
+         CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION.blood_pressure.v1]
+WHERE
+   o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude >= 140 OR
+   o/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude >= 90
+--------
+This parameter will be substituted by a specific `EHR.ehr_id` value at run time. Consequently, this query can be reused for all `EHRs` within a system.
 
-=== Where and how parameters are resolved
+=== Resolving parameters
 
 AQL query parameters can be resolved at application level, or EHR system level. It depends on what the query parameters are used for and the design/implementation of the system or components. Query parameters would be normally resolved outside of a query engine.
 
@@ -515,7 +529,7 @@ A simple `FROM` clause consists of three parts: keyword `FROM`, class expression
 
 --------
 FROM
-   EHR e [ehr_id/value=$ehrId]
+   EHR e [ehr_id/value=$ehrUid]
       CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]
 --------
 
@@ -525,7 +539,7 @@ Two examples of a class expression are shown below:
 
 --------
 // EHR class, class identifier/variable, and a standard predicate
-EHR e[ehr_id/value=$ehrId]
+EHR e[ehr_id/value=$ehrUid]
 --------
 
 --------
