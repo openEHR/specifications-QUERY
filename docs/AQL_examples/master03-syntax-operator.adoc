@@ -8,8 +8,6 @@ The following examples show how the ADL `matches` operator may be used within AQ
 
 NOTE: the ADL expressions on the right-hand side of the `matches` operator are in ADL 1.4 format.
 
-Get all abnormal blood pressure values that are recorded in a health encounter for a specific patient.
-
 .Scenario: *Get all blood glucose values and their corresponding subject ids, where blood glucose > 11 mmol/L or blood glucose >= 200 mg/dL*
 ----
 SELECT
@@ -32,6 +30,22 @@ WHERE
             >
         >
     }
+----
+
+----
+SELECT
+    e/ehr_status/subject/external_ref/id/value as subjectId,
+    a/items[at0001]/value as analyteName,
+    a/items[at0001]/value as analyteResult
+FROM EHR e
+    CONTAINS COMPOSITION c
+        CONTAINS OBSERVATION o[openEHR-EHR-OBSERVATION.laboratory_test_result.v1]
+            CONTAINS CLUSTER a[openEHR-EHR-CLUSTER.laboratory_test_analyte.v1]
+WHERE
+    (a/items[at0001]/value/defining_code/code_string matches {'14743-9','2345-7'} AND a/items[at0001]/value/defining_code/terminology_id = 'LOINC')
+    AND
+    ((a/items[at0024]/value/magnitude > 11 AND a/items[at0024]/value/units matches {'mmol/L'})
+        OR (a/items[at0024]/value/magnitude >= 200 AND a/items[at0024]/value/units matches {'mg/dL'}))
 ----
 
 .Scenario: *Get all blood glucose values and their corresponding ehr ids, where blood glucose level is between 5-6 mmol/L or between 90-110 mg/dL*
@@ -58,6 +72,23 @@ WHERE
     }
 ----
 
+.Alternative
+----
+SELECT
+    e/ehr_id/value as ehrId,
+    a/items[at0001]/value as analyteName,
+    a/items[at0001]/value as analyteResult
+FROM EHR e
+    CONTAINS COMPOSITION c
+        CONTAINS OBSERVATION o[openEHR-EHR-OBSERVATION.laboratory_test_result.v1]
+            CONTAINS CLUSTER a[openEHR-EHR-CLUSTER.laboratory_test_analyte.v1]
+WHERE
+    (a/items[at0001]/value/defining_code/code_string matches {'14743-9','2345-7'} AND a/items[at0001]/value/defining_code/terminology_id = 'LOINC')
+    AND
+    ((a/items[at0024]/value/magnitude >= 5 AND a/items[at0024]/value/magnitude <=6 AND a/items[at0024]/value/units matches {'mmol/L'})
+        OR (a/items[at0024]/value/magnitude >= 90 AND a/items[at0024]/value/magnitude >= 110 AND a/items[at0024]/value/units matches {'mg/dL'}))
+----
+
 .Scenario: *HbA1c > 7.0%*
 ----
 SELECT
@@ -72,6 +103,18 @@ WHERE
             denominator matches {|100.0|}
         }
     }
+----
+
+.Alternative
+----
+SELECT
+    e/ehr_id/value as ehrId,
+    p/data[at0001]/events[at0002]/data[at0003]/items[at0006]/value as spo2Numerator
+FROM EHR e
+    CONTAINS COMPOSITION c
+        CONTAINS OBSERVATION p[openEHR-EHR-OBSERVATION.pulse_oximetry.v1]
+WHERE
+    p/data[at0001]/events[at0002]/data[at0003]/items[at0006]/value/numerator <= 96
 ----
 
 .Scenario: *Total cholesterol >= 5.0 mmol/L or LDL-C >= 3.0 mmol/L*
