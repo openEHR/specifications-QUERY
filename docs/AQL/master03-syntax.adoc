@@ -36,9 +36,9 @@ NOTE: `TOP` modifier is deprecated in favour of the `LIMIT` clause combined with
 
 The openEHR path syntax has been described in detail (see {openehr_path_syntax}[Paths and Locators] section in the {openehr_overview}[Architecture Overview specification]). AQL utilises the basic openEHR path syntax to reference both coarse-grained and fine-grained archetype nodes (objects and data values, respectively), and openEHR class instances and attributes, when referencing something that is not defined in an archetype but is part of the openEHR Reference Model. A set of openEHR path examples are provided on this section.
 
-=== openEHR path examples - archetype path
+=== Archetype path
 
-An archetype path is the path referring to any node within an archetype. The following is an ADL workbench screen shot of apgar observation node map. The table below shows some examples.
+An archetype path is the path referring to any node within an archetype. The table below shows some examples.
 
 [width="100%",cols="1,1,1,1,1",options="header",]
 |===
@@ -49,7 +49,7 @@ An archetype path is the path referring to any node within an archetype. The fol
 |`OBSERVATION`     |Systolic            |openEHR-EHR-OBSERVATION.blood_pressure.v2  |`/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value`  | `DV_QUANTITY`
 |===
 
-=== openEHR path examples - path to RM class attributes
+=== RM class attribute path
 
 Another type of openEHR path is the path pointing to an attribute of openEHR Reference Model classes. The examples shown below uses the attributes from the `COMPOSITION` class.
 
