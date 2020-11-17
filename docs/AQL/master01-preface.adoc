@@ -32,6 +32,5 @@ The text of this specification was originally posted on the {openehr_wiki_root}/
 
 The following features are likely to be needed, but are not yet formalized by this specification:
 
-* `XOR` operator;
 * functions;
 * embedded queries.
