@@ -28,31 +28,19 @@ include::master00-amendment_record.adoc[leveloffset=+1]
 
 == Acknowledgements
 
-=== Primary Author
-
-* Chunlan Ma, MD, Ocean Informatics, Australia.
-
 === Contributors
 
 This specification benefited from wide formal and informal input from the openEHR and wider health informatics community. The openEHR Foundation would like to recognise the following people for their contributions.
 
-* Heath Frankel, Ocean Informatics, Australia
-* Bostjan Lah, Senior Architect, Better, Slovenia
 * Thomas Beale, Ars Semantica UK, openEHR Foundation Management Board
 * Ian McNicoll MD, FreshEHR, UK
-* Bjørn Næss, DIPS, Norway
-* Seref Arikan, MEcon, Ocean Informatics UK, Centre for Health Informatics and Multi-professional Education (CHIME) UK
-* Pablo Pazos Gutierrez, Senior engineer, CaboLabs, Uruguay
-* Matija Polajnar, PhD, Software Engineer, Better, Slovenia
 * Sebastian Iancu, Architect, Code24, Netherlands
-* Birger Haarbrandt, MSc, Peter L. Reichertz Institut for Medical Informatics (PLRI), Germany
 
 === Support
 
 The work reported in this paper has been funded by the following organisations:
 
-* Ocean Informatics, Australia
-* Better d.o.o., Slovenia (was Marand)
+* Code24, Netherlands
 
 === Trademarks
 
@@ -72,10 +60,9 @@ The work reported in this paper has been funded by the following organisations:
 :sectnums:
 include::master01-preface.adoc[leveloffset=+1]
 include::master02-overview.adoc[leveloffset=+1]
-include::master03-syntax.adoc[leveloffset=+1]
-include::master04-result_structure.adoc[leveloffset=+1]
-include::master06-writing_AQL.adoc[leveloffset=+1]
-include::master07-grammar.adoc[leveloffset=+1]
+include::master03-syntax-operator.adoc[leveloffset=+1]
+include::master04-single_subject.adoc[leveloffset=+1]
+include::master05-population.adoc[leveloffset=+1]
 
 //
 // --------------------------------------------- REFERENCES -----------------------------------------------

@@ -123,11 +123,10 @@ ehrContains
 
 //<IdentifiedExprBoolean> ::= <IdentifiedExpr> 'OR' <IdentifiedExpr>
 //                              | <IdentifiedExpr> 'AND' <IdentifiedExpr>
-//                              | <IdentifiedExpr> 'XOR' <IdentifiedExpr>
 //                              | 'NOT''(' <IdentifiedExprBoolean> ')'
 //                              | 'NOT' <IdentifiedEquality>
 identifiedExpr
- 	: identifiedExprAnd ((OR|XOR)^ identifiedExprAnd)*;
+ 	: identifiedExprAnd (OR^ identifiedExprAnd)*;
 
 identifiedExprAnd
 	: identifiedEquality (AND^ identifiedEquality)*;
@@ -290,12 +289,11 @@ containsExpression
 
 //<ContainExpressionBoolean> ::= <ContainsExpression> 'OR' <ContainsExpression>
 //                              | <ContainsExpression> 'AND' <ContainsExpression>
-//                              | <ContainsExpression> 'XOR' <ContainsExpression>
 containExpressionBool
  	: contains
  	| '(' containsExpression ')' -> ^(OPEN containsExpression CLOSE);
 
-boolOp	:	OR|XOR|AND;
+boolOp	:	OR|AND;
 	
 //<ClassExpr>::=   <SimpleClassExpr>
 //		   | '(' <SimpleClassExpr> <ContainsExpr> ')'
@@ -371,7 +369,6 @@ ASC : ('A'|'a')('S'|'s')('C'|'c') ;
 EHR : 'EHR';
 AND : ('A'|'a')('N'|'n')('D'|'d') ;
 OR : ('O'|'o')('R'|'r') ;
-XOR : ('X'|'x')('O'|'o')('R'|'r') ;
 NOT : ('N'|'n')('O'|'o')('T'|'t') ;
 LIKE : ('L'|'l')('I'|'i')('K'|'k')('E'|'e') ;
 MATCHES : ('M'|'m')('A'|'a')('T'|'t')('C'|'c')('H'|'h')('E'|'e')('S'|'s') ;

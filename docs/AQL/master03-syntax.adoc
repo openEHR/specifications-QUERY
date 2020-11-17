@@ -10,7 +10,7 @@ AQL has the following clauses:
 * The `ORDER BY` clause indicates the data items used to order the returned result set.
 * The `LIMIT` clause indicates which portion of the result set will be returned.
 
-In AQL, openEHR path syntax is used to locate any node or data values defined within archetypes. In the `SELECT` clause, the openEHR path syntax can be used to indicate expected objects or data values to be returned (similarly to how SQL 'projections' work). The `FROM` clause uses containment mechanisms indicating the scope of the query data source. `WHERE` clause uses archetype path to set query criteria on archetypes or any node within the archetypes. The following sections introduce the AQL syntax in detail.
+In AQL, <<_openehr_path_syntax,openEHR path syntax>> is used to locate any node or data values defined within archetypes. In the `SELECT` clause, the openEHR path syntax can be used to indicate expected objects or data values to be returned (similarly to how SQL 'projections' work). The `FROM` clause uses <<_containment,containment>> mechanisms indicating the scope of the query data source. `WHERE` clause uses archetype path to set query criteria on archetypes or any node within the archetypes. The following sections introduce the AQL syntax in detail.
 
 NOTE: If no `ORDER BY` clause is specified, then the query result doesn't have any default ordering criteria defined by this specification. Ordering could be defined by each implementation or be random. In terms of compliance to this specification, default ordering in results is undefined.
 
@@ -34,11 +34,11 @@ NOTE: `TOP` modifier is deprecated in favour of the `LIMIT` clause combined with
 
 == openEHR path syntax
 
-The openEHR path syntax has been described in detail (see the {openehr_overview}[Architecture Overview specification]). AQL utilises the basic openEHR path syntax to reference both coarse-grained and fine-grained archetype nodes (objects and data values, respectively), and openEHR class instances and attributes, when referencing something that is not defined in an archetype but is part of the openEHR Reference Model. A set of openEHR path examples are provided on this section.
+The openEHR path syntax has been described in detail (see {openehr_path_syntax}[Paths and Locators^] section in the {openehr_overview}[Architecture Overview specification^]). AQL utilises the basic openEHR path syntax to reference both coarse-grained and fine-grained archetype nodes (objects and data values, respectively), and openEHR class instances and attributes, when referencing something that is not defined in an archetype but is part of the openEHR Reference Model. A set of openEHR path examples are provided on this section.
 
-=== openEHR path examples - archetype path
+=== Archetype path
 
-An archetype path is the path referring to any node within an archetype. The following is an ADL workbench screen shot of apgar observation node map. The table below shows some examples.
+An archetype path is the path referring to any node within an archetype. The table below shows some examples.
 
 [width="100%",cols="1,1,1,1,1",options="header",]
 |===
@@ -49,7 +49,7 @@ An archetype path is the path referring to any node within an archetype. The fol
 |`OBSERVATION`     |Systolic            |openEHR-EHR-OBSERVATION.blood_pressure.v2  |`/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value`  | `DV_QUANTITY`
 |===
 
-=== openEHR path examples - path to RM class attributes
+=== RM class attribute path
 
 Another type of openEHR path is the path pointing to an attribute of openEHR Reference Model classes. The examples shown below uses the attributes from the `COMPOSITION` class.
 
@@ -81,38 +81,55 @@ WHERE
 
 This example defines only one AQL variable: `o`, which represents `OBSERVATIONs` that conform to (i.e. created using) the `openEHR-EHR-OBSERVATION.blood_pressure.v1` archetype.
 
+The combination of a variable reference and a subordinate <<_openehr_path_syntax,path>> forms one kind of _identified path_ (see <<AQL Identified Paths>>), used to specify a fine-grained data element within a larger object matched by the `FROM` clause.
+
+[[_variable_syntax]]
+=== Syntax
+
 AQL variables have the following features:
 
-* AQL variable names are defined in the AQL `FROM` clause.
+* AQL variables are defined in the AQL `FROM` clause.
 * A variable name must be unique within an AQL statement.
 * Not all classes defined within the `FROM` clause need a variable name. It is required only when other AQL clauses need to refer to the class identified in the `FROM` clause. The example above doesn't define a variable name for the `EHR` or `COMPOSITION` classes, only for the `OBSERVATION` class (variable `o`), to allow the latter to be referred to in the `WHERE` and `SELECT` clauses, as the root object of specific paths.
 
-The combination of a variable reference and a subordinate path forms one kind of _identified path_ (see <<AQL Identified Paths>>), used to specify a fine-grained data element within a larger object matched by the `FROM` clause. In the above example, `o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude` specifies the systolic value of the Observation archetype `openEHR-EHR-OBSERVATION.blood_pressure.v1`.
-
-A variable name is formed of an initial letter followed by any number of alphanumerics and underscores, as long as it does not clash with a reserved word. Variable names are not case-sensitive. Digits are not recommended at the beginning of a variable name although there is no formal restriction.
+A variable name is formed of an initial letter followed by any number of alphanumerics and underscores, as long as it does not clash with an <<_reserved_words_and_characters,AQL reserved word>>. Variable names are not case-sensitive. Digits are not recommended at the beginning of a variable name although there is no formal restriction.
 
 == Parameters
 
 AQL syntax supports parameterisation. AQL parameters are used to indicate criteria, which will be substituted with values at run time. Supporting parameterisation is one of the mechanisms used to realise sharing AQL statements within a system or across system boundaries.
 
-The parameters can be EHR specific (such as the parameter of EHR identifier or EHR creation date/time), archetype specific (such as an archetype identifier, or archetype constraints), or template specific (such as a template identifier or template constraints).
+The parameters can be class specific (such as the parameter of EHR identifier or EHR creation date/time), archetype specific (such as an archetype identifier, or archetype constraints), or template specific (such as a template identifier or template constraints).
 
-=== Parameter syntax
+[[parameter_syntax]]
+=== Syntax
 
-A parameter always starts with a dollar sign `$` followed by the parameter name, e.g. `$ehrUid`. The parameter name can consist of letters, digits and underscores. It cannot have spaces and it cannot be an AQL reserved word.
+A parameter always starts with a dollar sign `$` followed by the parameter name, e.g. `$ehrUid`. The parameter name can consist of letters, digits and underscores. It cannot have spaces and it cannot be an <<_reserved_words_and_characters,AQL reserved word>>.
 
 A parameter can be used for any criteria values within an AQL statement, e.g.:
 
-* within a predicate: `[$archetypeId]`, `[at0003, $nameValue]`, `[ehr_id/value=$ehrId]`
+* within a predicate: `[$archetypeId]`, `[at0003, $nameValue]`, `[ehr_id/value=$ehrUid]`
 * withing a `WHERE` criteria: `o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value > $systolicCriteria`
 
 NOTE: In the `WHERE` criteria, when the value of the parameter is not a number or boolean value, it should be substituted with the corresponding quotes added to the value, for instance `o/../.. = $textVariable`, when substituted should look like this `o/../.. = "value"` (single or double quotes could be used). So substituted values follow the same rules as each type when the value is specified as a constant in the AQL expression: strings, dates, times and datetimes should be quoted, numbers and booleans are not quoted.
 
-=== When parameters are needed
+=== Parameters use case
 
-Parameters are needed when the same AQL query statement is used with different criteria values. This AQL example is to return all abnormal blood pressure values for a single specific EHR. This query has a parameter `$ehrUid`. This parameter will be substituted by a specific `EHR.ehr_id` value at run time. Consequently, this query can be reused for all EHRs either within an EHR system or by other EHR systems (assuming these EHR systems support AQL).
+Parameters are needed when the same AQL query statement is used with different criteria values. This AQL example is to return all abnormal blood pressure values for a single specific EHR, indicated by `$ehrUid` parameter:
+--------
+SELECT
+   o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude,
+   o/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude
+FROM
+   EHR [ehr_id/value=$ehrUid]
+      CONTAINS COMPOSITION [openEHR-EHR-COMPOSITION.encounter.v1]
+         CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION.blood_pressure.v1]
+WHERE
+   o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude >= 140 OR
+   o/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude >= 90
+--------
+This parameter will be substituted by a specific `EHR.ehr_id` value at run time. Consequently, this query can be reused for all `EHRs` within a system.
 
-=== Where and how parameters are resolved
+=== Parameter Resolution
 
 AQL query parameters can be resolved at application level, or EHR system level. It depends on what the query parameters are used for and the design/implementation of the system or components. Query parameters would be normally resolved outside of a query engine.
 
@@ -473,11 +490,19 @@ Input values type should be either Integer of Real, and it will also determine t
 
 == AQL Identified Paths
 
-=== Usage
+In AQL, an _identified path_ is the association of a <<_aql_variables,variable>> reference (the identifier) and an <<_openehr_path_syntax,archetype path>> and/or <<_predicates,predicate>>. Except for the `FROM` clause, an identified path may appear in any clause of an AQL statement. For example, it can be used to indicate the data to be returned in a `SELECT` clause, or the data item on which query criteria are applied in a `WHERE` clause.
 
-In AQL, an _identified path_ is the association of a variable reference (the identifier; see <<AQL variables,above>>) and an archetype path and/or predicate. Except for the `FROM` clause, an identified path may appear in any clause of an AQL statement. For example, it can be used to indicate the data to be returned in a `SELECT` clause, or the data item on which query criteria are applied in a `WHERE` clause.
+In the following example, `o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude` specifies the systolic value of the Observation archetype `openEHR-EHR-OBSERVATION.blood_pressure.v1`:
+--------
+SELECT
+   o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude
+FROM
+   EHR [ehr_id/value='1234']
+      CONTAINS COMPOSITION [openEHR-EHR-COMPOSITION.encounter.v1]
+         CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION.blood_pressure.v1]
+--------
 
-[#_aql_identified_paths_syntax]
+[[_aql_identified_paths_syntax]]
 === Syntax
 
 An AQL identified path can take any of the following forms:
@@ -580,14 +605,14 @@ In summary:
 . predicates in _class expressions_: further filters for data in the subset;
 . `SELECT`: picks the exact data that we need to return from the query, taken from the matched data in the previous two points.
 
-[#_from_syntax]
+[[_from_syntax]]
 ==== Syntax
 
 A simple `FROM` clause consists of three parts: keyword `FROM`, class expression and/or containment constraints, e.g.
 
 --------
 FROM
-   EHR e [ehr_id/value=$ehrId]
+   EHR e [ehr_id/value=$ehrUid]
       CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]
 --------
 
@@ -597,7 +622,7 @@ Two examples of a class expression are shown below:
 
 --------
 // EHR class, class identifier/variable, and a standard predicate
-EHR e[ehr_id/value=$ehrId]
+EHR e[ehr_id/value=$ehrUid]
 --------
 
 --------
@@ -653,7 +678,7 @@ EHR e
 
 An AQL `WHERE` clause is used to represent further criteria applied to the data items within the objects declared in the `FROM` clause. A `WHERE` clause expresses the query criteria that cannot be represented in other AQL clauses, such as criteria on archetype id, composition committal date/time, and the criteria on in which order the returned results should be listed.
 
-[#_where_syntax]
+[[_where_syntax]]
 ==== Syntax
 
 The `WHERE` clause syntax has the following parts (in order): keyword `WHERE` and identified expression(s). Logical operators (`AND`, `OR`, `NOT`) and parenthesis can be used to represent multiple identified expressions. Examples:
@@ -778,13 +803,13 @@ Note that when using `LIMIT`, deterministic behavior requires that the `ORDER BY
 NOTE: As of Release 1.1.0, the use of the `LIMIT` clause in combination with the `ORDER BY` clause is recommended instead of the deprecated `TOP` alternative.
 It is not allowed to use `LIMIT` while also using `TOP` clause in the same query.
 
-[#_limit_syntax]
+[[_limit_syntax]]
 ==== Syntax
 
 The syntax was borrowed from SQL language, similar to PostgreSQL and MySQL implementation.
 It consists of two parts: keyword `LIMIT` followed by number, optionally followed by `OFFSET` followed by a number:
 --------
-`LIMIT row_count [OFFSET offset]`
+LIMIT row_count [OFFSET offset]
 --------
 Both `row_count` and `offset` are integer numbers, `row_count` minimal value is 1, while minimal value for `offset` is 0.
 

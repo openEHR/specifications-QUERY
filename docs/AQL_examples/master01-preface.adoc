@@ -2,11 +2,11 @@
 
 == Purpose
 
-This document describes the syntax of the openEHR Archetype Query Language (AQL).
+This document documents examples of use of the openEHR Archetype Query Language (AQL).
 
 == Status
 
-This specification is in the {spec_status} state. The latest development version of this document can be found at {openehr_query_latest_aql}[{openehr_query_latest_aql}^].
+This specification is in the {spec_status} state. The latest development version of this document can be found at {openehr_query_latest_aql_examples}[{openehr_query_latest_aql_examples}^].
 
 Known omissions or questions are indicated in the text with a 'to be determined' paragraph, as follows:
 [.tbd]
@@ -26,11 +26,5 @@ To see changes made due to previously reported issues, see the {component_histor
 
 == Original Source
 
-The text of this specification was originally posted on the {openehr_wiki_root}/spaces/spec/pages/4915203/AQL-+Archetype+Query+Language[openEHR wiki^], and was used by the global openEHR community in that form.
+The original text of this document was taken from the {openehr_query_aql}[openEHR AQL specification^].
 
-=== AQL features not yet supported
-
-The following features are likely to be needed, but are not yet formalized by this specification:
-
-* functions;
-* embedded queries.

@@ -10,15 +10,15 @@ In order to overcome these limitations, this specification describes a query lan
 
 == What is AQL?
 
-Archetype Query Language (AQL) is a declarative query language developed specifically for expressing queries used for searching and retrieving the data found in archetype-based repositories. The examples used in this specification mostly relate to the {openehr_rm}[openEHR Reference Model (RM)^] and the {openehr_CKM}[openEHR clinical archetypes^], but the syntax is independent of information model, application, programming language, system environment, and storage model.
+Archetype Query Language (AQL) is a declarative query language developed specifically for expressing queries used for searching and retrieving the data found in archetype-based repositories. The examples used in this specification mostly relate to the {openehr_rm}[openEHR Reference Model^] (RM) and the {openehr_CKM}[openEHR clinical archetypes^], but the syntax is independent of information model, application, programming language, system environment, and storage model.
 
 The minimum requirement for data to be queried using AQL (including with archetype structures and terminology) is that it be based on {openehr_am}[archetypes^], which concretely means that it contains fine-grained semantic markings in the form of archetype and terminology codes. This may be native openEHR RM data, or legacy system data to which the relevant semantic markers (i.e. archetype and terminology codes) have been added. Consequently, AQL expresses queries in terms of a combination of archetype semantic elements and RM data structure elements on which the archetypes are based, rather than solely the latter, which is the case for EAV-based query languages such as SQL. This is the key in developing and sharing semantic queries across system and enterprise boundaries.
 
 AQL has the following distinctive features:
 
-. the utilization of {openehr_path_syntax}[openEHR path syntax^] in AQL: the path syntax is used to locate clinical statements and data values within them using archetypes; this syntax is used to represent the query criteria and returned results, and allows stating query criteria using archetype and node identifiers, data values within the archetypes, and class attributes defined within the Reference Model;
+. the utilization of <<_openehr_path_syntax,openEHR path syntax>> to locate clinical statements and data values within them using archetypes; this syntax is used to represent the query criteria and returned results, and allows stating query criteria using archetype and node identifiers, data values within the archetypes, and class attributes defined within the Reference Model;
 . returned results may be objects of any granularity from 'top-level' RM objects to primitive data items;
-. the utilization of a `CONTAINS` operator to match data hierarchy relationships in order to constrain the source data to which the query is applied;
+. the utilization of a <<_containment,`CONTAINS` operator>> to match data hierarchy relationships in order to constrain the source data to which the query is applied;
 . the utilization of ADL-like operator syntaxes, such as `matches`, `exists`, `in`, and `not`;
 . model-neutral syntax: AQL does not have any dependency on a Reference Model; it is also neutral to system implementation and environment;
 . supports time-based conditions to query historical versions of data.
@@ -33,14 +33,14 @@ AQL also has features found in other query languages, including:
 
 == AQL example
 
-Below is an example of an AQL statement. This statement returns all blood pressure values contained in `COMPOSITION` instances defined by the `openEHR-EHR-COMPOSITION.encounter.v1` archetype, which contain `OBSERVATION` instances defined by the `openEHR-EHR-OBSERVATION.blood_pressure.v1` archetype, where the systolic value is greater than or equal to 140 or whose diastolic value is greater than or equal to 90, within a specified EHR (i.e. whose EHR id is the value of the variable `$ehrId`). The AQL syntax is a synthesis of SQL structural syntax and the {openehr_path_syntax}[openEHR path syntax^].
+Below is an example of an AQL statement. This statement returns all blood pressure values contained in `COMPOSITION` instances defined by the `openEHR-EHR-COMPOSITION.encounter.v1` archetype, which contain `OBSERVATION` instances defined by the `openEHR-EHR-OBSERVATION.blood_pressure.v1` archetype, where the systolic value is greater than or equal to 140 or whose diastolic value is greater than or equal to 90, within a specified EHR (i.e. whose EHR id is the value of the variable `$ehrUid`). The AQL syntax is a synthesis of SQL structural syntax and the <<_openehr_path_syntax,openEHR path syntax>>.
 
 ----
 SELECT                                                       -- Select clause
    o/data[at0001]/.../items[at0004]/value AS systolic,       -- Identified path with alias
    o/data[at0001]/.../items[at0005]/value AS diastolic,
 FROM                                                         -- From clause
-   EHR[ehr_id=$ehrId]                                        -- RM class expression
+   EHR[ehr_id/value=$ehrUid]                                 -- RM class expression
       CONTAINS                                               -- containment
          COMPOSITION c                                       -- RM class expression
             [openEHR-EHR-COMPOSITION.encounter.v1]           -- archetype predicate
@@ -50,3 +50,5 @@ WHERE                                                        -- Where clause
    o/data[at0001]/.../items[at0004]/value/value >= 140 OR    -- value comparison
    o/data[at0001]/.../items[at0005]/value/value >= 90
 ----
+
+More examples can be found in the {openehr_query_aql_examples}[openEHR AQL examples^] document.
