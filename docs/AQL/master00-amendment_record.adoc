@@ -7,9 +7,14 @@
 4+^h|*Release 1.1.0 (unreleased)*
 
 |[[latest_issue]]1.1.0
+|{spec_tickets}/SPECQUERY-8[SPECQUERY-8^] Improve readability and clean up text (non-semantic).
+|S Iancu
+|[[latest_issue_date]]17 Nov 2020
+
+|
 |{spec_tickets}/SPECQUERY-17[SPECQUERY-17^] Add support for `LIKE` operator ({spec_tickets}/SPECPR-358[SPECPR-358^]).
 |openEHR SEC
-|[[latest_issue_date]]09 Nov 2020
+|09 Nov 2020
 
 |
 |{spec_tickets}/SPECQUERY-31[SPECQUERY-31^] Move AQL examples to a new separate specification.
