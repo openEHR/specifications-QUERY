@@ -708,11 +708,16 @@ NOTE: If no `ORDER BY` clause is specified, then the query result doesn't have a
 
 [[_order_by_syntax]]
 ==== Syntax
-The keyword `ORDER BY` is followed by an identified path and the keyword `DESC`, `DESCENDING`, `ASC`, or `ASCENDING`, e.g.
+The syntax starts with keyword `ORDER BY` followed by one or more sorting expressions.
+A sorting expression consists of an identified path, optionally followed by one of the `DESC`, `DESCENDING`, `ASC`, or `ASCENDING` keyword, indicating the sorting type (descending or ascending), e.g.
 
 --------
-ORDER BY c/name/value
+ORDER BY c/name/value DESC
 --------
+
+When sorting type is not specified, `ASC` (ascending) is assumed by default.
+
+Multiple sorting expressions are separated using a comma. If two rows are equal according to the leftmost expression, they are compared according to the next sorting expression.
 
 === LIMIT
 
