@@ -650,13 +650,17 @@ o1/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value
 
 A `SELECT` clause specifies what data is to be retrieved by the AQL query. The data can be any types from openEHR RM and any primitive data types.
 
-The `SELECT` syntax always starts with the keyword `SELECT`, followed by `TOP` (optional, deprecated - see <<TOP, below>>), and identified path(s) or plain variable name(s) defined in the `FROM` clause. Each variable name or identified path may have a name alias renaming the associated data.
+[[_select_syntax]]
+==== Syntax
+The syntax always starts with the keyword `SELECT`, optionally followed by `TOP` (deprecated - see <<TOP, below>>), followed by <<_aql_identified_paths,identified path(s)>> or plain <<_aql_variables,variable>> name(s) defined in the `FROM` clause.
+Each variable name or identified path may have a <<_name_alias,name alias>> renaming the associated data.
+Multiple identifiers or identified paths are separated using a comma.
 
-Where a variable name is specified, the full object of the type associated with the variable is retrieved, such as a `COMPOSITION`, `OBSERVATION` etc. Where an identified path is specified, the data item(s) having that archetype path are returned. Multiple identifiers or identified paths are separated using a comma.
+Where a variable name is specified, the full object of the type associated with the variable is retrieved, such as a `COMPOSITION`, `OBSERVATION` etc. Where an identified path is specified, the data item(s) having that archetype path are returned.
 
 Some examples are shown below.
 
-Example 1: retrieve all Compositions' name value, context start time and composer name from a specific EHR.
+.Example 1: Retrieve all Compositions' name value, context start time and composer name from a specific EHR.
 --------
 SELECT
    c/name/value AS Name, c/context/start_time AS date_time, c/composer/name AS Composer
@@ -665,7 +669,7 @@ FROM
        CONTAINS COMPOSITION c
 --------
 
-Example 2: Retrieve all Composition objects of a specific EHR.
+.Example 2: Retrieve all Composition objects of a specific EHR.
 --------
 SELECT c
 FROM EHR e[ehr_id/value=$ehrUid] 
@@ -691,6 +695,7 @@ FROM
       CONTAINS COMPOSITION c
 --------
 
+[[_name_alias]]
 ==== Name alias
 
 As in SQL, `AQL` supports the use of a name alias for the retrieved data. This is done with the keyword `AS`, followed by the name which conforms to the syntax rule of AQL variable.
