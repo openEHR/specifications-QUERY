@@ -288,9 +288,6 @@ the ADL expressions on the right-hand side of the <code>matches</code> operator 
 </tr>
 </table>
 </div>
-<div class="paragraph">
-<p>Get all abnormal blood pressure values that are recorded in a health encounter for a specific patient.</p>
-</div>
 <div class="listingblock">
 <div class="title">Scenario: <strong>Get all blood glucose values and their corresponding subject ids, where blood glucose &gt; 11 mmol/L or blood glucose &gt;= 200 mg/dL</strong></div>
 <div class="content">
@@ -314,6 +311,23 @@ WHERE
             &gt;
         &gt;
     }</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>SELECT
+    e/ehr_status/subject/external_ref/id/value as subjectId,
+    a/items[at0001]/value as analyteName,
+    a/items[at0001]/value as analyteResult
+FROM EHR e
+    CONTAINS COMPOSITION c
+        CONTAINS OBSERVATION o[openEHR-EHR-OBSERVATION.laboratory_test_result.v1]
+            CONTAINS CLUSTER a[openEHR-EHR-CLUSTER.laboratory_test_analyte.v1]
+WHERE
+    (a/items[at0001]/value/defining_code/code_string matches {'14743-9','2345-7'} AND a/items[at0001]/value/defining_code/terminology_id = 'LOINC')
+    AND
+    ((a/items[at0024]/value/magnitude &gt; 11 AND a/items[at0024]/value/units matches {'mmol/L'})
+        OR (a/items[at0024]/value/magnitude &gt;= 200 AND a/items[at0024]/value/units matches {'mg/dL'}))</pre>
 </div>
 </div>
 <div class="listingblock">
@@ -342,6 +356,24 @@ WHERE
 </div>
 </div>
 <div class="listingblock">
+<div class="title">Alternative</div>
+<div class="content">
+<pre>SELECT
+    e/ehr_id/value as ehrId,
+    a/items[at0001]/value as analyteName,
+    a/items[at0001]/value as analyteResult
+FROM EHR e
+    CONTAINS COMPOSITION c
+        CONTAINS OBSERVATION o[openEHR-EHR-OBSERVATION.laboratory_test_result.v1]
+            CONTAINS CLUSTER a[openEHR-EHR-CLUSTER.laboratory_test_analyte.v1]
+WHERE
+    (a/items[at0001]/value/defining_code/code_string matches {'14743-9','2345-7'} AND a/items[at0001]/value/defining_code/terminology_id = 'LOINC')
+    AND
+    ((a/items[at0024]/value/magnitude &gt;= 5 AND a/items[at0024]/value/magnitude &lt;=6 AND a/items[at0024]/value/units matches {'mmol/L'})
+        OR (a/items[at0024]/value/magnitude &gt;= 90 AND a/items[at0024]/value/magnitude &gt;= 110 AND a/items[at0024]/value/units matches {'mg/dL'}))</pre>
+</div>
+</div>
+<div class="listingblock">
 <div class="title">Scenario: <strong>HbA1c &gt; 7.0%</strong></div>
 <div class="content">
 <pre>SELECT
@@ -356,6 +388,19 @@ WHERE
             denominator matches {|100.0|}
         }
     }</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Alternative</div>
+<div class="content">
+<pre>SELECT
+    e/ehr_id/value as ehrId,
+    p/data[at0001]/events[at0002]/data[at0003]/items[at0006]/value as spo2Numerator
+FROM EHR e
+    CONTAINS COMPOSITION c
+        CONTAINS OBSERVATION p[openEHR-EHR-OBSERVATION.pulse_oximetry.v1]
+WHERE
+    p/data[at0001]/events[at0002]/data[at0003]/items[at0006]/value/numerator &lt;= 96</pre>
 </div>
 </div>
 <div class="listingblock">
@@ -468,7 +513,7 @@ LIMIT 5</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-11-10 10:48:10 UTC
+Last updated 2020-11-15 12:05:26 UTC
 </div>
 </div>
 </body>

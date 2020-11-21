@@ -728,7 +728,7 @@ It is not allowed to use `LIMIT` while also using `TOP` clause in the same query
 The syntax was borrowed from SQL language, similar to PostgreSQL and MySQL implementation.
 It consists of two parts: keyword `LIMIT` followed by number, optionally followed by `OFFSET` followed by a number:
 --------
-`LIMIT row_count [OFFSET offset]`
+LIMIT row_count [OFFSET offset]
 --------
 Both `row_count` and `offset` are integer numbers, `row_count` minimal value is 1, while minimal value for `offset` is 0.
 
