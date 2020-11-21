@@ -708,12 +708,14 @@ NOTE: If no `ORDER BY` clause is specified, then the query result doesn't have a
 
 [[_order_by_syntax]]
 ==== Syntax
-The syntax starts with keyword `ORDER BY` followed by one or more sorting expressions.
+The syntax starts with keyword `ORDER BY` followed by one or more _sorting expressions_.
 A sorting expression consists of an identified path, optionally followed by one of the `DESC`, `DESCENDING`, `ASC`, or `ASCENDING` keyword, indicating the sorting type (descending or ascending), e.g.
 
 --------
 ORDER BY c/name/value DESC
 --------
+
+Sorting rows assumes that data identified by path (from the sorting expression) are comparable. It implies the use of a specific operators like _equal_, _less-than_ and _greater-than_ (all available to primitives and `Ordered` types) on data identified by path.
 
 When sorting type is not specified, `ASC` (ascending) is assumed by default.
 
