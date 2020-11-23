@@ -428,9 +428,9 @@ The table below shows the supported AQL aggregate functions:
 The example below uses `MIN()`, `MAX()` and `AVG()` functions to determine edge and mean values for systolic blood pressure:
 --------
 SELECT
-    MAX(o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude),
-    MIN(o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude),
-    AVG(o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude),
+    MAX(o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude) AS maxValue,
+    MIN(o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude) AS minValue,
+    AVG(o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude) AS meanValue
 FROM
     EHR e CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.encounter.v1]
         CONTAINS OBSERVATION o[openEHR-EHR-OBSERVATION.blood_pressure.v1]
