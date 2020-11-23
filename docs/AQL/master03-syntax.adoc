@@ -436,16 +436,6 @@ FROM
         CONTAINS OBSERVATION o[openEHR-EHR-OBSERVATION.blood_pressure.v1]
 --------
 
-In this example `COUNT()` and `MIN()` are used to return the number of discharge letters and the date of their oldest event:
---------
-SELECT
-   count(*), min(c/context/start_time)
-FROM
-   EHR e
-      CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.administrative_encounter.v1]
-         CONTAINS ADMIN_ENTRY admission[openEHR-EHR-ADMIN_ENTRY.admission.v1]
---------
-
 ==== COUNT
 
 The `COUNT()` function returns the number of values of given _expression_ argument. The syntax is `COUNT([DISTINCT] expression |\*)`.
