@@ -409,7 +409,8 @@ WHERE
 
 === Aggregate functions
 
-Aggregate functions calculate a single result value from a set of _input values_, aggregated from the result set using an _expression_, representing an <<_aql_identified_paths, identified path>>.
+Aggregate functions calculate a single result value from a set of _input values_, allowing the query to return summarized information about a data item or result set.
+Input values are selected by an _expression_, representing an <<_aql_identified_paths, identified path>>.
 Unless specified otherwise, these functions ignore `NULL` values.
 
 The table below shows the supported AQL aggregate functions:
