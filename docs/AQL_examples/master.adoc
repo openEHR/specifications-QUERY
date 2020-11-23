@@ -61,6 +61,7 @@ The work reported in this paper has been funded by the following organisations:
 include::master01-preface.adoc[leveloffset=+1]
 include::master02-overview.adoc[leveloffset=+1]
 include::master03-syntax-operator.adoc[leveloffset=+1]
+include::master03-syntax-function.adoc[leveloffset=+1]
 include::master04-single_subject.adoc[leveloffset=+1]
 include::master05-population.adoc[leveloffset=+1]
 
