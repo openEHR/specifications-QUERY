@@ -409,10 +409,7 @@ WHERE
 
 === Aggregate functions
 
-Aggregate functions calculate a single result from a set of _input values_, aggregated from an _expression_ over the result set.
-These expressions are using <<_aql_identified_paths, identified paths>>
-so that the functions operate on a set of <<_built_in_types,built in (primitive)>> type values.
-Some of these functions support the `DISTINCT` keyword to consider only distinct values from the set.
+Aggregate functions calculate a single result value from a set of _input values_, aggregated from the result set using an _expression_, representing an <<_aql_identified_paths, identified path>>.
 Unless specified otherwise, these functions ignore `NULL` values.
 
 The table below shows the supported AQL aggregate functions:
@@ -451,11 +448,11 @@ FROM
 
 ==== COUNT
 
-The `COUNT()` function returns the number of values of given _expression_ argument.
-The syntax is `COUNT([DISTINCT] expression |\*)`.
-The `COUNT(*)` is used to calculate and return the number of rows of the result set, whether or not they contain `NULL`.
+The `COUNT()` function returns the number of values of given _expression_ argument. The syntax is `COUNT([DISTINCT] expression |\*)`.
 
-The `DISTINCT` keyword can be used to return the number of the distinct values of _expression_.
+The `COUNT(*)` is used to calculate the number of rows of the result set, whether or not they contain `NULL`.
+The `DISTINCT` keyword can be calculate the number of only the distinct values of _expression_.
+
 If there are no matching rows, `COUNT()` returns `0`.
 Input values type can be anything, while the return type is always an Integer.
 
