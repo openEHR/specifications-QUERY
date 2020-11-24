@@ -35,3 +35,37 @@ FROM
     EHR e CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.encounter.v1]
         CONTAINS OBSERVATION o[openEHR-EHR-OBSERVATION.blood_pressure.v1]
 --------
+
+=== TERMINOLOGY
+
+The following are examples of the use of `TERMINOLOGY` function related to FHIR terminology operations.
+
+.*Example 1*: Expand a value set
+--------
+WHERE
+    e/value/defining_code/code_string matches TERMINOLOGY('expand', 'http://hl7.org/fhir/r4', 'url=http://snomed.info/sct?fhir_vs=isa/50697003')
+--------
+
+.*Example 2*: Validate a code in a value set
+--------
+WHERE
+    TERMINOLOGY('validate', 'http://hl7.org/fhir/r4', 'system=http://loinc.org&code=45276-3&url=http:/loinc.org/vsac/BloodCulture&display=Bacteria identified in Blood by Anaerobe culture 25 degree C incubation') = true
+--------
+
+.*Example 3*: Look-up a code
+--------
+WHERE
+    e/value/defining_code/code_string matches TERMINOLOGY('lookup', 'http://hl7.org/fhir/r4', 'system=http://loinc.org&code=1963-8')
+--------
+
+.*Example 4*: Translate a code
+--------
+WHERE
+    e/value/defining_code/code_string matches TERMINOLOGY('translate', 'http://hl7.org/fhir/r4', 'system=http://hl7.org/fhir/composition-status&code=preliminary&source=http://hl7.org/fhir/ValueSet/composition-status&target=http://hl7.org/fhir/ValueSet/v3-ActStatus')
+--------
+
+.*Example 5*: Subsumption testing
+--------
+WHERE
+    TERMINOLOGY('subsumes', 'http://hl7.org/fhir/r4', 'system=http://snomed.info/sct&codeA=235856003&codeB=3738000') = true
+--------

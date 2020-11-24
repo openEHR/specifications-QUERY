@@ -46,6 +46,8 @@ This specification benefited from wide formal and informal input from the openEH
 * Matija Polajnar, PhD, Software Engineer, Better, Slovenia
 * Sebastian Iancu, Architect, Code24, Netherlands
 * Birger Haarbrandt, MSc, Peter L. Reichertz Institut for Medical Informatics (PLRI), Germany
+* Luiz Marco-Ruiz, PhD, Norwegian Centre for E-health Research, Norway
+* Borut Fabjan, Program Manager, Better, Slovenia
 
 === Support
 
