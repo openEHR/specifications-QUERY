@@ -511,7 +511,7 @@ Some examples of typical operations are:
 * *translate*: Translate a code; this will translate (find an equivalent) code from one Value Set to another one based on a predefined mapping available in the external terminology service. Translation precision may not be limited to full equivalence and different kinds of mappings may be possible (wider meaning, equivalent, narrower meaning, etc).
 * *subsumes*: Subsumption testing; this will determine if a particular terminology concept is a subtype (is-a) of another one. For example, test in SNOMED-CT if `Myasthenia Gravis | 91637004` is a subtype of `autoimmune disease | 85828009` (i.e. test if 85828009 subsumes 91637004).
 
-The `driver` argument represents an identifier of the terminology server API. It provides the information to send requests related to the ValueSet and operation parameters to the the right terminology service. In addition, it allows the system to understand how to parse responses back from the terminology service.
+The `driver` argument represents an identifier of a type of terminology service. This is not the service endpoint as such, neither a service name, but an identifier for the kind/flavour of terminology syntax that is being sent. It provides the information to send requests related to the ValueSet, `operation` and parameters to the right terminology service. In addition, it is closely related to the strategy to parse the terminology service response in a format acceptable by the query processor.
 Some examples of typical drivers are:
 
 [width="100%",cols="2,4",options="header",]
@@ -527,7 +527,7 @@ Some examples of typical drivers are:
 |dts5.apelon.com               |
 |===
 
-The `params_uri` argument consists of URI path and query sections in compliance with {rfc3986}[IETF RFC 3986]. Most common operations use this to identify the value set on which to perform the operation. A value set may be a full code system such as the full set of codes in SNOMED-CT or LOINC. The value set URI may include the version and edition sections (e.g. Australian, US, etc.). When the release and version identifiers are not provided, it is up to the external terminology server to decide which default version will be used.
+The `params_uri` argument consists of URI path and query sections in compliance with {rfc3986}[IETF RFC 3986]. Most common operations use this to identify the value set on which to perform the `operation`. A value set may be a full code system such as the full set of codes in SNOMED-CT or LOINC. The value set URI may include the version and edition sections (e.g. Australian, US, etc). When the release and version identifiers are not provided, it is up to the external terminology server to decide which default version will be used.
 Some examples of typical URI parameters are:
 
 [width="100%",cols="2,4",options="header",]
@@ -542,7 +542,7 @@ Some examples of typical URI parameters are:
 |http://fhir.de/CodeSystem/dimdi/icd-10-gm      |
 |===
 
-The `TERMINOLOGY` function can be used in two ways in the `WHERE` clause, as a right operand of `matches` operator:
+The `TERMINOLOGY` function can be used in two ways in the `WHERE` clause, as a right-hand operand of `matches` operator:
 
 * as a direct use of function results, to indicate that the set will be resolved by the internal representation, e.g.
 +
