@@ -36,7 +36,7 @@ This specification benefited from wide formal and informal input from the openEH
 * Ian McNicoll MD, FreshEHR, UK
 * Sebastian Iancu, Architect, Code24, Netherlands
 * Luiz Marco-Ruiz, PhD, Norwegian Centre for E-health Research, Norway
-* Heath Frankel, Ocean Informatics, Australia
+* Heath Frankel, Ocean Health Systems, Australia
 
 === Support
 

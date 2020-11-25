@@ -503,7 +503,7 @@ The `TERMINOLOGY` function is used to invoke operations of an external terminolo
 The syntax is `TERMINOLOGY(operation, driver, params_uri)`, having all arguments of type String, while the return type depends on the invoked `operation` and `driver` and is considered to be of `Any` type.
 
 The `operation` argument specifies the action to perform over the specified value set or code system. It is not restricted to any particular value as different terminology servers may use different ways of specifying the operation and its parameters. The specified operation can be properly dereferenced by the implementation of the `driver`.
-Some examples of mostly used operations are:
+Some examples of typical operations are:
 
 * *expand*: Expand a value set; this will retrieve all the codes contained in a value set as an explicit set.
 * *validate*: Validate a code in a value set; this will check if a given code belongs to a value set. Recall that the value set may comprise all the codes in a code system (terminology).
@@ -512,7 +512,7 @@ Some examples of mostly used operations are:
 * *subsumes*: Subsumption testing; this will determine if a particular terminology concept is a subtype (is-a) of another one. For example, test in SNOMED-CT if `Myasthenia Gravis | 91637004` is a subtype of `autoimmune disease | 85828009` (i.e. test if 85828009 subsumes 91637004).
 
 The `driver` argument represents an identifier of the terminology server API. It provides the information to send requests related to the ValueSet and operation parameters to the the right terminology service. In addition, it allows the system to understand how to parse responses back from the terminology service.
-Some examples of mostly used drivers are:
+Some examples of typical drivers are:
 
 [width="100%",cols="2,4",options="header",]
 |===
@@ -527,8 +527,8 @@ Some examples of mostly used drivers are:
 |dts5.apelon.com               |
 |===
 
-The `params_uri` argument consists of URI path and query sections in compliance with {rfc3986}[IETF RFC 3986]. Most common operations uses this to identify the value set on which to perform the operation. A value set may be a full code system such as the full set of codes in SNOMED-CT or LOINC. The value set URI may include the version and edition sections (e.g. Australian, US, etc.). When the release and version identifiers are not provided, it is up to the external terminology server to decide which default version will be used.
-Some examples of mostly used URI parameters are:
+The `params_uri` argument consists of URI path and query sections in compliance with {rfc3986}[IETF RFC 3986]. Most common operations use this to identify the value set on which to perform the operation. A value set may be a full code system such as the full set of codes in SNOMED-CT or LOINC. The value set URI may include the version and edition sections (e.g. Australian, US, etc.). When the release and version identifiers are not provided, it is up to the external terminology server to decide which default version will be used.
+Some examples of typical URI parameters are:
 
 [width="100%",cols="2,4",options="header",]
 |===
