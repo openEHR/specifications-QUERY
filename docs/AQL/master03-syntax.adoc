@@ -499,32 +499,32 @@ Often the `matches` operator may be need to perform a request to a terminology s
 Several operations may be possible: the expansion of a ValueSet (or Reference Set), checking that a concept belongs to a value set or code system, testing if one concept subsumes another one, or the translation of concepts across different terminologies.
 While matching value by a pure terminology concept specified as <<_matches_terminology_uri,a terminology URI>> is possible, the invocation of external terminology servers from AQL requires a special function, to perform all these operations.
 
-The `TERMINOLOGY` function is used to invoke operations of an external terminology server and return the result.
-The syntax is `TERMINOLOGY(operation, driver, params_uri)`, having all arguments of type String, while the return type depends on the invoked `operation` and `driver` and is considered to be of `Any` type.
+The `TERMINOLOGY` function is used to invoke operations of an external terminology server and return the results for further processing by AQL.
+The syntax is `TERMINOLOGY(operation, service_api, params_uri)`, having all arguments of type String, while the return type depends on the invoked `operation` and `service_api` and is considered to be of `Any` type.
 
-The `operation` argument specifies the action to perform over the specified value set or code system. It is not restricted to any particular value as different terminology servers may use different ways of specifying the operation and its parameters. The specified operation can be properly dereferenced by the implementation of the `driver`.
+The `operation` argument specifies the action to perform over the specified value set or code system. It is not restricted to any particular value as different terminology servers may use different ways of specifying the operation and its parameters. The specified operation can be properly dereferenced by the implementation of the `service_api`.
 Some examples of typical operations are:
 
 * *expand*: Expand a value set; this will retrieve all the codes contained in a value set as an explicit set.
 * *validate*: Validate a code in a value set; this will check if a given code belongs to a value set. Recall that the value set may comprise all the codes in a code system (terminology).
 * *lookup*: Look-up a code; this will retrieve all the information concerning one particular code. Examples are retrieving the preferred form to display, synonyms, etc.
-* *translate*: Translate a code; this will translate (find an equivalent) code from one Value Set to another one based on a predefined mapping available in the external terminology service. Translation precision may not be limited to full equivalence and different kinds of mappings may be possible (wider meaning, equivalent, narrower meaning, etc).
+* *map*: Map a code (translate between value sets); this will convert (find an equivalent) code from one Value Set to another one based on a predefined mapping available in the external terminology service. Translation precision may not be limited to full equivalence and different kinds of mappings may be possible (wider meaning, equivalent, narrower meaning, etc).
 * *subsumes*: Subsumption testing; this will determine if a particular terminology concept is a subtype (is-a) of another one. For example, test in SNOMED-CT if `Myasthenia Gravis | 91637004` is a subtype of `autoimmune disease | 85828009` (i.e. test if 85828009 subsumes 91637004).
 
-The `driver` argument represents an identifier of a type of terminology service. This is not the service endpoint as such, neither a service name, but an identifier for the kind/flavour of terminology syntax that is being sent. It provides the information to send requests related to the ValueSet, `operation` and parameters to the right terminology service. In addition, it is closely related to the strategy to parse the terminology service response in a format acceptable by the query processor.
-Some examples of typical drivers are:
+The `service_api` argument represents an identifier of a type of terminology service. This is not the service endpoint as such, neither a service name, but an identifier for the kind/flavour of terminology syntax that is being sent. It provides the information to send requests related to the ValueSet, `operation` and parameters to the right terminology service. In addition, it is closely related to the strategy to parse the terminology service response in a format acceptable by the query processor.
+Some examples of typical values for `service_api` are:
 
 [width="100%",cols="2,4",options="header",]
 |===
-|Driver     |Description
+|Service_api     |Description
 
 |http://hl7.org/fhir/4.0       |FHIR Terminology Service v4.0
 |http://hl7.org/fhir/3.0       |FHIR Terminology Service v3.0
 |http://hl7.org/fhir/1.0       |FHIR Terminology Service v1.0
 |ots.oceanhealthsystems.com    |Ocean Ontology Service
 |bts.better.care               |Better Terminology Service
-|dts4.apelon.com               |
-|dts5.apelon.com               |
+|apelon.dts.org/4.7.1          |Apelon Terminology Service, version 4.7.1
+|example.terminology-service.api/v1        |An example of a fictive terminology service
 |===
 
 The `params_uri` argument consists of URI path and query sections in compliance with {rfc3986}[IETF RFC 3986]. Most common operations use this to identify the value set on which to perform the `operation`. A value set may be a full code system such as the full set of codes in SNOMED-CT or LOINC. The value set URI may include the version and edition sections (e.g. Australian, US, etc). When the release and version identifiers are not provided, it is up to the external terminology server to decide which default version will be used.
@@ -544,7 +544,7 @@ Some examples of typical URI parameters are:
 
 The `TERMINOLOGY` function can be used in two ways in the `WHERE` clause, as a right-hand operand of `matches` operator:
 
-* as a direct use of function results, to indicate that the set will be resolved by the internal representation, e.g.
+* as a direct use of function results, e.g.
 +
 --------
 WHERE e/value/defining_code/code_string matches TERMINOLOGY('expand', 'http://hl7.org/fhir/4.0', 'http://snomed.info/sct?fhir_vs=isa/50697003')
