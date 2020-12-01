@@ -46,6 +46,7 @@
 <li><a href="#_function_syntax_examples">2.2. Function Syntax Examples</a>
 <ul class="sectlevel3">
 <li><a href="#_aggregate_functions">2.2.1. Aggregate functions</a></li>
+<li><a href="#_terminology">2.2.2. TERMINOLOGY</a></li>
 </ul>
 </li>
 </ul>
@@ -176,6 +177,12 @@
 </li>
 <li>
 <p>Sebastian Iancu, Architect, Code24, Netherlands</p>
+</li>
+<li>
+<p>Luiz Marco-Ruiz, PhD, Norwegian Centre for E-health Research, Norway</p>
+</li>
+<li>
+<p>Heath Frankel, Ocean Health Systems, Australia</p>
 </li>
 </ul>
 </div>
@@ -526,6 +533,47 @@ FROM
 </div>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_terminology"><a class="anchor" href="#_terminology"></a>2.2.2. TERMINOLOGY</h4>
+<div class="paragraph">
+<p>The following are examples of the use of <code>TERMINOLOGY</code> function related to FHIR terminology operations.</p>
+</div>
+<div class="listingblock">
+<div class="title"><strong>Example 1</strong>: Expand a value set</div>
+<div class="content">
+<pre>WHERE
+    e/value/defining_code/code_string matches TERMINOLOGY('expand', 'http://hl7.org/fhir/r4', 'url=http://snomed.info/sct?fhir_vs=isa/50697003')</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title"><strong>Example 2</strong>: Validate a code in a value set</div>
+<div class="content">
+<pre>WHERE
+    TERMINOLOGY('validate', 'http://hl7.org/fhir/r4', 'system=http://snomed.info/sct&amp;code=122298005&amp;url=http://snomed.info/sct?fhir_vs&amp;display=Astrovirus RNA assay') = true</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title"><strong>Example 3</strong>: Look-up a code</div>
+<div class="content">
+<pre>WHERE
+    e/value/defining_code/code_string matches TERMINOLOGY('lookup', 'http://hl7.org/fhir/r4', 'system=http://loinc.org&amp;code=1963-8')</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title"><strong>Example 4</strong>: Map a code</div>
+<div class="content">
+<pre>WHERE
+    e/value/defining_code/code_string matches TERMINOLOGY('map', 'http://hl7.org/fhir/r4', 'system=http://hl7.org/fhir/composition-status&amp;code=preliminary&amp;source=http://hl7.org/fhir/ValueSet/composition-status&amp;target=http://hl7.org/fhir/ValueSet/v3-ActStatus')</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title"><strong>Example 5</strong>: Subsumption testing</div>
+<div class="content">
+<pre>WHERE
+    TERMINOLOGY('subsumes', 'http://hl7.org/fhir/r4', CONCAT('system=http://snomed.info/sct&amp;codeA=235856003&amp;codeB=', e/value/defining_code/code_string)) = true</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -562,7 +610,7 @@ LIMIT 5</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-11-23 10:09:42 UTC
+Last updated 2020-12-01 09:26:41 UTC
 </div>
 </div>
 </body>

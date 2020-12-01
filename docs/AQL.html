@@ -104,6 +104,11 @@
 <li><a href="#_avg">3.8.1.5. AVG</a></li>
 </ul>
 </li>
+<li><a href="#_other_functions">3.8.2. Other functions</a>
+<ul class="sectlevel4">
+<li><a href="#_terminology">3.8.2.1. TERMINOLOGY</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#_aql_identified_paths">3.9. AQL Identified Paths</a>
@@ -138,11 +143,16 @@
 </li>
 <li><a href="#_select">3.11.4. SELECT</a>
 <ul class="sectlevel4">
-<li><a href="#_top">3.11.4.1. TOP</a></li>
-<li><a href="#_name_alias">3.11.4.2. Name alias</a></li>
+<li><a href="#_select_syntax">3.11.4.1. Syntax</a></li>
+<li><a href="#_top">3.11.4.2. TOP</a></li>
+<li><a href="#_name_alias">3.11.4.3. Name alias</a></li>
 </ul>
 </li>
-<li><a href="#_order_by">3.11.5. ORDER BY</a></li>
+<li><a href="#_order_by">3.11.5. ORDER BY</a>
+<ul class="sectlevel4">
+<li><a href="#_order_by_syntax">3.11.5.1. Syntax</a></li>
+</ul>
+</li>
 <li><a href="#_limit">3.11.6. LIMIT</a>
 <ul class="sectlevel4">
 <li><a href="#_limit_syntax">3.11.6.1. Syntax</a></li>
@@ -263,6 +273,17 @@
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://specifications.openehr.org/tickets/SPECQUERY-8" target="_blank" rel="noopener">SPECQUERY-8</a> Improve readability and clean up text (non-semantic).</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">S Iancu</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="latest_issue_date"></a>17 Nov 2020</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://specifications.openehr.org/tickets/SPECQUERY-12" target="_blank" rel="noopener">SPECQUERY-12</a> Improve terminology support by adding a new TERMINOLOGY function.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">L Marco-Ruiz,<br>
+ B Næss,<br>
+ H Frankel<br>
+ B Fabjan,<br>
+ I McNicoll,<br>
+ S Iancu</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">24 Nov 2020</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"></td>
@@ -404,6 +425,12 @@ S Iancu</p></td>
 </li>
 <li>
 <p>Birger Haarbrandt, MSc, Peter L. Reichertz Institut for Medical Informatics (PLRI), Germany</p>
+</li>
+<li>
+<p>Luiz Marco-Ruiz, PhD, Norwegian Centre for E-health Research, Norway</p>
+</li>
+<li>
+<p>Borut Fabjan, Program Manager, Better, Slovenia</p>
 </li>
 </ul>
 </div>
@@ -634,18 +661,6 @@ WHERE                                                        -- Where clause
 <div class="paragraph">
 <p>In AQL, <a href="#_openehr_path_syntax">openEHR path syntax</a> is used to locate any node or data values defined within archetypes. In the <code>SELECT</code> clause, the openEHR path syntax can be used to indicate expected objects or data values to be returned (similarly to how SQL 'projections' work). The <code>FROM</code> clause uses <a href="#_containment">containment</a> mechanisms indicating the scope of the query data source. <code>WHERE</code> clause uses archetype path to set query criteria on archetypes or any node within the archetypes. The following sections introduce the AQL syntax in detail.</p>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-If no <code>ORDER BY</code> clause is specified, then the query result doesn&#8217;t have any default ordering criteria defined by this specification. Ordering could be defined by each implementation or be random. In terms of compliance to this specification, default ordering in results is undefined.
-</td>
-</tr>
-</table>
-</div>
 </div>
 <div class="sect2">
 <h3 id="_reserved_words_and_characters"><a class="anchor" href="#_reserved_words_and_characters"></a>3.2. Reserved words and characters</h3>
@@ -664,7 +679,7 @@ If no <code>ORDER BY</code> clause is specified, then the query result doesn&#82
 <p><code>AND</code>, <code>OR</code>, <code>NOT</code></p>
 </li>
 <li>
-<p>functions: <code>count</code>, <code>min</code>, <code>max</code>, <code>sum</code>, <code>avg</code>, <code>now</code>, <code>current-date</code>, <code>current-date-time</code></p>
+<p>functions: <code>count</code>, <code>min</code>, <code>max</code>, <code>sum</code>, <code>avg</code>, <code>terminology</code>, <code>now</code>, <code>current-date</code>, <code>current-date-time</code></p>
 </li>
 <li>
 <p><code>LIKE</code>, <code>matches</code>, <code>in</code>, <code>exists</code>, <code>not in</code></p>
@@ -1196,7 +1211,7 @@ WHERE
 </div>
 </div>
 <div class="paragraph">
-<p>URI data is enclosed within curly braces after <code>matches</code> operator. A URI is expressed in <a href="https://www.ietf.org/rfc/rfc3986">IETF RFC 3986</a> format. URIs are not case sensitive.</p>
+<p>URI data is enclosed within curly braces after <code>matches</code> operator. A URI is expressed in <a href="https://tools.ietf.org/html/rfc3986">IETF RFC 3986</a> format. URIs are not case sensitive.</p>
 </div>
 <div class="paragraph">
 <p>A terminology URI consists of the following components:</p>
@@ -1230,6 +1245,22 @@ WHERE
 </div>
 </li>
 </ol>
+</div>
+</li>
+<li>
+<p><strong>results of function calls</strong>: a <code>TERMINOLOGY()</code> function (see <a href="#_terminology">below</a>) is used to invoke operations of an external terminology server and return the results back to the <code>matches</code> operator for further use. An example is shown below:</p>
+<div class="listingblock">
+<div class="content">
+<pre>SELECT
+   c/context/start_time, p/data/items[at0002]/value
+FROM
+   EHR e[ehr_id/value='1234']
+      CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.problem_list.v1]
+         CONTAINS EVALUATION p[openEHR-EHR-EVALUATION.problem-diagnosis.v1]
+WHERE
+   c/name/value='Current Problems' AND
+   p/data/items[at0002]/value/defining_code/code_string matches TERMINOLOGY('expand', 'http://hl7.org/fhir/4.0', 'http://snomed.info/sct?fhir_vs=isa/50697003')</pre>
+</div>
 </div>
 </li>
 </ol>
@@ -1426,6 +1457,158 @@ Input values type should be either Integer of Real, and it will also determine t
 <div class="paragraph">
 <p>If there are no matching rows, <code>AVG()</code> returns <code>NULL</code>.
 Input values type should be either Integer of Real, and it will also determine the return type.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_other_functions"><a class="anchor" href="#_other_functions"></a>3.8.2. Other functions</h4>
+<div class="sect4">
+<h5 id="_terminology"><a class="anchor" href="#_terminology"></a>3.8.2.1. TERMINOLOGY</h5>
+<div class="paragraph">
+<p>Often the <code>matches</code> operator may be need to perform a request to a terminology server, in order to execute some <em>operations</em> over a value set or code system (a synonym of <em>terminology</em>).
+Several operations may be possible: the expansion of a ValueSet (or Reference Set), checking that a concept belongs to a value set or code system, testing if one concept subsumes another one, or the translation of concepts across different terminologies.
+While matching value by a pure terminology concept specified as <a href="#_matches_terminology_uri">a terminology URI</a> is possible, the invocation of external terminology servers from AQL requires a special function, to perform all these operations.</p>
+</div>
+<div class="paragraph">
+<p>The <code>TERMINOLOGY</code> function is used to invoke operations of an external terminology server and return the results for further processing by AQL.
+The syntax is <code>TERMINOLOGY(operation, service_api, params_uri)</code>, having all arguments of type String, while the return type depends on the invoked <code>operation</code> and <code>service_api</code> and is considered to be of <code>Any</code> type.</p>
+</div>
+<div class="paragraph">
+<p>The <code>operation</code> argument specifies the action to perform over the specified value set or code system. It is not restricted to any particular value as different terminology servers may use different ways of specifying the operation and its parameters. The specified operation can be properly dereferenced by the implementation of the <code>service_api</code>.
+Some examples of typical operations are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>expand</strong>: Expand a value set; this will retrieve all the codes contained in a value set as an explicit set.</p>
+</li>
+<li>
+<p><strong>validate</strong>: Validate a code in a value set; this will check if a given code belongs to a value set. Recall that the value set may comprise all the codes in a code system (terminology).</p>
+</li>
+<li>
+<p><strong>lookup</strong>: Look-up a code; this will retrieve all the information concerning one particular code. Examples are retrieving the preferred form to display, synonyms, etc.</p>
+</li>
+<li>
+<p><strong>map</strong>: Map a code (translate between value sets); this will convert (find an equivalent) code from one Value Set to another one based on a predefined mapping available in the external terminology service. Translation precision may not be limited to full equivalence and different kinds of mappings may be possible (wider meaning, equivalent, narrower meaning, etc).</p>
+</li>
+<li>
+<p><strong>subsumes</strong>: Subsumption testing; this will determine if a particular terminology concept is a subtype (is-a) of another one. For example, test in SNOMED-CT if <code>Myasthenia Gravis | 91637004</code> is a subtype of <code>autoimmune disease | 85828009</code> (i.e. test if 85828009 subsumes 91637004).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The <code>service_api</code> argument represents an identifier of a type of terminology service. This is not the service endpoint as such, neither a service name, but an identifier for the kind/flavour of terminology syntax that is being sent. It provides the information to send requests related to the ValueSet, <code>operation</code> and parameters to the right terminology service. In addition, it is closely related to the strategy to parse the terminology service response in a format acceptable by the query processor.
+Some examples of typical values for <code>service_api</code> are:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Service_api</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://hl7.org/fhir/4.0" class="bare">http://hl7.org/fhir/4.0</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">FHIR Terminology Service v4.0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://hl7.org/fhir/3.0" class="bare">http://hl7.org/fhir/3.0</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">FHIR Terminology Service v3.0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://hl7.org/fhir/1.0" class="bare">http://hl7.org/fhir/1.0</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">FHIR Terminology Service v1.0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ots.oceanhealthsystems.com</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ocean Ontology Service</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">bts.better.care</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Better Terminology Service</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">apelon.dts.org/4.7.1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Apelon Terminology Service, version 4.7.1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">example.terminology-service.api/v1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An example of a fictive terminology service</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The <code>params_uri</code> argument consists of URI path and query sections in compliance with <a href="https://tools.ietf.org/html/rfc3986">IETF RFC 3986</a>. Most common operations use this to identify the value set on which to perform the <code>operation</code>. A value set may be a full code system such as the full set of codes in SNOMED-CT or LOINC. The value set URI may include the version and edition sections (e.g. Australian, US, etc). When the release and version identifiers are not provided, it is up to the external terminology server to decide which default version will be used.
+Some examples of typical URI parameters are:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">URI parameters</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://terminology.hl7.org/ValueSet/v3-FamilyMember" class="bare">http://terminology.hl7.org/ValueSet/v3-FamilyMember</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://vsac.nlm.nih.gov/valueset/2.16.840.1.113762.1.4.1010.2" class="bare">https://vsac.nlm.nih.gov/valueset/2.16.840.1.113762.1.4.1010.2</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://snomed.info/sct/32506021000036107/version/20200331?fhir_vs=refset/1200161000168100" class="bare">http://snomed.info/sct/32506021000036107/version/20200331?fhir_vs=refset/1200161000168100</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">implicit VS defined for Australian Refset for Vaccination Reason</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://snomed.info/sct" class="bare">http://snomed.info/sct</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://www.omim.org" class="bare">http://www.omim.org</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://fhir.de/CodeSystem/dimdi/icd-10-gm" class="bare">http://fhir.de/CodeSystem/dimdi/icd-10-gm</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The <code>TERMINOLOGY</code> function can be used in two ways in the <code>WHERE</code> clause, as a right-hand operand of <code>matches</code> operator:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>as a direct use of function results, e.g.</p>
+<div class="listingblock">
+<div class="content">
+<pre>WHERE e/value/defining_code/code_string matches TERMINOLOGY('expand', 'http://hl7.org/fhir/4.0', 'http://snomed.info/sct?fhir_vs=isa/50697003')</pre>
+</div>
+</div>
+</li>
+<li>
+<p>embedded between curly braces (<code>{}</code>), for merging explicit codes with the function results (in which case the AQL interpreter is responsible for generating a valid list of codes during semantic analysis), e.g.</p>
+<div class="listingblock">
+<div class="content">
+<pre>WHERE e/value/defining_code/code_string matches {'http://snomed.info/id/442031002', TERMINOLOGY('expand', 'http://hl7.org/fhir/4.0', 'http://snomed.info/sct?fhir_vs=isa/50697003')}</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>More examples can be found in the <a href="https://specifications.openehr.org/releases/QUERY/latest/AQL_examples.html#_terminology" target="_blank" rel="noopener">openEHR AQL examples</a> document.</p>
 </div>
 </div>
 </div>
@@ -1836,19 +2019,21 @@ o1/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value</pre>
 <div class="paragraph">
 <p>A <code>SELECT</code> clause specifies what data is to be retrieved by the AQL query. The data can be any types from openEHR RM and any primitive data types.</p>
 </div>
+<div class="sect4">
+<h5 id="_select_syntax"><a class="anchor" href="#_select_syntax"></a>3.11.4.1. Syntax</h5>
 <div class="paragraph">
-<p>The <code>SELECT</code> syntax always starts with the keyword <code>SELECT</code>, followed by <code>TOP</code> (optional, deprecated - see <a href="#_top">below</a>), and identified path(s) or plain variable name(s) defined in the <code>FROM</code> clause. Each variable name or identified path may have a name alias renaming the associated data.</p>
+<p>The syntax always starts with the keyword <code>SELECT</code>, optionally followed by <code>TOP</code> (deprecated - see <a href="#_top">below</a>), followed by <a href="#_aql_identified_paths">identified path(s)</a> or plain <a href="#_aql_variables">variable</a> name(s) defined in the <code>FROM</code> clause.
+Each variable name or identified path may have a <a href="#_name_alias">name alias</a> renaming the associated data.
+Multiple identifiers or identified paths are separated using a comma.</p>
 </div>
 <div class="paragraph">
-<p>Where a variable name is specified, the full object of the type associated with the variable is retrieved, such as a <code>COMPOSITION</code>, <code>OBSERVATION</code> etc. Where an identified path is specified, the data item(s) having that archetype path are returned. Multiple identifiers or identified paths are separated using a comma.</p>
+<p>Where a variable name is specified, the full object of the type associated with the variable is retrieved, such as a <code>COMPOSITION</code>, <code>OBSERVATION</code> etc. Where an identified path is specified, the data item(s) having that archetype path are returned.</p>
 </div>
 <div class="paragraph">
 <p>Some examples are shown below.</p>
 </div>
-<div class="paragraph">
-<p>Example 1: retrieve all Compositions' name value, context start time and composer name from a specific EHR.</p>
-</div>
 <div class="listingblock">
+<div class="title">Example 1: Retrieve all Compositions' name value, context start time and composer name from a specific EHR.</div>
 <div class="content">
 <pre>SELECT
    c/name/value AS Name, c/context/start_time AS date_time, c/composer/name AS Composer
@@ -1857,18 +2042,17 @@ FROM
        CONTAINS COMPOSITION c</pre>
 </div>
 </div>
-<div class="paragraph">
-<p>Example 2: Retrieve all Composition objects of a specific EHR.</p>
-</div>
 <div class="listingblock">
+<div class="title">Example 2: Retrieve all Composition objects of a specific EHR.</div>
 <div class="content">
 <pre>SELECT c
 FROM EHR e[ehr_id/value=$ehrUid]
     CONTAINS COMPOSITION c</pre>
 </div>
 </div>
+</div>
 <div class="sect4">
-<h5 id="_top"><a class="anchor" href="#_top"></a>3.11.4.1. TOP</h5>
+<h5 id="_top"><a class="anchor" href="#_top"></a>3.11.4.2. TOP</h5>
 <div class="paragraph deprecated">
 <p><strong>Deprecated</strong>: Starting with Release 1.1.0, the use of <code>TOP</code> modifier is deprecated in favour of the <code>LIMIT</code> clause combined with <code>ORDER BY</code> (see <a href="#_limit">below</a>).
 The <code>TOP</code> will be removed in a future major release of AQL specification.
@@ -1891,7 +2075,7 @@ FROM
 </div>
 </div>
 <div class="sect4">
-<h5 id="_name_alias"><a class="anchor" href="#_name_alias"></a>3.11.4.2. Name alias</h5>
+<h5 id="_name_alias"><a class="anchor" href="#_name_alias"></a>3.11.4.3. Name alias</h5>
 <div class="paragraph">
 <p>As in SQL, <code>AQL</code> supports the use of a name alias for the retrieved data. This is done with the keyword <code>AS</code>, followed by the name which conforms to the syntax rule of AQL variable.</p>
 </div>
@@ -1900,11 +2084,39 @@ FROM
 <div class="sect3">
 <h4 id="_order_by"><a class="anchor" href="#_order_by"></a>3.11.5. ORDER BY</h4>
 <div class="paragraph">
-<p>The <code>ORDER BY</code> clause is used to sort the returned results. The keyword <code>ORDER BY</code> is followed by an identified path and the keyword <code>DESC</code>, <code>DESCENDING</code>, <code>ASC</code>, or <code>ASCENDING</code>, e.g.</p>
+<p>The <code>ORDER BY</code> clause is used to sort the returned results.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+If no <code>ORDER BY</code> clause is specified, then the query result doesn&#8217;t have any default ordering criteria defined by this specification. Ordering could be defined by each implementation or be random. In terms of compliance to this specification, default ordering in results is undefined.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_order_by_syntax"><a class="anchor" href="#_order_by_syntax"></a>3.11.5.1. Syntax</h5>
+<div class="paragraph">
+<p>The syntax starts with keyword <code>ORDER BY</code> followed by one or more <em>sorting expressions</em>.
+A sorting expression consists of an identified path, optionally followed by one of the <code>DESC</code>, <code>DESCENDING</code>, <code>ASC</code>, or <code>ASCENDING</code> keyword, indicating the sorting type (descending or ascending), e.g.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>ORDER BY c/name/value</pre>
+<pre>ORDER BY c/name/value DESC</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Sorting rows assumes that data identified by path (from the sorting expression) are comparable. It implies the use of a specific operators like <em>equal</em>, <em>less-than</em> and <em>greater-than</em> (all available to primitives and <code>Ordered</code> types) on data identified by path.</p>
+</div>
+<div class="paragraph">
+<p>When sorting type is not specified, <code>ASC</code> (ascending) is assumed by default.</p>
+</div>
+<div class="paragraph">
+<p>Multiple sorting expressions are separated using a comma. If two rows are equal according to the leftmost expression, they are compared according to the next sorting expression.</p>
 </div>
 </div>
 </div>
@@ -2762,7 +2974,7 @@ LIMIT 5</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-11-17 15:42:59 UTC
+Last updated 2020-12-01 09:26:41 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://specifications.openehr.org/styles/pygments-default.css">
