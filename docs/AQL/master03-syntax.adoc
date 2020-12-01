@@ -21,7 +21,7 @@ Keywords in AQL are not case sensitive, so `SELECT`, `Select`, `select`, `SeLeCt
 * `SELECT`, `AS`, `FROM`, `CONTAINS`, `WHERE`
 * `ORDER BY`, `LIMIT`, `OFFSET`
 * `AND`, `OR`, `NOT`
-* functions: `count`, `min`, `max`, `sum`, `avg`, `now`, `current-date`, `current-date-time`
+* functions: `count`, `min`, `max`, `sum`, `avg`, `terminology`, `now`, `current-date`, `current-date-time`
 * `LIKE`, `matches`, `in`, `exists`, `not in`
 * `"` and `'`: double and single quote characters are used to delimit string values;
 * `|`: bar characters are used to delimit intervals;
@@ -309,6 +309,8 @@ matches {1, 2, 3}                                           // an integer list
 matches {1.1, 2.5, 3.8}                                     // a real value list
 --------
 
++
+[[_matches_terminology_uri]]
 . *URI*: this can be a terminology URI, an openEHR EHR URI, or other URI. An example with a terminology URI is shown below:
 +
 --------
@@ -342,6 +344,20 @@ This is an example of a terminology URI:
         |             |         |           |          |
     terminology  terminology function    argument   argument
        uri         service                 name      value
+--------
+
+. *results of function calls*: a `TERMINOLOGY()` function (see <<_terminology, below>>) is used to invoke operations of an external terminology server and return the results back to the `matches` operator for further use. An example is shown below:
++
+--------
+SELECT
+   c/context/start_time, p/data/items[at0002]/value
+FROM
+   EHR e[ehr_id/value='1234']
+      CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.problem_list.v1]
+         CONTAINS EVALUATION p[openEHR-EHR-EVALUATION.problem-diagnosis.v1]
+WHERE
+   c/name/value='Current Problems' AND
+   p/data/items[at0002]/value/defining_code/code_string matches TERMINOLOGY('expand', 'http://hl7.org/fhir/4.0', 'http://snomed.info/sct?fhir_vs=isa/50697003')
 --------
 
 === Logical operators
@@ -475,6 +491,72 @@ The `AVG()` function returns the average value of given _expression_ argument. T
 If there are no matching rows, `AVG()` returns `NULL`.
 Input values type should be either Integer of Real, and it will also determine the return type.
 
+=== Other functions
+
+==== TERMINOLOGY
+
+Often the `matches` operator may be need to perform a request to a terminology server, in order to execute some _operations_ over a value set or code system (a synonym of _terminology_).
+Several operations may be possible: the expansion of a ValueSet (or Reference Set), checking that a concept belongs to a value set or code system, testing if one concept subsumes another one, or the translation of concepts across different terminologies.
+While matching value by a pure terminology concept specified as <<_matches_terminology_uri,a terminology URI>> is possible, the invocation of external terminology servers from AQL requires a special function, to perform all these operations.
+
+The `TERMINOLOGY` function is used to invoke operations of an external terminology server and return the results for further processing by AQL.
+The syntax is `TERMINOLOGY(operation, service_api, params_uri)`, having all arguments of type String, while the return type depends on the invoked `operation` and `service_api` and is considered to be of `Any` type.
+
+The `operation` argument specifies the action to perform over the specified value set or code system. It is not restricted to any particular value as different terminology servers may use different ways of specifying the operation and its parameters. The specified operation can be properly dereferenced by the implementation of the `service_api`.
+Some examples of typical operations are:
+
+* *expand*: Expand a value set; this will retrieve all the codes contained in a value set as an explicit set.
+* *validate*: Validate a code in a value set; this will check if a given code belongs to a value set. Recall that the value set may comprise all the codes in a code system (terminology).
+* *lookup*: Look-up a code; this will retrieve all the information concerning one particular code. Examples are retrieving the preferred form to display, synonyms, etc.
+* *map*: Map a code (translate between value sets); this will convert (find an equivalent) code from one Value Set to another one based on a predefined mapping available in the external terminology service. Translation precision may not be limited to full equivalence and different kinds of mappings may be possible (wider meaning, equivalent, narrower meaning, etc).
+* *subsumes*: Subsumption testing; this will determine if a particular terminology concept is a subtype (is-a) of another one. For example, test in SNOMED-CT if `Myasthenia Gravis | 91637004` is a subtype of `autoimmune disease | 85828009` (i.e. test if 85828009 subsumes 91637004).
+
+The `service_api` argument represents an identifier of a type of terminology service. This is not the service endpoint as such, neither a service name, but an identifier for the kind/flavour of terminology syntax that is being sent. It provides the information to send requests related to the ValueSet, `operation` and parameters to the right terminology service. In addition, it is closely related to the strategy to parse the terminology service response in a format acceptable by the query processor.
+Some examples of typical values for `service_api` are:
+
+[width="100%",cols="2,4",options="header",]
+|===
+|Service_api     |Description
+
+|http://hl7.org/fhir/4.0       |FHIR Terminology Service v4.0
+|http://hl7.org/fhir/3.0       |FHIR Terminology Service v3.0
+|http://hl7.org/fhir/1.0       |FHIR Terminology Service v1.0
+|ots.oceanhealthsystems.com    |Ocean Ontology Service
+|bts.better.care               |Better Terminology Service
+|apelon.dts.org/4.7.1          |Apelon Terminology Service, version 4.7.1
+|example.terminology-service.api/v1        |An example of a fictive terminology service
+|===
+
+The `params_uri` argument consists of URI path and query sections in compliance with {rfc3986}[IETF RFC 3986]. Most common operations use this to identify the value set on which to perform the `operation`. A value set may be a full code system such as the full set of codes in SNOMED-CT or LOINC. The value set URI may include the version and edition sections (e.g. Australian, US, etc). When the release and version identifiers are not provided, it is up to the external terminology server to decide which default version will be used.
+Some examples of typical URI parameters are:
+
+[width="100%",cols="2,4",options="header",]
+|===
+|URI parameters     |Description
+
+|http://terminology.hl7.org/ValueSet/v3-FamilyMember       |
+|https://vsac.nlm.nih.gov/valueset/2.16.840.1.113762.1.4.1010.2       |
+|http://snomed.info/sct/32506021000036107/version/20200331?fhir_vs=refset/1200161000168100       |implicit VS defined for Australian Refset for Vaccination Reason
+|http://snomed.info/sct     |
+|http://www.omim.org        |
+|http://fhir.de/CodeSystem/dimdi/icd-10-gm      |
+|===
+
+The `TERMINOLOGY` function can be used in two ways in the `WHERE` clause, as a right-hand operand of `matches` operator:
+
+* as a direct use of function results, e.g.
++
+--------
+WHERE e/value/defining_code/code_string matches TERMINOLOGY('expand', 'http://hl7.org/fhir/4.0', 'http://snomed.info/sct?fhir_vs=isa/50697003')
+--------
+
+* embedded between curly braces (`{}`), for merging explicit codes with the function results (in which case the AQL interpreter is responsible for generating a valid list of codes during semantic analysis), e.g.
++
+--------
+WHERE e/value/defining_code/code_string matches {'http://snomed.info/id/442031002', TERMINOLOGY('expand', 'http://hl7.org/fhir/4.0', 'http://snomed.info/sct?fhir_vs=isa/50697003')}
+--------
+
+More examples can be found in the {openehr_query_aql_examples}#_terminology[openEHR AQL examples^] document.
 
 == AQL Identified Paths
 
