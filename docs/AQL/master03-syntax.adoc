@@ -12,8 +12,6 @@ AQL has the following clauses:
 
 In AQL, <<_openehr_path_syntax,openEHR path syntax>> is used to locate any node or data values defined within archetypes. In the `SELECT` clause, the openEHR path syntax can be used to indicate expected objects or data values to be returned (similarly to how SQL 'projections' work). The `FROM` clause uses <<_containment,containment>> mechanisms indicating the scope of the query data source. `WHERE` clause uses archetype path to set query criteria on archetypes or any node within the archetypes. The following sections introduce the AQL syntax in detail.
 
-NOTE: If no `ORDER BY` clause is specified, then the query result doesn't have any default ordering criteria defined by this specification. Ordering could be defined by each implementation or be random. In terms of compliance to this specification, default ordering in results is undefined.
-
 == Reserved words and characters
 
 Keywords in AQL are not case sensitive, so `SELECT`, `Select`, `select`, `SeLeCt`, etc. are processed in the same way. AQL has the following reserved keywords and characters:
@@ -806,14 +804,17 @@ o1/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value
 
 A `SELECT` clause specifies what data is to be retrieved by the AQL query. The data can be any types from openEHR RM and any primitive data types.
 
-The `SELECT` syntax always starts with the keyword `SELECT`, followed by `TOP` (optional, deprecated - see <<TOP, below>>), and identified path(s) or plain variable name(s) defined in the `FROM` clause. Each variable name or identified path may have a name alias renaming the associated data.
+[[_select_syntax]]
+==== Syntax
+The syntax always starts with the keyword `SELECT`, optionally followed by `TOP` (deprecated - see <<TOP, below>>), followed by <<_aql_identified_paths,identified path(s)>> or plain <<_aql_variables,variable>> name(s) defined in the `FROM` clause.
+Each variable name or identified path may have a <<_name_alias,name alias>> renaming the associated data.
+Multiple identifiers or identified paths are separated using a comma.
 
-Where a variable name is specified, the full object of the type associated with the variable is retrieved, such as a `COMPOSITION`, `OBSERVATION` etc. Where an identified path is specified, the data item(s) having that archetype path are returned. Multiple identifiers or identified paths are separated using a comma.
+Where a variable name is specified, the full object of the type associated with the variable is retrieved, such as a `COMPOSITION`, `OBSERVATION` etc. Where an identified path is specified, the data item(s) having that archetype path are returned.
 
 Some examples are shown below.
 
-Example 1: retrieve all Compositions' name value, context start time and composer name from a specific EHR.
-
+.Example 1: Retrieve all Compositions' name value, context start time and composer name from a specific EHR.
 --------
 SELECT
    c/name/value AS Name, c/context/start_time AS date_time, c/composer/name AS Composer
@@ -822,8 +823,7 @@ FROM
        CONTAINS COMPOSITION c
 --------
 
-Example 2: Retrieve all Composition objects of a specific EHR.
-
+.Example 2: Retrieve all Composition objects of a specific EHR.
 --------
 SELECT c
 FROM EHR e[ehr_id/value=$ehrUid] 
@@ -849,17 +849,31 @@ FROM
       CONTAINS COMPOSITION c
 --------
 
+[[_name_alias]]
 ==== Name alias
 
 As in SQL, `AQL` supports the use of a name alias for the retrieved data. This is done with the keyword `AS`, followed by the name which conforms to the syntax rule of AQL variable.
 
 === ORDER BY
 
-The `ORDER BY` clause is used to sort the returned results. The keyword `ORDER BY` is followed by an identified path and the keyword `DESC`, `DESCENDING`, `ASC`, or `ASCENDING`, e.g.
+The `ORDER BY` clause is used to sort the returned results.
+
+NOTE: If no `ORDER BY` clause is specified, then the query result doesn't have any default ordering criteria defined by this specification. Ordering could be defined by each implementation or be random. In terms of compliance to this specification, default ordering in results is undefined.
+
+[[_order_by_syntax]]
+==== Syntax
+The syntax starts with keyword `ORDER BY` followed by one or more _sorting expressions_.
+A sorting expression consists of an identified path, optionally followed by one of the `DESC`, `DESCENDING`, `ASC`, or `ASCENDING` keyword, indicating the sorting type (descending or ascending), e.g.
 
 --------
-ORDER BY c/name/value
+ORDER BY c/name/value DESC
 --------
+
+Sorting rows assumes that data identified by path (from the sorting expression) are comparable. It implies the use of a specific operators like _equal_, _less-than_ and _greater-than_ (all available to primitives and `Ordered` types) on data identified by path.
+
+When sorting type is not specified, `ASC` (ascending) is assumed by default.
+
+Multiple sorting expressions are separated using a comma. If two rows are equal according to the leftmost expression, they are compared according to the next sorting expression.
 
 === LIMIT
 
