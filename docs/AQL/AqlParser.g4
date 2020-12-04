@@ -7,35 +7,8 @@ parser grammar AqlParser;
 
 options { tokenVocab=AqlLexer; }
 
-root
-    : aqlStatements? MINUSMINUS? EOF
-    ;
-
-aqlStatements
-    : (aqlStatement MINUSMINUS? SEMI? | emptyStatement)*
-    (aqlStatement (MINUSMINUS? SEMI)? | emptyStatement)
-    ;
-
-aqlStatement
-    : selectStatement
-    ;
-
-emptyStatement
-    : SEMI
-    ;
-
-selectStatement
-    : query
-    | queryExpression
-    ;
-
-queryExpression
-    : OPEN query CLOSE
-    | OPEN queryExpression CLOSE
-    ;
-
 query
-    : select from where? orderBy? limit?
+    : select from where? orderBy? limit? MINUSMINUS? EOF
     ;
 
 select
