@@ -24,7 +24,7 @@ whereClause
     ;
 
 orderByClause
-    : ORDERBY orderByExpr (COMMA orderByExpr)*
+    : ORDER BY orderByExpr (COMMA orderByExpr)*
     ;
 
 limitClause
