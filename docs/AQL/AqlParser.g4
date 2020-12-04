@@ -8,11 +8,27 @@ parser grammar AqlParser;
 options { tokenVocab=AqlLexer; }
 
 query
-    : select from where? orderBy? limit? MINUSMINUS? EOF
+    : selectClause fromClause whereClause? orderByClause? limitClause? MINUSMINUS? EOF
     ;
 
-select
+selectClause
     : SELECT top? selectExpr (COMMA selectExpr)*
+    ;
+
+fromClause
+    : FROM fromExpr
+	;
+
+whereClause
+    : WHERE whereExpr
+    ;
+
+orderByClause
+    : ORDERBY orderByExpr (COMMA orderByExpr)*
+    ;
+
+limitClause
+    : LIMIT limit=NN_INTEGER (OFFSET offset=NN_INTEGER)?
     ;
 
 // (deprecated)
@@ -27,10 +43,6 @@ selectExpr
 columnVar
 	: identifiedPath
 	;
-	
-from
-    : FROM fromExpr
-	;
 
 fromExpr
     : containsExpr
@@ -43,10 +55,6 @@ containsExpr
     | OPEN containsExpr CLOSE
     ;
 
-where
-    : WHERE whereExpr
-    ;
-
 whereExpr
     : NOT? identifiedExpr
     | whereExpr AND whereExpr
@@ -54,18 +62,9 @@ whereExpr
     | OPEN whereExpr CLOSE
     ;
 
-orderBy
-    : ORDERBY orderByExpr (COMMA orderByExpr)*
-    ;
-
 orderByExpr
 	: identifiedPath order=(DESCENDING|DESC|ASCENDING|ASC)?
 	;
-
-limit
-    : LIMIT NN_INTEGER (OFFSET NN_INTEGER)?
-    ;
-
 
 
 
