@@ -8,7 +8,6 @@
 lexer grammar AqlLexer;
 
 channels {
-    ERROR_CHANNEL,
     COMMENT_CHANNEL
 }
 
@@ -20,8 +19,8 @@ UNICODE_BOM: (
     | '\u0000FEFF' // UTF32_BOM
     ) -> skip;
 COMMENT: (
-    '-- ' ~[\r\n]* ('\r'? '\n' | EOF)
-    | '--' ('\r'? '\n' | EOF)
+    MINUSMINUS ' ' ~[\r\n]* ('\r'? '\n' | EOF)
+    | MINUSMINUS ('\r'? '\n' | EOF)
     ) -> channel(COMMENT_CHANNEL);
 
 // Keywords
@@ -57,11 +56,6 @@ COMPARISON_OPERATOR: '=' | '!=' | '>' | '>=' | '<' | '<=' ;
 LIKE: L I K E ;
 MATCHES: M A T C H E S ;
 
-
-// Constructors symbols
-SEMI: ';';
-
-
 EHR	: E H R ;
 VERSION	: V E R S I O N ;
 VERSIONED_OBJECT : V E R S I O N E D '_' O B J E C T ;
@@ -70,7 +64,7 @@ ALL_VERSIONS : A L L '_' V E R S I O N S ;
 
 TRUE: T R U E ;
 FALSE: F A L S E ;
-NULL: N U L L ;
+NULL_LITERAL: N U L L ;
 
 // Literal primitives
 BOOLEAN
@@ -87,7 +81,7 @@ INTEGER
 FLOAT
     : ('-'? DIGIT+)? '.' DIGIT+
     ;
-DECIMAL
+DOUBLE
     : '-'? DIGIT+ '.' EXPONENT_NUM_PART
     | ('-'? DIGIT+)? '.' (DIGIT+ EXPONENT_NUM_PART)
     | '-'? DIGIT+ EXPONENT_NUM_PART
@@ -116,50 +110,36 @@ DT_TIMEZONE
     | Z
     ;
 
-
-
 NN_INTEGER:	DIGIT+;
-
 NODEID:	('at'|'id') DIGIT+ ('.' DIGIT+)*;
 ARCHETYPEID: LETTER+ '-' LETTER+ '-' (LETTER|'_')+ '.' (IDCHAR|'-')+ '.v' DIGIT+ ('.' DIGIT+)? ('.' DIGIT+)?;
 PARAMETER: '$' LETTER IDCHAR*;
 
-//!Identifier  = {Letter}({Alphanumeric}|'_')*   ! Conflicts with UID
-//!Identifier  = {Letter}{IdChar}*   ! Conflicts with extended NodeId
 //! restricted to allow only letters after the 4th character due to conflict with extended NodeId
-//!Identifier  = {Letter}{IdChar}?{IdChar}?{IdChar}?({Letter}|'_')*  !Conficts with NodeId which may have any length of digit, such as at0.9
+//Identifier = {Letter}{IdChar}*   ! Conflicts with extended NodeId
+//Identifier = {Letter}{IdChar}?{IdChar}?{IdChar}?({Letter}|'_')*  !Conficts with NodeId which may have any length of digit, such as at0.9
 //Identifier = {LetterMinusA}{IdCharMinusT}?{IdChar}* | 'a''t'?(({letter}|'_')*|{LetterMinusT}{Alphanumeric}*)
-// Identifiers should not conflict with NODEID
 IDENTIFIER
     : ('at'|'id') (LETTER|'_') IDCHAR*
     | ('at'|'id'|'a'|'i')
     | [b-hj-zA-Z] IDCHAR*
     ;
 
+URIVALUE: LETTER+ '://' (URISTRING|OPENBRACKET|CLOSEBRACKET|', \''|'\'')*;
+REGEXPATTERN: '{/' REGEXCHAR+ '/}';
 
 
-URIVALUE
-    : LETTER+ '://' (URISTRING|'['|']'|', \''|'\'')*
-    ;
-
-REGEXPATTERN
-    : '{/' REGEXCHAR+ '/}';
-
-
-
-
-
-SLASH	:	'/';
-COMMA	:	',';
+// Constructors symbols
+SEMI: ';';
+SLASH: '/';
+COMMA: ',';
 OPENBRACKET: '[';
 CLOSEBRACKET: ']';
 OPEN_ACCOLADE: '{';
 CLOSE_ACCOLADE: '}';
-OPEN : '(';
-CLOSE : ')';
+OPEN: '(';
+CLOSE: ')';
 MINUSMINUS: '--';
-
-
 
 fragment ESC_SEQ: '\\' ('b'|'t'|'n'|'f'|'r'|'\\"'|'\''|'\\') | UNICODE_ESC | OCTAL_ESC;
 fragment OCTAL_ESC: '\\' [0-3] OCTAL_DIGIT OCTAL_DIGIT | '\\' OCTAL_DIGIT OCTAL_DIGIT | '\\' OCTAL_DIGIT;
@@ -204,5 +184,3 @@ fragment W: [wW];
 fragment X: [xX];
 fragment Y: [yY];
 fragment Z: [zZ];
-
-UNEXPECTED_CHAR: . -> channel(ERROR_CHANNEL);

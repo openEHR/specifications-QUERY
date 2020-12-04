@@ -165,9 +165,10 @@ operand
     : STRING
     | INTEGER
     | FLOAT
-    | DECIMAL
+    | DOUBLE
     | DATE
     | BOOLEAN
+    | NULL_LITERAL
     | PARAMETER
     ;
 
