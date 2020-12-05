@@ -31,28 +31,13 @@ limitClause
     : LIMIT limit=NN_INTEGER (OFFSET offset=NN_INTEGER)?
     ;
 
-// (deprecated)
-top
-    : TOP INTEGER direction=(FORWARD|BACKWARD)?
-	;
 
 selectExpr
 	: columnVar (AS IDENTIFIER)?
 	;
 
-columnVar
-	: identifiedPath
-	;
-
 fromExpr
     : containsExpr
-    ;
-
-containsExpr
-    : classExprOperand (CONTAINS containsExpr)?
-    | containsExpr AND containsExpr
-    | containsExpr OR containsExpr
-    | OPEN containsExpr CLOSE
     ;
 
 whereExpr
@@ -67,6 +52,16 @@ orderByExpr
 	;
 
 
+columnVar
+	: identifiedPath
+	;
+
+containsExpr
+    : classExprOperand (CONTAINS containsExpr)?
+    | containsExpr AND containsExpr
+    | containsExpr OR containsExpr
+    | OPEN containsExpr CLOSE
+    ;
 
 identifiedExpr
     : EXISTS identifiedPath
@@ -81,10 +76,10 @@ identifiedOperand
  	;
 
 identifiedPath
-    : IDENTIFIER predicate? (SLASH objectPath)?
+    : IDENTIFIER pathPredicate? (SLASH objectPath)?
     ;
 
-predicate
+pathPredicate
  	: OPENBRACKET (standardPredicate | archetypePredicate | nodePredicate) CLOSEBRACKET
  	;
 
@@ -95,7 +90,6 @@ standardPredicate
 archetypePredicate
     : ARCHETYPEID
     | PARAMETER
-    | REGEXPATTERN
     ;
 
 nodePredicate
@@ -168,3 +162,10 @@ versionPredicate
  	: LATEST_VERSION
  	| ALL_VERSIONS
  	;
+
+
+// (deprecated)
+top
+    : TOP INTEGER direction=(FORWARD|BACKWARD)?
+	;
+
