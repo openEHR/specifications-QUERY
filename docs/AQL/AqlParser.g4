@@ -112,7 +112,7 @@ objectPath
  	: pathPart (SLASH pathPart)*
  	;
 pathPart
- 	: IDENTIFIER predicate?
+ 	: IDENTIFIER pathPredicate?
  	;
 
 likeOperand
