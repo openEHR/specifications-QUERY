@@ -65,9 +65,9 @@ containsExpr
 
 identifiedExpr
     : EXISTS identifiedPath
-    | left=identifiedOperand COMPARISON_OPERATOR right=identifiedOperand
-    | identifiedOperand LIKE likeOperand
-    | identifiedOperand MATCHES OPEN_ACCOLADE matchesOperand CLOSE_ACCOLADE
+    | identifiedPath COMPARISON_OPERATOR identifiedOperand
+    | identifiedPath LIKE likeOperand
+    | identifiedPath MATCHES OPEN_ACCOLADE matchesOperand CLOSE_ACCOLADE
     ;
 
 identifiedOperand
