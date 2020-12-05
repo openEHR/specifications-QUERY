@@ -71,7 +71,8 @@ identifiedExpr
     ;
 
 identifiedOperand
- 	: operand
+ 	: primitive
+ 	| PARAMETER
  	| identifiedPath
  	;
 
@@ -84,7 +85,7 @@ pathPredicate
  	;
 
 standardPredicate
-    : predicateOperand COMPARISON_OPERATOR predicateOperand
+    : objectPath COMPARISON_OPERATOR pathPredicateOperand
     ;
 
 archetypePredicate
@@ -96,15 +97,16 @@ nodePredicate
     : NODEID (COMMA (STRING|PARAMETER))?
     | ARCHETYPEID (COMMA (STRING|PARAMETER))?
     | PARAMETER
-    | predicateOperand COMPARISON_OPERATOR predicateOperand
-    | predicateOperand MATCHES REGEXPATTERN
+    | objectPath COMPARISON_OPERATOR pathPredicateOperand
+    | objectPath MATCHES REGEXPATTERN
     | nodePredicate AND nodePredicate
     | nodePredicate OR nodePredicate
     ;
 
-predicateOperand
-    : operand
+pathPredicateOperand
+    : primitive
  	| objectPath
+ 	| PARAMETER
  	;
 
 
@@ -120,22 +122,21 @@ likeOperand
     | PARAMETER
     ;
 matchesOperand
- 	: valueListItems
+ 	: valueListItem (COMMA valueListItem)*
  	| URIVALUE
  	;
-valueListItems
- 	: operand (COMMA operand)*
+valueListItem
+ 	: primitive
+ 	| PARAMETER
  	;
 
-operand
+primitive
     : STRING
     | INTEGER
     | FLOAT
     | DOUBLE
     | DATE
     | BOOLEAN
-    | NULL_LITERAL
-    | PARAMETER
     ;
 
 
