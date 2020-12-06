@@ -78,6 +78,7 @@ containsExpr
 identifiedExpr
     : EXISTS identifiedPath
     | identifiedPath COMPARISON_OPERATOR identifiedOperand
+    | functionCall COMPARISON_OPERATOR identifiedOperand
     | identifiedPath LIKE likeOperand
     | identifiedPath MATCHES OPEN_CURLY matchesOperand CLOSE_CURLY
     ;
@@ -86,6 +87,7 @@ identifiedOperand
  	: primitive
  	| PARAMETER
  	| identifiedPath
+ 	| functionCall
  	;
 
 identifiedPath
