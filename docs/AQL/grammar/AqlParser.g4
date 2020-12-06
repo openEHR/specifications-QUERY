@@ -54,7 +54,7 @@ whereExpr
     : NOT? identifiedExpr
     | whereExpr AND whereExpr
     | whereExpr OR whereExpr
-    | OPEN whereExpr CLOSE
+    | OPEN_PAR whereExpr CLOSE_PAR
     ;
 
 orderByExpr
@@ -70,14 +70,14 @@ containsExpr
     : classExprOperand (CONTAINS containsExpr)?
     | containsExpr AND containsExpr
     | containsExpr OR containsExpr
-    | OPEN containsExpr CLOSE
+    | OPEN_PAR containsExpr CLOSE_PAR
     ;
 
 identifiedExpr
     : EXISTS identifiedPath
     | identifiedPath COMPARISON_OPERATOR identifiedOperand
     | identifiedPath LIKE likeOperand
-    | identifiedPath MATCHES OPEN_ACCOLADE matchesOperand CLOSE_ACCOLADE
+    | identifiedPath MATCHES OPEN_CURLY matchesOperand CLOSE_CURLY
     ;
 
 identifiedOperand
@@ -91,7 +91,7 @@ identifiedPath
     ;
 
 pathPredicate
- 	: OPENBRACKET (standardPredicate | archetypePredicate | nodePredicate) CLOSEBRACKET
+ 	: OPEN_BRACKET (standardPredicate | archetypePredicate | nodePredicate) CLOSE_BRACKET
  	;
 
 standardPredicate
@@ -164,10 +164,10 @@ archetypedClassExpr
  	: IDENTIFIER IDENTIFIER? archetypePredicate
  	;
 versionedClassExpr
- 	: VERSIONED_OBJECT IDENTIFIER? (OPENBRACKET standardPredicate OPENBRACKET)?
+ 	: VERSIONED_OBJECT IDENTIFIER? (OPEN_BRACKET standardPredicate OPEN_BRACKET)?
  	;
 versionClassExpr
- 	: VERSION IDENTIFIER? (OPENBRACKET (standardPredicate|versionPredicate) OPENBRACKET)?
+ 	: VERSION IDENTIFIER? (OPEN_BRACKET (standardPredicate|versionPredicate) OPEN_BRACKET)?
  	;
 versionPredicate
  	: LATEST_VERSION

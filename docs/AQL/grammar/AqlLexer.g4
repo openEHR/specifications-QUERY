@@ -134,7 +134,7 @@ IDENTIFIER
     | [b-hj-zA-Z] IDCHAR*
     ;
 
-URIVALUE: LETTER+ '://' (URISTRING|OPENBRACKET|CLOSEBRACKET|', \''|'\'')*;
+URIVALUE: LETTER+ '://' (URISTRING|OPEN_BRACKET|CLOSE_BRACKET|', \''|'\'')*;
 REGEXPATTERN: '{/' REGEXCHAR+ '/}';
 
 
@@ -142,12 +142,12 @@ REGEXPATTERN: '{/' REGEXCHAR+ '/}';
 SEMI: ';';
 SLASH: '/';
 COMMA: ',';
-OPENBRACKET: '[';
-CLOSEBRACKET: ']';
-OPEN_ACCOLADE: '{';
-CLOSE_ACCOLADE: '}';
-OPEN: '(';
-CLOSE: ')';
+OPEN_BRACKET: '[';
+CLOSE_BRACKET: ']';
+OPEN_CURLY: '{';
+CLOSE_CURLY: '}';
+OPEN_PAR: '(';
+CLOSE_PAR: ')';
 MINUSMINUS: '--';
 
 fragment ESC_SEQ: '\\' ('b'|'t'|'n'|'f'|'r'|'\\"'|'\''|'\\') | UNICODE_ESC | OCTAL_ESC;
