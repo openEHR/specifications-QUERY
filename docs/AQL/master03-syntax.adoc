@@ -230,6 +230,43 @@ The corresponding standard predicates would be:
 
 A node predicate defines criteria on fine-grained data.
 
+== AQL Identified Paths
+
+In AQL, an _identified path_ is the association of a <<_aql_variables,variable>> reference (the identifier) and an <<_openehr_path_syntax,archetype path>> and/or <<_predicates,predicate>>. Except for the `FROM` clause, an identified path may appear in any clause of an AQL statement. For example, it can be used to indicate the data to be returned in a `SELECT` clause, or the data item on which query criteria are applied in a `WHERE` clause.
+
+In the following example, `o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude` specifies the systolic value of the Observation archetype `openEHR-EHR-OBSERVATION.blood_pressure.v1`:
+--------
+SELECT
+   o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude
+FROM
+   EHR [ehr_id/value='1234']
+      CONTAINS COMPOSITION [openEHR-EHR-COMPOSITION.encounter.v1]
+         CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION.blood_pressure.v1]
+--------
+
+[[_aql_identified_paths_syntax]]
+=== Syntax
+
+An AQL identified path can take any of the following forms:
+
+* a variable name defined in the `FROM` clause followed by an archetype path, which specifies a data item at that path within the object, as follows:
++
+----
+o/data[at0001]/.../data[at0003]/items[at0004]/value/value
+----
+
+* a variable name followed by a predicate, which specifies an object that satisfies the predicate, as follows:
++
+----
+o[name/value=$nameValue]
+----
+
+* a variable name followed by a predicate and an archetype path, which specifies a data item at a path within an object satisfying the predicate, as follows:
++
+----
+o[name/value=$nameValue]/data[at0001]/.../data[at0003]/items[at0004]/value/value
+----
+
 == Operators
 
 === Comparison operators
@@ -556,43 +593,6 @@ WHERE e/value/defining_code/code_string matches {'http://snomed.info/id/44203100
 --------
 
 More examples can be found in the {openehr_query_aql_examples}#_terminology[openEHR AQL examples^] document.
-
-== AQL Identified Paths
-
-In AQL, an _identified path_ is the association of a <<_aql_variables,variable>> reference (the identifier) and an <<_openehr_path_syntax,archetype path>> and/or <<_predicates,predicate>>. Except for the `FROM` clause, an identified path may appear in any clause of an AQL statement. For example, it can be used to indicate the data to be returned in a `SELECT` clause, or the data item on which query criteria are applied in a `WHERE` clause.
-
-In the following example, `o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude` specifies the systolic value of the Observation archetype `openEHR-EHR-OBSERVATION.blood_pressure.v1`:
---------
-SELECT
-   o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude
-FROM
-   EHR [ehr_id/value='1234']
-      CONTAINS COMPOSITION [openEHR-EHR-COMPOSITION.encounter.v1]
-         CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION.blood_pressure.v1]
---------
-
-[[_aql_identified_paths_syntax]]
-=== Syntax
-
-An AQL identified path can take any of the following forms:
-
-* a variable name defined in the `FROM` clause followed by an archetype path, which specifies a data item at that path within the object, as follows:
-+
-----
-o/data[at0001]/.../data[at0003]/items[at0004]/value/value
-----
-
-* a variable name followed by a predicate, which specifies an object that satisfies the predicate, as follows:
-+
-----
-o[name/value=$nameValue]
-----
-
-* a variable name followed by a predicate and an archetype path, which specifies a data item at a path within an object satisfying the predicate, as follows:
-+
-----
-o[name/value=$nameValue]/data[at0001]/.../data[at0003]/items[at0004]/value/value
-----
 
 == Built-in Types
 
