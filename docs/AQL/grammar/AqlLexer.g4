@@ -71,6 +71,7 @@ MIN: M I N ;
 MAX: M A X ;
 SUM: S U M ;
 AVG: A V G ;
+TERMINOLOGY: T E R M I N O L O G Y ;
 
 //
 EHR	: E H R ;

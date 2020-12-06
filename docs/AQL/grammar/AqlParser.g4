@@ -135,11 +135,13 @@ likeOperand
     ;
 matchesOperand
  	: valueListItem (COMMA valueListItem)*
+ 	| terminologyFunction
  	| URIVALUE
  	;
 valueListItem
  	: primitive
  	| PARAMETER
+ 	| terminologyFunction
  	;
 
 primitive
@@ -177,7 +179,8 @@ versionPredicate
  	;
 
 functionCall
-    : function
+    : terminologyFunction
+    | function
     ;
 
 function
@@ -219,6 +222,9 @@ avgFunction
     : AVG OPEN_PAR identifiedPath CLOSE_PAR
     ;
 
+terminologyFunction
+    : TERMINOLOGY OPEN_PAR STRING COMMA STRING COMMA STRING CLOSE_PAR
+    ;
 
 // (deprecated)
 top
