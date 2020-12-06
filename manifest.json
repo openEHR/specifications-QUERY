@@ -29,11 +29,18 @@
     ],
     "expressions": [
         {
-            "id": "aql.g",
+            "id": "AqlLexer.g4",
             "type": "file",
-            "title": "Antlr file",
-            "link": "AQL/aql.g",
-            "description": "Antlr 3 Grammar for AQL."
+            "title": "ANTLR4 lexer",
+            "link": "AQL/grammar/AqlLexer.g4",
+            "description": "ANTLR4 lexer grammar for AQL."
+        },
+        {
+            "id": "AqlParser.g4",
+            "type": "file",
+            "title": "ANTLR4 parser",
+            "link": "AQL/grammar/AqlParser.g4",
+            "description": "ANTLR4 parser grammar for AQL."
         }
     ],
     "jira": {

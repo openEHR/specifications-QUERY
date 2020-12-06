@@ -1,13 +1,23 @@
-// Author: Bostjan Lah
-// (c) Copyright, Marand, http://www.marand.com
-// Licensed under LGPL: http://www.gnu.org/copyleft/lesser.html
-// Based on AQL grammar by Ocean Informatics: http://www.openehr.org/wiki/download/attachments/2949295/EQL_v0.6.grm?version=1&modificationDate=1259650833000
+//
+//  description:  ANTLR4 parser grammar for Archetype Query Language (AQL)
+//  author:       Sebastian Iancu
+//  contributors: This version of the grammar is a complet rewrite of previously published antlr3 grammar,
+//                based on current AQL specifications in combination with other grammars from several AQL implementations.
+//                The openEHR Foundation would like to recognise the following people for their contributions:
+//                  - Chunlan Ma & Heath Frankel, Ocen Health Systems, Australia
+//                  - Bostjan Lah, Better, Slovenia
+//                  - Christian Chevalley, EhrBAse, Germany
+//                  - Teun van Helmert, Nedap, Netherlands
+//  support:      openEHR Specifications PR tracker <https://specifications.openehr.org/releases/QUERY/open_issues>
+//  copyright:    Copyright (c) 2020 openEHR Foundation
+//  license:      Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>
+//
 
 parser grammar AqlParser;
 
 options { tokenVocab=AqlLexer; }
 
-query
+selectQuery
     : selectClause fromClause whereClause? orderByClause? limitClause? MINUSMINUS? EOF
     ;
 
@@ -169,4 +179,47 @@ versionPredicate
 top
     : TOP INTEGER direction=(FORWARD|BACKWARD)?
 	;
+
+
+
+
+
+
+
+//function
+//	: functionIdentifier OPEN arg (COMMA arg)* CLOSE
+//	;
+//
+//functionIdentifier
+//	: COUNT
+//	| MIN
+//	| MAX
+//	| IDENTIFIER
+//;
+
+//arg
+//    : operand
+//    | identifiedPath
+//    | function
+//;
+
+
+//
+//// parser
+//function : (FUNCTION | IDENTIFIER) OPEN PARAM (',' PARAM)* CLOSE ;
+//// lexer
+//FUNCTION : COUNT | SUM | AVG | ... ;
+//IDENTIFIER : // any string that starts with a letter
+
+//
+//
+//args
+//    : STRING
+//          | INTEGER
+//          | FLOAT
+//          | DOUBLE
+//          | DATE
+//          | BOOLEAN
+//          | PARAMETER
+//          ;
 
