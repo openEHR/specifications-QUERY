@@ -34,7 +34,7 @@ NOTE: `TOP` modifier is deprecated in favour of the `LIMIT` clause combined with
 
 The openEHR path syntax has been described in detail (see {openehr_path_syntax}[Paths and Locators^] section in the {openehr_overview}[Architecture Overview specification^]). AQL utilises the openEHR path syntax to reference both coarse-grained and fine-grained archetype nodes (objects and data values, respectively), and openEHR class instances and attributes, when referencing something that is not defined in an archetype but is part of the openEHR Reference Model.
 
-There are two types of openEHR paths used in AQL queries: an _archetype path_, referring to a node within an archetype, and a _RM class attribute path_, pointing to an attribute of an openEHR Reference Model class. These paths uses also _predicate expressions_ (see <<_predicates), enclosed by brackets (`[]`), to define criteria for coarse-grained and fine-grained data.
+There are two types of openEHR paths used in AQL queries: an _archetype path_, referring to a node within an archetype, and a _RM class attribute path_, pointing to an attribute of an openEHR Reference Model class. These paths uses also _predicate expressions_ (see <<_predicates>>) enclosed by brackets (`[]`), to define criteria for coarse-grained and fine-grained data.
 
 
 A set of openEHR path examples are shown below:
@@ -139,7 +139,7 @@ There are no specific guidelines on how to resolve query parameters. Generally s
 
 AQL uses predicates (see {openehr_path_syntax_predicates}[Predicate Expressions^]) to define criteria for coarse-grained and fine-grained data. Predicate expressions are always enclosed by brackets (`[]`).
 
-There are three types of predicates: the _standard predicate_, the _archetype predicate_, and the _node predicate_.
+There are three types of predicates used by AQL: the _standard predicate_, the _archetype predicate_, and the _node predicate_.
 
 === Standard predicate
 
