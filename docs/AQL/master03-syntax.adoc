@@ -232,9 +232,9 @@ A node predicate defines criteria on fine-grained data.
 
 == AQL Identified Paths
 
-In AQL, an _identified path_ is the association of a <<_aql_variables,variable>> reference (the identifier) and an <<_openehr_path_syntax,archetype path>> and/or <<_predicates,predicate>>. Except for the `FROM` clause, an identified path may appear in any clause of an AQL statement. For example, it can be used to indicate the data to be returned in a `SELECT` clause, or the data item on which query criteria are applied in a `WHERE` clause.
+In AQL, an _identified path_ is the association of a <<_aql_variables,variable>> reference (the identifier), a <<_predicates,predicate>> and/or an <<_openehr_path_syntax,openEHR path>>. Except for the `FROM` clause, an identified path may appear in any clause of an AQL statement. For example, it can be used to indicate the data to be returned in a `SELECT` clause, or the data item on which query criteria are applied in a `WHERE` clause.
 
-In the following example, `o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude` specifies the systolic value of the Observation archetype `openEHR-EHR-OBSERVATION.blood_pressure.v1`:
+In the following example, the identified path `o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude` specifies the systolic value of the Observation archetype `openEHR-EHR-OBSERVATION.blood_pressure.v1`:
 --------
 SELECT
    o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude
@@ -249,7 +249,7 @@ FROM
 
 An AQL identified path can take any of the following forms:
 
-* a variable name defined in the `FROM` clause followed by an archetype path, which specifies a data item at that path within the object, as follows:
+* a variable name defined in the `FROM` clause followed by an openEHR path, which specifies a data item at that path within the object, as follows:
 +
 ----
 o/data[at0001]/.../data[at0003]/items[at0004]/value/value
@@ -261,7 +261,7 @@ o/data[at0001]/.../data[at0003]/items[at0004]/value/value
 o[name/value=$nameValue]
 ----
 
-* a variable name followed by a predicate and an archetype path, which specifies a data item at a path within an object satisfying the predicate, as follows:
+* a variable name followed by a predicate and an openEHR path, which specifies a data item at a path within an object satisfying the predicate, as follows:
 +
 ----
 o[name/value=$nameValue]/data[at0001]/.../data[at0003]/items[at0004]/value/value
