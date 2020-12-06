@@ -23,7 +23,7 @@ Keywords in AQL are not case sensitive, so `SELECT`, `Select`, `select`, `SeLeCt
 * `LIKE`, `matches`, `in`, `exists`, `not in`
 * `"` and `'`: double and single quote characters are used to delimit string values;
 * `|`: bar characters are used to delimit intervals;
-* `[]`: brackets are used to delimit coded terms, archetype id values or openEHR reference model class attribute values.
+* `[]`: brackets are used to delimit coded terms or predicate expressions.
 * `{}`: brackets are used with `matches` delimiting matches criteria
 * `()`: parentheses are used with function calls or to separate logic or group expressions and enforce precedence
 * `<`, `>`, `=`, `%`, `!`, `$`
@@ -32,12 +32,14 @@ NOTE: `TOP` modifier is deprecated in favour of the `LIMIT` clause combined with
 
 == openEHR path syntax
 
-The openEHR path syntax has been described in detail (see {openehr_path_syntax}[Paths and Locators^] section in the {openehr_overview}[Architecture Overview specification^]). AQL utilises the basic openEHR path syntax to reference both coarse-grained and fine-grained archetype nodes (objects and data values, respectively), and openEHR class instances and attributes, when referencing something that is not defined in an archetype but is part of the openEHR Reference Model. A set of openEHR path examples are provided on this section.
+The openEHR path syntax has been described in detail (see {openehr_path_syntax}[Paths and Locators^] section in the {openehr_overview}[Architecture Overview specification^]). AQL utilises the openEHR path syntax to reference both coarse-grained and fine-grained archetype nodes (objects and data values, respectively), and openEHR class instances and attributes, when referencing something that is not defined in an archetype but is part of the openEHR Reference Model.
 
-=== Archetype path
+There are two types of openEHR paths used in AQL queries: an _archetype path_, referring to a node within an archetype, and a _RM class attribute path_, pointing to an attribute of an openEHR Reference Model class. These paths uses also _predicate expressions_ (see <<_predicates), enclosed by brackets (`[]`), to define criteria for coarse-grained and fine-grained data.
 
-An archetype path is the path referring to any node within an archetype. The table below shows some examples.
 
+A set of openEHR path examples are shown below:
+
+.Examples of archetype path syntax
 [width="100%",cols="1,1,1,1,1",options="header",]
 |===
 |Archetype RM type |Archetype node name |Archetype ID                               |Path syntax  | Referenced RM Type
@@ -47,10 +49,7 @@ An archetype path is the path referring to any node within an archetype. The tab
 |`OBSERVATION`     |Systolic            |openEHR-EHR-OBSERVATION.blood_pressure.v2  |`/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value`  | `DV_QUANTITY`
 |===
 
-=== RM class attribute path
-
-Another type of openEHR path is the path pointing to an attribute of openEHR Reference Model classes. The examples shown below uses the attributes from the `COMPOSITION` class.
-
+.Examples of RM class attribute path syntax using attributes from the `COMPOSITION` class
 [width="100%",cols="2,1",options="header",]
 |===
 |openEHR RM attribute name          |Path syntax
@@ -138,14 +137,16 @@ There are no specific guidelines on how to resolve query parameters. Generally s
 
 == Predicates
 
-AQL has three types of predicates: the standard predicate, the archetype predicate, and the node predicate.
+AQL uses predicates (see {openehr_path_syntax_predicates}[Predicate Expressions^]) to define criteria for coarse-grained and fine-grained data. Predicate expressions are always enclosed by brackets (`[]`).
+
+There are three types of predicates: the _standard predicate_, the _archetype predicate_, and the _node predicate_.
 
 === Standard predicate
 
 Standard predicates always have a left operand, operator and right operand, e.g. `[ehr_id/value='123456']`.
 
 * The left operand is normally an openEHR path, such as `ehr_id/value`, `name/value`.
-* The right operand is normally a criterion value or a parameter, such as `'123456'`, `$ehrUid`. It can also be an openEHR path (based on the BNF).
+* The right operand is normally a criterion value or a parameter, such as `'123456'`, `$ehrUid`. It can also be another openEHR path.
 * The operator can be one of the following:
 +
 ----
@@ -162,7 +163,7 @@ FROM EHR [ehr_id/value='1234']
       CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION.blood_pressure.v1]
 --------
 
-This predicates could also be written as `Standard predicates`:
+This predicates could also be written as standard predicates:
 
 --------
 FROM EHR e
@@ -193,7 +194,7 @@ The corresponding standard predicate would be:
 --------
 
 
-* Containing an `archetype_node_id` and a `name value/criterion`, e.g.:
+* Containing an `archetype_node_id` and a `name/value` criterion, e.g.:
 +
 --------
 [at0002 and name/value=$nameValue]
