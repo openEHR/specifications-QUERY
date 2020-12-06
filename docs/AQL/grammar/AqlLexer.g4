@@ -65,12 +65,22 @@ COMPARISON_OPERATOR: '=' | '!=' | '>' | '>=' | '<' | '<=' ;
 LIKE: L I K E ;
 MATCHES: M A T C H E S ;
 
+// functions
+COUNT: C O U N T ;
+MIN: M I N ;
+MAX: M A X ;
+SUM: S U M ;
+AVG: A V G ;
+
+//
 EHR	: E H R ;
 VERSION	: V E R S I O N ;
 VERSIONED_OBJECT : V E R S I O N E D '_' O B J E C T ;
 LATEST_VERSION : L A T E S T '_' V E R S I O N ;
 ALL_VERSIONS : A L L '_' V E R S I O N S ;
+DISTINCT: D I S T I N C T ;
 
+// Literal values
 TRUE: T R U E ;
 FALSE: F A L S E ;
 NULL_LITERAL: N U L L ;
@@ -142,6 +152,7 @@ REGEXPATTERN: '{/' REGEXCHAR+ '/}';
 SEMI: ';';
 SLASH: '/';
 COMMA: ',';
+STAR: '*';
 OPEN_BRACKET: '[';
 CLOSE_BRACKET: ']';
 OPEN_CURLY: '{';

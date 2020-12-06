@@ -64,6 +64,8 @@ orderByExpr
 
 columnVar
 	: identifiedPath
+	| aggregateFunctionCall
+	| functionCall
 	;
 
 containsExpr
@@ -174,52 +176,51 @@ versionPredicate
  	| ALL_VERSIONS
  	;
 
+functionCall
+    : function
+    ;
+
+function
+    : IDENTIFIER OPEN_PAR functionArg (COMMA functionArg)* CLOSE_PAR
+    ;
+
+functionArg
+    : primitive
+    | identifiedPath
+    | PARAMETER
+    | functionCall
+    ;
+
+aggregateFunctionCall
+    : countFunction
+    | minFunction
+    | maxFunction
+    | sumFunction
+    | avgFunction
+    ;
+
+countFunction
+    : COUNT OPEN_PAR (DISTINCT? identifiedPath | STAR) CLOSE_PAR
+    ;
+
+minFunction
+    : MIN OPEN_PAR identifiedPath CLOSE_PAR
+    ;
+
+maxFunction
+    : MAX OPEN_PAR identifiedPath CLOSE_PAR
+    ;
+
+sumFunction
+    : SUM OPEN_PAR identifiedPath CLOSE_PAR
+    ;
+
+avgFunction
+    : AVG OPEN_PAR identifiedPath CLOSE_PAR
+    ;
+
 
 // (deprecated)
 top
     : TOP INTEGER direction=(FORWARD|BACKWARD)?
 	;
-
-
-
-
-
-
-
-//function
-//	: functionIdentifier OPEN arg (COMMA arg)* CLOSE
-//	;
-//
-//functionIdentifier
-//	: COUNT
-//	| MIN
-//	| MAX
-//	| IDENTIFIER
-//;
-
-//arg
-//    : operand
-//    | identifiedPath
-//    | function
-//;
-
-
-//
-//// parser
-//function : (FUNCTION | IDENTIFIER) OPEN PARAM (',' PARAM)* CLOSE ;
-//// lexer
-//FUNCTION : COUNT | SUM | AVG | ... ;
-//IDENTIFIER : // any string that starts with a letter
-
-//
-//
-//args
-//    : STRING
-//          | INTEGER
-//          | FLOAT
-//          | DOUBLE
-//          | DATE
-//          | BOOLEAN
-//          | PARAMETER
-//          ;
-
