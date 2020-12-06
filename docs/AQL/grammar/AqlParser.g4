@@ -6,7 +6,7 @@
 //                The openEHR Foundation would like to recognise the following people for their contributions:
 //                  - Chunlan Ma & Heath Frankel, Ocen Health Systems, Australia
 //                  - Bostjan Lah, Better, Slovenia
-//                  - Christian Chevalley, EhrBAse, Germany
+//                  - Christian Chevalley, EHRBase, Germany
 //                  - Teun van Helmert, Nedap, Netherlands
 //  support:      openEHR Specifications PR tracker <https://specifications.openehr.org/releases/QUERY/open_issues>
 //  copyright:    Copyright (c) 2020 openEHR Foundation
