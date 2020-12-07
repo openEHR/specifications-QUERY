@@ -86,6 +86,7 @@ identifiedExpr
 classExprOperand
     : IDENTIFIER variable=IDENTIFIER? (OPEN_BRACKET archetypePredicate CLOSE_BRACKET)?                 #classExpression // RM_TYPE_NAME variable [archetype_id]
     | VERSIONED_OBJECT variable=IDENTIFIER? (OPEN_BRACKET standardPredicate CLOSE_BRACKET)?            #versionedClassExpr
+    | EHR variable=IDENTIFIER? (OPEN_BRACKET standardPredicate CLOSE_BRACKET)?                         #ehrClassExpr
     | VERSION variable=IDENTIFIER? (OPEN_BRACKET (standardPredicate|versionPredicate) CLOSE_BRACKET)?  #versionClassExpr
     ;
 
