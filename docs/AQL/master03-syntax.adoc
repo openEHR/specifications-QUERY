@@ -59,7 +59,7 @@ A set of openEHR path examples are shown below:
 |`COMPOSITION.uid.value`            |`/uid/value`
 |===
 
-== AQL variables
+== Variables
 
 AQL variables are used to refer a specific openEHR class defined within an AQL `FROM` clause. Consider the following example:
 
@@ -78,7 +78,7 @@ WHERE
 
 This example defines only one AQL variable: `o`, which represents `OBSERVATIONs` that conform to (i.e. created using) the `openEHR-EHR-OBSERVATION.blood_pressure.v1` archetype. This combination of a variable reference and a class represents a _class expression_ (see <<_class_expressions>>).
 
-The combination of a variable reference and a subordinate <<_openehr_path_syntax,path>> forms one kind of _identified path_ (see <<AQL Identified Paths>>), used to specify a fine-grained data element within a larger object matched by the `FROM` clause.
+The combination of a variable reference and a subordinate <<_openehr_path_syntax,path>> forms one kind of _identified path_ (see <<Identified Paths>>), used to specify a fine-grained data element within a larger object matched by the `FROM` clause.
 
 [[_variable_syntax]]
 === Syntax
@@ -230,9 +230,9 @@ The corresponding standard predicates would be:
 
 A node predicate defines criteria on fine-grained data.
 
-== AQL Identified Paths
+== Identified Paths
 
-In AQL, an _identified path_ is the association of a <<_aql_variables,variable>> reference (the identifier), a <<_predicates,predicate>> and/or an <<_openehr_path_syntax,openEHR path>>. Except for the `FROM` clause, an identified path may appear in any clause of an AQL statement. For example, it can be used to indicate the data to be returned in a `SELECT` clause, or the data item on which query criteria are applied in a `WHERE` clause.
+In AQL, an _identified path_ is the association of a <<_variables,variable>> reference (the identifier), a <<_predicates,predicate>> and/or an <<_openehr_path_syntax,openEHR path>>. Except for the `FROM` clause, an identified path may appear in any clause of an AQL statement. For example, it can be used to indicate the data to be returned in a `SELECT` clause, or the data item on which query criteria are applied in a `WHERE` clause.
 
 In the following example, the identified path `o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude` specifies the systolic value of the Observation archetype `openEHR-EHR-OBSERVATION.blood_pressure.v1`:
 --------
@@ -244,7 +244,7 @@ FROM
          CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION.blood_pressure.v1]
 --------
 
-[[_aql_identified_paths_syntax]]
+[[_identified_paths_syntax]]
 === Syntax
 
 An AQL identified path can take any of the following forms:
@@ -440,7 +440,7 @@ WHERE
 
 ==== EXISTS
 
-`EXISTS` is a unary operator, whose operand is an identified path (described in <<AQL Identified Paths>>). It returns a Boolean result: `true` means the data associated with the specified path exists, `false` otherwise. An `EXISTS` expression is a kind of <<_identified_expression,identified expression>> that can be used only in `WHERE` clause.
+`EXISTS` is a unary operator, whose operand is an identified path (described in <<Identified Paths>>). It returns a Boolean result: `true` means the data associated with the specified path exists, `false` otherwise. An `EXISTS` expression is a kind of <<_identified_expression,identified expression>> that can be used only in `WHERE` clause.
 
 In the AQL example below, `EXISTS` is used in negated form to filter out `COMPOSITIONs` (and therefore EHRs) that do not contain a discharge `ADMIN_ENTRY` instance:
 
@@ -460,7 +460,7 @@ WHERE
 === Aggregate functions
 
 Aggregate functions calculate a single result value from a set of _input values_, allowing the query to return summarized information about a data item or result set.
-Input values are selected by an _expression_, representing an <<_aql_identified_paths, identified path>>.
+Input values are selected by an _expression_, representing an <<_identified_paths, identified path>>.
 Unless specified otherwise, these functions ignore `NULL` values.
 
 The table below shows the supported AQL aggregate functions:
@@ -811,7 +811,7 @@ A `SELECT` clause specifies what data is to be retrieved by the AQL query. The d
 
 [[_select_syntax]]
 ==== Syntax
-The syntax always starts with the keyword `SELECT`, optionally followed by `TOP` (deprecated - see <<TOP, below>>), followed by <<_aql_identified_paths,identified path(s)>> or plain <<_aql_variables,variable>> name(s) defined in the `FROM` clause.
+The syntax always starts with the keyword `SELECT`, optionally followed by `TOP` (deprecated - see <<TOP, below>>), followed by <<_identified_paths,identified path(s)>> or plain <<_variables,variable>> name(s) defined in the `FROM` clause.
 Each variable name or identified path may have a <<_name_alias,name alias>> renaming the associated data.
 Multiple identifiers or identified paths are separated using a comma.
 
