@@ -43,7 +43,7 @@ limitClause
 
 
 selectExpr
-	: columnVar (AS IDENTIFIER)?
+	: columnExpr (AS IDENTIFIER)?
 	;
 
 fromExpr
@@ -62,7 +62,7 @@ orderByExpr
 	;
 
 
-columnVar
+columnExpr
 	: identifiedPath
 	| aggregateFunctionCall
 	| functionCall
