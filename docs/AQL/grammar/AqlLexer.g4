@@ -7,7 +7,7 @@
 //                  - Chunlan Ma & Heath Frankel, Ocen Health Systems, Australia
 //                  - Bostjan Lah, Better, Slovenia
 //                  - Christian Chevalley, EHRBase, Germany
-//                  - Teun van Hemert, Nedap, Netherlands
+//                  - Teun van Hemert & Michael Böckers, Nedap, Netherlands
 //  support:      openEHR Specifications PR tracker <https://specifications.openehr.org/releases/QUERY/open_issues>
 //  copyright:    Copyright (c) 2020 openEHR Foundation
 //  license:      Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>
