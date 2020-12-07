@@ -20,14 +20,17 @@ Keywords in AQL are not case sensitive, so `SELECT`, `Select`, `select`, `SeLeCt
 * `ORDER BY`, `LIMIT`, `OFFSET`
 * `AND`, `OR`, `NOT`
 * functions: `count`, `min`, `max`, `sum`, `avg`, `terminology`
+* `DISTINCT`
 * `LIKE`, `matches`, `exists`
-* `"` and `'`: double and single quote characters are used to delimit string values;
-* `|`: bar characters are used to delimit intervals;
-* `[]`: brackets are used to delimit coded terms or predicate expressions.
-* `{}`: brackets are used with `matches` delimiting matches criteria
+* `"` and `'`: double and single quote characters are used to delimit string values
+* `|`: bar characters are used to delimit intervals
+* `[]`: brackets are used to delimit coded terms or predicate expressions
+* `{}`: curly braces are used with `matches` delimiting matches criteria
 * `()`: parentheses are used with function calls or to separate logic or group expressions and enforce precedence
 * `$`: dollar sign used to prefix parameters
-* `<`, `>`, `=`, `%`, `!`
+* operators: `<`, `>`, `=`, `!`
+* `:`, `?`, `&`, `%`, `#`, `@`, `*`: characters that mainly used as part of a terminology or openEHR URI
+* `/`, `.`: used by openEHR path syntax
 
 NOTE: `TOP` modifier is deprecated in favour of the `LIMIT` clause combined with `ORDER BY` (see <<LIMIT, below>>).
 
