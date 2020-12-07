@@ -76,7 +76,7 @@ WHERE
    o/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude >= 90
 --------
 
-This example defines only one AQL variable: `o`, which represents `OBSERVATIONs` that conform to (i.e. created using) the `openEHR-EHR-OBSERVATION.blood_pressure.v1` archetype.
+This example defines only one AQL variable: `o`, which represents `OBSERVATIONs` that conform to (i.e. created using) the `openEHR-EHR-OBSERVATION.blood_pressure.v1` archetype. This combination of a variable reference and a class represents a _class expression_ (see <<_class_expressions>>).
 
 The combination of a variable reference and a subordinate <<_openehr_path_syntax,path>> forms one kind of _identified path_ (see <<AQL Identified Paths>>), used to specify a fine-grained data element within a larger object matched by the `FROM` clause.
 
