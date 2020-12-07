@@ -400,15 +400,15 @@ WHERE
 
 ==== AND
 
-`AND` is a binary operator used to link two boolean expressions. It evaluates to `true` when both operands evaluate to `true`, and it evaluates to `false` otherwise.
+`AND` is a binary operator used to combine two Boolean expressions. It represents a _logical 'and'_ (conjunction) and evaluates to `true` when both operands evaluate to `true`, and it evaluates to `false` otherwise.
 
 ==== OR
 
-`OR` is a binary operator used to link two boolean expressions. It evaluates to `true` when any of the operands evaluate to `true`, and it evaluates to `false` otherwise.
+`OR` is a binary operator used to combine two Boolean expressions. It represents a _logical 'or'_ (disjunction) and evaluates to `true` when any of the operands evaluate to `true`, and it evaluates to `false` otherwise.
 
 ==== NOT
 
-`NOT` is a unary operator which is always followed by either a Boolean identified expression (see <<Identified expression>>) or other Boolean-valued operand, such as an expression using the `EXISTS` operator. It returns a Boolean result: `true` means the operand is `false`. A `NOT` expression is a kind of identified expression (see <<Identified expression,below>>).
+`NOT` is a unary operator which is always followed by a Boolean identified expression (see <<Identified expression>>). It represents a _logical 'not'_ (negation) and returns a Boolean result: `true` means the operand is `false`. A `NOT` expression is a kind of identified expression <<_identified_expression,identified expression>> that can be used only in `WHERE` clause.
 
 The example below uses `NOT` operator followed by a Boolean identified expression:
 
@@ -438,11 +438,9 @@ WHERE
    e/ehr_status/subject/external_ref/namespace != 'CEC'
 --------
 
-These advanced operators are not yet supported by the grammar. The operator syntax is borrowed from ADL specifications. These are proposed to improve the richness and flexibility of AQL so that AQL syntax supports more complicated query scenarios.
-
 ==== EXISTS
 
-`EXISTS` is a unary operator, whose operand is an identified path (described in <<AQL Identified Paths>>). It returns a Boolean result: `true` means the data associated with the specified path exists, `false` otherwise. An `EXISTS` expression is a kind of identified expression (see <<Identified expression,below>>).
+`EXISTS` is a unary operator, whose operand is an identified path (described in <<AQL Identified Paths>>). It returns a Boolean result: `true` means the data associated with the specified path exists, `false` otherwise. An `EXISTS` expression is a kind of <<_identified_expression,identified expression>> that can be used only in `WHERE` clause.
 
 In the AQL example below, `EXISTS` is used in negated form to filter out `COMPOSITIONs` (and therefore EHRs) that do not contain a discharge `ADMIN_ENTRY` instance:
 
@@ -730,7 +728,7 @@ The syntax of containment constraint is very simple: using keyword `CONTAINS` be
 EHR e CONTAINS COMPOSITION c [openEHR-EHR-COMPOSITION.referral.v1]
 --------
 
-Logical operators (`AND`, `OR`, `NOT`) and parentheses are used when multiple containment constrains are required, e.g.
+Logical operators `AND` and `OR` and parentheses `()` are used when multiple containment constrains are required, e.g.
 
 --------
 EHR e
@@ -750,11 +748,13 @@ An AQL `WHERE` clause is used to represent further criteria applied to the data 
 [[_where_syntax]]
 ==== Syntax
 
-The `WHERE` clause syntax has the following parts (in order): keyword `WHERE` and identified expression(s). Logical operators (`AND`, `OR`, `NOT`) and parenthesis can be used to represent multiple identified expressions. Examples:
+The `WHERE` clause syntax has the following parts (in order): keyword `WHERE` and identified expression(s). Logical operators `AND`, `OR` and `NOT` and parenthesis `()` can be used to combine multiple identified expressions. Examples:
 
 --------
 WHERE
    c/name/value=$nameValue AND c/archetype_details/template_id/value=$templateId
+--------
+--------
 WHERE
    (c/name/value = $nameValue OR c/archetype_details/template_id/value = $templateId) AND
    o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value >= 140
@@ -762,7 +762,11 @@ WHERE
 
 ==== Identified expression
 
-An _identified expression_ specifies matching criteria in the `WHERE` clause and comes in two forms. The first form is an expression formed by a unary operator, such as `NOT` or `EXISTS`, described earlier. The second is a binary operator expression, formed as follows:
+An _identified expression_ specifies matching criteria in the `WHERE` clause and comes in two forms.
+
+The first form is an expression formed by a unary operator, such as `NOT` or `EXISTS`, described in <<_logical_operators>>.
+
+The second is a binary operator expression, formed as follows:
 
 . _left operand_: an identified path;
 . _operator_: a comparison operator;
