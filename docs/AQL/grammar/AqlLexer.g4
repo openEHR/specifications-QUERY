@@ -74,8 +74,8 @@ AVG: A V G ;
 TERMINOLOGY: T E R M I N O L O G Y ;
 
 //
-EHR	: E H R ;
-VERSION	: V E R S I O N ;
+EHR : E H R ;
+VERSION : V E R S I O N ;
 VERSIONED_OBJECT : V E R S I O N E D '_' O B J E C T ;
 LATEST_VERSION : L A T E S T '_' V E R S I O N ;
 ALL_VERSIONS : A L L '_' V E R S I O N S ;
@@ -130,8 +130,8 @@ DT_TIMEZONE
     | Z
     ;
 
-NN_INTEGER:	DIGIT+;
-NODEID:	('at'|'id') DIGIT+ ('.' DIGIT+)*;
+NN_INTEGER: DIGIT+;
+NODEID: ('at'|'id') DIGIT+ ('.' DIGIT+)*;
 ARCHETYPEID: LETTER+ '-' LETTER+ '-' (LETTER|'_')+ '.' (IDCHAR|'-')+ '.v' DIGIT+ ('.' DIGIT+)? ('.' DIGIT+)?;
 PARAMETER: '$' LETTER IDCHAR*;
 
