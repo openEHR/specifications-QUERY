@@ -84,19 +84,19 @@ identifiedExpr
     ;
 
 identifiedOperand
-     : primitive
-     | PARAMETER
-     | identifiedPath
-     | functionCall
-     ;
+    : primitive
+    | PARAMETER
+    | identifiedPath
+    | functionCall
+    ;
 
 identifiedPath
     : IDENTIFIER pathPredicate? (SLASH objectPath)?
     ;
 
 pathPredicate
-     : OPEN_BRACKET (standardPredicate | archetypePredicate | nodePredicate) CLOSE_BRACKET
-     ;
+    : OPEN_BRACKET (standardPredicate | archetypePredicate | nodePredicate) CLOSE_BRACKET
+    ;
 
 standardPredicate
     : objectPath COMPARISON_OPERATOR pathPredicateOperand
@@ -119,32 +119,32 @@ nodePredicate
 
 pathPredicateOperand
     : primitive
-     | objectPath
-     | PARAMETER
-     ;
+    | objectPath
+    | PARAMETER
+    ;
 
 
 objectPath
-     : pathPart (SLASH pathPart)*
-     ;
+    : pathPart (SLASH pathPart)*
+    ;
 pathPart
-     : IDENTIFIER pathPredicate?
-     ;
+    : IDENTIFIER pathPredicate?
+    ;
 
 likeOperand
     : STRING
     | PARAMETER
     ;
 matchesOperand
-     : valueListItem (COMMA valueListItem)*
-     | terminologyFunction
-     | URIVALUE
-     ;
+    : valueListItem (COMMA valueListItem)*
+    | terminologyFunction
+    | URIVALUE
+    ;
 valueListItem
-     : primitive
-     | PARAMETER
-     | terminologyFunction
-     ;
+    : primitive
+    | PARAMETER
+    | terminologyFunction
+    ;
 
 primitive
     : STRING
@@ -167,18 +167,18 @@ classExprOperand
 // RM_TYPE_NAME [archetype_id]
 // RM_TYPE_NAME variable [archetype_id]
 archetypedClassExpr
-     : IDENTIFIER IDENTIFIER? archetypePredicate
-     ;
+    : IDENTIFIER IDENTIFIER? archetypePredicate
+    ;
 versionedClassExpr
-     : VERSIONED_OBJECT IDENTIFIER? (OPEN_BRACKET standardPredicate OPEN_BRACKET)?
-     ;
+    : VERSIONED_OBJECT IDENTIFIER? (OPEN_BRACKET standardPredicate OPEN_BRACKET)?
+    ;
 versionClassExpr
-     : VERSION IDENTIFIER? (OPEN_BRACKET (standardPredicate|versionPredicate) OPEN_BRACKET)?
-     ;
+    : VERSION IDENTIFIER? (OPEN_BRACKET (standardPredicate|versionPredicate) OPEN_BRACKET)?
+    ;
 versionPredicate
-     : LATEST_VERSION
-     | ALL_VERSIONS
-     ;
+    : LATEST_VERSION
+    | ALL_VERSIONS
+    ;
 
 functionCall
     : terminologyFunction
@@ -198,10 +198,10 @@ functionArg
 
 aggregateFunctionCall
     : COUNT OPEN_PAR (DISTINCT? identifiedPath | STAR) CLOSE_PAR    #countFunction
-    | MIN OPEN_PAR identifiedPath CLOSE_PAR                         #minFunction
-    | MAX OPEN_PAR identifiedPath CLOSE_PAR                         #maxFunction
-    | SUM OPEN_PAR identifiedPath CLOSE_PAR                         #sumFunction
-    | AVG OPEN_PAR identifiedPath CLOSE_PAR                         #avgFunction
+    | MIN OPEN_PAR identifiedPath CLOSE_PAR                    #minFunction
+    | MAX OPEN_PAR identifiedPath CLOSE_PAR                    #maxFunction
+    | SUM OPEN_PAR identifiedPath CLOSE_PAR                    #sumFunction
+    | AVG OPEN_PAR identifiedPath CLOSE_PAR                    #avgFunction
     ;
 
 terminologyFunction
