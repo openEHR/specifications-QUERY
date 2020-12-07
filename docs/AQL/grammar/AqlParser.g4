@@ -1,13 +1,13 @@
 //
 //  description:  ANTLR4 parser grammar for Archetype Query Language (AQL)
 //  author:       Sebastian Iancu
-//  contributors: This version of the grammar is a complet rewrite of previously published antlr3 grammar,
+//  contributors: This version of the grammar is a complete rewrite of previously published antlr3 grammar,
 //                based on current AQL specifications in combination with other grammars from several AQL implementations.
 //                The openEHR Foundation would like to recognise the following people for their contributions:
 //                  - Chunlan Ma & Heath Frankel, Ocen Health Systems, Australia
 //                  - Bostjan Lah, Better, Slovenia
 //                  - Christian Chevalley, EHRBase, Germany
-//                  - Teun van Helmert, Nedap, Netherlands
+//                  - Teun van Hemert, Nedap, Netherlands
 //  support:      openEHR Specifications PR tracker <https://specifications.openehr.org/releases/QUERY/open_issues>
 //  copyright:    Copyright (c) 2020 openEHR Foundation
 //  license:      Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>
@@ -197,31 +197,11 @@ functionArg
     ;
 
 aggregateFunctionCall
-    : countFunction
-    | minFunction
-    | maxFunction
-    | sumFunction
-    | avgFunction
-    ;
-
-countFunction
-    : COUNT OPEN_PAR (DISTINCT? identifiedPath | STAR) CLOSE_PAR
-    ;
-
-minFunction
-    : MIN OPEN_PAR identifiedPath CLOSE_PAR
-    ;
-
-maxFunction
-    : MAX OPEN_PAR identifiedPath CLOSE_PAR
-    ;
-
-sumFunction
-    : SUM OPEN_PAR identifiedPath CLOSE_PAR
-    ;
-
-avgFunction
-    : AVG OPEN_PAR identifiedPath CLOSE_PAR
+    : COUNT OPEN_PAR (DISTINCT? identifiedPath | STAR) CLOSE_PAR    #countFunction
+    | MIN OPEN_PAR identifiedPath CLOSE_PAR                         #minFunction
+    | MAX OPEN_PAR identifiedPath CLOSE_PAR                         #maxFunction
+    | SUM OPEN_PAR identifiedPath CLOSE_PAR                         #sumFunction
+    | AVG OPEN_PAR identifiedPath CLOSE_PAR                         #avgFunction
     ;
 
 terminologyFunction

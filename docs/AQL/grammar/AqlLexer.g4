@@ -1,13 +1,13 @@
 //
 //  description:  ANTLR4 lexer grammar for Archetype Query Language (AQL)
 //  author:       Sebastian Iancu
-//  contributors: This version of the grammar is a complet rewrite of previously published antlr3 grammar,
+//  contributors: This version of the grammar is a complete rewrite of previously published antlr3 grammar,
 //                based on current AQL specifications in combination with other grammars from several AQL implementations.
 //                The openEHR Foundation would like to recognise the following people for their contributions:
 //                  - Chunlan Ma & Heath Frankel, Ocen Health Systems, Australia
 //                  - Bostjan Lah, Better, Slovenia
 //                  - Christian Chevalley, EHRBase, Germany
-//                  - Teun van Helmert, Nedap, Netherlands
+//                  - Teun van Hemert, Nedap, Netherlands
 //  support:      openEHR Specifications PR tracker <https://specifications.openehr.org/releases/QUERY/open_issues>
 //  copyright:    Copyright (c) 2020 openEHR Foundation
 //  license:      Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>
@@ -165,7 +165,6 @@ MINUSMINUS: '--';
 fragment ESC_SEQ: '\\' ('b'|'t'|'n'|'f'|'r'|'\\"'|'\''|'\\') | UNICODE_ESC | OCTAL_ESC;
 fragment OCTAL_ESC: '\\' [0-3] OCTAL_DIGIT OCTAL_DIGIT | '\\' OCTAL_DIGIT OCTAL_DIGIT | '\\' OCTAL_DIGIT;
 fragment UNICODE_ESC: '\\' 'u' HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT;
-fragment QUOTE_SYMB: SINGLE_QUOTE_SYMB | DOUBLE_QUOTE_SYMB ;
 fragment SINGLE_QUOTE_SYMB: '\'';
 fragment DOUBLE_QUOTE_SYMB: '"';
 fragment DIGIT: [0-9];
