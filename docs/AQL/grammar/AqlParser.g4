@@ -83,6 +83,12 @@ identifiedExpr
     | identifiedPath MATCHES OPEN_CURLY matchesOperand CLOSE_CURLY
     ;
 
+classExprOperand
+    : IDENTIFIER variable=IDENTIFIER? (OPEN_BRACKET archetypePredicate CLOSE_BRACKET)?                 #classExpression // RM_TYPE_NAME variable [archetype_id]
+    | VERSIONED_OBJECT variable=IDENTIFIER? (OPEN_BRACKET standardPredicate CLOSE_BRACKET)?            #versionedClassExpr
+    | VERSION variable=IDENTIFIER? (OPEN_BRACKET (standardPredicate|versionPredicate) CLOSE_BRACKET)?  #versionClassExpr
+    ;
+
 identifiedOperand
     : primitive
     | PARAMETER
@@ -115,6 +121,11 @@ nodePredicate
     | objectPath MATCHES REGEXPATTERN
     | nodePredicate AND nodePredicate
     | nodePredicate OR nodePredicate
+    ;
+
+versionPredicate
+    : LATEST_VERSION
+    | ALL_VERSIONS
     ;
 
 pathPredicateOperand
@@ -153,31 +164,6 @@ primitive
     | DOUBLE
     | DATE
     | BOOLEAN
-    ;
-
-
-
-classExprOperand
-    : IDENTIFIER IDENTIFIER? // RM_TYPE_NAME variable
-    | archetypedClassExpr
-    | versionedClassExpr
-    | versionClassExpr
-    ;
-
-// RM_TYPE_NAME [archetype_id]
-// RM_TYPE_NAME variable [archetype_id]
-archetypedClassExpr
-    : IDENTIFIER IDENTIFIER? archetypePredicate
-    ;
-versionedClassExpr
-    : VERSIONED_OBJECT IDENTIFIER? (OPEN_BRACKET standardPredicate OPEN_BRACKET)?
-    ;
-versionClassExpr
-    : VERSION IDENTIFIER? (OPEN_BRACKET (standardPredicate|versionPredicate) OPEN_BRACKET)?
-    ;
-versionPredicate
-    : LATEST_VERSION
-    | ALL_VERSIONS
     ;
 
 functionCall
