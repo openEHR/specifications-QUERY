@@ -26,7 +26,8 @@ Keywords in AQL are not case sensitive, so `SELECT`, `Select`, `select`, `SeLeCt
 * `[]`: brackets are used to delimit coded terms or predicate expressions.
 * `{}`: brackets are used with `matches` delimiting matches criteria
 * `()`: parentheses are used with function calls or to separate logic or group expressions and enforce precedence
-* `<`, `>`, `=`, `%`, `!`, `$`
+* `$`: dollar sign used to prefix parameters
+* `<`, `>`, `=`, `%`, `!`
 
 NOTE: `TOP` modifier is deprecated in favour of the `LIMIT` clause combined with `ORDER BY` (see <<LIMIT, below>>).
 
