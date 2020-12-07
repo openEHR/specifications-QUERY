@@ -19,8 +19,8 @@ Keywords in AQL are not case sensitive, so `SELECT`, `Select`, `select`, `SeLeCt
 * `SELECT`, `AS`, `FROM`, `CONTAINS`, `WHERE`
 * `ORDER BY`, `LIMIT`, `OFFSET`
 * `AND`, `OR`, `NOT`
-* functions: `count`, `min`, `max`, `sum`, `avg`, `terminology`, `now`, `current-date`, `current-date-time`
-* `LIKE`, `matches`, `in`, `exists`, `not in`
+* functions: `count`, `min`, `max`, `sum`, `avg`, `terminology`
+* `LIKE`, `matches`, `exists`
 * `"` and `'`: double and single quote characters are used to delimit string values;
 * `|`: bar characters are used to delimit intervals;
 * `[]`: brackets are used to delimit coded terms or predicate expressions.
