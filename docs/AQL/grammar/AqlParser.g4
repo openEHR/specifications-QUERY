@@ -64,6 +64,7 @@ orderByExpr
 
 columnExpr
     : identifiedPath
+    | primitive
     | aggregateFunctionCall
     | functionCall
     ;
