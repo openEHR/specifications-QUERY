@@ -69,7 +69,7 @@ columnExpr
     ;
 
 containsExpr
-    : classExprOperand (CONTAINS containsExpr)?
+    : classExprOperand (NOT? CONTAINS containsExpr)?
     | containsExpr AND containsExpr
     | containsExpr OR containsExpr
     | SYM_LEFT_PAREN containsExpr SYM_RIGHT_PAREN
