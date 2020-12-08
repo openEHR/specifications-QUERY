@@ -18,11 +18,11 @@ parser grammar AqlParser;
 options { tokenVocab=AqlLexer; }
 
 selectQuery
-    : selectClause fromClause whereClause? orderByClause? limitClause? MINUSMINUS? EOF
+    : selectClause fromClause whereClause? orderByClause? limitClause? SYM_DOUBLE_DASH? EOF
     ;
 
 selectClause
-    : SELECT top? selectExpr (COMMA selectExpr)*
+    : SELECT top? selectExpr (SYM_COMMA selectExpr)*
     ;
 
 fromClause
@@ -34,16 +34,16 @@ whereClause
     ;
 
 orderByClause
-    : ORDER BY orderByExpr (COMMA orderByExpr)*
+    : ORDER BY orderByExpr (SYM_COMMA orderByExpr)*
     ;
 
 limitClause
-    : LIMIT limit=NN_INTEGER (OFFSET offset=NN_INTEGER)?
+    : LIMIT limit=NATURAL_NUMBER (OFFSET offset=WHOLE_NUMBER) ?
     ;
 
 
 selectExpr
-    : columnExpr (AS IDENTIFIER)?
+    : columnExpr (AS aliasName=IDENTIFIER)?
     ;
 
 fromExpr
@@ -54,7 +54,7 @@ whereExpr
     : NOT? identifiedExpr
     | whereExpr AND whereExpr
     | whereExpr OR whereExpr
-    | OPEN_PAR whereExpr CLOSE_PAR
+    | SYM_LEFT_PAREN whereExpr SYM_RIGHT_PAREN
     ;
 
 orderByExpr
@@ -72,7 +72,7 @@ containsExpr
     : classExprOperand (CONTAINS containsExpr)?
     | containsExpr AND containsExpr
     | containsExpr OR containsExpr
-    | OPEN_PAR containsExpr CLOSE_PAR
+    | SYM_LEFT_PAREN containsExpr SYM_RIGHT_PAREN
     ;
 
 identifiedExpr
@@ -80,14 +80,14 @@ identifiedExpr
     | identifiedPath COMPARISON_OPERATOR identifiedOperand
     | functionCall COMPARISON_OPERATOR identifiedOperand
     | identifiedPath LIKE likeOperand
-    | identifiedPath MATCHES OPEN_CURLY matchesOperand CLOSE_CURLY
+    | identifiedPath MATCHES SYM_LEFT_CURLY matchesOperand SYM_RIGHT_CURLY
     ;
 
 classExprOperand
-    : IDENTIFIER variable=IDENTIFIER? (OPEN_BRACKET archetypePredicate CLOSE_BRACKET)?                 #classExpression // RM_TYPE_NAME variable [archetype_id]
-    | VERSIONED_OBJECT variable=IDENTIFIER? (OPEN_BRACKET standardPredicate CLOSE_BRACKET)?            #versionedClassExpr
-    | EHR variable=IDENTIFIER? (OPEN_BRACKET standardPredicate CLOSE_BRACKET)?                         #ehrClassExpr
-    | VERSION variable=IDENTIFIER? (OPEN_BRACKET (standardPredicate|versionPredicate) CLOSE_BRACKET)?  #versionClassExpr
+    : TYPE_ID variable=VARIABLE_ID? (SYM_LEFT_BRACKET archetypePredicate SYM_RIGHT_BRACKET)?                    #classExpression // RM_TYPE_NAME variable [archetype_id]
+    | VERSIONED_OBJECT variable=VARIABLE_ID? (SYM_LEFT_BRACKET standardPredicate SYM_RIGHT_BRACKET)?            #versionedClassExpr
+    | EHR variable=VARIABLE_ID? (SYM_LEFT_BRACKET standardPredicate SYM_RIGHT_BRACKET)?                         #ehrClassExpr
+    | VERSION variable=VARIABLE_ID? (SYM_LEFT_BRACKET (standardPredicate|versionPredicate) SYM_RIGHT_BRACKET)?  #versionClassExpr
     ;
 
 identifiedOperand
@@ -98,11 +98,11 @@ identifiedOperand
     ;
 
 identifiedPath
-    : IDENTIFIER pathPredicate? (SLASH objectPath)?
+    : VARIABLE_ID pathPredicate? (SYM_SLASH objectPath)?
     ;
 
 pathPredicate
-    : OPEN_BRACKET (standardPredicate | archetypePredicate | nodePredicate) CLOSE_BRACKET
+    : SYM_LEFT_BRACKET (standardPredicate | archetypePredicate | nodePredicate) SYM_RIGHT_BRACKET
     ;
 
 standardPredicate
@@ -110,16 +110,16 @@ standardPredicate
     ;
 
 archetypePredicate
-    : ARCHETYPEID
+    : ARCHETYPE_HRID
     | PARAMETER
     ;
 
 nodePredicate
-    : NODEID (COMMA (STRING|PARAMETER))?
-    | ARCHETYPEID (COMMA (STRING|PARAMETER))?
+    : (ID_CODE | AT_CODE) (SYM_COMMA (STRING | PARAMETER))?
+    | ARCHETYPE_HRID (SYM_COMMA (STRING | PARAMETER))?
     | PARAMETER
     | objectPath COMPARISON_OPERATOR pathPredicateOperand
-    | objectPath MATCHES REGEXPATTERN
+    | objectPath MATCHES CONTAINED_REGEX
     | nodePredicate AND nodePredicate
     | nodePredicate OR nodePredicate
     ;
@@ -137,10 +137,10 @@ pathPredicateOperand
 
 
 objectPath
-    : pathPart (SLASH pathPart)*
+    : pathPart (SYM_SLASH pathPart)*
     ;
 pathPart
-    : IDENTIFIER pathPredicate?
+    : ATTRIBUTE_ID pathPredicate?
     ;
 
 likeOperand
@@ -148,9 +148,9 @@ likeOperand
     | PARAMETER
     ;
 matchesOperand
-    : valueListItem (COMMA valueListItem)*
+    : valueListItem (SYM_COMMA valueListItem)*
     | terminologyFunction
-    | URIVALUE
+    | URI
     ;
 valueListItem
     : primitive
@@ -161,19 +161,14 @@ valueListItem
 primitive
     : STRING
     | INTEGER
-    | FLOAT
-    | DOUBLE
+    | REAL
     | DATE
     | BOOLEAN
     ;
 
 functionCall
     : terminologyFunction
-    | function
-    ;
-
-function
-    : IDENTIFIER OPEN_PAR functionArg (COMMA functionArg)* CLOSE_PAR
+    | name=FUNCTION_ID SYM_LEFT_PAREN functionArg (SYM_COMMA functionArg)* SYM_RIGHT_PAREN
     ;
 
 functionArg
@@ -184,15 +179,12 @@ functionArg
     ;
 
 aggregateFunctionCall
-    : COUNT OPEN_PAR (DISTINCT? identifiedPath | STAR) CLOSE_PAR    #countFunction
-    | MIN OPEN_PAR identifiedPath CLOSE_PAR                    #minFunction
-    | MAX OPEN_PAR identifiedPath CLOSE_PAR                    #maxFunction
-    | SUM OPEN_PAR identifiedPath CLOSE_PAR                    #sumFunction
-    | AVG OPEN_PAR identifiedPath CLOSE_PAR                    #avgFunction
+    : name=COUNT SYM_LEFT_PAREN (DISTINCT? identifiedPath | SYM_ASTERISK) SYM_RIGHT_PAREN
+    | name=(MIN | MAX | SUM | AVG) SYM_LEFT_PAREN identifiedPath SYM_RIGHT_PAREN
     ;
 
 terminologyFunction
-    : TERMINOLOGY OPEN_PAR STRING COMMA STRING COMMA STRING CLOSE_PAR
+    : TERMINOLOGY SYM_LEFT_PAREN STRING SYM_COMMA STRING SYM_COMMA STRING SYM_RIGHT_PAREN
     ;
 
 // (deprecated)
