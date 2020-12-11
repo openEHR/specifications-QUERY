@@ -815,11 +815,15 @@ A `SELECT` clause specifies what data is to be retrieved by the AQL query. The d
 
 [[_select_syntax]]
 ==== Syntax
-The syntax always starts with the keyword `SELECT`, optionally followed by `TOP` (deprecated - see <<TOP, below>>), followed by <<_identified_paths,identified path(s)>> or plain <<_variables,variable>> name(s) defined in the `FROM` clause.
-Each variable name or identified path may have a <<_name_alias,name alias>> renaming the associated data.
-Multiple identifiers or identified paths are separated using a comma.
+The syntax always starts with the keyword `SELECT`, optionally followed by `TOP` (deprecated - see <<TOP, below>>), followed by one or more _column expressions_.
 
-Where a variable name is specified, the full object of the type associated with the variable is retrieved, such as a `COMPOSITION`, `OBSERVATION` etc. Where an identified path is specified, the data item(s) having that archetype path are returned.
+A column expression is formed by an <<_aql_identified_paths,identified path>>, a <<_functions,function>> or plain <<_aql_variables,variable>> name defined in the `FROM` clause.
+Where a variable name is specified, the full object of the type associated with the variable is retrieved, such as a `COMPOSITION`, `OBSERVATION` etc.
+Where a function is specified, the call has to be done using the specified arguments and the results are returned.
+Where an identified path is specified, the data item(s) having that archetype path are returned.
+
+Each column expression may have a <<_name_alias,name alias>> renaming the associated data.
+When the `SELECT` clause contains multiple column expressions, they are separated using a comma.
 
 Some examples are shown below.
 

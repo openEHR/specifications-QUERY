@@ -22,7 +22,7 @@
 |24 Nov 2020
 
 |
-|{spec_tickets}/SPECQUERY-25[SPECQUERY-25^] Add support aggregate functions like COUNT, SUM, etc ({spec_tickets}/SPECPR-358[SPECPR-358^]).
+|{spec_tickets}/SPECQUERY-25[SPECQUERY-25^] Add support for aggregate functions like COUNT, SUM, etc ({spec_tickets}/SPECPR-358[SPECPR-358^]).
 |S Iancu
 |23 Nov 2020
 
