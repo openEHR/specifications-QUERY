@@ -45,7 +45,7 @@ limitClause
 
 
 selectExpr
-    : columnExpr (AS aliasName=IDENTIFIER)?
+    : columnExpr (AS aliasName=ALIAS_ID)?
     ;
 
 fromExpr
@@ -80,8 +80,8 @@ containsExpr
 
 identifiedExpr
     : EXISTS identifiedPath
-    | identifiedPath COMPARISON_OPERATOR identifiedOperand
-    | functionCall COMPARISON_OPERATOR identifiedOperand
+    | identifiedPath COMPARISON_OPERATOR terminal
+    | functionCall COMPARISON_OPERATOR terminal
     | identifiedPath LIKE likeOperand
     | identifiedPath MATCHES SYM_LEFT_CURLY matchesOperand SYM_RIGHT_CURLY
     ;
@@ -93,7 +93,7 @@ classExprOperand
     | VERSION variable=VARIABLE_ID? (SYM_LEFT_BRACKET (standardPredicate|versionPredicate) SYM_RIGHT_BRACKET)?  #versionClassExpr
     ;
 
-identifiedOperand
+terminal
     : primitive
     | PARAMETER
     | identifiedPath
@@ -171,14 +171,7 @@ primitive
 
 functionCall
     : terminologyFunction
-    | name=FUNCTION_ID SYM_LEFT_PAREN functionArg (SYM_COMMA functionArg)* SYM_RIGHT_PAREN
-    ;
-
-functionArg
-    : primitive
-    | identifiedPath
-    | PARAMETER
-    | functionCall
+    | name=FUNCTION_ID SYM_LEFT_PAREN terminal (SYM_COMMA terminal)* SYM_RIGHT_PAREN
     ;
 
 aggregateFunctionCall
