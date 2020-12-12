@@ -28,7 +28,7 @@ AQL also has features found in other query languages, including:
 . naming returned results;
 . query criteria parameters;
 . arithmetic, comparison and logical operators;
-. some built-in functions that are supported in {xquery}[W3C XQuery^], such as `current-date()`;
+. functions;
 . preferences on the result retrieval and structuring, such as ordering and total number of retrieved results.
 
 == AQL example
