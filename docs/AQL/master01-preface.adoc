@@ -27,10 +27,3 @@ To see changes made due to previously reported issues, see the {component_histor
 == Original Source
 
 The text of this specification was originally posted on the {openehr_wiki_root}/spaces/spec/pages/4915203/AQL-+Archetype+Query+Language[openEHR wiki^], and was used by the global openEHR community in that form.
-
-=== AQL features not yet supported
-
-The following features are likely to be needed, but are not yet formalized by this specification:
-
-* functions;
-* embedded queries.
