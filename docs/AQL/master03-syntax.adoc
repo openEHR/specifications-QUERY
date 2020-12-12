@@ -548,7 +548,7 @@ Input values type should be either Integer of Real, and it will also determine t
 ==== TERMINOLOGY
 
 Often the `matches` operator may be need to perform a request to a terminology server, in order to execute some _operations_ over a value set or code system (a synonym of _terminology_).
-Several operations may be possible: the expansion of a ValueSet (or Reference Set), checking that a concept belongs to a value set or code system, testing if one concept subsumes another one, or the translation of concepts across different terminologies.
+Several operations may be possible: the expansion of a ValueSet (or Reference Set), checking that a concept belongs to a value set or code system, testing if one concept subsumes another one, or the mapping of concepts across different terminologies.
 While matching value by a pure terminology concept specified as <<_matches_terminology_uri,a terminology URI>> is possible, the invocation of external terminology servers from AQL requires a special function, to perform all these operations.
 
 The `TERMINOLOGY` function is used to invoke operations of an external terminology server and return the results for further processing by AQL.
@@ -560,7 +560,7 @@ Some examples of typical operations are:
 * *expand*: Expand a value set; this will retrieve all the codes contained in a value set as an explicit set.
 * *validate*: Validate a code in a value set; this will check if a given code belongs to a value set. Recall that the value set may comprise all the codes in a code system (terminology).
 * *lookup*: Look-up a code; this will retrieve all the information concerning one particular code. Examples are retrieving the preferred form to display, synonyms, etc.
-* *map*: Map a code (translate between value sets); this will convert (find an equivalent) code from one Value Set to another one based on a predefined mapping available in the external terminology service. Translation precision may not be limited to full equivalence and different kinds of mappings may be possible (wider meaning, equivalent, narrower meaning, etc).
+* *map*: Map a code (translate between value sets); this will convert (find an equivalent code) from one Value Set to another one based on a predefined mapping available in the external terminology service. Translation precision may not be limited to full equivalence and different kinds of mappings may be possible (wider meaning, equivalent, narrower meaning, etc).
 * *subsumes*: Subsumption testing; this will determine if a particular terminology concept is a subtype (is-a) of another one. For example, test in SNOMED-CT if `Myasthenia Gravis | 91637004` is a subtype of `autoimmune disease | 85828009` (i.e. test if 85828009 subsumes 91637004).
 
 The `service_api` argument represents an identifier of a type of terminology service. This is not the service endpoint as such, neither a service name, but an identifier for the kind/flavour of terminology syntax that is being sent. It provides the information to send requests related to the ValueSet, `operation` and parameters to the right terminology service. In addition, it is closely related to the strategy to parse the terminology service response in a format acceptable by the query processor.
@@ -594,18 +594,25 @@ Some examples of typical URI parameters are:
 |http://fhir.de/CodeSystem/dimdi/icd-10-gm      |
 |===
 
-The `TERMINOLOGY` function can be used in two ways in the `WHERE` clause, as a right-hand operand of `matches` operator:
+The `TERMINOLOGY` function can be used in the following ways in the `WHERE` clause:
 
-* as a direct use of function results, e.g.
+* as a right-hand operand of `matches` operator, to directly match function results, e.g.
 +
 --------
 WHERE e/value/defining_code/code_string matches TERMINOLOGY('expand', 'http://hl7.org/fhir/4.0', 'http://snomed.info/sct?fhir_vs=isa/50697003')
 --------
 
-* embedded between curly braces (`{}`), for merging explicit codes with the function results (in which case the AQL interpreter is responsible for generating a valid list of codes during semantic analysis), e.g.
+* embedded between curly braces (`{}`) of the right-hand operand of `matches`, for merging explicit codes with the function results (in which case the AQL interpreter is responsible for generating a valid list of codes during semantic analysis), e.g.
 +
 --------
 WHERE e/value/defining_code/code_string matches {'http://snomed.info/id/442031002', TERMINOLOGY('expand', 'http://hl7.org/fhir/4.0', 'http://snomed.info/sct?fhir_vs=isa/50697003')}
+--------
+
+* as a Boolean value expression, when an assertion is being tested, e.g.
++
+--------
+WHERE
+    TERMINOLOGY('validate', 'http://hl7.org/fhir/r4', 'system=http://snomed.info/sct&code=122298005&url=http://snomed.info/sct?fhir_vs&display=Astrovirus RNA assay') = true
 --------
 
 More examples can be found in the {openehr_query_aql_examples}#_terminology[openEHR AQL examples^] document.
