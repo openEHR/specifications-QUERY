@@ -12,6 +12,12 @@
 |[[latest_issue_date]]12 Dec 2020
 
 |
+|{spec_tickets}/SPECQUERY-3[SPECQUERY-3^] Add support for constants (fixed values) in column expression.
+|D Bosca, +
+ S Iancu
+|12 Dec 2020
+
+|
 |{spec_tickets}/SPECQUERY-7[SPECQUERY-7^] Add support for NOT CONTAINS.
 |T Beale, +
  S Iancu
