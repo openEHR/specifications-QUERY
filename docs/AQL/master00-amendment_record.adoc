@@ -18,13 +18,13 @@
 |12 Dec 2020
 
 |
-|{spec_tickets}/SPECQUERY-7[SPECQUERY-7^] Add support for NOT CONTAINS.
+|{spec_tickets}/SPECQUERY-7[SPECQUERY-7^] Add support for `NOT CONTAINS`.
 |T Beale, +
  S Iancu
 |12 Dec 2020
 
 |
-|{spec_tickets}/SPECQUERY-12[SPECQUERY-12^] Improve terminology support by adding a new TERMINOLOGY function.
+|{spec_tickets}/SPECQUERY-12[SPECQUERY-12^] Improve terminology support by adding a new `TERMINOLOGY` function.
 |L Marco-Ruiz, +
  B Næss, +
  H Frankel +
@@ -34,7 +34,7 @@
 |24 Nov 2020
 
 |
-|{spec_tickets}/SPECQUERY-25[SPECQUERY-25^] Add support for aggregate functions like COUNT, SUM, etc ({spec_tickets}/SPECPR-358[SPECPR-358^]).
+|{spec_tickets}/SPECQUERY-25[SPECQUERY-25^] Add support for aggregate functions like `COUNT`, `SUM`, etc ({spec_tickets}/SPECPR-358[SPECPR-358^]).
 |S Iancu
 |23 Nov 2020
 
