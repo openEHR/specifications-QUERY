@@ -22,6 +22,7 @@ Keywords in AQL are not case sensitive, so `SELECT`, `Select`, `select`, `SeLeCt
 * functions: `count`, `min`, `max`, `sum`, `avg`, `terminology`
 * `DISTINCT`
 * `LIKE`, `matches`, `exists`
+* constants: true, false
 * `"` and `'`: double and single quote characters are used to delimit string values
 * `|`: bar characters are used to delimit intervals
 * `[]`: brackets are used to delimit coded terms or predicate expressions
@@ -838,7 +839,8 @@ A `SELECT` clause specifies what data is to be retrieved by the AQL query. The d
 ==== Syntax
 The syntax always starts with the keyword `SELECT`, optionally followed by `TOP` (deprecated - see <<TOP, below>>), followed by one or more _column expressions_.
 
-A column expression is formed by an <<_identified_paths,identified path>>, a <<_functions,function>> or plain <<_variables,variable>> name defined in the `FROM` clause.
+A column expression is formed by an <<_identified_paths,identified path>>, a <<_functions,function>>, a constant value or plain <<_variables,variable>> name defined in the `FROM` clause.
+A constant is a primitive type value (see <<_built_in_types>>), where strings, dates, times and datetimes should be quoted, numbers and booleans are not quoted.
 Where a variable name is specified, the full object of the type associated with the variable is retrieved, such as a `COMPOSITION`, `OBSERVATION` etc.
 Where a function is specified, the call has to be done using the specified arguments and the results are returned.
 Where an identified path is specified, the data item(s) having that archetype path are returned.
@@ -862,6 +864,19 @@ FROM
 SELECT c
 FROM EHR e[ehr_id/value=$ehrUid] 
     CONTAINS COMPOSITION c
+--------
+
+.Example 3: Use of constants and function as column expressions.
+--------
+SELECT
+    true AS dangerousBP, "alert" as indication, count(*) as counter
+FROM
+    EHR [ehr_id/value=$ehrUid]
+        CONTAINS COMPOSITION [openEHR-EHR-COMPOSITION.encounter.v1]
+            CONTAINS OBSERVATION obs [openEHR-EHR-OBSERVATION.blood_pressure.v1]
+WHERE
+    obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude>= 160 OR
+    obs/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude>= 110
 --------
 
 ==== TOP
