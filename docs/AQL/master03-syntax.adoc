@@ -847,7 +847,7 @@ A `SELECT` clause specifies what data is to be retrieved by the AQL query. The d
 The syntax always starts with the keyword `SELECT`, optionally followed by `TOP` (deprecated - see <<TOP, below>>), followed by one or more _column expressions_.
 
 A column expression is formed by an <<_identified_paths,identified path>>, a <<_functions,function>>, a constant value or plain <<_variables,variable>> name defined in the `FROM` clause.
-A constant is a primitive type value (see <<_built_in_types>>), where strings, dates, times and datetimes should be quoted, numbers and booleans are not quoted.
+A constant is a fixed primitive type value (see <<_built_in_types>>), where strings, dates, times and datetimes should be quoted, numbers and booleans are not quoted.
 Where a variable name is specified, the full object of the type associated with the variable is retrieved, such as a `COMPOSITION`, `OBSERVATION` etc.
 Where a function is specified, the call has to be done using the specified arguments and the results are returned.
 Where an identified path is specified, the data item(s) having that archetype path are returned.
