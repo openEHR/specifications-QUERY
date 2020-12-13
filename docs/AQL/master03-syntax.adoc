@@ -477,8 +477,8 @@ WHERE
 
 === Aggregate functions
 
-Aggregate functions calculate a single result value from a set of _input values_, allowing the query to return summarized information about a data item or result set.
-Input values are selected by an _expression_, representing an <<_identified_paths, identified path>>.
+Aggregate functions calculate a single result value from a set of _input values_, allowing the query to return summarized information about a data item or a result set.
+Input values are selected by an _expression_ in a form of an <<_identified_paths, identified path>>.
 Unless specified otherwise, these functions ignore `NULL` values.
 
 The table below shows the supported AQL aggregate functions:
@@ -507,40 +507,40 @@ FROM
 
 ==== COUNT
 
-The `COUNT()` function returns the number of values of given _expression_ argument. The syntax is `COUNT([DISTINCT] expression |\*)`.
+The `COUNT` function returns the number of values of given _expression_ argument. The syntax is `COUNT([DISTINCT] expression |\*)`.
 
 The `COUNT(*)` is used to calculate the number of rows of the result set, whether or not they contain `NULL`.
-The `DISTINCT` keyword can be calculate the number of only the distinct values of _expression_.
+The `DISTINCT` keyword can be used to calculate the number of only distinct values of _expression_.
 
-If there are no matching rows, `COUNT()` returns `0`.
+If there are no matching rows, then this function returns `0`.
 Input values type can be anything, while the return type is always an Integer.
 
 ==== MIN
 
-The `MIN()` function returns the minimum value of given _expression_ argument. The syntax is `MIN(expression)`.
+The `MIN` function returns the minimum value of given _expression_ argument. The syntax is `MIN(expression)`.
 
-If there are no matching rows, `MIN()` returns `NULL`.
+If there are no matching rows, then this function returns `NULL`.
 Input values type should be either String, Date, Time, Integer of Real, and it will also determine the return type.
 
 ==== MAX
 
-The `MAX()` function returns the maximum value of given _expression_ argument. The syntax is `MAX(expression)`.
+The `MAX` function returns the maximum value of given _expression_ argument. The syntax is `MAX(expression)`.
 
-If there are no matching rows, `MAX()` returns `NULL`.
+If there are no matching rows, then this function returns `NULL`.
 Input values type should be either String, Date, Time, Integer of Real, and it will also determine the return type.
 
 ==== SUM
 
-The `SUM()` function returns the sum value of given _expression_ argument. The syntax is `SUM(expression)`.
+The `SUM` function returns the sum value of given _expression_ argument. The syntax is `SUM(expression)`.
 
-If there are no matching rows, `SUM()` returns `NULL`.
+If there are no matching rows, then this function returns `NULL`.
 Input values type should be either Integer of Real, and it will also determine the return type.
 
 ==== AVG
 
-The `AVG()` function returns the average value of given _expression_ argument. The syntax is `AVG(expression)`.
+The `AVG` function returns the average value of given _expression_ argument. The syntax is `AVG(expression)`.
 
-If there are no matching rows, `AVG()` returns `NULL`.
+If there are no matching rows, then this function returns `NULL`.
 Input values type should be either Integer of Real, and it will also determine the return type.
 
 === Other functions
