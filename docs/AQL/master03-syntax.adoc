@@ -274,6 +274,8 @@ o[name/value=$nameValue]/data[at0001]/.../data[at0003]/items[at0004]/value/value
 
 == Operators
 
+An AQL operator is a reserved word or a symbol, used primarily in `WHERE` clause to perform comparison or logical operation(s).
+
 === Comparison operators
 
 The table below shows the supported AQL comparison operators, meaning and example.
@@ -475,6 +477,10 @@ WHERE
 
 == Functions
 
+AQL provides built-in functions to perform operations on data. Functions are similar to operators as they manipulate data and return a single result, but the difference is in the format and number of their arguments.
+
+In general, a function syntax is `function(argument, argument, ...)`, accepting zero, one or more _arguments_, consisting of <<_constants, constants>>, <<_parameters, parameters>>, <<_variables, variables>>, <<_identified_paths, identified paths>> or other functions.
+
 === Aggregate functions
 
 Aggregate functions calculate a single result value from a set of _input values_, allowing the query to return summarized information about a data item or result set.
@@ -616,6 +622,10 @@ WHERE
 --------
 
 More examples can be found in the {openehr_query_aql_examples}#_terminology[openEHR AQL examples^] document.
+
+== Expressions
+
+AQL expressions provide a formal way of evaluating, transforming or comparing values. An expression is a combination of one or more <<_constants, constants>>, <<_operators, operators>>, <<_variables, variables>>, <<_parameters, parameters>> and <<_functions, functions>> that evaluates to a value.
 
 == Constants
 
