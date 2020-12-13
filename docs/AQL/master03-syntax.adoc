@@ -617,6 +617,10 @@ WHERE
 
 More examples can be found in the {openehr_query_aql_examples}#_terminology[openEHR AQL examples^] document.
 
+== Constants
+
+A _constant_, often referred as _literal value_, is a fixed value that is supplied directly in the AQL statement, not derived from an <<_identified_paths, identified path>>, a <<_variables, variable>>, or a <<_name_alias, column alias name>>. This value can be of any of the AQL built-in types, where strings, dates, times and datetimes should be quoted, while numbers and booleans are not quoted.
+
 == Built-in Types
 
 === Integer data
@@ -846,8 +850,7 @@ A `SELECT` clause specifies what data is to be retrieved by the AQL query. The d
 ==== Syntax
 The syntax always starts with the keyword `SELECT`, optionally followed by `TOP` (deprecated - see <<TOP, below>>), followed by one or more _column expressions_.
 
-A column expression is formed by an <<_identified_paths,identified path>>, a <<_functions,function>>, a constant value or plain <<_variables,variable>> name defined in the `FROM` clause.
-A constant is a fixed primitive type value (see <<_built_in_types>>), where strings, dates, times and datetimes should be quoted, numbers and booleans are not quoted.
+A column expression is formed by an <<_identified_paths,identified path>>, a <<_functions,function>>, a <<_constants, constant>> value or plain <<_variables,variable>> name defined in the `FROM` clause.
 Where a variable name is specified, the full object of the type associated with the variable is retrieved, such as a `COMPOSITION`, `OBSERVATION` etc.
 Where a function is specified, the call has to be done using the specified arguments and the results are returned.
 Where an identified path is specified, the data item(s) having that archetype path are returned.
