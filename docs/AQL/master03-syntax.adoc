@@ -737,6 +737,10 @@ NOTE: The underlying types of date/time strings are inferred by the AQL processo
 Examples are as below:
 
 --------
+// complete datetime in ISO 8601 extended format: AQL grammar identifies this value as a datetime value.
+WHERE composition/context/start_time <= '1986-01-01T12:00:00.000+09:30'
+--------
+--------
 // complete date in ISO 8601 extended format: AQL grammar identifies this value as a date value.
 WHERE composition/context/start_time <= '1986-01-01'
 --------
@@ -746,7 +750,7 @@ WHERE composition/context/start_time > '19860101'
 --------
 --------
 // ISO 8601 time extended format: AQL grammar identifies it as a string value.
-WHERE composition/context/start_time < "12:00:00+0930"
+WHERE composition/context/start_time < '12:00:00+09:30'
 --------
 
 == Query structure
