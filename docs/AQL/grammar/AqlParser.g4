@@ -165,7 +165,7 @@ primitive
     : STRING
     | INTEGER
     | REAL
-    | DATE
+    | DATE | TIME | DATETIME
     | BOOLEAN
     ;
 
