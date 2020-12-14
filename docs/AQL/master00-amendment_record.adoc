@@ -7,12 +7,34 @@
 4+^h|*Release 1.1.0 (unreleased)*
 
 |[[latest_issue]]1.1.0
-|{spec_tickets}/SPECQUERY-8[SPECQUERY-8^] Improve readability and clean up text (non-semantic).
+|{spec_tickets}/SPECQUERY-8[SPECQUERY-8^] Correct numerous minor typographical and formatting errors. Improve the wording and readability.
 |S Iancu
-|[[latest_issue_date]]17 Nov 2020
+|[[latest_issue_date]]12 Dec 2020
 
 |
-|{spec_tickets}/SPECQUERY-25[SPECQUERY-25^] Add support aggregate functions like COUNT, SUM, etc ({spec_tickets}/SPECPR-358[SPECPR-358^]).
+|{spec_tickets}/SPECQUERY-3[SPECQUERY-3^] Add support for constants (fixed values) in column expression.
+|D Bosca, +
+ S Iancu
+|12 Dec 2020
+
+|
+|{spec_tickets}/SPECQUERY-7[SPECQUERY-7^] Add support for `NOT CONTAINS`.
+|T Beale, +
+ S Iancu
+|12 Dec 2020
+
+|
+|{spec_tickets}/SPECQUERY-12[SPECQUERY-12^] Improve terminology support by adding a new `TERMINOLOGY` function.
+|L Marco-Ruiz, +
+ B Næss, +
+ H Frankel +
+ B Fabjan, +
+ I McNicoll, +
+ S Iancu
+|24 Nov 2020
+
+|
+|{spec_tickets}/SPECQUERY-25[SPECQUERY-25^] Add support for aggregate functions like `COUNT`, `SUM`, etc ({spec_tickets}/SPECPR-358[SPECPR-358^]).
 |S Iancu
 |23 Nov 2020
 
