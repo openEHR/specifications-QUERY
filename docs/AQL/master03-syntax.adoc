@@ -626,6 +626,86 @@ More examples can be found in the {openehr_query_aql_examples}#_terminology[open
 
 AQL expressions provide a formal way of evaluating, transforming or comparing values. An expression is a combination of one or more <<_constants, constants>>, <<_operators, operators>>, <<_variables, variables>>, <<_parameters, parameters>> and <<_functions, functions>> that evaluates to a value.
 
+==== Class expressions
+
+_Class expressions_ are used in the `FROM` clause for two purposes:
+
+. indicating the constraints on RM classes so as to scope the data source for the query. For instance, `EHR e[ehr_id/value='123456']` indicates that the required data must be from a specific EHR with `ehr_id` value `'123456'`; while `COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]` indicates the required data must be from or must be associated with a Composition instance with archetype id - `openEHR-EHR-COMPOSITION.report.v1`.
+. defining an RM class variable that may be used by other clauses to indicate the required data or data items on which query criteria are applied. The example below uses the class expression to define a variable `e` which is used by the `SELECT` clause indicating all relevant `ehr_id` values are retrieved, and a variable `c` used by the `WHERE` clause indicating that the query criteria is set on the Composition `template_id` value.
++
+--------
+SELECT
+   e/ehr_id/value
+FROM
+   EHR e
+      CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.referral.v1]
+WHERE
+   c/archetype_details/template_id/value = $templateId
+--------
+
+Class expressions syntax include three parts. A class expression must have part one and at least one of part two or part three.
+
+. part one (mandatory): RM class name, such as `EHR`, `COMPOSITION`, `OBSERVATION` etc.
+. part two (optional): AQL variable name
+. part three (optional): a standard predicate or an archetype predicate.
+
+Two examples of a class expression are shown below:
+
+--------
+// EHR class, class identifier/variable, and a standard predicate
+EHR e[ehr_id/value=$ehrUid]
+--------
+
+--------
+// COMPOSITION class, class identifier/variable, and an archetype predicate
+COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]
+--------
+
+==== Identified expression
+
+An _identified expression_ specifies matching criteria in the `WHERE` clause and comes in two forms.
+
+The first form is an expression formed by a unary operator, such as `NOT` or `EXISTS`, described in <<_logical_operators>>.
+
+The second is a binary operator expression, formed as follows:
+
+. _left operand_: an identified path;
+. _operator_: a comparison operator;
+. _right operand_: one of:
+** a value criterion, normally of a primitive type, such as `String`, `Integer`, `Boolean`, `Double`, or `Float`; if a `String` value, single or double quotation marks are required; OR
+** a replaceable parameter (identified with the `'$'` symbol); OR
+** a string pattern, in case the operator `LIKE` is used; OR
+** an identified path.
+
+The following examples illustrate the binary form.
+
+* Left-hand operand is an identified path; right-hand operand is a primitive value:
++
+--------
+o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value >= 140
+
+c/archetype_details/template_id/value = 'health_encounter'
+--------
+
+* Left-hand operand is an identified path and right-hand operand is a parameter:
++
+--------
+c/archetype_details/template_id/value = $templateParameter
+--------
+
+* Left-hand operand is an identified path; right-hand operand is a pattern:
++
+--------
+c/archetype_details/template_id/value LIKE '*encounter*'
+--------
+
+* Both left-hand operand and right-hand operand are identified paths:
++
+--------
+o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value >
+o1/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value
+--------
+
 == Constants
 
 A _constant_, often referred as _literal value_, is a fixed value that is supplied directly in the AQL statement, not derived from an <<_identified_paths, identified path>>, a <<_variables, variable>>, or a <<_name_alias, column alias name>>. This value can be any of the AQL built-in types, where strings, dates, times and datetimes should be quoted, while numbers and booleans are not quoted.
@@ -721,41 +801,6 @@ FROM
       CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]
 --------
 
-==== Class expressions
-
-Two examples of a class expression are shown below:
-
---------
-// EHR class, class identifier/variable, and a standard predicate
-EHR e[ehr_id/value=$ehrUid]
---------
-
---------
-// COMPOSITION class, class identifier/variable, and an archetype predicate
-COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]
---------
-
-Class expressions are used for two purposes:
-
-. indicating the constraints on RM classes so as to scope the data source for the query. For instance, `EHR e[ehr_id/value='123456']` indicates that the required data must be from a specific EHR with `ehr_id` value `'123456'`; while `COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]` indicates the required data must be from or must be associated with a Composition instance with archetype id - `openEHR-EHR-COMPOSITION.report.v1`.
-. defining an RM class variable that may be used by other clauses to indicate the required data or data items on which query criteria are applied. The example below uses the class expression to define a variable `e` which is used by the `SELECT` clause indicating all relevant `ehr_id` values are retrieved, and a variable `c` used by the `WHERE` clause indicating that the query criteria is set on the Composition `template_id` value.
-+
---------
-SELECT
-   e/ehr_id/value
-FROM
-   EHR e
-      CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.referral.v1]
-WHERE
-   c/archetype_details/template_id/value = $templateId
---------
-
-Class expressions syntax include three parts. A class expression must have part one and at least one of part two or part three.
-
-. part one (mandatory): RM class name, such as `EHR`, `COMPOSITION`, `OBSERVATION` etc.
-. part two (optional): AQL variable name
-. part three (optional): a standard predicate or an archetype predicate.
-
 ==== Containment
 
 Since archetypes are in hierarchical structure, AQL has a containment constraint which specifies the hierarchical relationships between parent and child data items. The `FROM` clause utilises this hierarchical constraint along with class expression to determine the data source to which the AQL query is applied.
@@ -804,51 +849,6 @@ WHERE
 WHERE
    (c/name/value = $nameValue OR c/archetype_details/template_id/value = $templateId) AND
    o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value >= 140
---------
-
-==== Identified expression
-
-An _identified expression_ specifies matching criteria in the `WHERE` clause and comes in two forms.
-
-The first form is an expression formed by a unary operator, such as `NOT` or `EXISTS`, described in <<_logical_operators>>.
-
-The second is a binary operator expression, formed as follows:
-
-. _left operand_: an identified path;
-. _operator_: a comparison operator;
-. _right operand_: one of:
-** a value criterion, normally of a primitive type, such as `String`, `Integer`, `Boolean`, `Double`, or `Float`; if a `String` value, single or double quotation marks are required; OR
-** a replaceable parameter (identified with the `'$'` symbol); OR
-** a string pattern, in case the operator `LIKE` is used; OR
-** an identified path.
-
-The following examples illustrate the binary form.
-
-* Left-hand operand is an identified path; right-hand operand is a primitive value:
-+
---------
-o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value >= 140
-
-c/archetype_details/template_id/value = 'health_encounter'
---------
-
-* Left-hand operand is an identified path and right-hand operand is a parameter:
-+
---------
-c/archetype_details/template_id/value = $templateParameter
---------
-
-* Left-hand operand is an identified path; right-hand operand is a pattern:
-+
---------
-c/archetype_details/template_id/value LIKE '*encounter*'
---------
-
-* Both left-hand operand and right-hand operand are identified paths:
-+
---------
-o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value >
-o1/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value
 --------
 
 === SELECT
