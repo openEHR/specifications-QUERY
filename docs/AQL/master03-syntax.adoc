@@ -479,7 +479,7 @@ WHERE
 AQL provides built-in functions to perform operations on data. Functions are similar to operators as they manipulate data and return a single result, but the difference is in the format and number of their arguments.
 
 In general, a function syntax is `function(argument, argument, ...)`, accepting zero, one or more _arguments_, consisting of <<_constants, constants>>, <<_parameters, parameters>>, <<_variables, variables>>, <<_identified_paths, identified paths>> or other functions.
-Most of these functions are mapped to function definitions in the {openehr_foundation_types}[openEHR Foundation Types^].
+Most of these functions are mapped to function definitions in the {openehr_foundation_types}[openEHR Foundation Types^] and in the {openehr_base_types}[openEHR Base Types^].
 
 There are two types of functions: _single-row_ functions, returning a single result for every row, and _aggregate_ functions, returning a single result based on a group of rows rather than on a single row.
 
@@ -555,7 +555,7 @@ Input values type should be either Integer of Real, and it will also determine t
 
 === String functions
 
-AQL is providing single-row functions for examining and manipulating string values.
+AQL provides single-row functions for examining and manipulating string values.
 
 The table below shows the built-in AQL string functions:
 
@@ -572,7 +572,7 @@ The table below shows the built-in AQL string functions:
 |===
 
 For functions that operate on string positions, the first position is numbered 1.
-For functions that take length arguments, noninteger arguments are rounded to the nearest integer.
+For functions that take length arguments, non-integer arguments are rounded to the nearest integer.
 
 ==== LENGTH
 
@@ -649,7 +649,7 @@ The argument `d` is of type Integer, and defaults to value `0` if not specified.
 
 === Date and time functions
 
-AQL is providing single-row functions for examining and manipulating date, time or datetime values.
+AQL provides single-row functions for examining and manipulating date, time or datetime values.
 
 The table below shows the built-in AQL date and time functions:
 
