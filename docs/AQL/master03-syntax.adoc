@@ -148,10 +148,10 @@ There are three types of predicates used by AQL: the _standard predicate_, the _
 
 === Standard predicate
 
-Standard predicates always have a left operand, operator and right operand, e.g. `[ehr_id/value='123456']`.
+Standard predicates always have a left-hand operand, an operator and a right-hand operand, e.g. `[ehr_id/value='123456']`.
 
-* The left operand is normally an openEHR path, such as `ehr_id/value`, `name/value`.
-* The right operand is normally a criterion value or a parameter, such as `'123456'`, `$ehrUid`. It can also be another openEHR path.
+* The left-hand operand is normally an openEHR path, such as `ehr_id/value`, `name/value`.
+* The right-hand operand is normally a criterion value or a parameter, such as `'123456'`, `$ehrUid`. It can also be another openEHR path.
 * The operator can be one of the following:
 +
 ----
@@ -160,7 +160,7 @@ Standard predicates always have a left operand, operator and right operand, e.g.
 
 === Archetype predicate
 
-An archetype predicate is a shortcut of a standard predicate, i.e. the predicate does not have the left operand and operator. It only has an archetype id, e.g. `[openEHR-EHR-COMPOSITION.encounter.v1]`. The archetype predicate is a specific type of query criterion indicating which archetype instances are relevant to this query. It is used to scope the data source from which the query result data is to be retrieved. Therefore, an archetype predicate is only used within an AQL `FROM` clause, for example,
+An archetype predicate is a shortcut of a standard predicate, i.e. the predicate does not have the left-hand operand and operator. It only has an archetype id, e.g. `[openEHR-EHR-COMPOSITION.encounter.v1]`. The archetype predicate is a specific type of query criterion indicating which archetype instances are relevant to this query. It is used to scope the data source from which the query result data is to be retrieved. Therefore, an archetype predicate is only used within an AQL `FROM` clause, for example,
 
 --------
 FROM EHR [ehr_id/value='1234']
@@ -227,7 +227,7 @@ The corresponding standard predicates would be:
 [archetype_node_id=at0002 and name/value='real name value']
 --------
 
-* The above three forms are the most common node predicates. A more advanced form is to include a general criterion instead of the `name/value` criterion within the predicate. The general criterion consists of left operand, operator, and right operand, e.g.:
+* The above three forms are the most common node predicates. A more advanced form is to include a general criterion instead of the `name/value` criterion within the predicate. The general criterion consists of left-hand operand, operator, and right-hand operand, e.g.:
 +
 --------
 [at0002 and value/defining_code/terminology_id/value=$terminologyId]
@@ -297,7 +297,7 @@ The table below shows the supported AQL comparison operators, meaning and exampl
 ==== LIKE
 
 The `LIKE` binary operator is used to compare a value of type string (or dates and times) against a simple pattern.
-The left operand is an AQL identified path, while the right operand is a string value, representing the pattern to be matched.
+The left-hand operand is an AQL identified path, while the right-hand operand is a string value, representing the pattern to be matched.
 The `LIKE` expression returns `true` if the value matches the supplied pattern.
 
 Below is an example using a simple pattern matching:
@@ -321,7 +321,7 @@ To match a literal `?` or `*`, the respective character in pattern must be escap
 
 ==== matches
 
-The `matches` binary operator is used in the `WHERE` clause. The left operand is an AQL identified path. The right operand is enclosed within braces (`'{}'`), and may take the following forms:
+The `matches` binary operator is used in the `WHERE` clause. The left-hand operand is an AQL identified path. The right-hand operand is enclosed within braces (`'{}'`), and may take the following forms:
 
 . *cADL list constraint*: a comma-separated value list, which is one of the cADL constraint forms used in the {openehr_am}[Archetype Definition Language (ADL)^]. Below is an example using a string value list:
 +
@@ -344,9 +344,9 @@ Some examples of value list:
 +
 --------
 matches {'string item 1', 'string item 2', 'string item3'}  // A string list, equivalent to
-                                                            // matches 'string item1' or ..
+                                                            // matches 'string item 1' or ..
                                                             // matches 'string item 2' or ..
-                                                            // matches 'string item 3'
+                                                            // matches 'string item3'
 matches {'2006-01-01', '2007-01-01', '2008-01-01'}          // a date value list
 matches {1, 2, 3}                                           // an integer list
 matches {1.1, 2.5, 3.8}                                     // a real value list
@@ -761,7 +761,7 @@ Class expressions syntax include three parts. A class expression must have part 
 
 Since archetypes are in hierarchical structure, AQL has a containment constraint which specifies the hierarchical relationships between parent and child data items. The `FROM` clause utilises this hierarchical constraint along with class expression to determine the data source to which the AQL query is applied.
 
-The syntax of containment constraint expression is very simple: using `CONTAINS` operator between two class expressions. Left operand class expression is the parent object of the right operand class expression, e.g.
+The syntax of containment constraint expression is very simple: using `CONTAINS` operator between two class expressions. Left-hand operand class expression is the parent object of the right-hand operand class expression, e.g.
 
 --------
 EHR e CONTAINS COMPOSITION c [openEHR-EHR-COMPOSITION.referral.v1]
@@ -825,7 +825,7 @@ The second is a binary operator expression, formed as follows:
 
 The following examples illustrate the binary form.
 
-* Left operand is an identified path; right operand is a primitive value:
+* Left-hand operand is an identified path; right-hand operand is a primitive value:
 +
 --------
 o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value >= 140
@@ -833,19 +833,19 @@ o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value >= 140
 c/archetype_details/template_id/value = 'health_encounter'
 --------
 
-* Left operand is an identified path and right operand is a parameter:
+* Left-hand operand is an identified path and right-hand operand is a parameter:
 +
 --------
 c/archetype_details/template_id/value = $templateParameter
 --------
 
-* Left operand is an identified path; right operand is a pattern:
+* Left-hand operand is an identified path; right-hand operand is a pattern:
 +
 --------
 c/archetype_details/template_id/value LIKE '*encounter*'
 --------
 
-* Both left operand and right operand are identified paths:
+* Both left-hand operand and right-hand operand are identified paths:
 +
 --------
 o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value >
