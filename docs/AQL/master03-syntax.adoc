@@ -624,13 +624,13 @@ More examples can be found in the {openehr_query_aql_examples}#_terminology[open
 
 == Expressions
 
-AQL expressions provide a formal way of evaluating, transforming or comparing values. An expression is a combination of one or more <<_constants, constants>>, <<_operators, operators>>, <<_variables, variables>>, <<_parameters, parameters>> and <<_functions, functions>> that evaluates to a value.
+AQL expressions provide a formal way of evaluating, transforming or comparing values. An expression is a combination of one or more <<_constants, constants>>, <<_operators, operators>>, <<_variables, variables>>, <<_predicates, predicates>>, <<_parameters, parameters>> and <<_functions, functions>> that evaluates to a value.
 
-==== Class expressions
+=== Class expressions
 
 _Class expressions_ are used in the `FROM` clause for two purposes:
 
-. indicating the constraints on RM classes so as to scope the data source for the query. For instance, `EHR e[ehr_id/value='123456']` indicates that the required data must be from a specific EHR with `ehr_id` value `'123456'`; while `COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]` indicates the required data must be from or must be associated with a Composition instance with archetype id - `openEHR-EHR-COMPOSITION.report.v1`.
+. indicating the constraints on RM classes so as to scope the data source for the query. For instance, `EHR e[ehr_id/value='123456']` indicates that the required data must be from a specific `EHR` with `ehr_id` value `'123456'`; while `COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]` indicates the required data must be from or must be associated with a Composition instance with archetype id - `openEHR-EHR-COMPOSITION.report.v1`.
 . defining an RM class variable that may be used by other clauses to indicate the required data or data items on which query criteria are applied. The example below uses the class expression to define a variable `e` which is used by the `SELECT` clause indicating all relevant `ehr_id` values are retrieved, and a variable `c` used by the `WHERE` clause indicating that the query criteria is set on the Composition `template_id` value.
 +
 --------
@@ -661,7 +661,7 @@ EHR e[ehr_id/value=$ehrUid]
 COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]
 --------
 
-==== Identified expression
+=== Identified expression
 
 An _identified expression_ specifies matching criteria in the `WHERE` clause and comes in two forms.
 
@@ -780,7 +780,7 @@ Model and should follow the dual-model approach.
 Then, the expressions in the `WHERE` clause will filter data, but only from the subset
 defined by the `FROM` clause. And in the `SELECT` clause, a final projection is applied,
 selecting only the matched data that should be retrieved in the query result. In addition
-to the filtering done in the `WHERE` clause, the `class expressions` could hold predicates
+to the filtering done in the `WHERE` clause, the <<_class_expressions, class expressions>> could hold predicates
 that also allow filtering data.
 
 In summary:
@@ -793,7 +793,7 @@ In summary:
 [[_from_syntax]]
 ==== Syntax
 
-A simple `FROM` clause consists of three parts: keyword `FROM`, class expression and/or containment constraints, e.g.
+A simple `FROM` clause consists of three parts: keyword `FROM`, _class expression_ and/or _containment constraints_, e.g.
 
 --------
 FROM
@@ -803,7 +803,7 @@ FROM
 
 ==== Containment
 
-Since archetypes are in hierarchical structure, AQL has a containment constraint which specifies the hierarchical relationships between parent and child data items. The `FROM` clause utilises this hierarchical constraint along with class expression to determine the data source to which the AQL query is applied.
+Since archetypes are in hierarchical structure, AQL has a containment constraint which specifies the hierarchical relationships between parent and child data items. The `FROM` clause utilises this hierarchical constraint along with <<_class_expressions, class expression>> to determine the data source to which the AQL query is applied.
 
 The syntax of containment constraint expression is very simple: using `CONTAINS` operator between two class expressions. Left-hand operand class expression is the parent object of the right-hand operand class expression, e.g.
 
@@ -839,7 +839,7 @@ An AQL `WHERE` clause is used to represent further criteria applied to the data 
 [[_where_syntax]]
 ==== Syntax
 
-The `WHERE` clause syntax has the following parts (in order): keyword `WHERE` and identified expression(s). Logical operators `AND`, `OR` and `NOT` and parenthesis `()` can be used to combine multiple identified expressions. Examples:
+The `WHERE` clause syntax has the following parts (in order): keyword `WHERE` and one or more <<_identified_expression, identified expressions>>. Logical operators `AND`, `OR`, `NOT` and parenthesis `()` can be used to combine multiple identified expressions. Examples:
 
 --------
 WHERE
