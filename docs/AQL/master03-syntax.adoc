@@ -105,7 +105,7 @@ The parameters can be class specific (such as the parameter of EHR identifier or
 [[parameter_syntax]]
 === Syntax
 
-A parameter always starts with a dollar sign `$` followed by the parameter name, e.g. `$ehrUid`. The parameter name can consist of letters, digits and underscores. It cannot have spaces and it cannot be an <<_reserved_words_and_characters,AQL reserved word>>.
+A parameter always starts with a dollar sign `$` followed by the parameter name, e.g. `$ehrUid`. The parameter name can consist of letters, digits and underscores. It cannot have spaces, and it cannot be an <<_reserved_words_and_characters,AQL reserved word>>.
 
 A parameter can be used for any criteria values within an AQL statement, e.g.:
 
@@ -137,7 +137,7 @@ AQL query parameters can be resolved at application level, or EHR system level. 
 
 If a query needs to be reusable across different EHR systems, any query parameters normally need to be registered in these EHR systems so that they can be resolved with real values from each environment. A typical example of this type of query parameter is `$ehrUid`. If the query is only used within an application, then the query parameters would be resolved by the application, such as the parameter of healthcare facility identifier or template identifier.
 
-There are no specific guidelines on how to resolve query parameters. Generally speaking, a parameter name is used as a key (or a key is associated with a parameter name) and the key needs to be unique within the boundary where the parameters are resolved. The EHR system or application needs to have the API functions to get the real value with a given parameter name or key.
+There are no specific guidelines on how to resolve query parameters. Generally speaking, a parameter name is used as a key (or a key is associated with a parameter name), and the key needs to be unique within the boundary where the parameters are resolved. The EHR system or application needs to have the API functions to get the real value with a given parameter name or key.
 
 
 == Predicates
@@ -298,7 +298,7 @@ The table below shows the supported AQL comparison operators, meaning and exampl
 
 The `LIKE` binary operator is used to compare a value of type string (or dates and times) against a simple pattern.
 The left-hand operand is an AQL identified path, while the right-hand operand is a string value, representing the pattern to be matched.
-The `LIKE` expression returns `true` if the value matches the supplied pattern.
+It returns `true` if the value matches the supplied pattern.
 
 Below is an example using a simple pattern matching:
 --------
@@ -314,8 +314,7 @@ WHERE
 
 The `?` wildcard in pattern matches any single character, while the `\*` wildcard matches any sequence of zero or more characters.
 If the pattern does not contain any of these wildcards, then `LIKE` acts like the `=` (equal) operator.
-The `LIKE` operator always try to match the entire string value, therefore if the intention is to match a sequence anywhere within the string,
-the pattern must start and end with `*` wildcard, e.g. `"\*test*"`.
+The `LIKE` operator always try to match the entire string value, therefore if the intention is to match a sequence anywhere within the string, the pattern must start and end with `*` wildcard, e.g. `"\*test*"`.
 
 To match a literal `?` or `*`, the respective character in pattern must be escaped by using the backslash `\` character.
 
@@ -629,7 +628,7 @@ AQL expressions provide a formal way of evaluating, transforming or comparing va
 
 == Constants
 
-A _constant_, often referred as _literal value_, is a fixed value that is supplied directly in the AQL statement, not derived from an <<_identified_paths, identified path>>, a <<_variables, variable>>, or a <<_name_alias, column alias name>>. This value can be of any of the AQL built-in types, where strings, dates, times and datetimes should be quoted, while numbers and booleans are not quoted.
+A _constant_, often referred as _literal value_, is a fixed value that is supplied directly in the AQL statement, not derived from an <<_identified_paths, identified path>>, a <<_variables, variable>>, or a <<_name_alias, column alias name>>. This value can be any of the AQL built-in types, where strings, dates, times and datetimes should be quoted, while numbers and booleans are not quoted.
 
 == Built-in Types
 
