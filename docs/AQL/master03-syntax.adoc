@@ -479,6 +479,11 @@ WHERE
 AQL provides built-in functions to perform operations on data. Functions are similar to operators as they manipulate data and return a single result, but the difference is in the format and number of their arguments.
 
 In general, a function syntax is `function(argument, argument, ...)`, accepting zero, one or more _arguments_, consisting of <<_constants, constants>>, <<_parameters, parameters>>, <<_variables, variables>>, <<_identified_paths, identified paths>> or other functions.
+Most of these functions are mapped to function definitions in the {openehr_foundation_types}[openEHR Foundation Types^].
+
+There are two types of functions: _single-row_ functions, returning a single result for every row, and _aggregate_ functions, returning a single result based on a group of rows rather than on a single row.
+
+NOTE: The followings are a set of core built-in functions defined by AQL specifications. Various other functions may exist however in AQL implementation.
 
 === Aggregate functions
 
@@ -547,6 +552,133 @@ The `AVG` function returns the average value of given _expression_ argument. The
 
 If there are no matching rows, then this function returns `NULL`.
 Input values type should be either Integer of Real, and it will also determine the return type.
+
+=== String functions
+
+AQL is providing single-row functions for examining and manipulating string values.
+
+The table below shows the built-in AQL string functions:
+
+[width="100%",cols="1,5",options="header",]
+|===
+|Function       |Description
+
+|LENGTH()       |Returns the length of a string
+|CONTAINS()     |Validates if a string contains other string
+|POSITION()     |Returns the position of the first occurrence of substring in a string
+|SUBSTRING()    |Extracts the substring as specified
+|CONCAT()       |Returns the string that results from concatenating the arguments
+|CONCAT_WS()    |Returns the string that results from concatenating the arguments with separator
+|===
+
+For functions that operate on string positions, the first position is numbered 1.
+For functions that take length arguments, noninteger arguments are rounded to the nearest integer.
+
+==== LENGTH
+
+The `LENGTH` function returns the number of characters of a given _expression_ argument.
+The syntax is `LENGTH(expression)`, where the argument is of type String. The result type is Integer.
+
+==== CONTAINS
+
+The `CONTAINS` function with syntax is `CONTAINS(string, substring)` returns the `true` if the `string` argument expression contains the `substring`.
+The arguments are of type String, while the result type is Boolean.
+
+==== POSITION
+
+The `POSITION` function with syntax is `POSITION(substring, string)` returns the position (index) of the first occurrence of `substring` in `string` argument expression, or zero if it's not present.
+The arguments are of type String, while the result type is Integer.
+
+==== SUBSTRING
+
+The `SUBSTRING` function with syntax is `SUBSTRING(string, position, length)` extracts the substring of `string`, starting at the `position`-th character, and stopping after `length` characters, if that is specified.
+The first argument is of type String, while `position`, `length` are Integers. The result type is String.
+
+The `length` argument is optional, and when not provided this function will extract the substring from the `position` until the end of the given `string` argument.
+
+==== CONCAT
+
+The `CONCAT` function with syntax is `CONCAT(string1, string2, ...)` returns the string that results from concatenating all the arguments. It may have one or more expression arguments, all of type String.
+
+==== CONCAT_WS
+
+The `CONCAT_WS` function with syntax is `CONCAT_WS(separator, string1, string2, ...)` returns the string that results from concatenating all the arguments with `separator` string, i.e. the separator is added between the strings to be concatenated.
+
+=== Numeric functions
+
+Numeric single-row functions are providing various mathematical functions for numeric type arguments.
+
+The table below shows the built-in AQL numeric functions:
+
+[width="100%",cols="1,5",options="header",]
+|===
+|Function   |Description
+
+|ABS()      |Returns the absolute value
+|MOD()      |Returns the remainder
+|CEIL()     |Returns the nearest integer greater than or equal to argument
+|FLOOR()    |Returns the nearest integer less than or equal to argument
+|ROUND()    |Rounds the argument
+|===
+
+==== ABS
+
+The `ABS` function returns the absolute value of given _expression_ argument.
+The syntax is `ABS(expression)`, where the argument is of type Real or Integer. The result type is derived from the argument type.
+
+==== MOD
+
+The `MOD` function with the syntax `MOD(x, y)` returns the remainder of `x` divided by `y`.
+The arguments `x` and `y` are of type Real or Integer, while the result is derived from the arguments type.
+
+==== CEIL
+
+The `CEIL` function returns the Integer greater than or equal to _expression_ argument.
+The syntax is `CEIL(expression)`, where the argument is of type Real or Integer.
+
+==== FLOOR
+
+The `FLOOR` function returns the Integer less than or equal to _expression_ argument.
+The syntax is `FLOOR(expression)`, where the argument is of type Real or Integer.
+
+==== ROUND
+
+The `ROUND` function with the syntax `ROUND(expression, d)` returns the rounded _expression_ argument `expression` to `d` decimal places.
+The argument `expression` is of type Real or Integer, and the result of the function is derived from it.
+The argument `d` is of type Integer, and defaults to value `0` if not specified.
+
+=== Date and time functions
+
+AQL is providing single-row functions for examining and manipulating date, time or datetime values.
+
+The table below shows the built-in AQL date and time functions:
+
+[width="100%",cols="1,5",options="header",]
+|===
+|Function               |Description
+
+|CURRENT_DATE()         |Returns the current date
+|CURRENT_TIME()         |Returns the current time
+|CURRENT_DATE_TIME()    |Returns the current datetime
+|NOW()                  |An alias for CURRENT_DATE_TIME()
+|CURRENT_TIMEZONE()     |Returns the current timezone
+|===
+
+==== CURRENT_DATE
+
+The function with syntax `CURRENT_DATE()` accepts no arguments and returns the current date as string value with the format 'YYYY-MM-DD'.
+
+==== CURRENT_TIME
+
+The function with syntax `CURRENT_TIME()` accepts no arguments and returns the current time as string value with the format 'hh:mm:ss'.
+
+==== CURRENT_DATE_TIME or NOW
+
+The function with syntax `CURRENT_DATE_TIME()`, or `NOW()`, accepts no arguments and returns the current datetime as string value with the format 'YYYY-MM-DDThh:mm:ss.sss±hh:mm'.
+
+==== CURRENT_TIMEZONE
+
+The function with syntax `CURRENT_TIMEZONE()` accepts no arguments and returns the current timezone as string value with the format '±hh:mm'.
 
 === Other functions
 
