@@ -320,7 +320,7 @@ To match a literal `?` or `*`, the respective character in pattern must be escap
 
 ==== matches
 
-The `matches` binary operator is used in the `WHERE` clause. The left-hand operand is an AQL identified path. The right-hand operand is enclosed within braces (`'{}'`), and may take the following forms:
+The `matches` binary operator is used in the `WHERE` clause. The left-hand operand is an AQL identified path. The right-hand operand is enclosed within curly braces (`{}`), and may take the following forms:
 
 . *cADL list constraint*: a comma-separated value list, which is one of the cADL constraint forms used in the {openehr_am}[Archetype Definition Language (ADL)^]. Below is an example using a string value list:
 +
@@ -459,7 +459,7 @@ WHERE
 
 ==== EXISTS
 
-`EXISTS` is a unary operator, whose operand is an identified path (described in <<Identified Paths>>). It returns a Boolean result: `true` means the data associated with the specified path exists, `false` otherwise. An `EXISTS` expression is a kind of <<_identified_expression,identified expression>> that can be used only in `WHERE` clause.
+`EXISTS` is a unary operator, whose operand is an <<_identified_paths, identified path>>. It returns a Boolean result: `true` means the data associated with the specified path exists, `false` otherwise. An `EXISTS` expression is a kind of <<_identified_expression,identified expression>> that can be used only in `WHERE` clause.
 
 In the AQL example below, `EXISTS` is used in negated form to filter out `COMPOSITIONs` (and therefore EHRs) that do not contain a discharge `ADMIN_ENTRY` instance:
 
@@ -669,12 +669,12 @@ The first form is an expression formed by a unary operator, such as `NOT` or `EX
 
 The second is a binary operator expression, formed as follows:
 
-. _left operand_: an identified path;
-. _operator_: a comparison operator;
+. _left operand_: an <<_identified_paths, identified path>> or a <<_functions, function>> having an identified path as an argument;
+. _operator_: a <<_comparison_operators, comparison operator>>;
 . _right operand_: one of:
-** a value criterion, normally of a primitive type, such as `String`, `Integer`, `Boolean`, `Double`, or `Float`; if a `String` value, single or double quotation marks are required; OR
-** a replaceable parameter (identified with the `'$'` symbol); OR
-** a string pattern, in case the operator `LIKE` is used; OR
+** a value criterion, normally of a <<_constants, constant>> or a <<_functions, function>>; OR
+** a replaceable <<_parameters, parameter>> (identified with the `'$'` symbol); OR
+** a pattern or condition, in case the operator `matches` or `LIKE` is used; OR
 ** an identified path.
 
 The following examples illustrate the binary form.
