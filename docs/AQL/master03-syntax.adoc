@@ -1040,6 +1040,7 @@ The `DISTINCT` modifier specify whether duplicate rows should be filtered out fr
 
 By default, an AQL query returns all data items selected by the `FROM` and `WHERE` clauses as rows in the result set. A row is considered to be duplicated in the result set if there is at least one other row with the same value for each corresponding column expression. `DISTINCT` specifies removal of all such duplicate rows from the result set (keeps only the first row of each set of duplicates).
 
+Below is an example using `DISTINCT` modifier to filter out duplicate rows:
 --------
 SELECT DISTINCT
    c/name/value AS Name, c/composer/name AS Composer
