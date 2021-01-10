@@ -989,7 +989,7 @@ WHERE
 
 === SELECT
 
-A `SELECT` clause specifies what data is to be retrieved by the AQL query. The data can be any types from openEHR RM and any primitive data types.
+A `SELECT` clause specifies what data is to be retrieved by the AQL query. The data can be any types from RM or any built-in data types (see <<_built_in_types>>).
 
 [[_select_syntax]]
 ==== Syntax
