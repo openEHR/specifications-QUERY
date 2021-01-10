@@ -100,9 +100,36 @@
 <li><a href="#_avg">3.9.1.5. AVG</a></li>
 </ul>
 </li>
-<li><a href="#_other_functions">3.9.2. Other functions</a>
+<li><a href="#_string_functions">3.9.2. String functions</a>
 <ul class="sectlevel4">
-<li><a href="#_terminology">3.9.2.1. TERMINOLOGY</a></li>
+<li><a href="#_length">3.9.2.1. LENGTH</a></li>
+<li><a href="#_contains">3.9.2.2. CONTAINS</a></li>
+<li><a href="#_position">3.9.2.3. POSITION</a></li>
+<li><a href="#_substring">3.9.2.4. SUBSTRING</a></li>
+<li><a href="#_concat">3.9.2.5. CONCAT</a></li>
+<li><a href="#_concat_ws">3.9.2.6. CONCAT_WS</a></li>
+</ul>
+</li>
+<li><a href="#_numeric_functions">3.9.3. Numeric functions</a>
+<ul class="sectlevel4">
+<li><a href="#_abs">3.9.3.1. ABS</a></li>
+<li><a href="#_mod">3.9.3.2. MOD</a></li>
+<li><a href="#_ceil">3.9.3.3. CEIL</a></li>
+<li><a href="#_floor">3.9.3.4. FLOOR</a></li>
+<li><a href="#_round">3.9.3.5. ROUND</a></li>
+</ul>
+</li>
+<li><a href="#_date_and_time_functions">3.9.4. Date and time functions</a>
+<ul class="sectlevel4">
+<li><a href="#_current_date">3.9.4.1. CURRENT_DATE</a></li>
+<li><a href="#_current_time">3.9.4.2. CURRENT_TIME</a></li>
+<li><a href="#_current_date_time_or_now">3.9.4.3. CURRENT_DATE_TIME or NOW</a></li>
+<li><a href="#_current_timezone">3.9.4.4. CURRENT_TIMEZONE</a></li>
+</ul>
+</li>
+<li><a href="#_other_functions">3.9.5. Other functions</a>
+<ul class="sectlevel4">
+<li><a href="#_terminology">3.9.5.1. TERMINOLOGY</a></li>
 </ul>
 </li>
 </ul>
@@ -222,7 +249,7 @@
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-center valign-top" colspan="2">&#169; 2008 - 2020 The openEHR Foundation</th>
+<th class="tableblock halign-center valign-top" colspan="2">&#169; 2008 - 2021 The openEHR Foundation</th>
 </tr>
 </thead>
 <tbody>
@@ -670,19 +697,16 @@ WHERE                                                        -- Where clause
 <p><code>ORDER BY</code>, <code>LIMIT</code>, <code>OFFSET</code></p>
 </li>
 <li>
-<p><code>AND</code>, <code>OR</code>, <code>NOT</code></p>
-</li>
-<li>
-<p>functions: <code>count</code>, <code>min</code>, <code>max</code>, <code>sum</code>, <code>avg</code>, <code>terminology</code></p>
-</li>
-<li>
 <p><code>DISTINCT</code></p>
 </li>
 <li>
-<p><code>LIKE</code>, <code>matches</code>, <code>exists</code></p>
+<p>operators: <code>AND</code>, <code>OR</code>, <code>NOT</code>, <code>LIKE</code>, <code>matches</code>, <code>exists</code>, <code>&lt;</code>, <code>&gt;</code>, <code>=</code>, <code>!</code></p>
 </li>
 <li>
-<p>constants: true, false</p>
+<p>functions: <code>count</code>, <code>min</code>, <code>max</code>, <code>sum</code>, <code>avg</code>, <code>length</code>, <code>contains</code>, <code>position</code>, <code>substring</code>, <code>concat</code>, <code>concat_ws</code>, <code>abs</code>, <code>mod</code>, <code>ceil</code>, <code>floor</code>, <code>round</code>, <code>current_date</code>, <code>current_time</code>, <code>current_date_time</code>, <code>now</code>, <code>current_timezone</code>, <code>terminology</code></p>
+</li>
+<li>
+<p>constants: <code>true</code>, <code>false</code></p>
 </li>
 <li>
 <p><code>"</code> and <code>'</code>: double and single quote characters are used to delimit string values</p>
@@ -701,9 +725,6 @@ WHERE                                                        -- Where clause
 </li>
 <li>
 <p><code>$</code>: dollar sign used to prefix parameters</p>
-</li>
-<li>
-<p>operators: <code>&lt;</code>, <code>&gt;</code>, <code>=</code>, <code>!</code></p>
 </li>
 <li>
 <p><code>:</code>, <code>?</code>, <code>&amp;</code>, <code>%</code>, <code>#</code>, <code>@</code>, <code>*</code>: characters that mainly used as part of a terminology or openEHR URI</p>
@@ -1189,7 +1210,7 @@ FROM
 <h5 id="_like"><a class="anchor" href="#_like"></a>3.8.1.1. LIKE</h5>
 <div class="paragraph">
 <p>The <code>LIKE</code> binary operator is used to compare a value of type string (or dates and times) against a simple pattern.
-The left-hand operand is an AQL identified path, while the right-hand operand is a string value, representing the pattern to be matched.
+The left-hand operand is an AQL identified path to a data element that is either a String or has a String representation, while the right-hand operand is a String value, representing the pattern to be matched.
 It returns <code>true</code> if the value matches the supplied pattern.</p>
 </div>
 <div class="paragraph">
@@ -1210,10 +1231,10 @@ WHERE
 <div class="paragraph">
 <p>The <code>?</code> wildcard in pattern matches any single character, while the <code>*</code> wildcard matches any sequence of zero or more characters.
 If the pattern does not contain any of these wildcards, then <code>LIKE</code> acts like the <code>=</code> (equal) operator.
-The <code>LIKE</code> operator always try to match the entire string value, therefore if the intention is to match a sequence anywhere within the string, the pattern must start and end with <code>*</code> wildcard, e.g. <code>"*test*"</code>.</p>
+The <code>LIKE</code> operator always tries to match the entire string value, therefore if the intention is to match a sequence anywhere within the string, the pattern must start and end with <code>*</code> wildcard, e.g. <code>"*test*"</code>.</p>
 </div>
 <div class="paragraph">
-<p>To match a literal <code>?</code> or <code>*</code>, the respective character in pattern must be escaped by using the backslash <code>\</code> character.</p>
+<p>To match a literal <code>?</code> or <code>*</code>, the respective character in pattern must be escaped by using the backslash <code>\</code> character, e.g. <code>"test \?"</code>.</p>
 </div>
 </div>
 <div class="sect4">
@@ -1423,16 +1444,35 @@ WHERE
 <div class="sect2">
 <h3 id="_functions"><a class="anchor" href="#_functions"></a>3.9. Functions</h3>
 <div class="paragraph">
-<p>AQL provides built-in functions to perform operations on data. Functions are similar to operators as they manipulate data and return a single result, but the difference is in the format and number of their arguments.</p>
+<p>AQL provides <em>built-in functions</em> to perform operations on data. Functions are similar to operators as they manipulate data and return a single result, but the difference is in the format and number of their arguments.</p>
 </div>
 <div class="paragraph">
-<p>In general, a function syntax is <code>function(argument, argument, &#8230;&#8203;)</code>, accepting zero, one or more <em>arguments</em>, consisting of <a href="#_constants">constants</a>, <a href="#_parameters">parameters</a>, <a href="#_variables">variables</a>, <a href="#_identified_paths">identified paths</a> or other functions.</p>
+<p>In general, a function syntax is <code>function(argument, argument, &#8230;&#8203;)</code>, accepting zero, one or more <em>arguments</em>, consisting of <a href="#_constants">constants</a>, <a href="#_parameters">parameters</a>, <a href="#_variables">variables</a>, <a href="#_identified_paths">identified paths</a> or other functions.
+Functions are used primarily in the <code>SELECT</code> and <code>WHERE</code> clauses.</p>
+</div>
+<div class="paragraph">
+<p>There are two types of functions: <em>single-row</em> functions, returning a single result for every row of the result set, and <em>aggregate</em> functions, returning a single result based on a group of rows of the result set rather than on a single row.</p>
+</div>
+<div class="paragraph">
+<p>Most of AQL built-in functions are mapped to function definitions in the <a href="https://specifications.openehr.org/releases/BASE/latest/foundation_types.html" target="_blank" rel="noopener">openEHR Foundation Types</a> and in the <a href="https://specifications.openehr.org/releases/BASE/latest/base_types.html" target="_blank" rel="noopener">openEHR Base Types</a>, while others are borrowed from SQL languages.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+The followings are a set of core built-in functions defined by AQL specifications. Various other functions may exist however in various AQL implementations.
+</td>
+</tr>
+</table>
 </div>
 <div class="sect3">
 <h4 id="_aggregate_functions"><a class="anchor" href="#_aggregate_functions"></a>3.9.1. Aggregate functions</h4>
 <div class="paragraph">
-<p>Aggregate functions calculate a single result value from a set of <em>input values</em>, allowing the query to return summarized information about a data item or result set.
-Input values are selected by an <em>expression</em>, representing an <a href="#_identified_paths">identified path</a>.
+<p>Aggregate functions calculate a single result value from a set of <em>input values</em>, allowing the query to return summarized information about a data item or a result set.
+Input values are selected by an <em>expression</em> in a form of an <a href="#_identified_paths">identified path</a> applied to data items filtered by <code>FROM</code> and <code>WHERE</code> clauses.
 Unless specified otherwise, these functions ignore <code>NULL</code> values.</p>
 </div>
 <div class="paragraph">
@@ -1489,62 +1529,302 @@ FROM
 <div class="sect4">
 <h5 id="_count"><a class="anchor" href="#_count"></a>3.9.1.1. COUNT</h5>
 <div class="paragraph">
-<p>The <code>COUNT()</code> function returns the number of values of given <em>expression</em> argument. The syntax is <code>COUNT([DISTINCT] expression |\*)</code>.</p>
+<p>The <code>COUNT</code> function returns the number of values of given <em>expression</em> argument. The syntax is <code>COUNT([DISTINCT] expression |\*)</code>.</p>
 </div>
 <div class="paragraph">
 <p>The <code>COUNT(*)</code> is used to calculate the number of rows of the result set, whether or not they contain <code>NULL</code>.
-The <code>DISTINCT</code> keyword can be calculate the number of only the distinct values of <em>expression</em>.</p>
+The <code>DISTINCT</code> keyword can be used to calculate the number of only distinct values of <em>expression</em>.</p>
 </div>
 <div class="paragraph">
-<p>If there are no matching rows, <code>COUNT()</code> returns <code>0</code>.
+<p>If there are no matching rows, then this function returns <code>0</code>.
 Input values type can be anything, while the return type is always an Integer.</p>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_min"><a class="anchor" href="#_min"></a>3.9.1.2. MIN</h5>
 <div class="paragraph">
-<p>The <code>MIN()</code> function returns the minimum value of given <em>expression</em> argument. The syntax is <code>MIN(expression)</code>.</p>
+<p>The <code>MIN</code> function returns the minimum value of given <em>expression</em> argument. The syntax is <code>MIN(expression)</code>.</p>
 </div>
 <div class="paragraph">
-<p>If there are no matching rows, <code>MIN()</code> returns <code>NULL</code>.
+<p>If there are no matching rows, then this function returns <code>NULL</code>.
 Input values type should be either String, Date, Time, Integer of Real, and it will also determine the return type.</p>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_max"><a class="anchor" href="#_max"></a>3.9.1.3. MAX</h5>
 <div class="paragraph">
-<p>The <code>MAX()</code> function returns the maximum value of given <em>expression</em> argument. The syntax is <code>MAX(expression)</code>.</p>
+<p>The <code>MAX</code> function returns the maximum value of given <em>expression</em> argument. The syntax is <code>MAX(expression)</code>.</p>
 </div>
 <div class="paragraph">
-<p>If there are no matching rows, <code>MAX()</code> returns <code>NULL</code>.
+<p>If there are no matching rows, then this function returns <code>NULL</code>.
 Input values type should be either String, Date, Time, Integer of Real, and it will also determine the return type.</p>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_sum"><a class="anchor" href="#_sum"></a>3.9.1.4. SUM</h5>
 <div class="paragraph">
-<p>The <code>SUM()</code> function returns the sum value of given <em>expression</em> argument. The syntax is <code>SUM(expression)</code>.</p>
+<p>The <code>SUM</code> function returns the sum value of given <em>expression</em> argument. The syntax is <code>SUM(expression)</code>.</p>
 </div>
 <div class="paragraph">
-<p>If there are no matching rows, <code>SUM()</code> returns <code>NULL</code>.
+<p>If there are no matching rows, then this function returns <code>NULL</code>.
 Input values type should be either Integer of Real, and it will also determine the return type.</p>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_avg"><a class="anchor" href="#_avg"></a>3.9.1.5. AVG</h5>
 <div class="paragraph">
-<p>The <code>AVG()</code> function returns the average value of given <em>expression</em> argument. The syntax is <code>AVG(expression)</code>.</p>
+<p>The <code>AVG</code> function returns the average value of given <em>expression</em> argument. The syntax is <code>AVG(expression)</code>.</p>
 </div>
 <div class="paragraph">
-<p>If there are no matching rows, <code>AVG()</code> returns <code>NULL</code>.
+<p>If there are no matching rows, then this function returns <code>NULL</code>.
 Input values type should be either Integer of Real, and it will also determine the return type.</p>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_other_functions"><a class="anchor" href="#_other_functions"></a>3.9.2. Other functions</h4>
+<h4 id="_string_functions"><a class="anchor" href="#_string_functions"></a>3.9.2. String functions</h4>
+<div class="paragraph">
+<p>AQL provides single-row functions for examining and manipulating string values.</p>
+</div>
+<div class="paragraph">
+<p>The table below shows the built-in AQL string functions:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 83.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Function</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">LENGTH()</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the length of a string</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CONTAINS()</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Validates if a string contains other string</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">POSITION()</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the position of the first occurrence of substring in a string</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SUBSTRING()</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Extracts the substring as specified</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CONCAT()</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the string that results from concatenating the arguments</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CONCAT_WS()</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the string that results from concatenating the arguments with separator</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>For functions that operate on string positions, the first position is numbered 1.
+For functions that take length arguments, non-integer arguments are rounded to the nearest integer.</p>
+</div>
 <div class="sect4">
-<h5 id="_terminology"><a class="anchor" href="#_terminology"></a>3.9.2.1. TERMINOLOGY</h5>
+<h5 id="_length"><a class="anchor" href="#_length"></a>3.9.2.1. LENGTH</h5>
+<div class="paragraph">
+<p>The <code>LENGTH</code> function returns the number of characters of a given <em>expression</em> argument.
+The syntax is <code>LENGTH(expression)</code>, where the argument is of type String. The result type is Integer.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_contains"><a class="anchor" href="#_contains"></a>3.9.2.2. CONTAINS</h5>
+<div class="paragraph">
+<p>The <code>CONTAINS</code> function with syntax is <code>CONTAINS(string, substring)</code> returns the <code>true</code> if the <code>string</code> argument expression contains the <code>substring</code>.
+The arguments are of type String, while the result type is Boolean.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_position"><a class="anchor" href="#_position"></a>3.9.2.3. POSITION</h5>
+<div class="paragraph">
+<p>The <code>POSITION</code> function with syntax is <code>POSITION(substring, string)</code> returns the position (index) of the first occurrence of <code>substring</code> in <code>string</code> argument expression, or zero if it&#8217;s not present.
+The arguments are of type String, while the result type is Integer.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_substring"><a class="anchor" href="#_substring"></a>3.9.2.4. SUBSTRING</h5>
+<div class="paragraph">
+<p>The <code>SUBSTRING</code> function with syntax is <code>SUBSTRING(string, position, length)</code> extracts the substring of <code>string</code>, starting at the <code>position</code>-th character, and stopping after <code>length</code> characters, if that is specified.
+The first argument is of type String, while <code>position</code>, <code>length</code> are Integers. The result type is String.</p>
+</div>
+<div class="paragraph">
+<p>The <code>length</code> argument is optional, and when not provided this function will extract the substring from the <code>position</code> until the end of the given <code>string</code> argument.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_concat"><a class="anchor" href="#_concat"></a>3.9.2.5. CONCAT</h5>
+<div class="paragraph">
+<p>The <code>CONCAT</code> function with syntax is <code>CONCAT(string1, string2, &#8230;&#8203;)</code> returns the string that results from concatenating all the arguments. It may have one or more expression arguments, all of type String.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_concat_ws"><a class="anchor" href="#_concat_ws"></a>3.9.2.6. CONCAT_WS</h5>
+<div class="paragraph">
+<p>The <code>CONCAT_WS</code> function with syntax is <code>CONCAT_WS(separator, string1, string2, &#8230;&#8203;)</code> returns the string that results from concatenating all the arguments with <code>separator</code> string, i.e. the separator is added between the strings to be concatenated.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_numeric_functions"><a class="anchor" href="#_numeric_functions"></a>3.9.3. Numeric functions</h4>
+<div class="paragraph">
+<p>Numeric single-row functions are providing various mathematical functions for numeric type arguments.</p>
+</div>
+<div class="paragraph">
+<p>The table below shows the built-in AQL numeric functions:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 83.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Function</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ABS()</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the absolute value</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MOD()</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the remainder</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CEIL()</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the nearest integer greater than or equal to argument</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">FLOOR()</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the nearest integer less than or equal to argument</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ROUND()</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Rounds the argument</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect4">
+<h5 id="_abs"><a class="anchor" href="#_abs"></a>3.9.3.1. ABS</h5>
+<div class="paragraph">
+<p>The <code>ABS</code> function returns the absolute value of given <em>expression</em> argument.
+The syntax is <code>ABS(expression)</code>, where the argument is of type Real or Integer. The result type is derived from the argument type.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_mod"><a class="anchor" href="#_mod"></a>3.9.3.2. MOD</h5>
+<div class="paragraph">
+<p>The <code>MOD</code> function with the syntax <code>MOD(x, y)</code> returns the remainder of <code>x</code> divided by <code>y</code>.
+The arguments <code>x</code> and <code>y</code> are of type Real or Integer, while the result is derived from the arguments type.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_ceil"><a class="anchor" href="#_ceil"></a>3.9.3.3. CEIL</h5>
+<div class="paragraph">
+<p>The <code>CEIL</code> function returns the Integer greater than or equal to <em>expression</em> argument.
+The syntax is <code>CEIL(expression)</code>, where the argument is of type Real or Integer.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_floor"><a class="anchor" href="#_floor"></a>3.9.3.4. FLOOR</h5>
+<div class="paragraph">
+<p>The <code>FLOOR</code> function returns the Integer less than or equal to <em>expression</em> argument.
+The syntax is <code>FLOOR(expression)</code>, where the argument is of type Real or Integer.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_round"><a class="anchor" href="#_round"></a>3.9.3.5. ROUND</h5>
+<div class="paragraph">
+<p>The <code>ROUND</code> function with the syntax <code>ROUND(expression, d)</code> returns the rounded <em>expression</em> argument <code>expression</code> to <code>d</code> decimal places.
+The argument <code>expression</code> is of type Real or Integer, and the result of the function is derived from it.
+The argument <code>d</code> is of type Integer, and defaults to value <code>0</code> if not specified.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_date_and_time_functions"><a class="anchor" href="#_date_and_time_functions"></a>3.9.4. Date and time functions</h4>
+<div class="paragraph">
+<p>AQL provides single-row functions for examining and manipulating date, time or datetime values.</p>
+</div>
+<div class="paragraph">
+<p>The table below shows the built-in AQL date and time functions:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 83.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Function</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CURRENT_DATE()</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the current date</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CURRENT_TIME()</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the current time</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CURRENT_DATE_TIME()</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the current datetime</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NOW()</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An alias for CURRENT_DATE_TIME()</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CURRENT_TIMEZONE()</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the current timezone</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect4">
+<h5 id="_current_date"><a class="anchor" href="#_current_date"></a>3.9.4.1. CURRENT_DATE</h5>
+<div class="paragraph">
+<p>The function with syntax <code>CURRENT_DATE()</code> accepts no arguments and returns the current date as string value with the format 'YYYY-MM-DD'.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_current_time"><a class="anchor" href="#_current_time"></a>3.9.4.2. CURRENT_TIME</h5>
+<div class="paragraph">
+<p>The function with syntax <code>CURRENT_TIME()</code> accepts no arguments and returns the current time as string value with the format 'hh:mm:ss'.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_current_date_time_or_now"><a class="anchor" href="#_current_date_time_or_now"></a>3.9.4.3. CURRENT_DATE_TIME or NOW</h5>
+<div class="paragraph">
+<p>The function with syntax <code>CURRENT_DATE_TIME()</code>, or <code>NOW()</code>, accepts no arguments and returns the current datetime as string value with the format 'YYYY-MM-DDThh:mm:ss.sss±hh:mm'.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_current_timezone"><a class="anchor" href="#_current_timezone"></a>3.9.4.4. CURRENT_TIMEZONE</h5>
+<div class="paragraph">
+<p>The function with syntax <code>CURRENT_TIMEZONE()</code> accepts no arguments and returns the current timezone as string value with the format '±hh:mm'.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_other_functions"><a class="anchor" href="#_other_functions"></a>3.9.5. Other functions</h4>
+<div class="sect4">
+<h5 id="_terminology"><a class="anchor" href="#_terminology"></a>3.9.5.1. TERMINOLOGY</h5>
 <div class="paragraph">
 <p>Often the <code>matches</code> operator may be need to perform a request to a terminology server, in order to execute some <em>operations</em> over a value set or code system (a synonym of <em>terminology</em>).
 Several operations may be possible: the expansion of a ValueSet (or Reference Set), checking that a concept belongs to a value set or code system, testing if one concept subsumes another one, or the mapping of concepts across different terminologies.
@@ -1573,7 +1853,7 @@ Some examples of typical operations are:</p>
 <p><strong>map</strong>: Map a code (translate between value sets); this will convert (find an equivalent code) from one Value Set to another one based on a predefined mapping available in the external terminology service. Translation precision may not be limited to full equivalence and different kinds of mappings may be possible (wider meaning, equivalent, narrower meaning, etc).</p>
 </li>
 <li>
-<p><strong>subsumes</strong>: Subsumption testing; this will determine if a particular terminology concept is a subtype (is-a) of another one. For example, test in SNOMED-CT if <code>Myasthenia Gravis | 91637004</code> is a subtype of <code>autoimmune disease | 85828009</code> (i.e. test if 85828009 subsumes 91637004).</p>
+<p><strong>subsumes</strong>: Subsumption testing; this will determine if a particular terminology concept is a subtype (is-a) of another one. For example, test in SNOMED-CT if <code>"Myasthenia Gravis | 91637004"</code> is a subtype of <code>"autoimmune disease | 85828009"</code> (i.e. test if <code>85828009</code> subsumes <code>91637004</code>).</p>
 </li>
 </ul>
 </div>
@@ -3068,7 +3348,7 @@ LIMIT 5</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-12-11 15:24:29 UTC
+Last updated 2020-12-14 20:46:10 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://specifications.openehr.org/styles/pygments-default.css">
