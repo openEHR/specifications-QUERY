@@ -993,7 +993,7 @@ A `SELECT` clause specifies what data is to be retrieved by the AQL query. The d
 
 [[_select_syntax]]
 ==== Syntax
-The syntax always starts with the keyword `SELECT`, optionally followed by `TOP` (deprecated - see <<TOP, below>>), followed by one or more _column expressions_.
+The syntax always starts with the keyword `SELECT`, optionally followed by `DISTINCT`, optionally followed by `TOP` (deprecated - see <<TOP, below>>), followed by one or more _column expressions_.
 
 A column expression is formed by an <<_identified_paths,identified path>>, a <<_functions,function>>, a <<_constants, constant>> value or plain <<_variables,variable>> name defined in the `FROM` clause.
 Where a variable name is specified, the full object of the type associated with the variable is retrieved, such as a `COMPOSITION`, `OBSERVATION` etc.
@@ -1032,6 +1032,20 @@ FROM
 WHERE
     obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude>= 160 OR
     obs/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude>= 110
+--------
+
+==== DISTINCT
+
+The `DISTINCT` modifier specify whether duplicate rows should be filtered out from result set.
+
+By default, an AQL query returns all data items selected by the `FROM` and `WHERE` clauses as rows in the result set. A row is considered to be duplicated in the result set if there is at least one other row with the same value for each corresponding column expression. `DISTINCT` specifies removal of all such duplicate rows from the result set (keeps only the first row of each set of duplicates).
+
+--------
+SELECT DISTINCT
+   c/name/value AS Name, c/composer/name AS Composer
+FROM
+   EHR e[ehr_id/value=$ehrUid]
+      CONTAINS COMPOSITION c
 --------
 
 ==== TOP
@@ -1091,6 +1105,8 @@ Note that when using `LIMIT`, deterministic behavior requires that the `ORDER BY
 NOTE: As of Release 1.1.0, the use of the `LIMIT` clause in combination with the `ORDER BY` clause is recommended instead of the deprecated `TOP` alternative.
 It is not allowed to use `LIMIT` while also using `TOP` clause in the same query.
 
+Where `DISTINCT` modifier is used (see <<_distinct>>), the `LIMIT` and `OFFSET` applies to remaining rows, after duplicates were filtered out from result set.
+
 [[_limit_syntax]]
 ==== Syntax
 
@@ -1109,7 +1125,7 @@ when `offset` = 0 and `row_count` = 10, the result will have at most 10 items, s
 `row_count` = 10, the result will contain 10 items at most, now from item 10 to 19. So increasing `offset` by `row_count`,
 allows to get all the results in a paginated way.
 
-The following example will return 10 rows, representing the 2nd page of result sets, ordered by event start time:
+The following example will return 10 rows, representing the 2nd page of result set, ordered by event start time:
 --------
 SELECT
    c/name/value AS Name, c/context/start_time AS date_time, c/composer/name AS Composer
