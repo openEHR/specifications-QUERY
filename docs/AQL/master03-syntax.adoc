@@ -19,7 +19,7 @@ Keywords in AQL are not case sensitive, so `SELECT`, `Select`, `select`, `SeLeCt
 * `SELECT`, `AS`, `FROM`, `CONTAINS`, `WHERE`
 * `ORDER BY`, `LIMIT`, `OFFSET`
 * `AND`, `OR`, `NOT`
-* functions: `count`, `min`, `max`, `sum`, `avg`, `terminology`
+* functions: `count`, `min`, `max`, `sum`, `avg`, `length`, `contains`, `position`, `substring`, `concat`, `concat_ws`, `abs`, `mod`, `ceil`, `floor`, `round`, `current_date`, `current_time`, `current_date_time`, `now`, `current_timezone`, `terminology`
 * `DISTINCT`
 * `LIKE`, `matches`, `exists`
 * constants: true, false
