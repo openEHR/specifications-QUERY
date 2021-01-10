@@ -476,19 +476,21 @@ WHERE
 
 == Functions
 
-AQL provides built-in functions to perform operations on data. Functions are similar to operators as they manipulate data and return a single result, but the difference is in the format and number of their arguments.
+AQL provides _built-in functions_ to perform operations on data. Functions are similar to operators as they manipulate data and return a single result, but the difference is in the format and number of their arguments.
 
 In general, a function syntax is `function(argument, argument, ...)`, accepting zero, one or more _arguments_, consisting of <<_constants, constants>>, <<_parameters, parameters>>, <<_variables, variables>>, <<_identified_paths, identified paths>> or other functions.
-Most of these functions are mapped to function definitions in the {openehr_foundation_types}[openEHR Foundation Types^] and in the {openehr_base_types}[openEHR Base Types^].
+Functions are used primarily in the `SELECT` and `WHERE` clauses.
 
-There are two types of functions: _single-row_ functions, returning a single result for every row, and _aggregate_ functions, returning a single result based on a group of rows rather than on a single row.
+There are two types of functions: _single-row_ functions, returning a single result for every row of the result set, and _aggregate_ functions, returning a single result based on a group of rows of the result set rather than on a single row.
 
-NOTE: The followings are a set of core built-in functions defined by AQL specifications. Various other functions may exist however in AQL implementation.
+Most of AQL built-in functions are mapped to function definitions in the {openehr_foundation_types}[openEHR Foundation Types^] and in the {openehr_base_types}[openEHR Base Types^], while others are borrowed from SQL languages.
+
+NOTE: The followings are a set of core built-in functions defined by AQL specifications. Various other functions may exist however in various AQL implementations.
 
 === Aggregate functions
 
 Aggregate functions calculate a single result value from a set of _input values_, allowing the query to return summarized information about a data item or a result set.
-Input values are selected by an _expression_ in a form of an <<_identified_paths, identified path>>.
+Input values are selected by an _expression_ in a form of an <<_identified_paths, identified path>> applied to data items filtered by `FROM` and `WHERE` clauses.
 Unless specified otherwise, these functions ignore `NULL` values.
 
 The table below shows the supported AQL aggregate functions:
@@ -698,7 +700,7 @@ Some examples of typical operations are:
 * *validate*: Validate a code in a value set; this will check if a given code belongs to a value set. Recall that the value set may comprise all the codes in a code system (terminology).
 * *lookup*: Look-up a code; this will retrieve all the information concerning one particular code. Examples are retrieving the preferred form to display, synonyms, etc.
 * *map*: Map a code (translate between value sets); this will convert (find an equivalent code) from one Value Set to another one based on a predefined mapping available in the external terminology service. Translation precision may not be limited to full equivalence and different kinds of mappings may be possible (wider meaning, equivalent, narrower meaning, etc).
-* *subsumes*: Subsumption testing; this will determine if a particular terminology concept is a subtype (is-a) of another one. For example, test in SNOMED-CT if `Myasthenia Gravis | 91637004` is a subtype of `autoimmune disease | 85828009` (i.e. test if 85828009 subsumes 91637004).
+* *subsumes*: Subsumption testing; this will determine if a particular terminology concept is a subtype (is-a) of another one. For example, test in SNOMED-CT if `"Myasthenia Gravis | 91637004"` is a subtype of `"autoimmune disease | 85828009"` (i.e. test if `85828009` subsumes `91637004`).
 
 The `service_api` argument represents an identifier of a type of terminology service. This is not the service endpoint as such, neither a service name, but an identifier for the kind/flavour of terminology syntax that is being sent. It provides the information to send requests related to the ValueSet, `operation` and parameters to the right terminology service. In addition, it is closely related to the strategy to parse the terminology service response in a format acceptable by the query processor.
 Some examples of typical values for `service_api` are:
