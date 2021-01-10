@@ -18,18 +18,16 @@ Keywords in AQL are not case sensitive, so `SELECT`, `Select`, `select`, `SeLeCt
 
 * `SELECT`, `AS`, `FROM`, `CONTAINS`, `WHERE`
 * `ORDER BY`, `LIMIT`, `OFFSET`
-* `AND`, `OR`, `NOT`
-* functions: `count`, `min`, `max`, `sum`, `avg`, `length`, `contains`, `position`, `substring`, `concat`, `concat_ws`, `abs`, `mod`, `ceil`, `floor`, `round`, `current_date`, `current_time`, `current_date_time`, `now`, `current_timezone`, `terminology`
 * `DISTINCT`
-* `LIKE`, `matches`, `exists`
-* constants: true, false
+* operators: `AND`, `OR`, `NOT`, `LIKE`, `matches`, `exists`, `<`, `>`, `=`, `!`
+* functions: `count`, `min`, `max`, `sum`, `avg`, `length`, `contains`, `position`, `substring`, `concat`, `concat_ws`, `abs`, `mod`, `ceil`, `floor`, `round`, `current_date`, `current_time`, `current_date_time`, `now`, `current_timezone`, `terminology`
+* constants: `true`, `false`
 * `"` and `'`: double and single quote characters are used to delimit string values
 * `|`: bar characters are used to delimit intervals
 * `[]`: brackets are used to delimit coded terms or predicate expressions
 * `{}`: curly braces are used with `matches` delimiting matches criteria
 * `()`: parentheses are used with function calls or to separate logic or group expressions and enforce precedence
 * `$`: dollar sign used to prefix parameters
-* operators: `<`, `>`, `=`, `!`
 * `:`, `?`, `&`, `%`, `#`, `@`, `*`: characters that mainly used as part of a terminology or openEHR URI
 * `/`, `.`: used by openEHR path syntax
 
