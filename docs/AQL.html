@@ -295,7 +295,13 @@
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="latest_issue"></a>1.1.0</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://specifications.openehr.org/tickets/SPECQUERY-8" target="_blank" rel="noopener">SPECQUERY-8</a> Correct numerous minor typographical and formatting errors. Improve the wording and readability.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">S Iancu</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="latest_issue_date"></a>12 Dec 2020</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="latest_issue_date"></a>10 Jan 2021</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://specifications.openehr.org/tickets/SPECQUERY-28" target="_blank" rel="noopener">SPECQUERY-28</a> Add support for built-in functions.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S Iancu</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10 Jan 2021</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"></td>
@@ -1529,7 +1535,7 @@ FROM
 <div class="sect4">
 <h5 id="_count"><a class="anchor" href="#_count"></a>3.9.1.1. COUNT</h5>
 <div class="paragraph">
-<p>The <code>COUNT</code> function returns the number of values of given <em>expression</em> argument. The syntax is <code>COUNT([DISTINCT] expression |\*)</code>.</p>
+<p>The <code>COUNT</code> function returns the number of values of given <em>expression</em> argument. The syntax is <code>COUNT([DISTINCT] expression|*)</code>.</p>
 </div>
 <div class="paragraph">
 <p>The <code>COUNT(*)</code> is used to calculate the number of rows of the result set, whether or not they contain <code>NULL</code>.
@@ -1887,7 +1893,7 @@ Some examples of typical values for <code>service_api</code> are:</p>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ots.oceanhealthsystems.com</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Ocean Ontology Service</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ocean Terminology Service</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">bts.better.care</p></td>
@@ -1986,7 +1992,7 @@ Some examples of typical URI parameters are:</p>
 <div class="sect2">
 <h3 id="_expressions"><a class="anchor" href="#_expressions"></a>3.10. Expressions</h3>
 <div class="paragraph">
-<p>AQL expressions provide a formal way of evaluating, transforming or comparing values. An expression is a combination of one or more <a href="#_constants">constants</a>, <a href="#_operators">operators</a>, <a href="#_variables">variables</a>, <a href="#_predicates">predicates</a>, <a href="#_parameters">parameters</a> and <a href="#_functions">functions</a> that evaluates to a value.</p>
+<p>AQL expressions provide a formal way of evaluating, transforming or comparing values. An expression is a combination of one or more <a href="#_constants">constants</a>, <a href="#_operators">operators</a>, <a href="#_variables">variables</a>, <a href="#_predicates">predicates</a>, <a href="#_parameters">parameters</a> or <a href="#_functions">functions</a> that evaluates to a value.</p>
 </div>
 <div class="sect3">
 <h4 id="_class_expressions"><a class="anchor" href="#_class_expressions"></a>3.10.1. Class expressions</h4>
@@ -2333,7 +2339,7 @@ that also allow filtering data.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Logical operator <code>NOT</code> can be used in combination with <code>CONTAINS</code> to express an exclusion constraint, i.e. the missing of a hierarchical relationships between the parent and child data items operands, e.g.</p>
+<p>The logical operator <code>NOT</code> can be used in combination with <code>CONTAINS</code> to express an exclusion constraint,  i.e. the absence of any containment relationship between a parent and potential child items. The following example matches referral COMPOSITIONs that do not contain laboratory test result OBSERVATIONs:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2372,7 +2378,7 @@ that also allow filtering data.</p>
 <div class="sect3">
 <h4 id="_select"><a class="anchor" href="#_select"></a>3.13.4. SELECT</h4>
 <div class="paragraph">
-<p>A <code>SELECT</code> clause specifies what data is to be retrieved by the AQL query. The data can be any types from openEHR RM and any primitive data types.</p>
+<p>A <code>SELECT</code> clause specifies what data is to be retrieved by the AQL query. The data can be any types from RM or any built-in data types (see <a href="#_built_in_types">Section 3.12</a>).</p>
 </div>
 <div class="sect4">
 <h5 id="_select_syntax"><a class="anchor" href="#_select_syntax"></a>3.13.4.1. Syntax</h5>
@@ -2497,7 +2503,7 @@ A sorting expression consists of an identified path, optionally followed by one 
 <div class="sect3">
 <h4 id="_limit"><a class="anchor" href="#_limit"></a>3.13.6. LIMIT</h4>
 <div class="paragraph">
-<p>The <code>LIMIT</code> clause is used to constrain the result sets generated by the rest of the query.
+<p>The <code>LIMIT</code> clause is used to constrain the result set generated by the rest of the query.
 It is often used together with an <code>OFFSET</code> subclause.</p>
 </div>
 <div class="paragraph">
@@ -2543,7 +2549,7 @@ when <code>offset</code> = 0 and <code>row_count</code> = 10, the result will ha
 allows to get all the results in a paginated way.</p>
 </div>
 <div class="paragraph">
-<p>The following example will return 10 rows, representing the 2nd page of result sets, ordered by event start time:</p>
+<p>The following example will return 10 rows, representing the 2nd page of result set, ordered by event start time:</p>
 </div>
 <div class="listingblock">
 <div class="content">
