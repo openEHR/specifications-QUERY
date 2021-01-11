@@ -960,7 +960,7 @@ EHR e
       CONTAINS (OBSERVATION o [openEHR-EHR-OBSERVATION-laboratory-hba1c.v1] OR OBSERVATION o1 [openEHR-EHR-OBSERVATION-laboratory-glucose.v1])
 --------
 
-Logical operator `NOT` can be used in combination with `CONTAINS` to express an exclusion constraint, i.e. the missing of a hierarchical relationships between the parent and child data items operands, e.g.
+The logical operator `NOT` can be used in combination with `CONTAINS` to express an exclusion constraint,  i.e. the absence of any containment relationship between a parent and potential child items. The following example matches referral COMPOSITIONs that do not contain laboratory test result OBSERVATIONs:
 
 --------
 EHR e
