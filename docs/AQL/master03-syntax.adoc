@@ -517,7 +517,7 @@ FROM
 
 ==== COUNT
 
-The `COUNT` function returns the number of values of given _expression_ argument. The syntax is `COUNT([DISTINCT] expression |\*)`.
+The `COUNT` function returns the number of values of given _expression_ argument. The syntax is `COUNT([DISTINCT] expression|*)`.
 
 The `COUNT(*)` is used to calculate the number of rows of the result set, whether or not they contain `NULL`.
 The `DISTINCT` keyword can be used to calculate the number of only distinct values of _expression_.
