@@ -710,7 +710,7 @@ Some examples of typical values for `service_api` are:
 |http://hl7.org/fhir/4.0       |FHIR Terminology Service v4.0
 |http://hl7.org/fhir/3.0       |FHIR Terminology Service v3.0
 |http://hl7.org/fhir/1.0       |FHIR Terminology Service v1.0
-|ots.oceanhealthsystems.com    |Ocean Ontology Service
+|ots.oceanhealthsystems.com    |Ocean Terminology Service
 |bts.better.care               |Better Terminology Service
 |apelon.dts.org/4.7.1          |Apelon Terminology Service, version 4.7.1
 |example.terminology-service.api/v1        |An example of a fictive terminology service
