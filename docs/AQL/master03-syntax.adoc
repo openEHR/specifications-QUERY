@@ -476,7 +476,7 @@ WHERE
 
 AQL provides _built-in functions_ to perform operations on data. Functions are similar to operators as they manipulate data and return a single result, but the difference is in the format and number of their arguments.
 
-In general, a function syntax is `function(argument, argument, ...)`, accepting zero, one or more _arguments_, consisting of <<_constants, constants>>, <<_parameters, parameters>>, <<_variables, variables>>, <<_identified_paths, identified paths>> or other functions.
+In general, a function syntax is `function(expression, expression, ...)`, accepting zero, one or more _expression_ arguments, consisting of <<_constants, constants>>, <<_parameters, parameters>>, <<_variables, variables>>, <<_identified_paths, identified paths>> or other functions.
 Functions are used primarily in the `SELECT` and `WHERE` clauses.
 
 There are two types of functions: _single-row_ functions, returning a single result for every row of the result set, and _aggregate_ functions, returning a single result based on a group of rows of the result set rather than on a single row.
