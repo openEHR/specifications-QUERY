@@ -21,7 +21,7 @@ Keywords in AQL are not case sensitive, so `SELECT`, `Select`, `select`, `SeLeCt
 * `DISTINCT`
 * operators: `AND`, `OR`, `NOT`, `LIKE`, `matches`, `exists`, `<`, `>`, `=`, `!`
 * functions: `count`, `min`, `max`, `sum`, `avg`, `length`, `contains`, `position`, `substring`, `concat`, `concat_ws`, `abs`, `mod`, `ceil`, `floor`, `round`, `current_date`, `current_time`, `current_date_time`, `now`, `current_timezone`, `terminology`
-* constants: `true`, `false`
+* literals: `true`, `false`
 * `"` and `'`: double and single quote characters are used to delimit string values
 * `|`: bar characters are used to delimit intervals
 * `[]`: brackets are used to delimit coded terms or predicate expressions
@@ -110,7 +110,7 @@ A parameter can be used for any criteria values within an AQL statement, e.g.:
 * within a predicate: `[$archetypeId]`, `[at0003, $nameValue]`, `[ehr_id/value=$ehrUid]`
 * withing a `WHERE` criteria: `o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value > $systolicCriteria`
 
-NOTE: In the `WHERE` criteria, when the value of the parameter is not a number or boolean value, it should be substituted with the corresponding quotes added to the value, for instance `o/../.. = $textVariable`, when substituted should look like this `o/../.. = "value"` (single or double quotes could be used). So substituted values follow the same rules as each type when the value is specified as a constant in the AQL expression: strings, dates, times and datetimes should be quoted, numbers and booleans are not quoted.
+NOTE: In the `WHERE` criteria, when the value of the parameter is not a number or boolean value, it should be substituted with the corresponding quotes added to the value, for instance `o/../.. = $textVariable`, when substituted should look like this `o/../.. = "value"` (single or double quotes could be used). So substituted values follow the same rules as each type when the value is specified as a literal in the AQL expression: strings, dates, times and datetimes should be quoted, numbers and booleans are not quoted.
 
 === Parameters use case
 
@@ -476,7 +476,7 @@ WHERE
 
 AQL provides _built-in functions_ to perform operations on data. Functions are similar to operators as they manipulate data and return a single result, but the difference is in the format and number of their arguments.
 
-In general, a function syntax is `function(expression, expression, ...)`, accepting zero, one or more _expression_ arguments, consisting of <<_constants, constants>>, <<_parameters, parameters>>, <<_variables, variables>>, <<_identified_paths, identified paths>> or other functions.
+In general, a function syntax is `function(expression, expression, ...)`, accepting zero, one or more _expression_ arguments, consisting of <<_literals, literals>>, <<_parameters, parameters>>, <<_variables, variables>>, <<_identified_paths, identified paths>> or other functions.
 Functions are used primarily in the `SELECT` and `WHERE` clauses.
 
 There are two types of functions: _single-row_ functions, returning a single result for every row of the result set, and _aggregate_ functions, returning a single result based on a group of rows of the result set rather than on a single row.
@@ -756,7 +756,7 @@ More examples can be found in the {openehr_query_aql_examples}#_terminology[open
 
 == Expressions
 
-AQL expressions provide a formal way of evaluating, transforming or comparing values. An expression is a combination of one or more <<_constants, constants>>, <<_operators, operators>>, <<_variables, variables>>, <<_predicates, predicates>>, <<_parameters, parameters>> or <<_functions, functions>> that evaluates to a value.
+AQL expressions provide a formal way of evaluating, transforming or comparing values. An expression is a combination of one or more <<_literals, literals>>, <<_operators, operators>>, <<_variables, variables>>, <<_predicates, predicates>>, <<_parameters, parameters>> or <<_functions, functions>> that evaluates to a value.
 
 === Class expressions
 
@@ -804,7 +804,7 @@ The second is a binary operator expression, formed as follows:
 . _left operand_: an <<_identified_paths, identified path>> or a <<_functions, function>> having an identified path as an argument;
 . _operator_: a <<_comparison_operators, comparison operator>>;
 . _right operand_: one of:
-** a value criterion, normally of a <<_constants, constant>> or a <<_functions, function>>; OR
+** a value criterion, normally of a <<_literals, literal>> or a <<_functions, function>>; OR
 ** a replaceable <<_parameters, parameter>> (identified with the `'$'` symbol); OR
 ** a pattern or condition, in case the operator `matches` or `LIKE` is used; OR
 ** an identified path.
@@ -838,9 +838,9 @@ o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value >
 o1/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value
 --------
 
-== Constants
+== Literals
 
-A _constant_, often referred as _literal value_, is a fixed value that is supplied directly in the AQL statement, not derived from an <<_identified_paths, identified path>>, a <<_variables, variable>>, or a <<_name_alias, column alias name>>. This value can be any of the AQL built-in types, where strings, dates, times and datetimes should be quoted, while numbers and booleans are not quoted.
+A _literal value_, sometimes known as _constants_ in certain SQL implementations, is a fixed value that is supplied directly in the AQL statement, not derived from an <<_identified_paths, identified path>>, a <<_variables, variable>>, or a <<_name_alias, column alias name>>. This value can be any of the AQL built-in types, where strings, dates, times and datetimes should be quoted, while numbers and booleans are not quoted.
 
 == Built-in Types
 
@@ -995,7 +995,7 @@ A `SELECT` clause specifies what data is to be retrieved by the AQL query. The d
 ==== Syntax
 The syntax always starts with the keyword `SELECT`, optionally followed by `TOP` (deprecated - see <<TOP, below>>), followed by one or more _column expressions_.
 
-A column expression is formed by an <<_identified_paths,identified path>>, a <<_functions,function>>, a <<_constants, constant>> value or plain <<_variables,variable>> name defined in the `FROM` clause.
+A column expression is formed by an <<_identified_paths,identified path>>, a <<_functions,function>>, a <<_literals, literal>> value or plain <<_variables,variable>> name defined in the `FROM` clause.
 Where a variable name is specified, the full object of the type associated with the variable is retrieved, such as a `COMPOSITION`, `OBSERVATION` etc.
 Where a function is specified, the call has to be done using the specified arguments and the results are returned.
 Where an identified path is specified, the data item(s) having that archetype path are returned.
@@ -1021,7 +1021,7 @@ FROM EHR e[ehr_id/value=$ehrUid]
     CONTAINS COMPOSITION c
 --------
 
-.Example 3: Use of constants and function as column expressions.
+.Example 3: Use of literals and function as column expressions.
 --------
 SELECT
     true AS dangerousBP, "alert" as indication, count(*) as counter

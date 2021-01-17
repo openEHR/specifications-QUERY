@@ -17,7 +17,7 @@
 |10 Jan 2021
 
 |
-|{spec_tickets}/SPECQUERY-3[SPECQUERY-3^] Add support for constants (fixed values) in column expression.
+|{spec_tickets}/SPECQUERY-3[SPECQUERY-3^] Add support for literals (fixed values) in column expression.
 |D Bosca, +
  S Iancu
 |12 Dec 2020
