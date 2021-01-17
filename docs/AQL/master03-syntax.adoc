@@ -530,28 +530,28 @@ Input values type can be anything, while the return type is always an Integer.
 The `MIN` function returns the minimum value of given _expression_ argument. The syntax is `MIN(expression)`.
 
 If there are no matching rows, then this function returns `NULL`.
-Input values type should be either String, Date, Time, Integer of Real, and it will also determine the return type.
+Input values type should be either String, Date, Time, Integer or Real, and it will also determine the return type.
 
 ==== MAX
 
 The `MAX` function returns the maximum value of given _expression_ argument. The syntax is `MAX(expression)`.
 
 If there are no matching rows, then this function returns `NULL`.
-Input values type should be either String, Date, Time, Integer of Real, and it will also determine the return type.
+Input values type should be either String, Date, Time, Integer or Real, and it will also determine the return type.
 
 ==== SUM
 
 The `SUM` function returns the sum value of given _expression_ argument. The syntax is `SUM(expression)`.
 
 If there are no matching rows, then this function returns `NULL`.
-Input values type should be either Integer of Real, and it will also determine the return type.
+Input values type should be either Integer or Real, and it will also determine the return type.
 
 ==== AVG
 
 The `AVG` function returns the average value of given _expression_ argument. The syntax is `AVG(expression)`.
 
 If there are no matching rows, then this function returns `NULL`.
-Input values type should be either Integer of Real, and it will also determine the return type.
+Input values type should be either Integer or Real, and it will also determine the return type.
 
 === String functions
 
