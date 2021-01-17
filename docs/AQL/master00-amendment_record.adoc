@@ -12,6 +12,11 @@
 |[[latest_issue_date]]10 Jan 2021
 
 |
+|{spec_tickets}/SPECQUERY-27[SPECQUERY-27^] Add support for `DISTINCT`.
+|S Iancu
+|10 Jan 2021
+
+|
 |{spec_tickets}/SPECQUERY-28[SPECQUERY-28^] Add support for built-in functions.
 |S Iancu
 |10 Jan 2021
