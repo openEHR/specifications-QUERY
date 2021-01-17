@@ -1104,12 +1104,9 @@ Both `row_count` and `offset` are integer numbers, `row_count` minimal value is 
 If a `LIMIT row_count` is given, no more than that many rows will be returned (but possibly fewer, if the query itself yields fewer rows).
 The `OFFSET offset` is optional, and when not specified then `offset` = 0 is assumed.
 
-The `LIMIT row_count OFFSET offset` is used to get results in a paginated way. For instance,
-when `offset` = 0 and `row_count` = 10, the result will have at most 10 items, starting with item 0. Then with `offset` = 10 and
-`row_count` = 10, the result will contain 10 items at most, now from item 10 to 19. So increasing `offset` by `row_count`,
-allows to get all the results in a paginated way.
+The `LIMIT row_count OFFSET offset` is used to get results in a paginated way. For instance, when `offset` = 0 and `row_count` = 10, the result will have at most 10 rows, starting with first row. The offset of the first row is 0 (not 1). Then with `offset` = 10 and `row_count` = 10, the result will contain next 10 rows at most (i.e. rows 11-20 respectively). So increasing `offset` by `row_count`, allows to get all the results in a paginated way.
 
-The following example will return 10 rows, representing the 2nd page of result set, ordered by event start time:
+The following example will return 10 rows, representing the second page of result set, ordered by event start time:
 --------
 SELECT
    c/name/value AS Name, c/context/start_time AS date_time, c/composer/name AS Composer
