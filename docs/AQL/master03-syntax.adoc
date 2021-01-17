@@ -491,7 +491,7 @@ Aggregate functions calculate a single result value from a set of _input values_
 Input values are selected by an _expression_ in a form of an <<_identified_paths, identified path>> applied to data items filtered by `FROM` and `WHERE` clauses.
 Unless specified otherwise, these functions ignore `NULL` values.
 
-The table below shows the supported AQL aggregate functions:
+The table below shows the built-in AQL aggregate functions:
 
 [width="100%",cols="1,5",options="header",]
 |===
@@ -571,9 +571,6 @@ The table below shows the built-in AQL string functions:
 |CONCAT_WS()    |Returns the string that results from concatenating the arguments with separator
 |===
 
-For functions that operate on string positions, the first position is numbered 1.
-For functions that take length arguments, non-integer arguments are rounded to the nearest integer.
-
 ==== LENGTH
 
 The `LENGTH` function returns the number of characters of a given _expression_ argument.
@@ -581,28 +578,30 @@ The syntax is `LENGTH(expression)`, where the argument is of type String. The re
 
 ==== CONTAINS
 
-The `CONTAINS` function with syntax is `CONTAINS(string, substring)` returns the `true` if the `string` argument expression contains the `substring`.
+The `CONTAINS` function with syntax `CONTAINS(expression, substring)` returns `true` if the _expression_ argument contains the _substring_ argument.
 The arguments are of type String, while the result type is Boolean.
 
 ==== POSITION
 
-The `POSITION` function with syntax is `POSITION(substring, string)` returns the position (index) of the first occurrence of `substring` in `string` argument expression, or zero if it's not present.
+The `POSITION` function with syntax `POSITION(substring, expression)` returns the position (index) of the first occurrence of _substring_ argument in the value of the _expression_ argument, or `0` (zero) if is not present.
+The position of the first character (start) of a string is considered position `1`.
 The arguments are of type String, while the result type is Integer.
 
 ==== SUBSTRING
 
-The `SUBSTRING` function with syntax is `SUBSTRING(string, position, length)` extracts the substring of `string`, starting at the `position`-th character, and stopping after `length` characters, if that is specified.
-The first argument is of type String, while `position`, `length` are Integers. The result type is String.
+The `SUBSTRING` function with syntax `SUBSTRING(expression, position, length)` extracts the substring from _expression_ argument, starting at the _position_-th character, and optionally stopping after a given _length_ characters.
+The first argument is of type String, while _position_ and _length_ arguments are Integers. The result type is String.
+The position of the first character (start) of a string is considered position `1`.
 
-The `length` argument is optional, and when not provided this function will extract the substring from the `position` until the end of the given `string` argument.
+The _length_ argument is optional, and when not provided this function will extract the substring from the given position until the end of the given _expression_ argument.
 
 ==== CONCAT
 
-The `CONCAT` function with syntax is `CONCAT(string1, string2, ...)` returns the string that results from concatenating all the arguments. It may have one or more expression arguments, all of type String.
+The `CONCAT` function with syntax `CONCAT(expr1, expr2, ...)` returns the string that results from concatenating all the arguments. It may have one or more _expression_ arguments, all of type String.
 
 ==== CONCAT_WS
 
-The `CONCAT_WS` function with syntax is `CONCAT_WS(separator, string1, string2, ...)` returns the string that results from concatenating all the arguments with `separator` string, i.e. the separator is added between the strings to be concatenated.
+The `CONCAT_WS` function with syntax `CONCAT_WS(separator, expr1, expr2, ...)` returns the string that results from concatenating all the string _expression_ arguments with `separator` string, i.e. the separator is added between the strings to be concatenated.
 
 === Numeric functions
 
@@ -629,7 +628,7 @@ The syntax is `ABS(expression)`, where the argument is of type Real or Integer. 
 ==== MOD
 
 The `MOD` function with the syntax `MOD(x, y)` returns the remainder of `x` divided by `y`.
-The arguments `x` and `y` are of type Real or Integer, while the result is derived from the arguments type.
+The `x` and `y` _expression_ arguments are of type Real or Integer, while the result type is derived from the arguments.
 
 ==== CEIL
 
@@ -643,9 +642,9 @@ The syntax is `FLOOR(expression)`, where the argument is of type Real or Integer
 
 ==== ROUND
 
-The `ROUND` function with the syntax `ROUND(expression, d)` returns the rounded _expression_ argument `expression` to `d` decimal places.
-The argument `expression` is of type Real or Integer, and the result of the function is derived from it.
-The argument `d` is of type Integer, and defaults to value `0` if not specified.
+The `ROUND` function with the syntax `ROUND(expression, decimal)` returns the rounded _expression_ argument to _decimal_ places.
+The _expression_ argument is of type Real or Integer, and the result type of the function is derived from it.
+The _decimal_ argument is of type Integer, and defaults to value `0` if not specified.
 
 === Date and time functions
 
@@ -666,19 +665,19 @@ The table below shows the built-in AQL date and time functions:
 
 ==== CURRENT_DATE
 
-The function with syntax `CURRENT_DATE()` accepts no arguments and returns the current date as string value with the format 'YYYY-MM-DD'.
+The function with syntax `CURRENT_DATE()` accepts no arguments and returns the current date as String value with the format 'YYYY-MM-DD'.
 
 ==== CURRENT_TIME
 
-The function with syntax `CURRENT_TIME()` accepts no arguments and returns the current time as string value with the format 'hh:mm:ss'.
+The function with syntax `CURRENT_TIME()` accepts no arguments and returns the current time as String value with the format 'hh:mm:ss'.
 
 ==== CURRENT_DATE_TIME or NOW
 
-The function with syntax `CURRENT_DATE_TIME()`, or `NOW()`, accepts no arguments and returns the current datetime as string value with the format 'YYYY-MM-DDThh:mm:ss.sss±hh:mm'.
+The function with syntax `CURRENT_DATE_TIME()`, or `NOW()`, accepts no arguments and returns the current datetime as String value with the format 'YYYY-MM-DDThh:mm:ss.sss±hh:mm'.
 
 ==== CURRENT_TIMEZONE
 
-The function with syntax `CURRENT_TIMEZONE()` accepts no arguments and returns the current timezone as string value with the format '±hh:mm'.
+The function with syntax `CURRENT_TIMEZONE()` accepts no arguments and returns the current timezone as String value with the format '±hh:mm'.
 
 === Other functions
 
