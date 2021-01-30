@@ -14,13 +14,13 @@ In AQL, <<_openehr_path_syntax,openEHR path syntax>> is used to locate any node 
 
 == Reserved words and characters
 
-Keywords in AQL are not case sensitive, so `SELECT`, `Select`, `select`, `SeLeCt`, etc. are processed in the same way. AQL has the following reserved keywords and characters:
+Keywords in AQL are not case-sensitive, so `SELECT`, `Select`, `select`, `SeLeCt`, etc. are processed in the same way. AQL has the following reserved keywords and characters:
 
 * `SELECT`, `AS`, `FROM`, `CONTAINS`, `WHERE`
 * `ORDER BY`, `LIMIT`, `OFFSET`
 * `DISTINCT`
 * operators: `AND`, `OR`, `NOT`, `LIKE`, `matches`, `exists`, `<`, `>`, `=`, `!`
-* functions: `count`, `min`, `max`, `sum`, `avg`, `length`, `contains`, `position`, `substring`, `concat`, `concat_ws`, `abs`, `mod`, `ceil`, `floor`, `round`, `current_date`, `current_time`, `current_date_time`, `now`, `current_timezone`, `terminology`
+* functions: `COUNT`, `MIN`, `MAX`, `SUM`, `AVG`, `LENGTH`, `CONTAINS`, `POSITION`, `SUBSTRING`, `CONCAT`, `CONCAT_WS`, `ABS`, `MOD`, `CEIL`, `FLOOR`, `ROUND`, `CURRENT_DATE`, `CURRENT_TIME`, `CURRENT_DATE_TIME`, `NOW`, `CURRENT_TIMEZONE`, `TERMINOLOGY`
 * literals: `true`, `false`
 * `"` and `'`: double and single quote characters are used to delimit string values
 * `|`: bar characters are used to delimit intervals
@@ -166,7 +166,7 @@ FROM EHR [ehr_id/value='1234']
       CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION.blood_pressure.v1]
 --------
 
-This predicates could also be written as standard predicates:
+These predicates could also be written as standard predicates:
 
 --------
 FROM EHR e
@@ -310,11 +310,11 @@ WHERE
    c/context/start_time LIKE '2019-0?-*'
 --------
 
-The `?` wildcard in pattern matches any single character, while the `\*` wildcard matches any sequence of zero or more characters.
+The `?` wildcard in the pattern matches any single character, while the `\*` wildcard matches any sequence of zero or more characters.
 If the pattern does not contain any of these wildcards, then `LIKE` acts like the `=` (equal) operator.
-The `LIKE` operator always tries to match the entire string value, therefore if the intention is to match a sequence anywhere within the string, the pattern must start and end with `*` wildcard, e.g. `"\*test*"`.
+The `LIKE` operator always tries to match the entire string value, therefore if the intention is to match a sequence anywhere within the string, the pattern must start and end with the `*` wildcard, e.g. `"\*test*"`.
 
-To match a literal `?` or `*`, the respective character in pattern must be escaped by using the backslash `\` character, e.g. `"test \?"`.
+To match a literal `?` or `*`, the respective character in a pattern must be escaped by using the backslash `\` character, e.g. `"test \?"`.
 
 ==== matches
 
@@ -365,7 +365,7 @@ WHERE
    diagnosis/data/items[at0002.1]/value/defining_code matches { terminology://snomed-ct/hierarchy?rootConceptId=50043002 }
 --------
 +
-URI data is enclosed within curly braces after `matches` operator. A URI is expressed in {rfc3986}[IETF RFC 3986] format. URIs are not case sensitive.
+URI data is enclosed within curly braces after `matches` operator. A URI is expressed in {rfc3986}[IETF RFC 3986] format. URIs are not case-sensitive.
 +
 A terminology URI consists of the following components:
 +
@@ -519,7 +519,7 @@ FROM
 
 The `COUNT` function returns the number of values of given _expression_ argument. The syntax is `COUNT([DISTINCT] expression|*)`.
 
-The `COUNT(*)` is used to calculate the number of rows of the result set, whether or not they contain `NULL`.
+The `COUNT(*)` is used to calculate the number of rows of the result set, whether or not they contain only `NULL` values.
 The `DISTINCT` keyword can be used to calculate the number of only distinct values of _expression_.
 
 If there are no matching rows, then this function returns `0`.
@@ -800,9 +800,9 @@ The first form is an expression formed by a unary operator, such as `NOT` or `EX
 
 The second is a binary operator expression, formed as follows:
 
-. _left operand_: an <<_identified_paths, identified path>> or a <<_functions, function>> having an identified path as an argument;
+. _left-hand operand_: an <<_identified_paths, identified path>> or a <<_functions, function>> having an identified path as an argument;
 . _operator_: a <<_comparison_operators, comparison operator>>;
-. _right operand_: one of:
+. _right-hand operand_: one of:
 ** a value criterion, normally of a <<_literals, literal>> or a <<_functions, function>>; OR
 ** a replaceable <<_parameters, parameter>> (identified with the `'$'` symbol); OR
 ** a pattern or condition, in case the operator `matches` or `LIKE` is used; OR
@@ -913,7 +913,7 @@ given RM, it should comply with some requirements: it should be an Object Orient
 Model and should follow the dual-model approach.
 
 Then, the expressions in the `WHERE` clause will filter data, but only from the subset
-defined by the `FROM` clause. And in the `SELECT` clause, a final projection is applied,
+defined by the `FROM` clause. In the `SELECT` clause, a final projection is applied,
 selecting only the matched data that should be retrieved in the query result. In addition
 to the filtering done in the `WHERE` clause, the <<_class_expressions, class expressions>> could hold predicates
 that also allow filtering data.
@@ -996,7 +996,7 @@ The syntax always starts with the keyword `SELECT`, optionally followed by `DIST
 
 A column expression is formed by an <<_identified_paths,identified path>>, a <<_functions,function>>, a <<_literals, literal>> value or plain <<_variables,variable>> name defined in the `FROM` clause.
 Where a variable name is specified, the full object of the type associated with the variable is retrieved, such as a `COMPOSITION`, `OBSERVATION` etc.
-Where a function is specified, the call has to be done using the specified arguments and the results are returned.
+Where a function is specified, the call has to be done using the specified arguments, and the results are returned.
 Where an identified path is specified, the data item(s) having that archetype path are returned.
 
 Each column expression may have a <<_name_alias,name alias>> renaming the associated data.
@@ -1087,7 +1087,7 @@ A sorting expression consists of an identified path, optionally followed by one 
 ORDER BY c/name/value DESC
 --------
 
-Sorting rows assumes that data identified by path (from the sorting expression) are comparable. It implies the use of a specific operators like _equal_, _less-than_ and _greater-than_ (all available to primitives and `Ordered` types) on data identified by path.
+Sorting rows assumes that data identified by the path (from the sorting expression) are comparable. It implies the use of a specific operators like _equal_, _less-than_ and _greater-than_ (all available to primitives and `Ordered` types) on data identified by path.
 
 When sorting type is not specified, `ASC` (ascending) is assumed by default.
 

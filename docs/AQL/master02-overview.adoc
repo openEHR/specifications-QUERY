@@ -2,7 +2,7 @@
 
 == Existing Query Languages
 
-Currently mainstream database query languages such as {wikipedia_sql}[Structured Query Language (SQL)^], {xquery}[W3C XQuery^], and {wikipedia_oql}[Object Query Language (OQL)^] have dependencies on particular data schemas and physical representations (e.g. relational tables). Users must know the physical data schema of a particular database in order to write a valid query. A query statement written for one schema will not usually work in other systems, which have generally have different data schemas, even for storing the same data. One reason schemas are different between systems relates to differing optimisation requirements and choices. Queries written in these languages therefore are not usually _portable across systems_.
+Currently, mainstream database query languages such as {wikipedia_sql}[Structured Query Language (SQL)^], {xquery}[W3C XQuery^], and {wikipedia_oql}[Object Query Language (OQL)^] have dependencies on particular data schemas and physical representations (e.g. relational tables). Users must know the physical data schema of a particular database in order to write a valid query. A query statement written for one schema will not usually work in other systems, which generally have different data schemas, even for storing the same data. One reason schemas are different between systems relates to differing optimisation requirements and choices. Queries written in these languages therefore are not usually _portable across systems_.
 
 More modern web-oriented languages such as {w3c_sparql}[W3C Sparql^] and {graphql}[GraphQL] are not database- or system-oriented as such, and do not suffer from the problem of portability. However, both the database- and web-oriented languages suffer from another problem, which is being limited to a single level of semantic representation, i.e. they effectively assume an Entity-Attribute-Value (EAV) data meta-model. This prevents their direct use with multi-level models, such as those based on {openehr_am}[openEHR Archetype model^], or its ISO equivalent {iso_13606-2}[ISO 13606-2:2019^].
 
@@ -19,7 +19,7 @@ AQL has the following distinctive features:
 . the utilization of <<_openehr_path_syntax,openEHR path syntax>> to locate clinical statements and data values within them using archetypes; this syntax is used to represent the query criteria and returned results, and allows stating query criteria using archetype and node identifiers, data values within the archetypes, and class attributes defined within the Reference Model;
 . returned results may be objects of any granularity from 'top-level' RM objects to primitive data items;
 . the utilization of a <<_containment,`CONTAINS` operator>> to match data hierarchy relationships in order to constrain the source data to which the query is applied;
-. the utilization of ADL-like operator syntaxes, such as `matches`, `exists`, `in`, and `not`;
+. the utilization of ADL-like operator syntaxes, such as `matches`, `exists` and `not`;
 . model-neutral syntax: AQL does not have any dependency on a Reference Model; it is also neutral to system implementation and environment;
 . supports time-based conditions to query historical versions of data.
 
@@ -29,7 +29,7 @@ AQL also has features found in other query languages, including:
 . query criteria parameters;
 . arithmetic, comparison and logical operators;
 . functions;
-. preferences on the result retrieval and structuring, such as ordering and total number of retrieved results.
+. preferences on the result retrieval and structuring, such as ordering and paginating results.
 
 == AQL example
 
@@ -39,6 +39,7 @@ Below is an example of an AQL statement. This statement returns all blood pressu
 SELECT                                                       -- Select clause
    o/data[at0001]/.../items[at0004]/value AS systolic,       -- Identified path with alias
    o/data[at0001]/.../items[at0005]/value AS diastolic,
+   c/context/start_time AS date_time
 FROM                                                         -- From clause
    EHR[ehr_id/value=$ehrUid]                                 -- RM class expression
       CONTAINS                                               -- containment
@@ -49,6 +50,8 @@ FROM                                                         -- From clause
 WHERE                                                        -- Where clause
    o/data[at0001]/.../items[at0004]/value/value >= 140 OR    -- value comparison
    o/data[at0001]/.../items[at0005]/value/value >= 90
+ORDER BY                                                     -- order by date time, latest first
+   c/context/start_time DESC
 ----
 
 More examples can be found in the {openehr_query_aql_examples}[openEHR AQL examples^] document.
