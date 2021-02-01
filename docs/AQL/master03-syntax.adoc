@@ -14,14 +14,14 @@ In AQL, <<_openehr_path_syntax,openEHR path syntax>> is used to locate any node 
 
 == Reserved words and characters
 
-Keywords in AQL are not case sensitive, so `SELECT`, `Select`, `select`, `SeLeCt`, etc. are processed in the same way. AQL has the following reserved keywords and characters:
+Keywords in AQL are not case-sensitive, so `SELECT`, `Select`, `select`, `SeLeCt`, etc. are processed in the same way. AQL has the following reserved keywords and characters:
 
 * `SELECT`, `AS`, `FROM`, `CONTAINS`, `WHERE`
 * `ORDER BY`, `LIMIT`, `OFFSET`
 * `DISTINCT`
 * operators: `AND`, `OR`, `NOT`, `LIKE`, `matches`, `exists`, `<`, `>`, `=`, `!`
-* functions: `count`, `min`, `max`, `sum`, `avg`, `length`, `contains`, `position`, `substring`, `concat`, `concat_ws`, `abs`, `mod`, `ceil`, `floor`, `round`, `current_date`, `current_time`, `current_date_time`, `now`, `current_timezone`, `terminology`
-* constants: `true`, `false`
+* functions: `COUNT`, `MIN`, `MAX`, `SUM`, `AVG`, `LENGTH`, `CONTAINS`, `POSITION`, `SUBSTRING`, `CONCAT`, `CONCAT_WS`, `ABS`, `MOD`, `CEIL`, `FLOOR`, `ROUND`, `CURRENT_DATE`, `CURRENT_TIME`, `CURRENT_DATE_TIME`, `NOW`, `CURRENT_TIMEZONE`, `TERMINOLOGY`
+* literals: `true`, `false`, `NULL`
 * `"` and `'`: double and single quote characters are used to delimit string values
 * `|`: bar characters are used to delimit intervals
 * `[]`: brackets are used to delimit coded terms or predicate expressions
@@ -110,7 +110,7 @@ A parameter can be used for any criteria values within an AQL statement, e.g.:
 * within a predicate: `[$archetypeId]`, `[at0003, $nameValue]`, `[ehr_id/value=$ehrUid]`
 * withing a `WHERE` criteria: `o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value > $systolicCriteria`
 
-NOTE: In the `WHERE` criteria, when the value of the parameter is not a number or boolean value, it should be substituted with the corresponding quotes added to the value, for instance `o/../.. = $textVariable`, when substituted should look like this `o/../.. = "value"` (single or double quotes could be used). So substituted values follow the same rules as each type when the value is specified as a constant in the AQL expression: strings, dates, times and datetimes should be quoted, numbers and booleans are not quoted.
+NOTE: In the `WHERE` criteria, when the value of the parameter is not a number or boolean value, it should be substituted with the corresponding quotes added to the value, for instance `o/../.. = $textVariable`, when substituted should look like this `o/../.. = "value"` (single or double quotes could be used). So substituted values follow the same rules as each type when the value is specified as a literal in the AQL expression: strings, dates, times and datetimes should be quoted, numbers and booleans are not quoted.
 
 === Parameters use case
 
@@ -166,7 +166,7 @@ FROM EHR [ehr_id/value='1234']
       CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION.blood_pressure.v1]
 --------
 
-This predicates could also be written as standard predicates:
+These predicates could also be written as standard predicates:
 
 --------
 FROM EHR e
@@ -196,7 +196,6 @@ The corresponding standard predicate would be:
 [archetype_node_id=at0002]
 --------
 
-
 * Containing an `archetype_node_id` and a `name/value` criterion, e.g.:
 +
 --------
@@ -225,7 +224,21 @@ The corresponding standard predicates would be:
 [archetype_node_id=at0002 and name/value='real name value']
 --------
 
-* The above three forms are the most common node predicates. A more advanced form is to include a general criterion instead of the `name/value` criterion within the predicate. The general criterion consists of left-hand operand, operator, and right-hand operand, e.g.:
+* Containing an `archetype_node_id` and a shortcut of a `name` term code criterion (the `name` attribute is coded text rather than free text), e.g.:
++
+--------
+[at0002, at0003]
+[at0002, snomed_ct::313267000]
+--------
++
+The corresponding standard predicates would be:
++
+--------
+[archetype_node_id=at0002 and name/defining_code/code_string='at0003' and name/defining_code/terminology_id/value='local']
+[archetype_node_id=at0002 and name/defining_code/code_string='313267000' and name/defining_code/terminology_id/value='snomed_ct']
+--------
+
+* The above four forms are the most common node predicates. A more advanced form is to include a general criterion instead of the `name/value` criterion within the predicate. The general criterion consists of left-hand operand, operator, and right-hand operand, e.g.:
 +
 --------
 [at0002 and value/defining_code/terminology_id/value=$terminologyId]
@@ -310,11 +323,11 @@ WHERE
    c/context/start_time LIKE '2019-0?-*'
 --------
 
-The `?` wildcard in pattern matches any single character, while the `\*` wildcard matches any sequence of zero or more characters.
+The `?` wildcard in the pattern matches any single character, while the `\*` wildcard matches any sequence of zero or more characters.
 If the pattern does not contain any of these wildcards, then `LIKE` acts like the `=` (equal) operator.
-The `LIKE` operator always tries to match the entire string value, therefore if the intention is to match a sequence anywhere within the string, the pattern must start and end with `*` wildcard, e.g. `"\*test*"`.
+The `LIKE` operator always tries to match the entire string value, therefore if the intention is to match a sequence anywhere within the string, the pattern must start and end with the `*` wildcard, e.g. `"\*test*"`.
 
-To match a literal `?` or `*`, the respective character in pattern must be escaped by using the backslash `\` character, e.g. `"test \?"`.
+To match a literal `?` or `*`, the respective character in a pattern must be escaped by using the backslash `\` character, e.g. `"test \?"`.
 
 ==== matches
 
@@ -365,7 +378,7 @@ WHERE
    diagnosis/data/items[at0002.1]/value/defining_code matches { terminology://snomed-ct/hierarchy?rootConceptId=50043002 }
 --------
 +
-URI data is enclosed within curly braces after `matches` operator. A URI is expressed in {rfc3986}[IETF RFC 3986] format. URIs are not case sensitive.
+URI data is enclosed within curly braces after `matches` operator. A URI is expressed in {rfc3986}[IETF RFC 3986] format. URIs are not case-sensitive.
 +
 A terminology URI consists of the following components:
 +
@@ -476,7 +489,7 @@ WHERE
 
 AQL provides _built-in functions_ to perform operations on data. Functions are similar to operators as they manipulate data and return a single result, but the difference is in the format and number of their arguments.
 
-In general, a function syntax is `function(argument, argument, ...)`, accepting zero, one or more _arguments_, consisting of <<_constants, constants>>, <<_parameters, parameters>>, <<_variables, variables>>, <<_identified_paths, identified paths>> or other functions.
+In general, a function syntax is `function(expression, expression, ...)`, accepting zero, one or more _expression_ arguments, consisting of <<_literals, literals>>, <<_parameters, parameters>>, <<_variables, variables>>, <<_identified_paths, identified paths>> or other functions.
 Functions are used primarily in the `SELECT` and `WHERE` clauses.
 
 There are two types of functions: _single-row_ functions, returning a single result for every row of the result set, and _aggregate_ functions, returning a single result based on a group of rows of the result set rather than on a single row.
@@ -489,9 +502,9 @@ NOTE: The followings are a set of core built-in functions defined by AQL specifi
 
 Aggregate functions calculate a single result value from a set of _input values_, allowing the query to return summarized information about a data item or a result set.
 Input values are selected by an _expression_ in a form of an <<_identified_paths, identified path>> applied to data items filtered by `FROM` and `WHERE` clauses.
-Unless specified otherwise, these functions ignore `NULL` values.
+Unless specified otherwise, these functions ignore `NULL` input values.
 
-The table below shows the supported AQL aggregate functions:
+The table below shows the built-in AQL aggregate functions:
 
 [width="100%",cols="1,5",options="header",]
 |===
@@ -517,10 +530,10 @@ FROM
 
 ==== COUNT
 
-The `COUNT` function returns the number of values of given _expression_ argument. The syntax is `COUNT([DISTINCT] expression |\*)`.
+The `COUNT` function returns the number of values of given _expression_ argument. The syntax is `COUNT([DISTINCT] expression|*)`.
 
-The `COUNT(*)` is used to calculate the number of rows of the result set, whether or not they contain `NULL`.
 The `DISTINCT` keyword can be used to calculate the number of only distinct values of _expression_.
+The `COUNT(*)` is used to calculate the number of all rows of the result set, including duplicates and `NULL` values.
 
 If there are no matching rows, then this function returns `0`.
 Input values type can be anything, while the return type is always an Integer.
@@ -530,28 +543,28 @@ Input values type can be anything, while the return type is always an Integer.
 The `MIN` function returns the minimum value of given _expression_ argument. The syntax is `MIN(expression)`.
 
 If there are no matching rows, then this function returns `NULL`.
-Input values type should be either String, Date, Time, Integer of Real, and it will also determine the return type.
+Input values type should be either String, Date, Time, Integer or Real, and it will also determine the return type.
 
 ==== MAX
 
 The `MAX` function returns the maximum value of given _expression_ argument. The syntax is `MAX(expression)`.
 
 If there are no matching rows, then this function returns `NULL`.
-Input values type should be either String, Date, Time, Integer of Real, and it will also determine the return type.
+Input values type should be either String, Date, Time, Integer or Real, and it will also determine the return type.
 
 ==== SUM
 
 The `SUM` function returns the sum value of given _expression_ argument. The syntax is `SUM(expression)`.
 
 If there are no matching rows, then this function returns `NULL`.
-Input values type should be either Integer of Real, and it will also determine the return type.
+Input values type should be either Integer or Real, and it will also determine the return type.
 
 ==== AVG
 
 The `AVG` function returns the average value of given _expression_ argument. The syntax is `AVG(expression)`.
 
 If there are no matching rows, then this function returns `NULL`.
-Input values type should be either Integer of Real, and it will also determine the return type.
+Input values type should be either Integer or Real, and it will also determine the return type.
 
 === String functions
 
@@ -571,9 +584,6 @@ The table below shows the built-in AQL string functions:
 |CONCAT_WS()    |Returns the string that results from concatenating the arguments with separator
 |===
 
-For functions that operate on string positions, the first position is numbered 1.
-For functions that take length arguments, non-integer arguments are rounded to the nearest integer.
-
 ==== LENGTH
 
 The `LENGTH` function returns the number of characters of a given _expression_ argument.
@@ -581,28 +591,30 @@ The syntax is `LENGTH(expression)`, where the argument is of type String. The re
 
 ==== CONTAINS
 
-The `CONTAINS` function with syntax is `CONTAINS(string, substring)` returns the `true` if the `string` argument expression contains the `substring`.
+The `CONTAINS` function with syntax `CONTAINS(expression, substring)` returns `true` if the _expression_ argument contains the _substring_ argument.
 The arguments are of type String, while the result type is Boolean.
 
 ==== POSITION
 
-The `POSITION` function with syntax is `POSITION(substring, string)` returns the position (index) of the first occurrence of `substring` in `string` argument expression, or zero if it's not present.
+The `POSITION` function with syntax `POSITION(substring, expression)` returns the position (index) of the first occurrence of _substring_ argument in the value of the _expression_ argument, or `0` (zero) if is not present.
+The position of the first character (start) of a string is considered position `1`.
 The arguments are of type String, while the result type is Integer.
 
 ==== SUBSTRING
 
-The `SUBSTRING` function with syntax is `SUBSTRING(string, position, length)` extracts the substring of `string`, starting at the `position`-th character, and stopping after `length` characters, if that is specified.
-The first argument is of type String, while `position`, `length` are Integers. The result type is String.
+The `SUBSTRING` function with syntax `SUBSTRING(expression, position, length)` extracts the substring from _expression_ argument, starting at the _position_-th character, and optionally stopping after a given _length_ characters.
+The first argument is of type String, while _position_ and _length_ arguments are Integers. The result type is String.
+The position of the first character (start) of a string is considered position `1`.
 
-The `length` argument is optional, and when not provided this function will extract the substring from the `position` until the end of the given `string` argument.
+The _length_ argument is optional, and when not provided this function will extract the substring from the given position until the end of the given _expression_ argument.
 
 ==== CONCAT
 
-The `CONCAT` function with syntax is `CONCAT(string1, string2, ...)` returns the string that results from concatenating all the arguments. It may have one or more expression arguments, all of type String.
+The `CONCAT` function with syntax `CONCAT(expr1, expr2, ...)` returns the string that results from concatenating all the arguments. It may have one or more _expression_ arguments, all of type String.
 
 ==== CONCAT_WS
 
-The `CONCAT_WS` function with syntax is `CONCAT_WS(separator, string1, string2, ...)` returns the string that results from concatenating all the arguments with `separator` string, i.e. the separator is added between the strings to be concatenated.
+The `CONCAT_WS` function with syntax `CONCAT_WS(separator, expr1, expr2, ...)` returns the string that results from concatenating all the string _expression_ arguments with `separator` string, i.e. the separator is added between the strings to be concatenated.
 
 === Numeric functions
 
@@ -629,7 +641,7 @@ The syntax is `ABS(expression)`, where the argument is of type Real or Integer. 
 ==== MOD
 
 The `MOD` function with the syntax `MOD(x, y)` returns the remainder of `x` divided by `y`.
-The arguments `x` and `y` are of type Real or Integer, while the result is derived from the arguments type.
+The `x` and `y` _expression_ arguments are of type Real or Integer, while the result type is derived from the arguments.
 
 ==== CEIL
 
@@ -643,9 +655,9 @@ The syntax is `FLOOR(expression)`, where the argument is of type Real or Integer
 
 ==== ROUND
 
-The `ROUND` function with the syntax `ROUND(expression, d)` returns the rounded _expression_ argument `expression` to `d` decimal places.
-The argument `expression` is of type Real or Integer, and the result of the function is derived from it.
-The argument `d` is of type Integer, and defaults to value `0` if not specified.
+The `ROUND` function with the syntax `ROUND(expression, decimal)` returns the rounded _expression_ argument to _decimal_ places.
+The _expression_ argument is of type Real or Integer, and the result type of the function is derived from it.
+The _decimal_ argument is of type Integer, and defaults to value `0` if not specified.
 
 === Date and time functions
 
@@ -666,19 +678,19 @@ The table below shows the built-in AQL date and time functions:
 
 ==== CURRENT_DATE
 
-The function with syntax `CURRENT_DATE()` accepts no arguments and returns the current date as string value with the format 'YYYY-MM-DD'.
+The function with syntax `CURRENT_DATE()` accepts no arguments and returns the current date as String value with the format 'YYYY-MM-DD'.
 
 ==== CURRENT_TIME
 
-The function with syntax `CURRENT_TIME()` accepts no arguments and returns the current time as string value with the format 'hh:mm:ss'.
+The function with syntax `CURRENT_TIME()` accepts no arguments and returns the current time as String value with the format 'hh:mm:ss'.
 
 ==== CURRENT_DATE_TIME or NOW
 
-The function with syntax `CURRENT_DATE_TIME()`, or `NOW()`, accepts no arguments and returns the current datetime as string value with the format 'YYYY-MM-DDThh:mm:ss.sss±hh:mm'.
+The function with syntax `CURRENT_DATE_TIME()`, or `NOW()`, accepts no arguments and returns the current datetime as String value with the format 'YYYY-MM-DDThh:mm:ss.sss±hh:mm'.
 
 ==== CURRENT_TIMEZONE
 
-The function with syntax `CURRENT_TIMEZONE()` accepts no arguments and returns the current timezone as string value with the format '±hh:mm'.
+The function with syntax `CURRENT_TIMEZONE()` accepts no arguments and returns the current timezone as String value with the format '±hh:mm'.
 
 === Other functions
 
@@ -710,7 +722,7 @@ Some examples of typical values for `service_api` are:
 |http://hl7.org/fhir/4.0       |FHIR Terminology Service v4.0
 |http://hl7.org/fhir/3.0       |FHIR Terminology Service v3.0
 |http://hl7.org/fhir/1.0       |FHIR Terminology Service v1.0
-|ots.oceanhealthsystems.com    |Ocean Ontology Service
+|ots.oceanhealthsystems.com    |Ocean Terminology Service
 |bts.better.care               |Better Terminology Service
 |apelon.dts.org/4.7.1          |Apelon Terminology Service, version 4.7.1
 |example.terminology-service.api/v1        |An example of a fictive terminology service
@@ -756,7 +768,7 @@ More examples can be found in the {openehr_query_aql_examples}#_terminology[open
 
 == Expressions
 
-AQL expressions provide a formal way of evaluating, transforming or comparing values. An expression is a combination of one or more <<_constants, constants>>, <<_operators, operators>>, <<_variables, variables>>, <<_predicates, predicates>>, <<_parameters, parameters>> and <<_functions, functions>> that evaluates to a value.
+AQL expressions provide a formal way of evaluating, transforming or comparing values. An expression is a combination of one or more <<_literals, literals>>, <<_operators, operators>>, <<_variables, variables>>, <<_predicates, predicates>>, <<_parameters, parameters>> or <<_functions, functions>> that evaluates to a value.
 
 === Class expressions
 
@@ -801,17 +813,17 @@ The first form is an expression formed by a unary operator, such as `NOT` or `EX
 
 The second is a binary operator expression, formed as follows:
 
-. _left operand_: an <<_identified_paths, identified path>> or a <<_functions, function>> having an identified path as an argument;
+. _left-hand operand_: an <<_identified_paths, identified path>> or a <<_functions, function>> having an identified path as an argument;
 . _operator_: a <<_comparison_operators, comparison operator>>;
-. _right operand_: one of:
-** a value criterion, normally of a <<_constants, constant>> or a <<_functions, function>>; OR
+. _right-hand operand_: one of:
+** a value criterion, normally of a <<_literals, literal>> or a <<_functions, function>>; OR
 ** a replaceable <<_parameters, parameter>> (identified with the `'$'` symbol); OR
 ** a pattern or condition, in case the operator `matches` or `LIKE` is used; OR
 ** an identified path.
 
 The following examples illustrate the binary form.
 
-* Left-hand operand is an identified path; right-hand operand is a primitive value:
+* The left-hand operand is an identified path; the right-hand operand is a primitive value:
 +
 --------
 o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value >= 140
@@ -819,13 +831,13 @@ o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value >= 140
 c/archetype_details/template_id/value = 'health_encounter'
 --------
 
-* Left-hand operand is an identified path and right-hand operand is a parameter:
+* The left-hand operand is an identified path and right-hand operand is a parameter:
 +
 --------
 c/archetype_details/template_id/value = $templateParameter
 --------
 
-* Left-hand operand is an identified path; right-hand operand is a pattern:
+* The left-hand operand is an identified path; the right-hand operand is a pattern:
 +
 --------
 c/archetype_details/template_id/value LIKE '*encounter*'
@@ -838,9 +850,13 @@ o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value >
 o1/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value
 --------
 
-== Constants
+== Literals
 
-A _constant_, often referred as _literal value_, is a fixed value that is supplied directly in the AQL statement, not derived from an <<_identified_paths, identified path>>, a <<_variables, variable>>, or a <<_name_alias, column alias name>>. This value can be any of the AQL built-in types, where strings, dates, times and datetimes should be quoted, while numbers and booleans are not quoted.
+A _literal value_, sometimes known as _constant_ in certain SQL implementations, is a fixed value that is supplied directly in the AQL statement, not derived from an <<_identified_paths, identified path>>, a <<_variables, variable>>, or a <<_name_alias, column alias name>>. It can be used in the `SELECT` clause as a column expression, or in `WHERE` class as part of an identified expression.
+
+The type of a literal value can be any of the AQL <<_built_in_types, built-in types>>, where strings, dates, times and datetimes should be quoted, while numbers and booleans are not quoted.
+
+Another supported literal value is the `NULL` keyword, indicating that the data item is either missing or is unknown.
 
 == Built-in Types
 
@@ -914,7 +930,7 @@ given RM, it should comply with some requirements: it should be an Object Orient
 Model and should follow the dual-model approach.
 
 Then, the expressions in the `WHERE` clause will filter data, but only from the subset
-defined by the `FROM` clause. And in the `SELECT` clause, a final projection is applied,
+defined by the `FROM` clause. In the `SELECT` clause, a final projection is applied,
 selecting only the matched data that should be retrieved in the query result. In addition
 to the filtering done in the `WHERE` clause, the <<_class_expressions, class expressions>> could hold predicates
 that also allow filtering data.
@@ -960,7 +976,7 @@ EHR e
       CONTAINS (OBSERVATION o [openEHR-EHR-OBSERVATION-laboratory-hba1c.v1] OR OBSERVATION o1 [openEHR-EHR-OBSERVATION-laboratory-glucose.v1])
 --------
 
-Logical operator `NOT` can be used in combination with `CONTAINS` to express an exclusion constraint, i.e. the missing of a hierarchical relationships between the parent and child data items operands, e.g.
+The logical operator `NOT` can be used in combination with `CONTAINS` to express an exclusion constraint,  i.e. the absence of any containment relationship between a parent and potential child items. The following example matches referral COMPOSITIONs that do not contain laboratory test result OBSERVATIONs:
 
 --------
 EHR e
@@ -989,15 +1005,15 @@ WHERE
 
 === SELECT
 
-A `SELECT` clause specifies what data is to be retrieved by the AQL query. The data can be any types from openEHR RM and any primitive data types.
+A `SELECT` clause specifies what data is to be retrieved by the AQL query. The data can be any types from RM or any built-in data types (see <<_built_in_types>>).
 
 [[_select_syntax]]
 ==== Syntax
-The syntax always starts with the keyword `SELECT`, optionally followed by `TOP` (deprecated - see <<TOP, below>>), followed by one or more _column expressions_.
+The syntax always starts with the keyword `SELECT`, optionally followed by `DISTINCT`, optionally followed by `TOP` (deprecated - see <<TOP, below>>), followed by one or more _column expressions_.
 
-A column expression is formed by an <<_identified_paths,identified path>>, a <<_functions,function>>, a <<_constants, constant>> value or plain <<_variables,variable>> name defined in the `FROM` clause.
+A column expression is formed by an <<_identified_paths,identified path>>, a <<_functions,function>>, a <<_literals, literal>> value or plain <<_variables,variable>> name defined in the `FROM` clause.
 Where a variable name is specified, the full object of the type associated with the variable is retrieved, such as a `COMPOSITION`, `OBSERVATION` etc.
-Where a function is specified, the call has to be done using the specified arguments and the results are returned.
+Where a function is specified, the call has to be done using the specified arguments, and the results are returned.
 Where an identified path is specified, the data item(s) having that archetype path are returned.
 
 Each column expression may have a <<_name_alias,name alias>> renaming the associated data.
@@ -1021,7 +1037,7 @@ FROM EHR e[ehr_id/value=$ehrUid]
     CONTAINS COMPOSITION c
 --------
 
-.Example 3: Use of constants and function as column expressions.
+.Example 3: Use of literals and function as column expressions.
 --------
 SELECT
     true AS dangerousBP, "alert" as indication, count(*) as counter
@@ -1032,6 +1048,21 @@ FROM
 WHERE
     obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude>= 160 OR
     obs/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude>= 110
+--------
+
+==== DISTINCT
+
+The `DISTINCT` modifier specify whether duplicate rows should be filtered out from result set.
+
+By default, an AQL query returns all data items selected by the `FROM` and `WHERE` clauses as rows in the result set. A row is considered to be duplicated in the result set if there is at least one other row with the same value for each corresponding column expression. `DISTINCT` specifies removal of all such duplicate rows from the result set.
+
+Below is an example using `DISTINCT` modifier to filter out duplicate rows:
+--------
+SELECT DISTINCT
+   c/name/value AS Name, c/composer/name AS Composer
+FROM
+   EHR e[ehr_id/value=$ehrUid]
+      CONTAINS COMPOSITION c
 --------
 
 ==== TOP
@@ -1073,7 +1104,7 @@ A sorting expression consists of an identified path, optionally followed by one 
 ORDER BY c/name/value DESC
 --------
 
-Sorting rows assumes that data identified by path (from the sorting expression) are comparable. It implies the use of a specific operators like _equal_, _less-than_ and _greater-than_ (all available to primitives and `Ordered` types) on data identified by path.
+Sorting rows assumes that data identified by the path (from the sorting expression) are comparable. It implies the use of a specific operators like _equal_, _less-than_ and _greater-than_ (all available to primitives and `Ordered` types) on data identified by path.
 
 When sorting type is not specified, `ASC` (ascending) is assumed by default.
 
@@ -1081,7 +1112,7 @@ Multiple sorting expressions are separated using a comma. If two rows are equal 
 
 === LIMIT
 
-The `LIMIT` clause is used to constrain the result sets generated by the rest of the query.
+The `LIMIT` clause is used to constrain the result set generated by the rest of the query.
 It is often used together with an `OFFSET` subclause.
 
 The `OFFSET` specifies the number of rows to skip before it starts to return rows from the query.
@@ -1090,6 +1121,8 @@ Note that when using `LIMIT`, deterministic behavior requires that the `ORDER BY
 
 NOTE: As of Release 1.1.0, the use of the `LIMIT` clause in combination with the `ORDER BY` clause is recommended instead of the deprecated `TOP` alternative.
 It is not allowed to use `LIMIT` while also using `TOP` clause in the same query.
+
+Where `DISTINCT` modifier is used (see <<_distinct>>), the `LIMIT` and `OFFSET` applies to remaining rows, after duplicates were filtered out from result set.
 
 [[_limit_syntax]]
 ==== Syntax
@@ -1104,12 +1137,9 @@ Both `row_count` and `offset` are integer numbers, `row_count` minimal value is 
 If a `LIMIT row_count` is given, no more than that many rows will be returned (but possibly fewer, if the query itself yields fewer rows).
 The `OFFSET offset` is optional, and when not specified then `offset` = 0 is assumed.
 
-The `LIMIT row_count OFFSET offset` is used to get results in a paginated way. For instance,
-when `offset` = 0 and `row_count` = 10, the result will have at most 10 items, starting with item 0. Then with `offset` = 10 and
-`row_count` = 10, the result will contain 10 items at most, now from item 10 to 19. So increasing `offset` by `row_count`,
-allows to get all the results in a paginated way.
+The `LIMIT row_count OFFSET offset` is used to get results in a paginated way. For instance, when `offset` = 0 and `row_count` = 10, the result will have at most 10 rows, starting with first row. The offset of the first row is 0 (not 1). Then with `offset` = 10 and `row_count` = 10, the result will contain next 10 rows at most (i.e. rows 11-20 respectively). So increasing `offset` by `row_count`, allows to get all the results in a paginated way.
 
-The following example will return 10 rows, representing the 2nd page of result sets, ordered by event start time:
+The following example will return 10 rows, representing the second page of result set, ordered by event start time:
 --------
 SELECT
    c/name/value AS Name, c/context/start_time AS date_time, c/composer/name AS Composer

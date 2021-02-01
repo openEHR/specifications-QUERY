@@ -140,7 +140,7 @@
 <li><a href="#_identified_expression">3.10.2. Identified expression</a></li>
 </ul>
 </li>
-<li><a href="#_constants">3.11. Constants</a></li>
+<li><a href="#_literals">3.11. Literals</a></li>
 <li><a href="#_built_in_types">3.12. Built-in Types</a>
 <ul class="sectlevel3">
 <li><a href="#_integer_data">3.12.1. Integer data</a></li>
@@ -167,8 +167,9 @@
 <li><a href="#_select">3.13.4. SELECT</a>
 <ul class="sectlevel4">
 <li><a href="#_select_syntax">3.13.4.1. Syntax</a></li>
-<li><a href="#_top">3.13.4.2. TOP</a></li>
-<li><a href="#_name_alias">3.13.4.3. Name alias</a></li>
+<li><a href="#_distinct">3.13.4.2. DISTINCT</a></li>
+<li><a href="#_top">3.13.4.3. TOP</a></li>
+<li><a href="#_name_alias">3.13.4.4. Name alias</a></li>
 </ul>
 </li>
 <li><a href="#_order_by">3.13.5. ORDER BY</a>
@@ -295,11 +296,36 @@
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="latest_issue"></a>1.1.0</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://specifications.openehr.org/tickets/SPECQUERY-8" target="_blank" rel="noopener">SPECQUERY-8</a> Correct numerous minor typographical and formatting errors. Improve the wording and readability.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">S Iancu</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="latest_issue_date"></a>12 Dec 2020</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="latest_issue_date"></a>01 Feb 2021</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://specifications.openehr.org/tickets/SPECQUERY-3" target="_blank" rel="noopener">SPECQUERY-3</a> Add support for constants (fixed values) in column expression.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://specifications.openehr.org/tickets/SPECQUERY-33" target="_blank" rel="noopener">SPECQUERY-33</a> Add support for <code>NULL</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S Iancu</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">01 Feb 2021</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://specifications.openehr.org/tickets/SPECQUERY-1" target="_blank" rel="noopener">SPECQUERY-1</a> Allow name attribute term codes to be used in node predicate (<a href="https://specifications.openehr.org/tickets/SPECPR-129" target="_blank" rel="noopener">SPECPR-129</a>).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">C Ma,<br>
+ S Iancu</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">01 Feb 2021</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://specifications.openehr.org/tickets/SPECQUERY-27" target="_blank" rel="noopener">SPECQUERY-27</a> Add support for <code>DISTINCT</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S Iancu</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10 Jan 2021</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://specifications.openehr.org/tickets/SPECQUERY-28" target="_blank" rel="noopener">SPECQUERY-28</a> Add support for built-in functions.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S Iancu</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10 Jan 2021</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://specifications.openehr.org/tickets/SPECQUERY-3" target="_blank" rel="noopener">SPECQUERY-3</a> Add support for literals (fixed values) in column expression.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">D Bosca,<br>
  S Iancu</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">12 Dec 2020</p></td>
@@ -559,7 +585,7 @@ S Iancu</p></td>
 <div class="sect2">
 <h3 id="_existing_query_languages"><a class="anchor" href="#_existing_query_languages"></a>2.1. Existing Query Languages</h3>
 <div class="paragraph">
-<p>Currently mainstream database query languages such as <a href="https://en.wikipedia.org/wiki/SQL" target="_blank" rel="noopener">Structured Query Language (SQL)</a>, <a href="https://www.w3.org/XML/Query/" target="_blank" rel="noopener">W3C XQuery</a>, and <a href="https://en.wikipedia.org/wiki/Object_Query_Language" target="_blank" rel="noopener">Object Query Language (OQL)</a> have dependencies on particular data schemas and physical representations (e.g. relational tables). Users must know the physical data schema of a particular database in order to write a valid query. A query statement written for one schema will not usually work in other systems, which have generally have different data schemas, even for storing the same data. One reason schemas are different between systems relates to differing optimisation requirements and choices. Queries written in these languages therefore are not usually <em>portable across systems</em>.</p>
+<p>Currently, mainstream database query languages such as <a href="https://en.wikipedia.org/wiki/SQL" target="_blank" rel="noopener">Structured Query Language (SQL)</a>, <a href="https://www.w3.org/XML/Query/" target="_blank" rel="noopener">W3C XQuery</a>, and <a href="https://en.wikipedia.org/wiki/Object_Query_Language" target="_blank" rel="noopener">Object Query Language (OQL)</a> have dependencies on particular data schemas and physical representations (e.g. relational tables). Users must know the physical data schema of a particular database in order to write a valid query. A query statement written for one schema will not usually work in other systems, which generally have different data schemas, even for storing the same data. One reason schemas are different between systems relates to differing optimisation requirements and choices. Queries written in these languages therefore are not usually <em>portable across systems</em>.</p>
 </div>
 <div class="paragraph">
 <p>More modern web-oriented languages such as <a href="https://www.w3.org/TR/sparql11-query/" target="_blank" rel="noopener">W3C Sparql</a> and <a href="http://graphql.org">GraphQL</a> are not database- or system-oriented as such, and do not suffer from the problem of portability. However, both the database- and web-oriented languages suffer from another problem, which is being limited to a single level of semantic representation, i.e. they effectively assume an Entity-Attribute-Value (EAV) data meta-model. This prevents their direct use with multi-level models, such as those based on <a href="https://specifications.openehr.org/releases/AM/latest/index" target="_blank" rel="noopener">openEHR Archetype model</a>, or its ISO equivalent <a href="https://www.iso.org/standard/62305.html" target="_blank" rel="noopener">ISO 13606-2:2019</a>.</p>
@@ -591,7 +617,7 @@ S Iancu</p></td>
 <p>the utilization of a <a href="#_containment"><code>CONTAINS</code> operator</a> to match data hierarchy relationships in order to constrain the source data to which the query is applied;</p>
 </li>
 <li>
-<p>the utilization of ADL-like operator syntaxes, such as <code>matches</code>, <code>exists</code>, <code>in</code>, and <code>not</code>;</p>
+<p>the utilization of ADL-like operator syntaxes, such as <code>matches</code>, <code>exists</code> and <code>not</code>;</p>
 </li>
 <li>
 <p>model-neutral syntax: AQL does not have any dependency on a Reference Model; it is also neutral to system implementation and environment;</p>
@@ -619,7 +645,7 @@ S Iancu</p></td>
 <p>functions;</p>
 </li>
 <li>
-<p>preferences on the result retrieval and structuring, such as ordering and total number of retrieved results.</p>
+<p>preferences on the result retrieval and structuring, such as ordering and paginating results.</p>
 </li>
 </ol>
 </div>
@@ -634,6 +660,7 @@ S Iancu</p></td>
 <pre>SELECT                                                       -- Select clause
    o/data[at0001]/.../items[at0004]/value AS systolic,       -- Identified path with alias
    o/data[at0001]/.../items[at0005]/value AS diastolic,
+   c/context/start_time AS date_time
 FROM                                                         -- From clause
    EHR[ehr_id/value=$ehrUid]                                 -- RM class expression
       CONTAINS                                               -- containment
@@ -643,7 +670,9 @@ FROM                                                         -- From clause
             OBSERVATION o [openEHR-EHR-OBSERVATION.blood_pressure.v1]
 WHERE                                                        -- Where clause
    o/data[at0001]/.../items[at0004]/value/value &gt;= 140 OR    -- value comparison
-   o/data[at0001]/.../items[at0005]/value/value &gt;= 90</pre>
+   o/data[at0001]/.../items[at0005]/value/value &gt;= 90
+ORDER BY                                                     -- order by datetime, latest first
+   c/context/start_time DESC</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -686,7 +715,7 @@ WHERE                                                        -- Where clause
 <div class="sect2">
 <h3 id="_reserved_words_and_characters"><a class="anchor" href="#_reserved_words_and_characters"></a>3.2. Reserved words and characters</h3>
 <div class="paragraph">
-<p>Keywords in AQL are not case sensitive, so <code>SELECT</code>, <code>Select</code>, <code>select</code>, <code>SeLeCt</code>, etc. are processed in the same way. AQL has the following reserved keywords and characters:</p>
+<p>Keywords in AQL are not case-sensitive, so <code>SELECT</code>, <code>Select</code>, <code>select</code>, <code>SeLeCt</code>, etc. are processed in the same way. AQL has the following reserved keywords and characters:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -703,10 +732,10 @@ WHERE                                                        -- Where clause
 <p>operators: <code>AND</code>, <code>OR</code>, <code>NOT</code>, <code>LIKE</code>, <code>matches</code>, <code>exists</code>, <code>&lt;</code>, <code>&gt;</code>, <code>=</code>, <code>!</code></p>
 </li>
 <li>
-<p>functions: <code>count</code>, <code>min</code>, <code>max</code>, <code>sum</code>, <code>avg</code>, <code>length</code>, <code>contains</code>, <code>position</code>, <code>substring</code>, <code>concat</code>, <code>concat_ws</code>, <code>abs</code>, <code>mod</code>, <code>ceil</code>, <code>floor</code>, <code>round</code>, <code>current_date</code>, <code>current_time</code>, <code>current_date_time</code>, <code>now</code>, <code>current_timezone</code>, <code>terminology</code></p>
+<p>functions: <code>COUNT</code>, <code>MIN</code>, <code>MAX</code>, <code>SUM</code>, <code>AVG</code>, <code>LENGTH</code>, <code>CONTAINS</code>, <code>POSITION</code>, <code>SUBSTRING</code>, <code>CONCAT</code>, <code>CONCAT_WS</code>, <code>ABS</code>, <code>MOD</code>, <code>CEIL</code>, <code>FLOOR</code>, <code>ROUND</code>, <code>CURRENT_DATE</code>, <code>CURRENT_TIME</code>, <code>CURRENT_DATE_TIME</code>, <code>NOW</code>, <code>CURRENT_TIMEZONE</code>, <code>TERMINOLOGY</code></p>
 </li>
 <li>
-<p>constants: <code>true</code>, <code>false</code></p>
+<p>literals: <code>true</code>, <code>false</code>, <code>NULL</code></p>
 </li>
 <li>
 <p><code>"</code> and <code>'</code>: double and single quote characters are used to delimit string values</p>
@@ -909,7 +938,7 @@ WHERE
 <div class="title">Note</div>
 </td>
 <td class="content">
-In the <code>WHERE</code> criteria, when the value of the parameter is not a number or boolean value, it should be substituted with the corresponding quotes added to the value, for instance <code>o/../.. = $textVariable</code>, when substituted should look like this <code>o/../.. = "value"</code> (single or double quotes could be used). So substituted values follow the same rules as each type when the value is specified as a constant in the AQL expression: strings, dates, times and datetimes should be quoted, numbers and booleans are not quoted.
+In the <code>WHERE</code> criteria, when the value of the parameter is not a number or boolean value, it should be substituted with the corresponding quotes added to the value, for instance <code>o/../.. = $textVariable</code>, when substituted should look like this <code>o/../.. = "value"</code> (single or double quotes could be used). So substituted values follow the same rules as each type when the value is specified as a literal in the AQL expression: strings, dates, times and datetimes should be quoted, numbers and booleans are not quoted.
 </td>
 </tr>
 </table>
@@ -996,7 +1025,7 @@ WHERE
 </div>
 </div>
 <div class="paragraph">
-<p>This predicates could also be written as standard predicates:</p>
+<p>These predicates could also be written as standard predicates:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1073,7 +1102,25 @@ WHERE
 </div>
 </li>
 <li>
-<p>The above three forms are the most common node predicates. A more advanced form is to include a general criterion instead of the <code>name/value</code> criterion within the predicate. The general criterion consists of left-hand operand, operator, and right-hand operand, e.g.:</p>
+<p>Containing an <code>archetype_node_id</code> and a shortcut of a <code>name</code> term code criterion (the <code>name</code> attribute is coded text rather than free text), e.g.:</p>
+<div class="listingblock">
+<div class="content">
+<pre>[at0002, at0003]
+[at0002, snomed_ct::313267000]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The corresponding standard predicates would be:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>[archetype_node_id=at0002 and name/defining_code/code_string='at0003' and name/defining_code/terminology_id/value='local']
+[archetype_node_id=at0002 and name/defining_code/code_string='313267000' and name/defining_code/terminology_id/value='snomed_ct']</pre>
+</div>
+</div>
+</li>
+<li>
+<p>The above four forms are the most common node predicates. A more advanced form is to include a general criterion instead of the <code>name/value</code> criterion within the predicate. The general criterion consists of left-hand operand, operator, and right-hand operand, e.g.:</p>
 <div class="listingblock">
 <div class="content">
 <pre>[at0002 and value/defining_code/terminology_id/value=$terminologyId]</pre>
@@ -1229,12 +1276,12 @@ WHERE
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>?</code> wildcard in pattern matches any single character, while the <code>*</code> wildcard matches any sequence of zero or more characters.
+<p>The <code>?</code> wildcard in the pattern matches any single character, while the <code>*</code> wildcard matches any sequence of zero or more characters.
 If the pattern does not contain any of these wildcards, then <code>LIKE</code> acts like the <code>=</code> (equal) operator.
-The <code>LIKE</code> operator always tries to match the entire string value, therefore if the intention is to match a sequence anywhere within the string, the pattern must start and end with <code>*</code> wildcard, e.g. <code>"*test*"</code>.</p>
+The <code>LIKE</code> operator always tries to match the entire string value, therefore if the intention is to match a sequence anywhere within the string, the pattern must start and end with the <code>*</code> wildcard, e.g. <code>"*test*"</code>.</p>
 </div>
 <div class="paragraph">
-<p>To match a literal <code>?</code> or <code>*</code>, the respective character in pattern must be escaped by using the backslash <code>\</code> character, e.g. <code>"test \?"</code>.</p>
+<p>To match a literal <code>?</code> or <code>*</code>, the respective character in a pattern must be escaped by using the backslash <code>\</code> character, e.g. <code>"test \?"</code>.</p>
 </div>
 </div>
 <div class="sect4">
@@ -1295,7 +1342,7 @@ WHERE
 </div>
 </div>
 <div class="paragraph">
-<p>URI data is enclosed within curly braces after <code>matches</code> operator. A URI is expressed in <a href="https://tools.ietf.org/html/rfc3986">IETF RFC 3986</a> format. URIs are not case sensitive.</p>
+<p>URI data is enclosed within curly braces after <code>matches</code> operator. A URI is expressed in <a href="https://tools.ietf.org/html/rfc3986">IETF RFC 3986</a> format. URIs are not case-sensitive.</p>
 </div>
 <div class="paragraph">
 <p>A terminology URI consists of the following components:</p>
@@ -1447,7 +1494,7 @@ WHERE
 <p>AQL provides <em>built-in functions</em> to perform operations on data. Functions are similar to operators as they manipulate data and return a single result, but the difference is in the format and number of their arguments.</p>
 </div>
 <div class="paragraph">
-<p>In general, a function syntax is <code>function(argument, argument, &#8230;&#8203;)</code>, accepting zero, one or more <em>arguments</em>, consisting of <a href="#_constants">constants</a>, <a href="#_parameters">parameters</a>, <a href="#_variables">variables</a>, <a href="#_identified_paths">identified paths</a> or other functions.
+<p>In general, a function syntax is <code>function(expression, expression, &#8230;&#8203;)</code>, accepting zero, one or more <em>expression</em> arguments, consisting of <a href="#_literals">literals</a>, <a href="#_parameters">parameters</a>, <a href="#_variables">variables</a>, <a href="#_identified_paths">identified paths</a> or other functions.
 Functions are used primarily in the <code>SELECT</code> and <code>WHERE</code> clauses.</p>
 </div>
 <div class="paragraph">
@@ -1473,10 +1520,10 @@ The followings are a set of core built-in functions defined by AQL specification
 <div class="paragraph">
 <p>Aggregate functions calculate a single result value from a set of <em>input values</em>, allowing the query to return summarized information about a data item or a result set.
 Input values are selected by an <em>expression</em> in a form of an <a href="#_identified_paths">identified path</a> applied to data items filtered by <code>FROM</code> and <code>WHERE</code> clauses.
-Unless specified otherwise, these functions ignore <code>NULL</code> values.</p>
+Unless specified otherwise, these functions ignore <code>NULL</code> input values.</p>
 </div>
 <div class="paragraph">
-<p>The table below shows the supported AQL aggregate functions:</p>
+<p>The table below shows the built-in AQL aggregate functions:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1529,11 +1576,11 @@ FROM
 <div class="sect4">
 <h5 id="_count"><a class="anchor" href="#_count"></a>3.9.1.1. COUNT</h5>
 <div class="paragraph">
-<p>The <code>COUNT</code> function returns the number of values of given <em>expression</em> argument. The syntax is <code>COUNT([DISTINCT] expression |\*)</code>.</p>
+<p>The <code>COUNT</code> function returns the number of values of given <em>expression</em> argument. The syntax is <code>COUNT([DISTINCT] expression|*)</code>.</p>
 </div>
 <div class="paragraph">
-<p>The <code>COUNT(*)</code> is used to calculate the number of rows of the result set, whether or not they contain <code>NULL</code>.
-The <code>DISTINCT</code> keyword can be used to calculate the number of only distinct values of <em>expression</em>.</p>
+<p>The <code>DISTINCT</code> keyword can be used to calculate the number of only distinct values of <em>expression</em>.
+The <code>COUNT(*)</code> is used to calculate the number of all rows of the result set, including duplicates and <code>NULL</code> values.</p>
 </div>
 <div class="paragraph">
 <p>If there are no matching rows, then this function returns <code>0</code>.
@@ -1547,7 +1594,7 @@ Input values type can be anything, while the return type is always an Integer.</
 </div>
 <div class="paragraph">
 <p>If there are no matching rows, then this function returns <code>NULL</code>.
-Input values type should be either String, Date, Time, Integer of Real, and it will also determine the return type.</p>
+Input values type should be either String, Date, Time, Integer or Real, and it will also determine the return type.</p>
 </div>
 </div>
 <div class="sect4">
@@ -1557,7 +1604,7 @@ Input values type should be either String, Date, Time, Integer of Real, and it w
 </div>
 <div class="paragraph">
 <p>If there are no matching rows, then this function returns <code>NULL</code>.
-Input values type should be either String, Date, Time, Integer of Real, and it will also determine the return type.</p>
+Input values type should be either String, Date, Time, Integer or Real, and it will also determine the return type.</p>
 </div>
 </div>
 <div class="sect4">
@@ -1567,7 +1614,7 @@ Input values type should be either String, Date, Time, Integer of Real, and it w
 </div>
 <div class="paragraph">
 <p>If there are no matching rows, then this function returns <code>NULL</code>.
-Input values type should be either Integer of Real, and it will also determine the return type.</p>
+Input values type should be either Integer or Real, and it will also determine the return type.</p>
 </div>
 </div>
 <div class="sect4">
@@ -1577,7 +1624,7 @@ Input values type should be either Integer of Real, and it will also determine t
 </div>
 <div class="paragraph">
 <p>If there are no matching rows, then this function returns <code>NULL</code>.
-Input values type should be either Integer of Real, and it will also determine the return type.</p>
+Input values type should be either Integer or Real, and it will also determine the return type.</p>
 </div>
 </div>
 </div>
@@ -1627,10 +1674,6 @@ Input values type should be either Integer of Real, and it will also determine t
 </tr>
 </tbody>
 </table>
-<div class="paragraph">
-<p>For functions that operate on string positions, the first position is numbered 1.
-For functions that take length arguments, non-integer arguments are rounded to the nearest integer.</p>
-</div>
 <div class="sect4">
 <h5 id="_length"><a class="anchor" href="#_length"></a>3.9.2.1. LENGTH</h5>
 <div class="paragraph">
@@ -1641,37 +1684,39 @@ The syntax is <code>LENGTH(expression)</code>, where the argument is of type Str
 <div class="sect4">
 <h5 id="_contains"><a class="anchor" href="#_contains"></a>3.9.2.2. CONTAINS</h5>
 <div class="paragraph">
-<p>The <code>CONTAINS</code> function with syntax is <code>CONTAINS(string, substring)</code> returns the <code>true</code> if the <code>string</code> argument expression contains the <code>substring</code>.
+<p>The <code>CONTAINS</code> function with syntax <code>CONTAINS(expression, substring)</code> returns <code>true</code> if the <em>expression</em> argument contains the <em>substring</em> argument.
 The arguments are of type String, while the result type is Boolean.</p>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_position"><a class="anchor" href="#_position"></a>3.9.2.3. POSITION</h5>
 <div class="paragraph">
-<p>The <code>POSITION</code> function with syntax is <code>POSITION(substring, string)</code> returns the position (index) of the first occurrence of <code>substring</code> in <code>string</code> argument expression, or zero if it&#8217;s not present.
+<p>The <code>POSITION</code> function with syntax <code>POSITION(substring, expression)</code> returns the position (index) of the first occurrence of <em>substring</em> argument in the value of the <em>expression</em> argument, or <code>0</code> (zero) if is not present.
+The position of the first character (start) of a string is considered position <code>1</code>.
 The arguments are of type String, while the result type is Integer.</p>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_substring"><a class="anchor" href="#_substring"></a>3.9.2.4. SUBSTRING</h5>
 <div class="paragraph">
-<p>The <code>SUBSTRING</code> function with syntax is <code>SUBSTRING(string, position, length)</code> extracts the substring of <code>string</code>, starting at the <code>position</code>-th character, and stopping after <code>length</code> characters, if that is specified.
-The first argument is of type String, while <code>position</code>, <code>length</code> are Integers. The result type is String.</p>
+<p>The <code>SUBSTRING</code> function with syntax <code>SUBSTRING(expression, position, length)</code> extracts the substring from <em>expression</em> argument, starting at the <em>position</em>-th character, and optionally stopping after a given <em>length</em> characters.
+The first argument is of type String, while <em>position</em> and <em>length</em> arguments are Integers. The result type is String.
+The position of the first character (start) of a string is considered position <code>1</code>.</p>
 </div>
 <div class="paragraph">
-<p>The <code>length</code> argument is optional, and when not provided this function will extract the substring from the <code>position</code> until the end of the given <code>string</code> argument.</p>
+<p>The <em>length</em> argument is optional, and when not provided this function will extract the substring from the given position until the end of the given <em>expression</em> argument.</p>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_concat"><a class="anchor" href="#_concat"></a>3.9.2.5. CONCAT</h5>
 <div class="paragraph">
-<p>The <code>CONCAT</code> function with syntax is <code>CONCAT(string1, string2, &#8230;&#8203;)</code> returns the string that results from concatenating all the arguments. It may have one or more expression arguments, all of type String.</p>
+<p>The <code>CONCAT</code> function with syntax <code>CONCAT(expr1, expr2, &#8230;&#8203;)</code> returns the string that results from concatenating all the arguments. It may have one or more <em>expression</em> arguments, all of type String.</p>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_concat_ws"><a class="anchor" href="#_concat_ws"></a>3.9.2.6. CONCAT_WS</h5>
 <div class="paragraph">
-<p>The <code>CONCAT_WS</code> function with syntax is <code>CONCAT_WS(separator, string1, string2, &#8230;&#8203;)</code> returns the string that results from concatenating all the arguments with <code>separator</code> string, i.e. the separator is added between the strings to be concatenated.</p>
+<p>The <code>CONCAT_WS</code> function with syntax <code>CONCAT_WS(separator, expr1, expr2, &#8230;&#8203;)</code> returns the string that results from concatenating all the string <em>expression</em> arguments with <code>separator</code> string, i.e. the separator is added between the strings to be concatenated.</p>
 </div>
 </div>
 </div>
@@ -1728,7 +1773,7 @@ The syntax is <code>ABS(expression)</code>, where the argument is of type Real o
 <h5 id="_mod"><a class="anchor" href="#_mod"></a>3.9.3.2. MOD</h5>
 <div class="paragraph">
 <p>The <code>MOD</code> function with the syntax <code>MOD(x, y)</code> returns the remainder of <code>x</code> divided by <code>y</code>.
-The arguments <code>x</code> and <code>y</code> are of type Real or Integer, while the result is derived from the arguments type.</p>
+The <code>x</code> and <code>y</code> <em>expression</em> arguments are of type Real or Integer, while the result type is derived from the arguments.</p>
 </div>
 </div>
 <div class="sect4">
@@ -1748,9 +1793,9 @@ The syntax is <code>FLOOR(expression)</code>, where the argument is of type Real
 <div class="sect4">
 <h5 id="_round"><a class="anchor" href="#_round"></a>3.9.3.5. ROUND</h5>
 <div class="paragraph">
-<p>The <code>ROUND</code> function with the syntax <code>ROUND(expression, d)</code> returns the rounded <em>expression</em> argument <code>expression</code> to <code>d</code> decimal places.
-The argument <code>expression</code> is of type Real or Integer, and the result of the function is derived from it.
-The argument <code>d</code> is of type Integer, and defaults to value <code>0</code> if not specified.</p>
+<p>The <code>ROUND</code> function with the syntax <code>ROUND(expression, decimal)</code> returns the rounded <em>expression</em> argument to <em>decimal</em> places.
+The <em>expression</em> argument is of type Real or Integer, and the result type of the function is derived from it.
+The <em>decimal</em> argument is of type Integer, and defaults to value <code>0</code> if not specified.</p>
 </div>
 </div>
 </div>
@@ -1799,25 +1844,25 @@ The argument <code>d</code> is of type Integer, and defaults to value <code>0</c
 <div class="sect4">
 <h5 id="_current_date"><a class="anchor" href="#_current_date"></a>3.9.4.1. CURRENT_DATE</h5>
 <div class="paragraph">
-<p>The function with syntax <code>CURRENT_DATE()</code> accepts no arguments and returns the current date as string value with the format 'YYYY-MM-DD'.</p>
+<p>The function with syntax <code>CURRENT_DATE()</code> accepts no arguments and returns the current date as String value with the format 'YYYY-MM-DD'.</p>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_current_time"><a class="anchor" href="#_current_time"></a>3.9.4.2. CURRENT_TIME</h5>
 <div class="paragraph">
-<p>The function with syntax <code>CURRENT_TIME()</code> accepts no arguments and returns the current time as string value with the format 'hh:mm:ss'.</p>
+<p>The function with syntax <code>CURRENT_TIME()</code> accepts no arguments and returns the current time as String value with the format 'hh:mm:ss'.</p>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_current_date_time_or_now"><a class="anchor" href="#_current_date_time_or_now"></a>3.9.4.3. CURRENT_DATE_TIME or NOW</h5>
 <div class="paragraph">
-<p>The function with syntax <code>CURRENT_DATE_TIME()</code>, or <code>NOW()</code>, accepts no arguments and returns the current datetime as string value with the format 'YYYY-MM-DDThh:mm:ss.sss±hh:mm'.</p>
+<p>The function with syntax <code>CURRENT_DATE_TIME()</code>, or <code>NOW()</code>, accepts no arguments and returns the current datetime as String value with the format 'YYYY-MM-DDThh:mm:ss.sss±hh:mm'.</p>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_current_timezone"><a class="anchor" href="#_current_timezone"></a>3.9.4.4. CURRENT_TIMEZONE</h5>
 <div class="paragraph">
-<p>The function with syntax <code>CURRENT_TIMEZONE()</code> accepts no arguments and returns the current timezone as string value with the format '±hh:mm'.</p>
+<p>The function with syntax <code>CURRENT_TIMEZONE()</code> accepts no arguments and returns the current timezone as String value with the format '±hh:mm'.</p>
 </div>
 </div>
 </div>
@@ -1887,7 +1932,7 @@ Some examples of typical values for <code>service_api</code> are:</p>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ots.oceanhealthsystems.com</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Ocean Ontology Service</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ocean Terminology Service</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">bts.better.care</p></td>
@@ -1986,7 +2031,7 @@ Some examples of typical URI parameters are:</p>
 <div class="sect2">
 <h3 id="_expressions"><a class="anchor" href="#_expressions"></a>3.10. Expressions</h3>
 <div class="paragraph">
-<p>AQL expressions provide a formal way of evaluating, transforming or comparing values. An expression is a combination of one or more <a href="#_constants">constants</a>, <a href="#_operators">operators</a>, <a href="#_variables">variables</a>, <a href="#_predicates">predicates</a>, <a href="#_parameters">parameters</a> and <a href="#_functions">functions</a> that evaluates to a value.</p>
+<p>AQL expressions provide a formal way of evaluating, transforming or comparing values. An expression is a combination of one or more <a href="#_literals">literals</a>, <a href="#_operators">operators</a>, <a href="#_variables">variables</a>, <a href="#_predicates">predicates</a>, <a href="#_parameters">parameters</a> or <a href="#_functions">functions</a> that evaluates to a value.</p>
 </div>
 <div class="sect3">
 <h4 id="_class_expressions"><a class="anchor" href="#_class_expressions"></a>3.10.1. Class expressions</h4>
@@ -2060,17 +2105,17 @@ COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]</pre>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><em>left operand</em>: an <a href="#_identified_paths">identified path</a> or a <a href="#_functions">function</a> having an identified path as an argument;</p>
+<p><em>left-hand operand</em>: an <a href="#_identified_paths">identified path</a> or a <a href="#_functions">function</a> having an identified path as an argument;</p>
 </li>
 <li>
 <p><em>operator</em>: a <a href="#_comparison_operators">comparison operator</a>;</p>
 </li>
 <li>
-<p><em>right operand</em>: one of:</p>
+<p><em>right-hand operand</em>: one of:</p>
 <div class="ulist">
 <ul>
 <li>
-<p>a value criterion, normally of a <a href="#_constants">constant</a> or a <a href="#_functions">function</a>; OR</p>
+<p>a value criterion, normally of a <a href="#_literals">literal</a> or a <a href="#_functions">function</a>; OR</p>
 </li>
 <li>
 <p>a replaceable <a href="#_parameters">parameter</a> (identified with the <code>'$'</code> symbol); OR</p>
@@ -2092,7 +2137,7 @@ COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]</pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Left-hand operand is an identified path; right-hand operand is a primitive value:</p>
+<p>The left-hand operand is an identified path; the right-hand operand is a primitive value:</p>
 <div class="listingblock">
 <div class="content">
 <pre>o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value &gt;= 140
@@ -2102,7 +2147,7 @@ c/archetype_details/template_id/value = 'health_encounter'</pre>
 </div>
 </li>
 <li>
-<p>Left-hand operand is an identified path and right-hand operand is a parameter:</p>
+<p>The left-hand operand is an identified path and right-hand operand is a parameter:</p>
 <div class="listingblock">
 <div class="content">
 <pre>c/archetype_details/template_id/value = $templateParameter</pre>
@@ -2110,7 +2155,7 @@ c/archetype_details/template_id/value = 'health_encounter'</pre>
 </div>
 </li>
 <li>
-<p>Left-hand operand is an identified path; right-hand operand is a pattern:</p>
+<p>The left-hand operand is an identified path; the right-hand operand is a pattern:</p>
 <div class="listingblock">
 <div class="content">
 <pre>c/archetype_details/template_id/value LIKE '*encounter*'</pre>
@@ -2131,9 +2176,15 @@ o1/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_constants"><a class="anchor" href="#_constants"></a>3.11. Constants</h3>
+<h3 id="_literals"><a class="anchor" href="#_literals"></a>3.11. Literals</h3>
 <div class="paragraph">
-<p>A <em>constant</em>, often referred as <em>literal value</em>, is a fixed value that is supplied directly in the AQL statement, not derived from an <a href="#_identified_paths">identified path</a>, a <a href="#_variables">variable</a>, or a <a href="#_name_alias">column alias name</a>. This value can be any of the AQL built-in types, where strings, dates, times and datetimes should be quoted, while numbers and booleans are not quoted.</p>
+<p>A <em>literal value</em>, sometimes known as <em>constant</em> in certain SQL implementations, is a fixed value that is supplied directly in the AQL statement, not derived from an <a href="#_identified_paths">identified path</a>, a <a href="#_variables">variable</a>, or a <a href="#_name_alias">column alias name</a>. It can be used in the <code>SELECT</code> clause as a column expression, or in <code>WHERE</code> class as part of an identified expression.</p>
+</div>
+<div class="paragraph">
+<p>The type of a literal value can be any of the AQL <a href="#_built_in_types">built-in types</a>, where strings, dates, times and datetimes should be quoted, while numbers and booleans are not quoted.</p>
+</div>
+<div class="paragraph">
+<p>Another supported literal value is the <code>NULL</code> keyword, indicating that the data item is either missing or is unknown.</p>
 </div>
 </div>
 <div class="sect2">
@@ -2266,7 +2317,7 @@ Model and should follow the dual-model approach.
 </div>
 <div class="paragraph">
 <p>Then, the expressions in the <code>WHERE</code> clause will filter data, but only from the subset
-defined by the <code>FROM</code> clause. And in the <code>SELECT</code> clause, a final projection is applied,
+defined by the <code>FROM</code> clause. In the <code>SELECT</code> clause, a final projection is applied,
 selecting only the matched data that should be retrieved in the query result. In addition
 to the filtering done in the <code>WHERE</code> clause, the <a href="#_class_expressions">class expressions</a> could hold predicates
 that also allow filtering data.</p>
@@ -2333,7 +2384,7 @@ that also allow filtering data.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Logical operator <code>NOT</code> can be used in combination with <code>CONTAINS</code> to express an exclusion constraint, i.e. the missing of a hierarchical relationships between the parent and child data items operands, e.g.</p>
+<p>The logical operator <code>NOT</code> can be used in combination with <code>CONTAINS</code> to express an exclusion constraint,  i.e. the absence of any containment relationship between a parent and potential child items. The following example matches referral COMPOSITIONs that do not contain laboratory test result OBSERVATIONs:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2372,17 +2423,17 @@ that also allow filtering data.</p>
 <div class="sect3">
 <h4 id="_select"><a class="anchor" href="#_select"></a>3.13.4. SELECT</h4>
 <div class="paragraph">
-<p>A <code>SELECT</code> clause specifies what data is to be retrieved by the AQL query. The data can be any types from openEHR RM and any primitive data types.</p>
+<p>A <code>SELECT</code> clause specifies what data is to be retrieved by the AQL query. The data can be any types from RM or any built-in data types (see <a href="#_built_in_types">Section 3.12</a>).</p>
 </div>
 <div class="sect4">
 <h5 id="_select_syntax"><a class="anchor" href="#_select_syntax"></a>3.13.4.1. Syntax</h5>
 <div class="paragraph">
-<p>The syntax always starts with the keyword <code>SELECT</code>, optionally followed by <code>TOP</code> (deprecated - see <a href="#_top">below</a>), followed by one or more <em>column expressions</em>.</p>
+<p>The syntax always starts with the keyword <code>SELECT</code>, optionally followed by <code>DISTINCT</code>, optionally followed by <code>TOP</code> (deprecated - see <a href="#_top">below</a>), followed by one or more <em>column expressions</em>.</p>
 </div>
 <div class="paragraph">
-<p>A column expression is formed by an <a href="#_identified_paths">identified path</a>, a <a href="#_functions">function</a>, a <a href="#_constants">constant</a> value or plain <a href="#_variables">variable</a> name defined in the <code>FROM</code> clause.
+<p>A column expression is formed by an <a href="#_identified_paths">identified path</a>, a <a href="#_functions">function</a>, a <a href="#_literals">literal</a> value or plain <a href="#_variables">variable</a> name defined in the <code>FROM</code> clause.
 Where a variable name is specified, the full object of the type associated with the variable is retrieved, such as a <code>COMPOSITION</code>, <code>OBSERVATION</code> etc.
-Where a function is specified, the call has to be done using the specified arguments and the results are returned.
+Where a function is specified, the call has to be done using the specified arguments, and the results are returned.
 Where an identified path is specified, the data item(s) having that archetype path are returned.</p>
 </div>
 <div class="paragraph">
@@ -2411,7 +2462,7 @@ FROM EHR e[ehr_id/value=$ehrUid]
 </div>
 </div>
 <div class="listingblock">
-<div class="title">Example 3: Use of constants and function as column expressions.</div>
+<div class="title">Example 3: Use of literals and function as column expressions.</div>
 <div class="content">
 <pre>SELECT
     true AS dangerousBP, "alert" as indication, count(*) as counter
@@ -2426,7 +2477,28 @@ WHERE
 </div>
 </div>
 <div class="sect4">
-<h5 id="_top"><a class="anchor" href="#_top"></a>3.13.4.2. TOP</h5>
+<h5 id="_distinct"><a class="anchor" href="#_distinct"></a>3.13.4.2. DISTINCT</h5>
+<div class="paragraph">
+<p>The <code>DISTINCT</code> modifier specify whether duplicate rows should be filtered out from result set.</p>
+</div>
+<div class="paragraph">
+<p>By default, an AQL query returns all data items selected by the <code>FROM</code> and <code>WHERE</code> clauses as rows in the result set. A row is considered to be duplicated in the result set if there is at least one other row with the same value for each corresponding column expression. <code>DISTINCT</code> specifies removal of all such duplicate rows from the result set.</p>
+</div>
+<div class="paragraph">
+<p>Below is an example using <code>DISTINCT</code> modifier to filter out duplicate rows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>SELECT DISTINCT
+   c/name/value AS Name, c/composer/name AS Composer
+FROM
+   EHR e[ehr_id/value=$ehrUid]
+      CONTAINS COMPOSITION c</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_top"><a class="anchor" href="#_top"></a>3.13.4.3. TOP</h5>
 <div class="paragraph deprecated">
 <p><strong>Deprecated</strong>: Starting with Release 1.1.0, the use of <code>TOP</code> modifier is deprecated in favour of the <code>LIMIT</code> clause combined with <code>ORDER BY</code> (see <a href="#_limit">below</a>).
 The <code>TOP</code> will be removed in a future major release of AQL specification.
@@ -2449,7 +2521,7 @@ FROM
 </div>
 </div>
 <div class="sect4">
-<h5 id="_name_alias"><a class="anchor" href="#_name_alias"></a>3.13.4.3. Name alias</h5>
+<h5 id="_name_alias"><a class="anchor" href="#_name_alias"></a>3.13.4.4. Name alias</h5>
 <div class="paragraph">
 <p>As in SQL, <code>AQL</code> supports the use of a name alias for the retrieved data. This is done with the keyword <code>AS</code>, followed by the name which conforms to the syntax rule of AQL variable.</p>
 </div>
@@ -2484,7 +2556,7 @@ A sorting expression consists of an identified path, optionally followed by one 
 </div>
 </div>
 <div class="paragraph">
-<p>Sorting rows assumes that data identified by path (from the sorting expression) are comparable. It implies the use of a specific operators like <em>equal</em>, <em>less-than</em> and <em>greater-than</em> (all available to primitives and <code>Ordered</code> types) on data identified by path.</p>
+<p>Sorting rows assumes that data identified by the path (from the sorting expression) are comparable. It implies the use of a specific operators like <em>equal</em>, <em>less-than</em> and <em>greater-than</em> (all available to primitives and <code>Ordered</code> types) on data identified by path.</p>
 </div>
 <div class="paragraph">
 <p>When sorting type is not specified, <code>ASC</code> (ascending) is assumed by default.</p>
@@ -2497,7 +2569,7 @@ A sorting expression consists of an identified path, optionally followed by one 
 <div class="sect3">
 <h4 id="_limit"><a class="anchor" href="#_limit"></a>3.13.6. LIMIT</h4>
 <div class="paragraph">
-<p>The <code>LIMIT</code> clause is used to constrain the result sets generated by the rest of the query.
+<p>The <code>LIMIT</code> clause is used to constrain the result set generated by the rest of the query.
 It is often used together with an <code>OFFSET</code> subclause.</p>
 </div>
 <div class="paragraph">
@@ -2518,6 +2590,9 @@ It is not allowed to use <code>LIMIT</code> while also using <code>TOP</code> cl
 </tr>
 </table>
 </div>
+<div class="paragraph">
+<p>Where <code>DISTINCT</code> modifier is used (see <a href="#_distinct">Section 3.13.4.2</a>), the <code>LIMIT</code> and <code>OFFSET</code> applies to remaining rows, after duplicates were filtered out from result set.</p>
+</div>
 <div class="sect4">
 <h5 id="_limit_syntax"><a class="anchor" href="#_limit_syntax"></a>3.13.6.1. Syntax</h5>
 <div class="paragraph">
@@ -2537,13 +2612,10 @@ It consists of two parts: keyword <code>LIMIT</code> followed by number, optiona
 The <code>OFFSET offset</code> is optional, and when not specified then <code>offset</code> = 0 is assumed.</p>
 </div>
 <div class="paragraph">
-<p>The <code>LIMIT row_count OFFSET offset</code> is used to get results in a paginated way. For instance,
-when <code>offset</code> = 0 and <code>row_count</code> = 10, the result will have at most 10 items, starting with item 0. Then with <code>offset</code> = 10 and
-<code>row_count</code> = 10, the result will contain 10 items at most, now from item 10 to 19. So increasing <code>offset</code> by <code>row_count</code>,
-allows to get all the results in a paginated way.</p>
+<p>The <code>LIMIT row_count OFFSET offset</code> is used to get results in a paginated way. For instance, when <code>offset</code> = 0 and <code>row_count</code> = 10, the result will have at most 10 rows, starting with first row. The offset of the first row is 0 (not 1). Then with <code>offset</code> = 10 and <code>row_count</code> = 10, the result will contain next 10 rows at most (i.e. rows 11-20 respectively). So increasing <code>offset</code> by <code>row_count</code>, allows to get all the results in a paginated way.</p>
 </div>
 <div class="paragraph">
-<p>The following example will return 10 rows, representing the 2nd page of result sets, ordered by event start time:</p>
+<p>The following example will return 10 rows, representing the second page of result set, ordered by event start time:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2565,7 +2637,7 @@ LIMIT 10 OFFSET 10</pre>
 <h2 id="_result_structure"><a class="anchor" href="#_result_structure"></a>4. Result structure</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The result structure of an AQL query in its raw form is a 2-dimensional table, conceptually similar to the tabular projection generated by a SQL query. Formally, it may be thought of as having the type <code>Array&lt;Array&lt;Any&gt;&gt;</code>, where <code>Any</code> is understood as the superclass of all object types, including primitive and constructed types.</p>
+<p>The result structure of an AQL query in its raw form is a 2-dimensional table, conceptually similar to the tabular projection generated by an SQL query. Formally, it may be thought of as having the type <code>Array&lt;Array&lt;Any&gt;&gt;</code>, where <code>Any</code> is understood as the superclass of all object types, including primitive and build-in types, or the <code>NULL</code> value in the case where the data item is missing or unknown.</p>
 </div>
 <div class="paragraph">
 <p>In practical use, AQL queries will normally be executed through a library or service API, which is likely to provide an 'annotated' result structure, i.e. a data structure that includes meta-data such as column descriptors, thus enabling efficient result processing. Such annotated results are not formally defined by this specification, and are considered an artefact of the relevant API or service definition.</p>

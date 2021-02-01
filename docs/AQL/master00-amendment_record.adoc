@@ -9,10 +9,31 @@
 |[[latest_issue]]1.1.0
 |{spec_tickets}/SPECQUERY-8[SPECQUERY-8^] Correct numerous minor typographical and formatting errors. Improve the wording and readability.
 |S Iancu
-|[[latest_issue_date]]12 Dec 2020
+|[[latest_issue_date]]01 Feb 2021
 
 |
-|{spec_tickets}/SPECQUERY-3[SPECQUERY-3^] Add support for constants (fixed values) in column expression.
+|{spec_tickets}/SPECQUERY-33[SPECQUERY-33^] Add support for `NULL`.
+|S Iancu
+|01 Feb 2021
+
+|
+|{spec_tickets}/SPECQUERY-1[SPECQUERY-1^] Allow name attribute term codes to be used in node predicate ({spec_tickets}/SPECPR-129[SPECPR-129^]).
+|C Ma, +
+ S Iancu
+|01 Feb 2021
+
+|
+|{spec_tickets}/SPECQUERY-27[SPECQUERY-27^] Add support for `DISTINCT`.
+|S Iancu
+|10 Jan 2021
+
+|
+|{spec_tickets}/SPECQUERY-28[SPECQUERY-28^] Add support for built-in functions.
+|S Iancu
+|10 Jan 2021
+
+|
+|{spec_tickets}/SPECQUERY-3[SPECQUERY-3^] Add support for literals (fixed values) in column expression.
 |D Bosca, +
  S Iancu
 |12 Dec 2020
