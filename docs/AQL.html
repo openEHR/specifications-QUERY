@@ -306,6 +306,13 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://specifications.openehr.org/tickets/SPECQUERY-1" target="_blank" rel="noopener">SPECQUERY-1</a> Allow name attribute term codes to be used in node predicate (<a href="https://specifications.openehr.org/tickets/SPECPR-129" target="_blank" rel="noopener">SPECPR-129</a>).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">C Ma,<br>
+ S Iancu</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">01 Feb 2021</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://specifications.openehr.org/tickets/SPECQUERY-27" target="_blank" rel="noopener">SPECQUERY-27</a> Add support for <code>DISTINCT</code>.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">S Iancu</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">10 Jan 2021</p></td>
@@ -1095,7 +1102,25 @@ WHERE
 </div>
 </li>
 <li>
-<p>The above three forms are the most common node predicates. A more advanced form is to include a general criterion instead of the <code>name/value</code> criterion within the predicate. The general criterion consists of left-hand operand, operator, and right-hand operand, e.g.:</p>
+<p>Containing an <code>archetype_node_id</code> and a shortcut of a <code>name</code> term code criterion (the <code>name</code> attribute is coded text rather than free text), e.g.:</p>
+<div class="listingblock">
+<div class="content">
+<pre>[at0002, at0003]
+[at0002, snomed_ct::313267000]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The corresponding standard predicates would be:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>[archetype_node_id=at0002 and name/defining_code/code_string='at0003' and name/defining_code/terminology_id/value='local']
+[archetype_node_id=at0002 and name/defining_code/code_string='313267000' and name/defining_code/terminology_id/value='snomed_ct']</pre>
+</div>
+</div>
+</li>
+<li>
+<p>The above four forms are the most common node predicates. A more advanced form is to include a general criterion instead of the <code>name/value</code> criterion within the predicate. The general criterion consists of left-hand operand, operator, and right-hand operand, e.g.:</p>
 <div class="listingblock">
 <div class="content">
 <pre>[at0002 and value/defining_code/terminology_id/value=$terminologyId]</pre>
