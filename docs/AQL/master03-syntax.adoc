@@ -21,7 +21,7 @@ Keywords in AQL are not case-sensitive, so `SELECT`, `Select`, `select`, `SeLeCt
 * `DISTINCT`
 * operators: `AND`, `OR`, `NOT`, `LIKE`, `matches`, `exists`, `<`, `>`, `=`, `!`
 * functions: `COUNT`, `MIN`, `MAX`, `SUM`, `AVG`, `LENGTH`, `CONTAINS`, `POSITION`, `SUBSTRING`, `CONCAT`, `CONCAT_WS`, `ABS`, `MOD`, `CEIL`, `FLOOR`, `ROUND`, `CURRENT_DATE`, `CURRENT_TIME`, `CURRENT_DATE_TIME`, `NOW`, `CURRENT_TIMEZONE`, `TERMINOLOGY`
-* literals: `true`, `false`
+* literals: `true`, `false`, `NULL`
 * `"` and `'`: double and single quote characters are used to delimit string values
 * `|`: bar characters are used to delimit intervals
 * `[]`: brackets are used to delimit coded terms or predicate expressions
@@ -839,7 +839,11 @@ o1/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value
 
 == Literals
 
-A _literal value_, sometimes known as _constants_ in certain SQL implementations, is a fixed value that is supplied directly in the AQL statement, not derived from an <<_identified_paths, identified path>>, a <<_variables, variable>>, or a <<_name_alias, column alias name>>. This value can be any of the AQL built-in types, where strings, dates, times and datetimes should be quoted, while numbers and booleans are not quoted.
+A _literal value_, sometimes known as _constant_ in certain SQL implementations, is a fixed value that is supplied directly in the AQL statement, not derived from an <<_identified_paths, identified path>>, a <<_variables, variable>>, or a <<_name_alias, column alias name>>. It can be used in the `SELECT` clause as a column expression, or in `WHERE` class as part of an identified expression.
+
+The type of a literal value can be any of the AQL <<_built_in_types, built-in types>>, where strings, dates, times and datetimes should be quoted, while numbers and booleans are not quoted.
+
+Another supported literal value is the `NULL` keyword, indicating that the data item is either missing or is unknown.
 
 == Built-in Types
 

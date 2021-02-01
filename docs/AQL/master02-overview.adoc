@@ -50,7 +50,7 @@ FROM                                                         -- From clause
 WHERE                                                        -- Where clause
    o/data[at0001]/.../items[at0004]/value/value >= 140 OR    -- value comparison
    o/data[at0001]/.../items[at0005]/value/value >= 90
-ORDER BY                                                     -- order by date time, latest first
+ORDER BY                                                     -- order by datetime, latest first
    c/context/start_time DESC
 ----
 

@@ -9,7 +9,12 @@
 |[[latest_issue]]1.1.0
 |{spec_tickets}/SPECQUERY-8[SPECQUERY-8^] Correct numerous minor typographical and formatting errors. Improve the wording and readability.
 |S Iancu
-|[[latest_issue_date]]10 Jan 2021
+|[[latest_issue_date]]01 Feb 2021
+
+|
+|{spec_tickets}/SPECQUERY-33[SPECQUERY-33^] Add support for `NULL`.
+|S Iancu
+|01 Feb 2021
 
 |
 |{spec_tickets}/SPECQUERY-27[SPECQUERY-27^] Add support for `DISTINCT`.
