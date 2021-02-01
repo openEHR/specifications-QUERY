@@ -196,7 +196,6 @@ The corresponding standard predicate would be:
 [archetype_node_id=at0002]
 --------
 
-
 * Containing an `archetype_node_id` and a `name/value` criterion, e.g.:
 +
 --------
@@ -225,7 +224,21 @@ The corresponding standard predicates would be:
 [archetype_node_id=at0002 and name/value='real name value']
 --------
 
-* The above three forms are the most common node predicates. A more advanced form is to include a general criterion instead of the `name/value` criterion within the predicate. The general criterion consists of left-hand operand, operator, and right-hand operand, e.g.:
+* Containing an `archetype_node_id` and a shortcut of a `name` term code criterion (the `name` attribute is coded text rather than free text), e.g.:
++
+--------
+[at0002, at0003]
+[at0002, snomed_ct::313267000]
+--------
++
+The corresponding standard predicates would be:
++
+--------
+[archetype_node_id=at0002 and name/defining_code/code_string='at0003' and name/defining_code/terminology_id/value='local']
+[archetype_node_id=at0002 and name/defining_code/code_string='313267000' and name/defining_code/terminology_id/value='snomed_ct']
+--------
+
+* The above four forms are the most common node predicates. A more advanced form is to include a general criterion instead of the `name/value` criterion within the predicate. The general criterion consists of left-hand operand, operator, and right-hand operand, e.g.:
 +
 --------
 [at0002 and value/defining_code/terminology_id/value=$terminologyId]

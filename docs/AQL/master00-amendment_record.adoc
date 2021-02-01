@@ -17,6 +17,12 @@
 |01 Feb 2021
 
 |
+|{spec_tickets}/SPECQUERY-1[SPECQUERY-1^] Allow name attribute term codes to be used in node predicate ({spec_tickets}/SPECPR-129[SPECPR-129^]).
+|C Ma, +
+ S Iancu
+|01 Feb 2021
+
+|
 |{spec_tickets}/SPECQUERY-27[SPECQUERY-27^] Add support for `DISTINCT`.
 |S Iancu
 |10 Jan 2021
