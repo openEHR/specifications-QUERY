@@ -489,7 +489,7 @@ NOTE: The followings are a set of core built-in functions defined by AQL specifi
 
 Aggregate functions calculate a single result value from a set of _input values_, allowing the query to return summarized information about a data item or a result set.
 Input values are selected by an _expression_ in a form of an <<_identified_paths, identified path>> applied to data items filtered by `FROM` and `WHERE` clauses.
-Unless specified otherwise, these functions ignore `NULL` values.
+Unless specified otherwise, these functions ignore `NULL` input values.
 
 The table below shows the built-in AQL aggregate functions:
 
@@ -519,8 +519,8 @@ FROM
 
 The `COUNT` function returns the number of values of given _expression_ argument. The syntax is `COUNT([DISTINCT] expression|*)`.
 
-The `COUNT(*)` is used to calculate the number of rows of the result set, whether or not they contain only `NULL` values.
 The `DISTINCT` keyword can be used to calculate the number of only distinct values of _expression_.
+The `COUNT(*)` is used to calculate the number of all rows of the result set, including duplicates and `NULL` values.
 
 If there are no matching rows, then this function returns `0`.
 Input values type can be anything, while the return type is always an Integer.
@@ -810,7 +810,7 @@ The second is a binary operator expression, formed as follows:
 
 The following examples illustrate the binary form.
 
-* Left-hand operand is an identified path; right-hand operand is a primitive value:
+* The left-hand operand is an identified path; the right-hand operand is a primitive value:
 +
 --------
 o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value >= 140
@@ -818,13 +818,13 @@ o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value >= 140
 c/archetype_details/template_id/value = 'health_encounter'
 --------
 
-* Left-hand operand is an identified path and right-hand operand is a parameter:
+* The left-hand operand is an identified path and right-hand operand is a parameter:
 +
 --------
 c/archetype_details/template_id/value = $templateParameter
 --------
 
-* Left-hand operand is an identified path; right-hand operand is a pattern:
+* The left-hand operand is an identified path; the right-hand operand is a pattern:
 +
 --------
 c/archetype_details/template_id/value LIKE '*encounter*'
