@@ -24,7 +24,7 @@ selectQuery
     ;
 
 selectClause
-    : SELECT top? selectExpr (SYM_COMMA selectExpr)*
+    : SELECT DISTINCT? top? selectExpr (SYM_COMMA selectExpr)*
     ;
 
 fromClause
