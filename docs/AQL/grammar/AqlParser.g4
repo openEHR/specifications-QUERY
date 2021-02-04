@@ -4,15 +4,15 @@
 //                Teun van Hemert, Nedap, Netherlands
 //                Thomas Beale, Ars Semantica UK, openEHR Foundation Management Board
 //  contributors: This version of the grammar is a complete rewrite of previously published antlr3 grammar,
-//                based on current AQL specifications in combination with other grammars from several AQL implementations.
+//                based on current AQL specifications in combination with grammars of AQL implementations.
 //                The openEHR Foundation would like to recognise the following people for their contributions:
-//                  - Chunlan Ma & Heath Frankel, Ocen Health Systems, Australia
+//                  - Chunlan Ma & Heath Frankel, Ocean Health Systems, Australia
 //                  - Bostjan Lah, Better, Slovenia
 //                  - Christian Chevalley, EHRBase, Germany
 //                  - Michael Böckers, Nedap, Netherlands
 //  support:      openEHR Specifications PR tracker <https://specifications.openehr.org/releases/QUERY/open_issues>
-//  copyright:    Copyright (c) 2020 openEHR Foundation
-//  license:      Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>
+//  copyright:    Copyright (c) 2021- openEHR Foundation
+//  license:      Creative Commons CC-BY-SA <https://creativecommons.org/licenses/by-sa/3.0/>
 //
 
 parser grammar AqlParser;

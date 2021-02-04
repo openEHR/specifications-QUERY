@@ -4,15 +4,15 @@
 //                Teun van Hemert, Nedap, Netherlands
 //                Thomas Beale, Ars Semantica UK, openEHR Foundation Management Board
 //  contributors: This version of the grammar is a complete rewrite of previously published antlr3 grammar,
-//                based on current AQL specifications in combination with other grammars from several AQL implementations.
+//                based on current AQL specifications in combination with grammars of AQL implementations.
 //                The openEHR Foundation would like to recognise the following people for their contributions:
-//                  - Chunlan Ma & Heath Frankel, Ocen Health Systems, Australia
+//                  - Chunlan Ma & Heath Frankel, Ocean Health Systems, Australia
 //                  - Bostjan Lah, Better, Slovenia
 //                  - Christian Chevalley, EHRBase, Germany
 //                  - Michael Böckers, Nedap, Netherlands
 //  support:      openEHR Specifications PR tracker <https://specifications.openehr.org/releases/QUERY/open_issues>
-//  copyright:    Copyright (c) 2020 openEHR Foundation
-//  license:      Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0.html>
+//  copyright:    Copyright (c) 2021- openEHR Foundation
+//  license:      Creative Commons CC-BY-SA <https://creativecommons.org/licenses/by-sa/3.0/>
 //
 
 lexer grammar AqlLexer;
@@ -105,12 +105,12 @@ AVG: A V G ;
 // other functions
 TERMINOLOGY: T E R M I N O L O G Y ;
 
-//
+// other, identifiers
 PARAMETER: '$' IDENTIFIER_CHAR;
 IDENTIFIER: IDENTIFIER_CHAR;
 NATURAL_NUMBER: [1-9] DIGIT*;
 WHOLE_NUMBER: DIGIT+;
-//! restricted to allow only letters after the 4th character due to conflict with extended NodeId
+//Notes: restricted to allow only letters after the 4th character due to conflict with extended NodeId
 //Identifier = {Letter}{IdChar}*   ! Conflicts with extended NodeId
 //Identifier = {Letter}{IdChar}?{IdChar}?{IdChar}?({Letter}|'_')*  !Conficts with NodeId which may have any length of digit, such as at0.9
 //Identifier = {LetterMinusA}{IdCharMinusT}?{IdChar}* | 'a''t'?(({letter}|'_')*|{LetterMinusT}{Alphanumeric}*)
@@ -122,12 +122,9 @@ ATTRIBUTE_ID
 
 
 
-
-
-
 //
 //  ======================= Lexical rules ========================
-//  The followings are copies of BaseLexer rules, with some slight modifications
+//  The followings are copies of https://github.com/openEHR/adl-antlr/blob/master/src/main/antlr/adl2/base_lexer.g4 rules, with some modifications required by AQL
 //
 
 // ---------- various ADL2 codes -------
@@ -301,6 +298,7 @@ SYM_SLASH: '/';
 SYM_ASTERISK: '*';
 SYM_PLUS: '+';
 SYM_MINUS: '-';
+
 SYM_LEFT_BRACKET: '[';
 SYM_RIGHT_BRACKET: ']';
 SYM_LEFT_CURLY: '{';
