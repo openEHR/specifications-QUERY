@@ -75,11 +75,34 @@ LIKE: L I K E ;
 MATCHES: M A T C H E S ;
 
 // functions
+STRING_FUNCTION_ID: LENGTH | CONTAINS | POSITION | SUBSTRING | CONCAT_WS | CONCAT ;
+NUMERIC_FUNCTION_ID: ABS | MOD | CEIL | FLOOR | ROUND ;
+DATE_TIME_FUNCTION_ID: NOW | CURRENT_DATE_TIME | CURRENT_DATE | CURRENT_TIMEZONE | CURRENT_TIME ;
+// string functions
+LENGTH: L E N G T H ;
+POSITION: P O S I T I O N ;
+SUBSTRING: S U B S T R I N G ;
+CONCAT: C O N C A T ;
+CONCAT_WS: C O N C A T '_' W S ;
+// numeric functions
+ABS: A B S ;
+MOD: M O D ;
+CEIL: C E I L ;
+FLOOR: F L O O R ;
+ROUND: R O U N D ;
+// date and time functions
+CURRENT_DATE: C U R R E N T '_' D A T E ;
+CURRENT_TIME: C U R R E N T '_' T I M E ;
+CURRENT_DATE_TIME: C U R R E N T '_' D A T E '_' T I M E ;
+NOW: N O W ;
+CURRENT_TIMEZONE: C U R R E N T '_' T I M E Z O N E ;
+// aggregate function
 COUNT: C O U N T ;
 MIN: M I N ;
 MAX: M A X ;
 SUM: S U M ;
 AVG: A V G ;
+// other functions
 TERMINOLOGY: T E R M I N O L O G Y ;
 
 //
