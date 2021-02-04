@@ -81,19 +81,15 @@ AVG: A V G ;
 TERMINOLOGY: T E R M I N O L O G Y ;
 
 //
-PARAMETER: '$' ALPHA_CHAR WORD_CHAR*;
-VARIABLE_ID: IDENTIFIER;
-TYPE_ID: IDENTIFIER;
-ALIAS_ID: IDENTIFIER;
-FUNCTION_ID: IDENTIFIER;
-ATTRIBUTE_ID: S_IDENTIFIER;
+PARAMETER: '$' IDENTIFIER_CHAR;
+IDENTIFIER: IDENTIFIER_CHAR;
 NATURAL_NUMBER: [1-9] DIGIT*;
 WHOLE_NUMBER: DIGIT+;
 //! restricted to allow only letters after the 4th character due to conflict with extended NodeId
 //Identifier = {Letter}{IdChar}*   ! Conflicts with extended NodeId
 //Identifier = {Letter}{IdChar}?{IdChar}?{IdChar}?({Letter}|'_')*  !Conficts with NodeId which may have any length of digit, such as at0.9
 //Identifier = {LetterMinusA}{IdCharMinusT}?{IdChar}* | 'a''t'?(({letter}|'_')*|{LetterMinusT}{Alphanumeric}*)
-fragment S_IDENTIFIER
+ATTRIBUTE_ID
     : ('at'|'id') (ALPHA_CHAR|'_') WORD_CHAR*
     | ('at'|'id'|'a'|'i')
     | [b-hj-zA-Z] WORD_CHAR*
@@ -155,9 +151,9 @@ SYM_NULL: N U L L ;
 
 ARCHETYPE_HRID      : ARCHETYPE_HRID_ROOT '.v' VERSION_ID ;
 ARCHETYPE_REF       : ARCHETYPE_HRID_ROOT '.v' DIGIT+ ( '.' DIGIT+ )* ;
-fragment ARCHETYPE_HRID_ROOT : (NAMESPACE '::')? IDENTIFIER '-' IDENTIFIER '-' IDENTIFIER '.' ARCHETYPE_CONCEPT_ID ;
+fragment ARCHETYPE_HRID_ROOT : (NAMESPACE '::')? IDENTIFIER_CHAR '-' IDENTIFIER_CHAR '-' IDENTIFIER_CHAR '.' ARCHETYPE_CONCEPT_ID ;
 VERSION_ID          : DIGIT+ '.' DIGIT+ '.' DIGIT+ ( ( '-rc' | '-alpha' ) ( '.' DIGIT+ )? )? ;
-fragment IDENTIFIER : ALPHA_CHAR WORD_CHAR* ;
+fragment IDENTIFIER_CHAR : ALPHA_CHAR WORD_CHAR* ;
 fragment ARCHETYPE_CONCEPT_ID : ALPHA_CHAR NAME_CHAR* ;
 
 // --------------------- composed primitive types -------------------

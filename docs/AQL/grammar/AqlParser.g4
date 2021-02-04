@@ -45,7 +45,7 @@ limitClause
 
 
 selectExpr
-    : columnExpr (AS aliasName=ALIAS_ID)?
+    : columnExpr (AS aliasName=IDENTIFIER)?
     ;
 
 fromExpr
@@ -87,8 +87,8 @@ identifiedExpr
     ;
 
 classExprOperand
-    : TYPE_ID variable=VARIABLE_ID? (SYM_LEFT_BRACKET pathPredicate SYM_RIGHT_BRACKET)?     #classExpression
-    | VERSION variable=VARIABLE_ID? (SYM_LEFT_BRACKET versionPredicate SYM_RIGHT_BRACKET)?  #versionClassExpr
+    : IDENTIFIER variable=IDENTIFIER? (SYM_LEFT_BRACKET pathPredicate SYM_RIGHT_BRACKET)?     #classExpression
+    | VERSION variable=IDENTIFIER? (SYM_LEFT_BRACKET versionPredicate SYM_RIGHT_BRACKET)?  #versionClassExpr
     ;
 
 terminal
@@ -99,7 +99,7 @@ terminal
     ;
 
 identifiedPath
-    : VARIABLE_ID pathPredicate? (SYM_SLASH objectPath)?
+    : IDENTIFIER pathPredicate? (SYM_SLASH objectPath)?
     ;
 
 pathPredicate
@@ -170,7 +170,7 @@ primitive
 
 functionCall
     : terminologyFunction
-    | name=FUNCTION_ID SYM_LEFT_PAREN terminal (SYM_COMMA terminal)* SYM_RIGHT_PAREN
+    | name=IDENTIFIER SYM_LEFT_PAREN terminal (SYM_COMMA terminal)* SYM_RIGHT_PAREN
     ;
 
 aggregateFunctionCall
