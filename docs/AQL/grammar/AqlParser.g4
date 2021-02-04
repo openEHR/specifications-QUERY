@@ -87,10 +87,8 @@ identifiedExpr
     ;
 
 classExprOperand
-    : TYPE_ID variable=VARIABLE_ID? (SYM_LEFT_BRACKET archetypePredicate SYM_RIGHT_BRACKET)?                    #classExpression // RM_TYPE_NAME variable [archetype_id]
-    | VERSIONED_OBJECT variable=VARIABLE_ID? (SYM_LEFT_BRACKET standardPredicate SYM_RIGHT_BRACKET)?            #versionedClassExpr
-    | EHR variable=VARIABLE_ID? (SYM_LEFT_BRACKET standardPredicate SYM_RIGHT_BRACKET)?                         #ehrClassExpr
-    | VERSION variable=VARIABLE_ID? (SYM_LEFT_BRACKET (standardPredicate|versionPredicate) SYM_RIGHT_BRACKET)?  #versionClassExpr
+    : TYPE_ID variable=VARIABLE_ID? (SYM_LEFT_BRACKET pathPredicate SYM_RIGHT_BRACKET)?     #classExpression
+    | VERSION variable=VARIABLE_ID? (SYM_LEFT_BRACKET versionPredicate SYM_RIGHT_BRACKET)?  #versionClassExpr
     ;
 
 terminal
@@ -130,6 +128,7 @@ nodePredicate
 versionPredicate
     : LATEST_VERSION
     | ALL_VERSIONS
+    | standardPredicate
     ;
 
 pathPredicateOperand

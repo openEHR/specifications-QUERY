@@ -49,9 +49,7 @@ LIMIT: L I M I T ;
 OFFSET: O F F S E T ;
 // other keywords
 DISTINCT: D I S T I N C T ;
-EHR : E H R ;
 VERSION : V E R S I O N ;
-VERSIONED_OBJECT : V E R S I O N E D '_' O B J E C T ;
 LATEST_VERSION : L A T E S T '_' V E R S I O N ;
 ALL_VERSIONS : A L L '_' V E R S I O N S ;
 // deprecated
