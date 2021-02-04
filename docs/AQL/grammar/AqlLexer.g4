@@ -159,6 +159,10 @@ fragment ARCHETYPE_CONCEPT_ID : ALPHA_CHAR NAME_CHAR* ;
 
 // --------------------- composed primitive types -------------------
 
+TERM_CODE_REF : '[' TERM_CODE_REF ']' ;  // e.g. [ICD10AM(1998)::F23]; [ISO_639-1::en]
+TERM_CODE : TERM_CODE_CHAR+ ( '(' TERM_CODE_CHAR+ ')' )? '::' TERM_CODE_CHAR+ ;
+fragment TERM_CODE_CHAR: NAME_CHAR | '.';
+
 // URIs - simple recogniser based on https://tools.ietf.org/html/rfc3986 and
 // http://www.w3.org/Addressing/URL/5_URI_BNF.html
 URI : URI_SCHEME ':' URI_HIER_PART ( '?' URI_QUERY )? ('#' URI_FRAGMENT)? ;
