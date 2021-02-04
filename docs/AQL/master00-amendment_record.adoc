@@ -9,7 +9,14 @@
 |[[latest_issue]]1.1.0
 |{spec_tickets}/SPECQUERY-8[SPECQUERY-8^] Correct numerous minor typographical and formatting errors. Improve the wording and readability.
 |S Iancu
-|[[latest_issue_date]]01 Feb 2021
+|[[latest_issue_date]]04 Feb 2021
+
+|
+|{spec_tickets}/SPECQUERY-30[SPECQUERY-30^] Update (rewrite) grammar to ANTLR4 format.
+|S Iancu, +
+ T Beale, +
+ T van Hemert
+|04 Feb 2021
 
 |
 |{spec_tickets}/SPECQUERY-33[SPECQUERY-33^] Add support for `NULL`.
