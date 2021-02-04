@@ -166,6 +166,7 @@ primitive
     | REAL
     | DATE | TIME | DATETIME
     | BOOLEAN
+    | NULL
     ;
 
 functionCall

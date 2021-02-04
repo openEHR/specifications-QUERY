@@ -52,6 +52,8 @@ DISTINCT: D I S T I N C T ;
 VERSION : V E R S I O N ;
 LATEST_VERSION : L A T E S T '_' V E R S I O N ;
 ALL_VERSIONS : A L L '_' V E R S I O N S ;
+NULL: N U L L ;
+
 // deprecated
 TOP: T O P ;
 FORWARD: F O R W A R D ;
@@ -145,7 +147,6 @@ fragment SECOND: [0-5][0-9] ; // seconds
 
 SYM_TRUE: T R U E ;
 SYM_FALSE: F A L S E ;
-SYM_NULL: N U L L ;
 
 // ---------------------- Identifiers ---------------------
 
