@@ -1110,11 +1110,12 @@ WHERE
 </div>
 </li>
 <li>
-<p>Containing an <code>archetype_node_id</code> and a shortcut of a <code>name</code> term code criterion (the <code>name</code> attribute is coded text rather than free text), e.g.:</p>
+<p>Containing an <code>archetype_node_id</code> and a shortcut of a <code>name</code> term code criterion (the <code>name</code> attribute is coded text rather than free text), consisting of a <em>terminology_id</em>, a <em>code_string</em> and an optional (informational) <em>value</em>, formatted as <code>terminology_id::code_string|value|</code>, e.g.:</p>
 <div class="listingblock">
 <div class="content">
 <pre>[at0002, at0003]
-[at0002, snomed_ct::313267000]</pre>
+[at0002, snomed_ct(3.1)::313267000]
+[at0003, icd10AM::F60.1|Schizoid personality disorder|]</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1123,7 +1124,8 @@ WHERE
 <div class="listingblock">
 <div class="content">
 <pre>[archetype_node_id=at0002 and name/defining_code/code_string='at0003' and name/defining_code/terminology_id/value='local']
-[archetype_node_id=at0002 and name/defining_code/code_string='313267000' and name/defining_code/terminology_id/value='snomed_ct']</pre>
+[archetype_node_id=at0002 and name/defining_code/code_string='313267000' and name/defining_code/terminology_id/value='snomed_ct(3.1)']
+[archetype_node_id=at0003 and name/defining_code/code_string='F60.1' and name/defining_code/terminology_id/value='icd10AM']</pre>
 </div>
 </div>
 </li>
@@ -3260,9 +3262,8 @@ LIMIT 5</pre>
 <span class="tok-n">fragment</span> <span class="tok-n">ARCHETYPE_CONCEPT_ID</span> <span class="tok-o">:</span> <span class="tok-n">ALPHA_CHAR</span> <span class="tok-n">NAME_CHAR</span><span class="tok-o">*</span> <span class="tok-o">;</span>
 
 <span class="tok-c1">// --------------------- composed primitive types -------------------</span>
-
-<span class="tok-n">TERM_CODE_REF</span> <span class="tok-o">:</span> <span class="tok-err">&#39;</span><span class="tok-p">[</span><span class="tok-err">&#39;</span> <span class="tok-n">TERM_CODE_REF</span> <span class="tok-err">&#39;</span><span class="tok-p">]</span><span class="tok-err">&#39;</span> <span class="tok-o">;</span>  <span class="tok-c1">// e.g. [ICD10AM(1998)::F23]; [ISO_639-1::en]</span>
-<span class="tok-n">TERM_CODE</span> <span class="tok-o">:</span> <span class="tok-n">TERM_CODE_CHAR</span><span class="tok-o">+</span> <span class="tok-o">(</span> <span class="tok-sc">&#39;(&#39;</span> <span class="tok-n">TERM_CODE_CHAR</span><span class="tok-o">+</span> <span class="tok-sc">&#39;)&#39;</span> <span class="tok-o">)?</span> <span class="tok-err">&#39;</span><span class="tok-o">::</span><span class="tok-err">&#39;</span> <span class="tok-n">TERM_CODE_CHAR</span><span class="tok-o">+</span> <span class="tok-o">;</span>
+<span class="tok-c1">// coded term shortcut e.g. &#39;ICD10AM(1998)::F23&#39;, &#39;ISO_639-1::en&#39; or &#39;snomed_ct(3.1)::3415004|cyanosis|&#39;</span>
+<span class="tok-n">TERM_CODE</span> <span class="tok-o">:</span> <span class="tok-n">TERM_CODE_CHAR</span><span class="tok-o">+</span> <span class="tok-o">(</span> <span class="tok-sc">&#39;(&#39;</span> <span class="tok-n">TERM_CODE_CHAR</span><span class="tok-o">+</span> <span class="tok-sc">&#39;)&#39;</span> <span class="tok-o">)?</span> <span class="tok-err">&#39;</span><span class="tok-o">::</span><span class="tok-err">&#39;</span> <span class="tok-n">TERM_CODE_CHAR</span><span class="tok-o">+</span> <span class="tok-o">(</span><span class="tok-sc">&#39;|&#39;</span> <span class="tok-o">~[|[</span><span class="tok-err">\</span><span class="tok-o">]]+</span> <span class="tok-sc">&#39;|&#39;</span><span class="tok-o">)?;</span>
 <span class="tok-n">fragment</span> <span class="tok-n">TERM_CODE_CHAR</span><span class="tok-o">:</span> <span class="tok-n">NAME_CHAR</span> <span class="tok-o">|</span> <span class="tok-sc">&#39;.&#39;</span><span class="tok-o">;</span>
 
 <span class="tok-c1">// URIs - simple recogniser based on https://tools.ietf.org/html/rfc3986 and</span>
