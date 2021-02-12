@@ -178,9 +178,8 @@ fragment IDENTIFIER_CHAR : ALPHA_CHAR WORD_CHAR* ;
 fragment ARCHETYPE_CONCEPT_ID : ALPHA_CHAR NAME_CHAR* ;
 
 // --------------------- composed primitive types -------------------
-
-TERM_CODE_REF : '[' TERM_CODE_REF ']' ;  // e.g. [ICD10AM(1998)::F23]; [ISO_639-1::en]
-TERM_CODE : TERM_CODE_CHAR+ ( '(' TERM_CODE_CHAR+ ')' )? '::' TERM_CODE_CHAR+ ;
+// coded term shortcut e.g. 'ICD10AM(1998)::F23', 'ISO_639-1::en' or 'snomed_ct(3.1)::3415004|cyanosis|'
+TERM_CODE : TERM_CODE_CHAR+ ( '(' TERM_CODE_CHAR+ ')' )? '::' TERM_CODE_CHAR+ ('|' ~[|[\]]+ '|')?;
 fragment TERM_CODE_CHAR: NAME_CHAR | '.';
 
 // URIs - simple recogniser based on https://tools.ietf.org/html/rfc3986 and
