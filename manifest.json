@@ -2,7 +2,7 @@
     "id": "QUERY",
     "title": "Query Languages",
     "description": "Query Languages Component",
-    "keywords": "query languages, openehr",
+    "keywords": "query languages, openehr, AQL",
     "specifications": [
         {
             "id": "AQL",
