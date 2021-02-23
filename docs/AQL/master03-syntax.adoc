@@ -864,11 +864,11 @@ Another supported literal value is the `NULL` keyword, indicating that the data 
 
 === Integer data
 
-Integers are represented as numeric literals, such as `1`, `2`, `365`. Commas or periods for breaking long numbers are not allowed. Hexadecimal representation is not supported.
+Integers are represented as numeric literals, such as `1`, `2`, `365` or `-1`. Commas or periods for breaking long numbers are not allowed. Hexadecimal representation is not supported.
 
 === Real data
 
-Real numbers are the decimal literals that include a decimal point, such as `3.1415926`. Commas or periods for breaking long numbers are not allowed.
+Real numbers are the decimal literals that include a decimal point, such as `3.1415926` or `-1.0`. Commas or periods for breaking long numbers are not allowed.
 
 === Boolean data
 
@@ -876,11 +876,11 @@ Boolean values are indicated using the case-insensitive literals `true` or `fals
 
 === String data
 
-All strings are enclosed in double or single quotes. Line breaks are not supported.
+All string literals are enclosed in double or single quotes, such as `'encounter'` or `"encounter"`. Line breaks are not supported.
 
 === Dates and Times
 
-These types are treated as strings and should comply with the rules for string quoting. The format of the date, time and datetime types should comply with the {iso_8601}[ISO 8601 Date and Time] format specification, which allow the basic or extended formats to be used. In the openEHR specification it is recommended to use the extended format for dates, times and datetimes. Complete or partial values are allowed.
+These types are treated as string literals and should comply with the rules for string quoting. The format of the date, time and datetime types should comply with the {iso_8601}[ISO 8601 Date and Time] format specification, which allow the basic or extended formats to be used. In the openEHR specification it is recommended to use the extended format for dates, times and datetimes. Complete or partial values are allowed.
 
 NOTE: The underlying types of date/time strings are inferred by the AQL processor from the context (metadata associated with the path to which the date/time value is compared with, or by interpretation of the ISO 8601 format), enabling them to be processed as date/time quantities rather than literal strings by AQL engines.
 
