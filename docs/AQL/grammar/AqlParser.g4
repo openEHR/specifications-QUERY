@@ -81,7 +81,7 @@ identifiedExpr
     | identifiedPath COMPARISON_OPERATOR terminal
     | functionCall COMPARISON_OPERATOR terminal
     | identifiedPath LIKE likeOperand
-    | identifiedPath MATCHES SYM_LEFT_CURLY matchesOperand SYM_RIGHT_CURLY
+    | identifiedPath MATCHES matchesOperand
     ;
 
 classExprOperand
@@ -149,10 +149,11 @@ likeOperand
     | PARAMETER
     ;
 matchesOperand
-    : valueListItem (SYM_COMMA valueListItem)*
+    : SYM_LEFT_CURLY valueListItem (SYM_COMMA valueListItem)* SYM_RIGHT_CURLY
     | terminologyFunction
-    | URI
+    | SYM_LEFT_CURLY URI SYM_RIGHT_CURLY
     ;
+
 valueListItem
     : primitive
     | PARAMETER
