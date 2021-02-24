@@ -114,8 +114,8 @@ archetypePredicate
     ;
 
 nodePredicate
-    : (ID_CODE | AT_CODE) (SYM_COMMA (STRING | PARAMETER | TERM_CODE))?
-    | ARCHETYPE_HRID (SYM_COMMA (STRING | PARAMETER | TERM_CODE))?
+    : (ID_CODE | AT_CODE) (SYM_COMMA (STRING | PARAMETER | TERM_CODE | AT_CODE | ID_CODE))?
+    | ARCHETYPE_HRID (SYM_COMMA (STRING | PARAMETER | TERM_CODE | AT_CODE | ID_CODE))?
     | PARAMETER
     | objectPath COMPARISON_OPERATOR pathPredicateOperand
     | objectPath MATCHES CONTAINED_REGEX
@@ -133,6 +133,8 @@ pathPredicateOperand
     : primitive
     | objectPath
     | PARAMETER
+    | ID_CODE
+    | AT_CODE
     ;
 
 objectPath
