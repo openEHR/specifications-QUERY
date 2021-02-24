@@ -52,7 +52,8 @@ fromExpr
     ;
 
 whereExpr
-    : NOT? identifiedExpr
+    : identifiedExpr
+    | NOT whereExpr
     | whereExpr AND whereExpr
     | whereExpr OR whereExpr
     | SYM_LEFT_PAREN whereExpr SYM_RIGHT_PAREN
@@ -82,6 +83,7 @@ identifiedExpr
     | functionCall COMPARISON_OPERATOR terminal
     | identifiedPath LIKE likeOperand
     | identifiedPath MATCHES matchesOperand
+    | SYM_LEFT_PAREN identifiedExpr SYM_RIGHT_PAREN
     ;
 
 classExprOperand
