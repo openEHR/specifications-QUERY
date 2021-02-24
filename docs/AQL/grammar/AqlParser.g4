@@ -43,7 +43,6 @@ limitClause
     : LIMIT limit=NATURAL_NUMBER (OFFSET offset=WHOLE_NUMBER) ?
     ;
 
-
 selectExpr
     : columnExpr (AS aliasName=IDENTIFIER)?
     ;
@@ -62,7 +61,6 @@ whereExpr
 orderByExpr
     : identifiedPath order=(DESCENDING|DESC|ASCENDING|ASC)?
     ;
-
 
 columnExpr
     : identifiedPath
@@ -136,7 +134,6 @@ pathPredicateOperand
     | objectPath
     | PARAMETER
     ;
-
 
 objectPath
     : pathPart (SYM_SLASH pathPart)*
