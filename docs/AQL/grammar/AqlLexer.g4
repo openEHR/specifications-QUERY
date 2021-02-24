@@ -118,7 +118,7 @@ PARAMETER: '$' IDENTIFIER_CHAR;
 
 ID_CODE      : 'id' CODE_STR ;
 AT_CODE      : 'at' CODE_STR ;
-fragment CODE_STR : ('0' | [1-9][0-9]*)* ( '.' ('0' | [1-9][0-9]* ))* ;
+fragment CODE_STR : ('0' | [1-9][0-9]*)+ ( '.' ('0' | [1-9][0-9]* ))* ;
 
 // ---------- Delimited Regex matcher ------------
 
