@@ -105,18 +105,9 @@ TERMINOLOGY: T E R M I N O L O G Y ;
 
 // other, identifiers
 PARAMETER: '$' IDENTIFIER_CHAR;
-IDENTIFIER: IDENTIFIER_CHAR;
 NATURAL_NUMBER: [1-9] DIGIT*;
 WHOLE_NUMBER: DIGIT+;
-//Notes: restricted to allow only letters after the 4th character due to conflict with extended NodeId
-//Identifier = {Letter}{IdChar}*   ! Conflicts with extended NodeId
-//Identifier = {Letter}{IdChar}?{IdChar}?{IdChar}?({Letter}|'_')*  !Conficts with NodeId which may have any length of digit, such as at0.9
-//Identifier = {LetterMinusA}{IdCharMinusT}?{IdChar}* | 'a''t'?(({letter}|'_')*|{LetterMinusT}{Alphanumeric}*)
-ATTRIBUTE_ID
-    : ('at'|'id') (ALPHA_CHAR|'_') WORD_CHAR*
-    | ('at'|'id'|'a'|'i')
-    | [b-hj-zA-Z] WORD_CHAR*
-    ;
+
 
 
 
@@ -129,7 +120,7 @@ ATTRIBUTE_ID
 
 ID_CODE      : 'id' CODE_STR ;
 AT_CODE      : 'at' CODE_STR ;
-fragment CODE_STR : ('0' | [1-9][0-9]*) ( '.' ('0' | [1-9][0-9]* ))* ;
+fragment CODE_STR : ('0' | [1-9][0-9]*)* ( '.' ('0' | [1-9][0-9]* ))* ;
 
 // ---------- Delimited Regex matcher ------------
 
@@ -172,6 +163,7 @@ ARCHETYPE_HRID      : ARCHETYPE_HRID_ROOT '.v' VERSION_ID ;
 ARCHETYPE_REF       : ARCHETYPE_HRID_ROOT '.v' DIGIT+ ( '.' DIGIT+ )* ;
 fragment ARCHETYPE_HRID_ROOT : (NAMESPACE '::')? IDENTIFIER_CHAR '-' IDENTIFIER_CHAR '-' IDENTIFIER_CHAR '.' ARCHETYPE_CONCEPT_ID ;
 VERSION_ID          : DIGIT+ '.' DIGIT+ '.' DIGIT+ ( ( '-rc' | '-alpha' ) ( '.' DIGIT+ )? )? ;
+IDENTIFIER: IDENTIFIER_CHAR;
 fragment IDENTIFIER_CHAR : ALPHA_CHAR WORD_CHAR* ;
 fragment ARCHETYPE_CONCEPT_ID : ALPHA_CHAR NAME_CHAR* ;
 

@@ -139,7 +139,7 @@ objectPath
     : pathPart (SYM_SLASH pathPart)*
     ;
 pathPart
-    : ATTRIBUTE_ID pathPredicate?
+    : IDENTIFIER pathPredicate?
     ;
 
 likeOperand
