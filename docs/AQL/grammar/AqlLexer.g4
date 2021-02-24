@@ -128,15 +128,15 @@ fragment SLASH_REGEX_CHAR: ~[/\n\r] | ESCAPE_SEQ | '\\/';
 
 // ---------- ISO8601 Date/Time values ----------
 
-ISO8601_DATE
+fragment ISO8601_DATE
     : YEAR MONTH DAY
     | YEAR '-' MONTH '-' DAY
     ;
-ISO8601_TIME
+fragment ISO8601_TIME
     : HOUR MINUTE SECOND ('.' MICROSECOND)? TIMEZONE?
     | HOUR ':' MINUTE ':' SECOND ('.' MICROSECOND)? TIMEZONE?
     ;
-ISO8601_DATE_TIME
+fragment ISO8601_DATE_TIME
     : YEAR MONTH DAY ('T' HOUR MINUTE SECOND ('.' MICROSECOND)? TIMEZONE?)?
     | YEAR '-' MONTH '-' DAY ('T' HOUR ':' MINUTE ':' SECOND ('.' MICROSECOND)? TIMEZONE?)?
     ;
