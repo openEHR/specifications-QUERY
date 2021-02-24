@@ -152,8 +152,8 @@ fragment SECOND: [0-5][0-9] ; // seconds
 
 // ------------------- special word symbols --------------
 
-SYM_TRUE: T R U E ;
-SYM_FALSE: F A L S E ;
+fragment SYM_TRUE: T R U E ;
+fragment SYM_FALSE: F A L S E ;
 
 // ---------------------- Identifiers ---------------------
 
