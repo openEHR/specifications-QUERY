@@ -67,8 +67,6 @@ AND : A N D ;
 OR : O R ;
 NOT : N O T ;
 EXISTS: E X I S T S ;
-// Arithmetical operators
-ARITHMETIC_OPERATOR: SYM_ASTERISK | SYM_SLASH | SYM_PLUS | SYM_MINUS ;
 // Comparison operators
 COMPARISON_OPERATOR: SYM_EQ | SYM_NE | SYM_GT | SYM_GE | SYM_LT | SYM_LE ;
 LIKE: L I K E ;
