@@ -40,7 +40,7 @@ orderByClause
     ;
 
 limitClause
-    : LIMIT limit=NATURAL_NUMBER (OFFSET offset=WHOLE_NUMBER) ?
+    : LIMIT limit=INTEGER (OFFSET offset=INTEGER) ?
     ;
 
 selectExpr
@@ -159,11 +159,16 @@ valueListItem
 
 primitive
     : STRING
-    | INTEGER
-    | REAL
+    | numericPrimitive
     | DATE | TIME | DATETIME
     | BOOLEAN
     | NULL
+    ;
+
+numericPrimitive
+    : INTEGER
+    | REAL
+    | SYM_MINUS numericPrimitive
     ;
 
 functionCall
