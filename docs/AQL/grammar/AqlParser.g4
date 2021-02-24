@@ -85,7 +85,7 @@ identifiedExpr
     ;
 
 classExprOperand
-    : IDENTIFIER variable=IDENTIFIER? (SYM_LEFT_BRACKET pathPredicate SYM_RIGHT_BRACKET)?     #classExpression
+    : IDENTIFIER variable=IDENTIFIER? pathPredicate?                                       #classExpression
     | VERSION variable=IDENTIFIER? (SYM_LEFT_BRACKET versionPredicate SYM_RIGHT_BRACKET)?  #versionClassExpr
     ;
 
