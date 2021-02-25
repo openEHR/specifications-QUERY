@@ -173,6 +173,8 @@ primitive
 numericPrimitive
     : INTEGER
     | REAL
+    | SCI_INTEGER
+    | SCI_REAL
     | SYM_MINUS numericPrimitive
     ;
 
