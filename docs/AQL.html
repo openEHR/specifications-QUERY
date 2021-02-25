@@ -2202,13 +2202,13 @@ o1/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value</pre>
 <div class="sect3">
 <h4 id="_integer_data"><a class="anchor" href="#_integer_data"></a>3.12.1. Integer data</h4>
 <div class="paragraph">
-<p>Integers are represented as numeric literals, such as <code>1</code>, <code>2</code>, <code>365</code>. Commas or periods for breaking long numbers are not allowed. Hexadecimal representation is not supported.</p>
+<p>Integers are represented as numeric literals, such as <code>1</code>, <code>2</code>, <code>365</code> or <code>-1</code>. Commas or periods for breaking long numbers are not allowed. Hexadecimal representation is not supported.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_real_data"><a class="anchor" href="#_real_data"></a>3.12.2. Real data</h4>
 <div class="paragraph">
-<p>Real numbers are the decimal literals that include a decimal point, such as <code>3.1415926</code>. Commas or periods for breaking long numbers are not allowed.</p>
+<p>Real numbers are the decimal literals that include a decimal point, such as <code>3.1415926</code> or <code>-1.0</code>. Commas or periods for breaking long numbers are not allowed.</p>
 </div>
 </div>
 <div class="sect3">
@@ -2220,13 +2220,13 @@ o1/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value</pre>
 <div class="sect3">
 <h4 id="_string_data"><a class="anchor" href="#_string_data"></a>3.12.4. String data</h4>
 <div class="paragraph">
-<p>All strings are enclosed in double or single quotes. Line breaks are not supported.</p>
+<p>All string literals are enclosed in double or single quotes, such as <code>'encounter'</code> or <code>"encounter"</code>. Line breaks are not supported.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_dates_and_times"><a class="anchor" href="#_dates_and_times"></a>3.12.5. Dates and Times</h4>
 <div class="paragraph">
-<p>These types are treated as strings and should comply with the rules for string quoting. The format of the date, time and datetime types should comply with the <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601 Date and Time</a> format specification, which allow the basic or extended formats to be used. In the openEHR specification it is recommended to use the extended format for dates, times and datetimes. Complete or partial values are allowed.</p>
+<p>These types are treated as string literals and should comply with the rules for string quoting. The format of the date, time and datetime types should comply with the <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601 Date and Time</a> format specification, which allow the basic or extended formats to be used. In the openEHR specification it is recommended to use the extended format for dates, times and datetimes. Complete or partial values are allowed.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -2390,7 +2390,7 @@ that also allow filtering data.</p>
 <div class="content">
 <pre>EHR e
    CONTAINS COMPOSITION c [openEHR-EHR-COMPOSITION.referral.v1]
-      CONTAINS (OBSERVATION o [openEHR-EHR-OBSERVATION-laboratory-hba1c.v1] OR OBSERVATION o1 [openEHR-EHR-OBSERVATION-laboratory-glucose.v1])</pre>
+      CONTAINS (OBSERVATION o [openEHR-EHR-OBSERVATION.laboratory-hba1c.v1] OR OBSERVATION o1 [openEHR-EHR-OBSERVATION.laboratory-glucose.v1])</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2400,7 +2400,7 @@ that also allow filtering data.</p>
 <div class="content">
 <pre>EHR e
     CONTAINS COMPOSITION c [openEHR-EHR-COMPOSITION.referral.v1]
-        NOT CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION-laboratory_test_result.v1]</pre>
+        NOT CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION.laboratory_test_result.v1]</pre>
 </div>
 </div>
 </div>

@@ -107,7 +107,7 @@
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-center valign-top" colspan="2">&#169; 2020 - 2020 The openEHR Foundation</th>
+<th class="tableblock halign-center valign-top" colspan="2">&#169; 2020 - 2021 The openEHR Foundation</th>
 </tr>
 </thead>
 <tbody>
@@ -321,7 +321,7 @@ the ADL expressions on the right-hand side of the <code>matches</code> operator 
     e/ehr_status/subject/external_ref/id/value,
     o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]/value
 FROM EHR e CONTAINS COMPOSITION c
-    CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION-laboratory-glucose.v1]
+    CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION.laboratory-glucose.v1]
 WHERE
     o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]/value matches {
         C_DV_QUANTITY&lt;
@@ -363,7 +363,7 @@ WHERE
     e/ehr_id,
     o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]/value
 EHR e CONTAINS COMPOSITION c
-    CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION-laboratory-glucose.v1]
+    CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION.laboratory-glucose.v1]
 WHERE
     o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]/value matches {
         C_DV_QUANTITY&lt;
@@ -406,7 +406,7 @@ WHERE
     e/ehr_id,
     o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]/value
 EHR e CONTAINS COMPOSITION c
-    CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION-laboratory-glucose.v1]
+    CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION.laboratory-glucose.v1]
 WHERE
     o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]/value matches {
         DV_PROPORTION matches {
@@ -437,7 +437,7 @@ WHERE
     o/data[at0001]/events[at0002]/data[at0003]/items[at0013.1] AS TotalC,
     o/data[at0001]/events[at0002]/data[at0003]/items[at0011.1, 'Fractions']/items[at0013.4, 'LDL-Cholesterol'] AS LDLC
 EHR e CONTAINS COMPOSITION c
-    CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION-laboratory-hba1c.v1]
+    CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION.laboratory-hba1c.v1]
 WHERE
     o/data[at0001]/events[at0002, 'Any event']/data[at0003]/items[at0013.1]/value matches {
         DV_QUANTITY matches {
@@ -624,7 +624,7 @@ LIMIT 5</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-12-07 09:00:19 UTC
+Last updated 2020-12-14 20:46:10 UTC
 </div>
 </div>
 </body>
