@@ -14,7 +14,7 @@ SELECT
     e/ehr_status/subject/external_ref/id/value,
     o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]/value
 FROM EHR e CONTAINS COMPOSITION c
-    CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION-laboratory-glucose.v1]
+    CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION.laboratory-glucose.v1]
 WHERE
     o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]/value matches {
         C_DV_QUANTITY<
@@ -54,7 +54,7 @@ SELECT
     e/ehr_id,
     o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]/value
 EHR e CONTAINS COMPOSITION c
-    CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION-laboratory-glucose.v1]
+    CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION.laboratory-glucose.v1]
 WHERE
     o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]/value matches {
         C_DV_QUANTITY<
@@ -95,7 +95,7 @@ SELECT
     e/ehr_id,
     o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]/value
 EHR e CONTAINS COMPOSITION c
-    CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION-laboratory-glucose.v1]
+    CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION.laboratory-glucose.v1]
 WHERE
     o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]/value matches {
         DV_PROPORTION matches {
@@ -124,7 +124,7 @@ SELECT
     o/data[at0001]/events[at0002]/data[at0003]/items[at0013.1] AS TotalC,
     o/data[at0001]/events[at0002]/data[at0003]/items[at0011.1, 'Fractions']/items[at0013.4, 'LDL-Cholesterol'] AS LDLC
 EHR e CONTAINS COMPOSITION c
-    CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION-laboratory-hba1c.v1]
+    CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION.laboratory-hba1c.v1]
 WHERE
     o/data[at0001]/events[at0002, 'Any event']/data[at0003]/items[at0013.1]/value matches {
         DV_QUANTITY matches {
