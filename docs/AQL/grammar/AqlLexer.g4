@@ -67,8 +67,6 @@ AND : A N D ;
 OR : O R ;
 NOT : N O T ;
 EXISTS: E X I S T S ;
-// Arithmetical operators
-ARITHMETIC_OPERATOR: SYM_ASTERISK | SYM_SLASH | SYM_PLUS | SYM_MINUS ;
 // Comparison operators
 COMPARISON_OPERATOR: SYM_EQ | SYM_NE | SYM_GT | SYM_GE | SYM_LT | SYM_LE ;
 LIKE: L I K E ;
@@ -107,18 +105,7 @@ TERMINOLOGY: T E R M I N O L O G Y ;
 
 // other, identifiers
 PARAMETER: '$' IDENTIFIER_CHAR;
-IDENTIFIER: IDENTIFIER_CHAR;
-NATURAL_NUMBER: [1-9] DIGIT*;
-WHOLE_NUMBER: DIGIT+;
-//Notes: restricted to allow only letters after the 4th character due to conflict with extended NodeId
-//Identifier = {Letter}{IdChar}*   ! Conflicts with extended NodeId
-//Identifier = {Letter}{IdChar}?{IdChar}?{IdChar}?({Letter}|'_')*  !Conficts with NodeId which may have any length of digit, such as at0.9
-//Identifier = {LetterMinusA}{IdCharMinusT}?{IdChar}* | 'a''t'?(({letter}|'_')*|{LetterMinusT}{Alphanumeric}*)
-ATTRIBUTE_ID
-    : ('at'|'id') (ALPHA_CHAR|'_') WORD_CHAR*
-    | ('at'|'id'|'a'|'i')
-    | [b-hj-zA-Z] WORD_CHAR*
-    ;
+
 
 
 
@@ -131,7 +118,7 @@ ATTRIBUTE_ID
 
 ID_CODE      : 'id' CODE_STR ;
 AT_CODE      : 'at' CODE_STR ;
-fragment CODE_STR : ('0' | [1-9][0-9]*) ( '.' ('0' | [1-9][0-9]* ))* ;
+fragment CODE_STR : ('0' | [1-9][0-9]*)+ ( '.' ('0' | [1-9][0-9]* ))* ;
 
 // ---------- Delimited Regex matcher ------------
 
@@ -141,15 +128,15 @@ fragment SLASH_REGEX_CHAR: ~[/\n\r] | ESCAPE_SEQ | '\\/';
 
 // ---------- ISO8601 Date/Time values ----------
 
-ISO8601_DATE
+fragment ISO8601_DATE
     : YEAR MONTH DAY
     | YEAR '-' MONTH '-' DAY
     ;
-ISO8601_TIME
+fragment ISO8601_TIME
     : HOUR MINUTE SECOND ('.' MICROSECOND)? TIMEZONE?
     | HOUR ':' MINUTE ':' SECOND ('.' MICROSECOND)? TIMEZONE?
     ;
-ISO8601_DATE_TIME
+fragment ISO8601_DATE_TIME
     : YEAR MONTH DAY ('T' HOUR MINUTE SECOND ('.' MICROSECOND)? TIMEZONE?)?
     | YEAR '-' MONTH '-' DAY ('T' HOUR ':' MINUTE ':' SECOND ('.' MICROSECOND)? TIMEZONE?)?
     ;
@@ -165,15 +152,15 @@ fragment SECOND: [0-5][0-9] ; // seconds
 
 // ------------------- special word symbols --------------
 
-SYM_TRUE: T R U E ;
-SYM_FALSE: F A L S E ;
+fragment SYM_TRUE: T R U E ;
+fragment SYM_FALSE: F A L S E ;
 
 // ---------------------- Identifiers ---------------------
 
 ARCHETYPE_HRID      : ARCHETYPE_HRID_ROOT '.v' VERSION_ID ;
-ARCHETYPE_REF       : ARCHETYPE_HRID_ROOT '.v' DIGIT+ ( '.' DIGIT+ )* ;
 fragment ARCHETYPE_HRID_ROOT : (NAMESPACE '::')? IDENTIFIER_CHAR '-' IDENTIFIER_CHAR '-' IDENTIFIER_CHAR '.' ARCHETYPE_CONCEPT_ID ;
-VERSION_ID          : DIGIT+ '.' DIGIT+ '.' DIGIT+ ( ( '-rc' | '-alpha' ) ( '.' DIGIT+ )? )? ;
+fragment VERSION_ID          : DIGIT+ ('.' DIGIT+)* ( ( '-rc' | '-alpha' ) ( '.' DIGIT+ )? )? ;
+IDENTIFIER: IDENTIFIER_CHAR;
 fragment IDENTIFIER_CHAR : ALPHA_CHAR WORD_CHAR* ;
 fragment ARCHETYPE_CONCEPT_ID : ALPHA_CHAR NAME_CHAR* ;
 
@@ -239,8 +226,10 @@ fragment LABEL: ALPHA_CHAR (NAME_CHAR|URI_PCT_ENCODED)* ;
 
 BOOLEAN: SYM_TRUE | SYM_FALSE ;
 
-INTEGER: '-'? DIGIT+ E_SUFFIX? ;
-REAL: ('-'? DIGIT+)? '.' DIGIT+ E_SUFFIX? ;
+INTEGER: DIGIT+;
+REAL: DIGIT* '.' DIGIT+;
+SCI_INTEGER: INTEGER E_SUFFIX;
+SCI_REAL: REAL E_SUFFIX;
 fragment E_SUFFIX: E [-+]? DIGIT+ ;
 
 DATE

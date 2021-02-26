@@ -40,9 +40,8 @@ orderByClause
     ;
 
 limitClause
-    : LIMIT limit=NATURAL_NUMBER (OFFSET offset=WHOLE_NUMBER) ?
+    : LIMIT limit=INTEGER (OFFSET offset=INTEGER) ?
     ;
-
 
 selectExpr
     : columnExpr (AS aliasName=IDENTIFIER)?
@@ -53,7 +52,8 @@ fromExpr
     ;
 
 whereExpr
-    : NOT? identifiedExpr
+    : identifiedExpr
+    | NOT whereExpr
     | whereExpr AND whereExpr
     | whereExpr OR whereExpr
     | SYM_LEFT_PAREN whereExpr SYM_RIGHT_PAREN
@@ -62,7 +62,6 @@ whereExpr
 orderByExpr
     : identifiedPath order=(DESCENDING|DESC|ASCENDING|ASC)?
     ;
-
 
 columnExpr
     : identifiedPath
@@ -83,11 +82,12 @@ identifiedExpr
     | identifiedPath COMPARISON_OPERATOR terminal
     | functionCall COMPARISON_OPERATOR terminal
     | identifiedPath LIKE likeOperand
-    | identifiedPath MATCHES SYM_LEFT_CURLY matchesOperand SYM_RIGHT_CURLY
+    | identifiedPath MATCHES matchesOperand
+    | SYM_LEFT_PAREN identifiedExpr SYM_RIGHT_PAREN
     ;
 
 classExprOperand
-    : IDENTIFIER variable=IDENTIFIER? (SYM_LEFT_BRACKET pathPredicate SYM_RIGHT_BRACKET)?     #classExpression
+    : IDENTIFIER variable=IDENTIFIER? pathPredicate?                                       #classExpression
     | VERSION variable=IDENTIFIER? (SYM_LEFT_BRACKET versionPredicate SYM_RIGHT_BRACKET)?  #versionClassExpr
     ;
 
@@ -116,8 +116,8 @@ archetypePredicate
     ;
 
 nodePredicate
-    : (ID_CODE | AT_CODE) (SYM_COMMA (STRING | PARAMETER | TERM_CODE))?
-    | ARCHETYPE_HRID (SYM_COMMA (STRING | PARAMETER | TERM_CODE))?
+    : (ID_CODE | AT_CODE) (SYM_COMMA (STRING | PARAMETER | TERM_CODE | AT_CODE | ID_CODE))?
+    | ARCHETYPE_HRID (SYM_COMMA (STRING | PARAMETER | TERM_CODE | AT_CODE | ID_CODE))?
     | PARAMETER
     | objectPath COMPARISON_OPERATOR pathPredicateOperand
     | objectPath MATCHES CONTAINED_REGEX
@@ -135,14 +135,15 @@ pathPredicateOperand
     : primitive
     | objectPath
     | PARAMETER
+    | ID_CODE
+    | AT_CODE
     ;
-
 
 objectPath
     : pathPart (SYM_SLASH pathPart)*
     ;
 pathPart
-    : ATTRIBUTE_ID pathPredicate?
+    : IDENTIFIER pathPredicate?
     ;
 
 likeOperand
@@ -150,10 +151,11 @@ likeOperand
     | PARAMETER
     ;
 matchesOperand
-    : valueListItem (SYM_COMMA valueListItem)*
+    : SYM_LEFT_CURLY valueListItem (SYM_COMMA valueListItem)* SYM_RIGHT_CURLY
     | terminologyFunction
-    | URI
+    | SYM_LEFT_CURLY URI SYM_RIGHT_CURLY
     ;
+
 valueListItem
     : primitive
     | PARAMETER
@@ -162,11 +164,18 @@ valueListItem
 
 primitive
     : STRING
-    | INTEGER
-    | REAL
+    | numericPrimitive
     | DATE | TIME | DATETIME
     | BOOLEAN
     | NULL
+    ;
+
+numericPrimitive
+    : INTEGER
+    | REAL
+    | SCI_INTEGER
+    | SCI_REAL
+    | SYM_MINUS numericPrimitive
     ;
 
 functionCall
