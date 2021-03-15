@@ -880,7 +880,7 @@ All string literals are enclosed in double or single quotes, such as `'encounter
 
 === Dates and Times
 
-These types are treated as string literals and should comply with the rules for string quoting. The format of the date, time and datetime types should comply with the {iso_8601}[ISO 8601 Date and Time] format specification, which allow the basic or extended formats to be used. In the openEHR specification it is recommended to use the extended format for dates, times and datetimes. Complete or partial values are allowed.
+These types are treated as string literals and should comply with the rules for string quoting. The format of the date, time and datetime types should comply with the {iso_8601}[ISO 8601 Date and Time] format specification, which allow the _basic_ or _extended_ formats to be used. The ISO 8601 semantics assumed by openEHR is defined in the classes of the {openehr_foundation_time_types}[base.foundation_types.time package^]. It is strongly recommended using the _extended_ format for dates, times and datetimes. Complete or partial values are allowed.
 
 NOTE: The underlying types of date/time strings are inferred by the AQL processor from the context (metadata associated with the path to which the date/time value is compared with, or by interpretation of the ISO 8601 format), enabling them to be processed as date/time quantities rather than literal strings by AQL engines.
 
