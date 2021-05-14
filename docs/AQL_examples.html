@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.10">
+<meta name="generator" content="Asciidoctor 2.0.14">
 <meta name="description" content="openEHR Archetype Query Language (AQL) examples.">
 <meta name="keywords" content="query, AQL, example, openehr">
 <title>Archetype Query Language Examples</title>
@@ -83,7 +83,7 @@
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Release</strong>: QUERY latest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Release</strong>: QUERY Release-1.1.0</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Status</strong>: DEVELOPMENT</p></td>
 </tr>
 <tr>
@@ -147,7 +147,7 @@
 </thead>
 <tbody>
 <tr>
-<th class="tableblock halign-center valign-top" colspan="4"><p class="tableblock"><strong>Release 1.1.0 (unreleased)</strong></p></th>
+<th class="tableblock halign-center valign-top" colspan="4"><p class="tableblock"><strong>Release 1.1.0</strong></p></th>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="latest_issue"></a>1.1.0</p></td>
@@ -274,7 +274,7 @@
 <div class="sect2">
 <h3 id="_original_source"><a class="anchor" href="#_original_source"></a>1.5. Original Source</h3>
 <div class="paragraph">
-<p>The original text of this document was taken from the <a href="https://specifications.openehr.org/releases/QUERY/latest/AQL.html" target="_blank" rel="noopener">openEHR AQL specification</a>.</p>
+<p>The original text of this document was taken from the <a href="https://specifications.openehr.org/releases/QUERY/Release-1.1.0/AQL.html" target="_blank" rel="noopener">openEHR AQL specification</a>.</p>
 </div>
 </div>
 </div>
@@ -283,7 +283,7 @@
 <h2 id="_overview"><a class="anchor" href="#_overview"></a>2. Overview</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><a href="https://specifications.openehr.org/releases/QUERY/latest/AQL.html">Archetype Query Language (AQL)</a> is a declarative query language developed specifically for expressing queries used for searching and retrieving the data found in archetype-based repositories.</p>
+<p><a href="https://specifications.openehr.org/releases/QUERY/Release-1.1.0/AQL.html">Archetype Query Language (AQL)</a> is a declarative query language developed specifically for expressing queries used for searching and retrieving the data found in archetype-based repositories.</p>
 </div>
 <div class="paragraph">
 <p>This document provides AQL syntax examples as well as example of use of AQL in various complex scenarios, for both single-subject and population queries.</p>
@@ -556,35 +556,35 @@ FROM
 <div class="title"><strong>Example 1</strong>: Expand a value set</div>
 <div class="content">
 <pre>WHERE
-    e/value/defining_code/code_string matches TERMINOLOGY('expand', 'http://hl7.org/fhir/r4', 'url=http://snomed.info/sct?fhir_vs=isa/50697003')</pre>
+    e/value/defining_code/code_string matches TERMINOLOGY('expand', 'hl7.org/fhir/r4', 'url=http://snomed.info/sct?fhir_vs=isa/50697003')</pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title"><strong>Example 2</strong>: Validate a code in a value set</div>
 <div class="content">
 <pre>WHERE
-    TERMINOLOGY('validate', 'http://hl7.org/fhir/r4', 'system=http://snomed.info/sct&amp;code=122298005&amp;url=http://snomed.info/sct?fhir_vs&amp;display=Astrovirus RNA assay') = true</pre>
+    TERMINOLOGY('validate', 'hl7.org/fhir/r4', 'system=http://snomed.info/sct&amp;code=122298005&amp;url=http://snomed.info/sct?fhir_vs&amp;display=Astrovirus RNA assay') = true</pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title"><strong>Example 3</strong>: Look-up a code</div>
 <div class="content">
 <pre>WHERE
-    e/value/defining_code/code_string matches TERMINOLOGY('lookup', 'http://hl7.org/fhir/r4', 'system=http://loinc.org&amp;code=1963-8')</pre>
+    e/value/defining_code/code_string matches TERMINOLOGY('lookup', 'hl7.org/fhir/r4', 'system=http://loinc.org&amp;code=1963-8')</pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title"><strong>Example 4</strong>: Map a code</div>
 <div class="content">
 <pre>WHERE
-    e/value/defining_code/code_string matches TERMINOLOGY('map', 'http://hl7.org/fhir/r4', 'system=http://hl7.org/fhir/composition-status&amp;code=preliminary&amp;source=http://hl7.org/fhir/ValueSet/composition-status&amp;target=http://hl7.org/fhir/ValueSet/v3-ActStatus')</pre>
+    e/value/defining_code/code_string matches TERMINOLOGY('map', 'hl7.org/fhir/r4', 'system=http://hl7.org/fhir/composition-status&amp;code=preliminary&amp;source=http://hl7.org/fhir/ValueSet/composition-status&amp;target=http://hl7.org/fhir/ValueSet/v3-ActStatus')</pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title"><strong>Example 5</strong>: Subsumption testing</div>
 <div class="content">
 <pre>WHERE
-    TERMINOLOGY('subsumes', 'http://hl7.org/fhir/r4', CONCAT('system=http://snomed.info/sct&amp;codeA=235856003&amp;codeB=', e/value/defining_code/code_string)) = true</pre>
+    TERMINOLOGY('subsumes', 'hl7.org/fhir/r4', CONCAT('system=http://snomed.info/sct&amp;codeA=235856003&amp;codeB=', e/value/defining_code/code_string)) = true</pre>
 </div>
 </div>
 </div>
