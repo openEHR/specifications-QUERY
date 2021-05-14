@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.10">
+<meta name="generator" content="Asciidoctor 2.0.14">
 <meta name="description" content="openEHR Archetype Query Language (AQL) examples.">
 <meta name="keywords" content="query, AQL, example, openehr">
 <title>Archetype Query Language Examples</title>
@@ -147,7 +147,10 @@
 </thead>
 <tbody>
 <tr>
-<th class="tableblock halign-center valign-top" colspan="4"><p class="tableblock"><strong>Release 1.1.0 (unreleased)</strong></p></th>
+<th class="tableblock halign-center valign-top" colspan="4"><p class="tableblock"><strong>Release 1.2.0 (unreleased)</strong></p></th>
+</tr>
+<tr>
+<th class="tableblock halign-center valign-top" colspan="4"><p class="tableblock"><strong>Release 1.1.0</strong></p></th>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="latest_issue"></a>1.1.0</p></td>
@@ -556,35 +559,35 @@ FROM
 <div class="title"><strong>Example 1</strong>: Expand a value set</div>
 <div class="content">
 <pre>WHERE
-    e/value/defining_code/code_string matches TERMINOLOGY('expand', 'http://hl7.org/fhir/r4', 'url=http://snomed.info/sct?fhir_vs=isa/50697003')</pre>
+    e/value/defining_code/code_string matches TERMINOLOGY('expand', 'hl7.org/fhir/r4', 'url=http://snomed.info/sct?fhir_vs=isa/50697003')</pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title"><strong>Example 2</strong>: Validate a code in a value set</div>
 <div class="content">
 <pre>WHERE
-    TERMINOLOGY('validate', 'http://hl7.org/fhir/r4', 'system=http://snomed.info/sct&amp;code=122298005&amp;url=http://snomed.info/sct?fhir_vs&amp;display=Astrovirus RNA assay') = true</pre>
+    TERMINOLOGY('validate', 'hl7.org/fhir/r4', 'system=http://snomed.info/sct&amp;code=122298005&amp;url=http://snomed.info/sct?fhir_vs&amp;display=Astrovirus RNA assay') = true</pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title"><strong>Example 3</strong>: Look-up a code</div>
 <div class="content">
 <pre>WHERE
-    e/value/defining_code/code_string matches TERMINOLOGY('lookup', 'http://hl7.org/fhir/r4', 'system=http://loinc.org&amp;code=1963-8')</pre>
+    e/value/defining_code/code_string matches TERMINOLOGY('lookup', 'hl7.org/fhir/r4', 'system=http://loinc.org&amp;code=1963-8')</pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title"><strong>Example 4</strong>: Map a code</div>
 <div class="content">
 <pre>WHERE
-    e/value/defining_code/code_string matches TERMINOLOGY('map', 'http://hl7.org/fhir/r4', 'system=http://hl7.org/fhir/composition-status&amp;code=preliminary&amp;source=http://hl7.org/fhir/ValueSet/composition-status&amp;target=http://hl7.org/fhir/ValueSet/v3-ActStatus')</pre>
+    e/value/defining_code/code_string matches TERMINOLOGY('map', 'hl7.org/fhir/r4', 'system=http://hl7.org/fhir/composition-status&amp;code=preliminary&amp;source=http://hl7.org/fhir/ValueSet/composition-status&amp;target=http://hl7.org/fhir/ValueSet/v3-ActStatus')</pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title"><strong>Example 5</strong>: Subsumption testing</div>
 <div class="content">
 <pre>WHERE
-    TERMINOLOGY('subsumes', 'http://hl7.org/fhir/r4', CONCAT('system=http://snomed.info/sct&amp;codeA=235856003&amp;codeB=', e/value/defining_code/code_string)) = true</pre>
+    TERMINOLOGY('subsumes', 'hl7.org/fhir/r4', CONCAT('system=http://snomed.info/sct&amp;codeA=235856003&amp;codeB=', e/value/defining_code/code_string)) = true</pre>
 </div>
 </div>
 </div>
