@@ -412,7 +412,7 @@ FROM
          CONTAINS EVALUATION p[openEHR-EHR-EVALUATION.problem-diagnosis.v1]
 WHERE
    c/name/value='Current Problems' AND
-   p/data/items[at0002]/value/defining_code/code_string matches TERMINOLOGY('expand', 'http://hl7.org/fhir/4.0', 'http://snomed.info/sct?fhir_vs=isa/50697003')
+   p/data/items[at0002]/value/defining_code/code_string matches TERMINOLOGY('expand', 'hl7.org/fhir/4.0', 'http://snomed.info/sct?fhir_vs=isa/50697003')
 --------
 
 === Logical operators
@@ -698,7 +698,7 @@ The function with syntax `CURRENT_TIMEZONE()` accepts no arguments and returns t
 
 ==== TERMINOLOGY
 
-Often the `matches` operator may be need to perform a request to a terminology server, in order to execute some _operations_ over a value set or code system (a synonym of _terminology_).
+Often the `matches` operator may need to perform a request to a terminology server, in order to execute some _operations_ over a value set or code system (a synonym of _terminology_).
 Several operations may be possible: the expansion of a ValueSet (or Reference Set), checking that a concept belongs to a value set or code system, testing if one concept subsumes another one, or the mapping of concepts across different terminologies.
 While matching value by a pure terminology concept specified as <<_matches_terminology_uri,a terminology URI>> is possible, the invocation of external terminology servers from AQL requires a special function, to perform all these operations.
 
@@ -721,9 +721,9 @@ Some examples of typical values for `service_api` are:
 |===
 |Service_api     |Description
 
-|http://hl7.org/fhir/4.0       |FHIR Terminology Service v4.0
-|http://hl7.org/fhir/3.0       |FHIR Terminology Service v3.0
-|http://hl7.org/fhir/1.0       |FHIR Terminology Service v1.0
+|hl7.org/fhir/4.0              |FHIR Terminology Service v4.0
+|hl7.org/fhir/3.0              |FHIR Terminology Service v3.0
+|hl7.org/fhir/1.0              |FHIR Terminology Service v1.0
 |ots.oceanhealthsystems.com    |Ocean Terminology Service
 |bts.better.care               |Better Terminology Service
 |apelon.dts.org/4.7.1          |Apelon Terminology Service, version 4.7.1
@@ -750,20 +750,20 @@ The `TERMINOLOGY` function can be used in the following ways in the `WHERE` clau
 * as a right-hand operand of `matches` operator, to directly match function results, e.g.
 +
 --------
-WHERE e/value/defining_code/code_string matches TERMINOLOGY('expand', 'http://hl7.org/fhir/4.0', 'http://snomed.info/sct?fhir_vs=isa/50697003')
+WHERE e/value/defining_code/code_string matches TERMINOLOGY('expand', 'hl7.org/fhir/4.0', 'http://snomed.info/sct?fhir_vs=isa/50697003')
 --------
 
 * embedded between curly braces (`{}`) of the right-hand operand of `matches`, for merging explicit codes with the function results (in which case the AQL interpreter is responsible for generating a valid list of codes during semantic analysis), e.g.
 +
 --------
-WHERE e/value/defining_code/code_string matches {'http://snomed.info/id/442031002', TERMINOLOGY('expand', 'http://hl7.org/fhir/4.0', 'http://snomed.info/sct?fhir_vs=isa/50697003')}
+WHERE e/value/defining_code/code_string matches {'http://snomed.info/id/442031002', TERMINOLOGY('expand', 'hl7.org/fhir/4.0', 'http://snomed.info/sct?fhir_vs=isa/50697003')}
 --------
 
 * as a Boolean value expression, when an assertion is being tested, e.g.
 +
 --------
 WHERE
-    TERMINOLOGY('validate', 'http://hl7.org/fhir/r4', 'system=http://snomed.info/sct&code=122298005&url=http://snomed.info/sct?fhir_vs&display=Astrovirus RNA assay') = true
+    TERMINOLOGY('validate', 'hl7.org/fhir/r4', 'system=http://snomed.info/sct&code=122298005&url=http://snomed.info/sct?fhir_vs&display=Astrovirus RNA assay') = true
 --------
 
 More examples can be found in the {openehr_query_aql_examples}#_terminology[openEHR AQL examples^] document.
