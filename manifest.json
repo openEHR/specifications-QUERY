@@ -49,8 +49,16 @@
     },
     "releases": [
         {
-            "id": "1.1.0",
+            "id": "1.2.0",
             "date": "",
+            "jira": {
+                "crs": "SPECQUERY/versions/12534",
+                "prs": "SPECPR/versions/11566"
+            }
+        },
+        {
+            "id": "1.1.0",
+            "date": "2021-05-14",
             "jira": {
                 "crs": "SPECQUERY/versions/11262",
                 "prs": "SPECPR/versions/11565"

@@ -42,6 +42,9 @@ endif::[]
 |link:/releases/QUERY/{query_release}/AQL.html[Archetype Query Language (AQL)]
 |Query language based on archetype paths and pattern matching.
 
+|link:/releases/QUERY/{query_release}/AQL_examples.html[Archetype Query Language Examples]
+|Examples of AQL use.
+
 |===
 
 == Computable Expressions
@@ -50,7 +53,10 @@ endif::[]
 |===
 |Resource |Description
 
-|link:/releases/QUERY/{query_release}/docs/AQL/Aql.g[Antlr file]
-|Antlr 3 Grammar for AQL
+|link:/releases/QUERY/{query_release}/docs/AQL/grammar/AqlLexer.g4[Antlr4 lexer]
+|ANTLR4 lexer grammar for AQL.
+
+|link:/releases/QUERY/{query_release}/docs/AQL/grammar/AqlParser.g4[Antlr4 parser]
+|ANTLR4 parser grammar for AQL.
 
 |===

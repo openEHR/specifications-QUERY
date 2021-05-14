@@ -4,7 +4,7 @@
 |===
 |Issue|Details|Raiser|Completed
 
-4+^h|*Release 1.1.0 (unreleased)*
+4+^h|*Release 1.1.0*
 
 |[[latest_issue]]1.1.0
 |{spec_tickets}/SPECQUERY-8[SPECQUERY-8^] Improve readability and clean up text (non-semantic).
