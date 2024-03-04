@@ -154,6 +154,7 @@ fragment SECOND: [0-5][0-9] ; // seconds
 
 fragment SYM_TRUE: T R U E ;
 fragment SYM_FALSE: F A L S E ;
+BOOLEAN: SYM_TRUE | SYM_FALSE ;
 
 // ---------------------- Identifiers ---------------------
 
@@ -223,8 +224,6 @@ fragment NAMESPACE: LABEL ('.' LABEL)* ;
 fragment LABEL: ALPHA_CHAR (NAME_CHAR|URI_PCT_ENCODED)* ;
 
 // --------------------- atomic primitive types -------------------
-
-BOOLEAN: SYM_TRUE | SYM_FALSE ;
 
 INTEGER: DIGIT+;
 REAL: DIGIT* '.' DIGIT+;
