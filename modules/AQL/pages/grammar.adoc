@@ -4,5 +4,5 @@ The following Antlr grammar expresses the AQL syntax.
 
 [source, antlr-java]
 --------
-include::aql.g[]
+include::partial$aql.g[]
 --------

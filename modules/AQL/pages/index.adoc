@@ -1,0 +1,65 @@
+//
+// ============================================ Asciidoc HEADER =============================================
+//
+
+//
+// ============================================ Asciidoc PREAMBLE =============================================
+//
+
+
+= Archetype Query Language (AQL)
+
+
+//
+// ============================================= Asciidoc BODY ===============================================
+//
+
+
+//
+// --------------------------------------------- Preface -----------------------------------------------
+//
+
+== Acknowledgements
+
+=== Primary Author
+
+* Chunlan Ma, MD, Ocean Informatics, Australia.
+
+=== Contributors
+
+This specification benefited from wide formal and informal input from the openEHR and wider health informatics community. The openEHR Foundation would like to recognise the following people for their contributions.
+
+* Heath Frankel, Ocean Informatics, Australia
+* Bostjan Lah, Architect, Marand, Slovenia
+
+=== Support
+
+The work reported in this paper has been funded by the following organisations:
+
+* Ocean Informatics, Australia
+* Marand, Slovenia
+
+=== Trademarks
+
+* 'openEHR' is a trademark of the openEHR Foundation
+* 'Java' is a registered trademark of Oracle Corporation
+* 'Microsoft' and '.Net' are trademarks of the Microsoft Corporation
+
+
+//
+// --------------------------------------------- TOC -----------------------------------------------
+//
+//toc::[left]
+
+//
+// --------------------------------------------- CHAPTERS -----------------------------------------------
+//
+
+//
+// --------------------------------------------- REFERENCES -----------------------------------------------
+//
+
+:sectnums!:
+//== References
+//
+//bibliography::[]
