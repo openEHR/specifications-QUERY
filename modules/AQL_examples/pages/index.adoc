@@ -1,3 +1,5 @@
+include::partial$module_vars.adoc[]
+
 //
 // ============================================ Asciidoc HEADER =============================================
 //
@@ -7,7 +9,16 @@
 //
 
 
-= {spec_title}
+= {spec_title} [.spec-status.spec-status-development]#{spec_status}#
+
+Annotated AQL query examples covering common clinical retrieval patterns across EHR, Composition, Entry, and demographic contexts. Intended as a practical complement to the formal AQL specification. Examples range from simple single-archetype retrievals to complex multi-entry queries with joins, aggregations, and parameter substitution. Each example is accompanied by narrative explaining the clinical intent, the data model being queried, and notes on expected result sets.
+
+== Purpose
+
+This document documents examples of use of the openEHR Archetype Query Language (AQL).
+
+
+
 
 
 //
@@ -19,45 +30,12 @@
 // --------------------------------------------- Preface -----------------------------------------------
 //
 
-== Acknowledgements
+== Feedback
 
-=== Contributors
+Feedback may be provided on the {openehr_technical_list}/aql[openEHR AQL forum^].
 
-This specification benefited from wide formal and informal input from the openEHR and wider health informatics community. The openEHR Foundation would like to recognise the following people for their contributions.
+Issues may be raised on the {component_prs}[specifications Problem Report tracker^].
 
-* Heath Frankel, Ocean Health Systems, Australia
-* Ian McNicoll MD, FreshEHR, UK
-* Luiz Marco-Ruiz, PhD, Norwegian Centre for E-health Research, Norway
-* Sebastian Iancu, Architect, Code24, Netherlands
-* Thomas Beale, Ars Semantica UK, openEHR Foundation Management Board
-
-=== Support
-
-The work reported in this paper has been funded by the following organisations:
-
-* Code24, Netherlands
-
-=== Trademarks
-
-* 'openEHR' is a trademark of the openEHR Foundation
-* 'Java' is a registered trademark of Oracle Corporation
-* 'Microsoft' and '.Net' are trademarks of the Microsoft Corporation
+To see changes made due to previously reported issues, see the {component_history}[{component} component Change Request tracker^].
 
 
-//
-// --------------------------------------------- TOC -----------------------------------------------
-//
-//toc::[left]
-
-//
-// --------------------------------------------- CHAPTERS -----------------------------------------------
-//
-
-//
-// --------------------------------------------- REFERENCES -----------------------------------------------
-//
-
-:sectnums!:
-//== References
-//
-//bibliography::[]
