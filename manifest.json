@@ -1,58 +1,58 @@
 {
-    "id": "QUERY",
-    "title": "Query Languages",
-    "description": "Query Languages Component",
-    "keywords": "query languages, openehr",
-    "specifications": [
-        {
-            "id": "AQL",
-            "title": "Archetype Query Language",
-            "title_short": "AQL",
-            "description": "openEHR Archetype Query Language (AQL)",
-            "summary": "Query language based on archetype paths and pattern matching.",
-            "micro_summary": "Archetype Query Language",
-            "copyright_year": "2008",
-            "spec_status": "STABLE",
-            "keywords": "query, AQL, archetype, Xpath, openehr"
-        }
-    ],
-    "expressions": [
-        {
-            "id": "aql.g",
-            "type": "file",
-            "title": "Antlr file",
-            "link": "AQL/aql.g",
-            "description": "Antlr 3 Grammar for AQL."
-        }
-    ],
-    "jira": {
-        "open_issues": "11109",
-        "roadmap": "SPECQUERY"
+  "id": "QUERY",
+  "title": "Query Languages",
+  "description": "Query Languages Component",
+  "keywords": "query languages, openehr",
+  "specifications": [
+    {
+      "id": "AQL",
+      "title": "Archetype Query Language",
+      "title_short": "AQL",
+      "description": "openEHR Archetype Query Language (AQL)",
+      "summary": "Archetype Query Language: an SQL-inspired query language for retrieving openEHR EHR data. Uses archetype paths as the addressing mechanism and supports SELECT, FROM, WHERE, ORDER BY, and aggregation functions for clinical data retrieval. AQL queries are submitted to openEHR platforms via the Query REST API, either as ad-hoc queries or as stored named queries with bound parameters. The language provides path-based navigation through Composition and Entry structures using archetype node identifiers, enabling precise targeting of clinical data elements.",
+      "micro_summary": "Archetype Query Language",
+      "copyright_year": "2008",
+      "spec_status": "STABLE",
+      "keywords": "query, AQL, archetype, Xpath, openehr"
+    }
+  ],
+  "expressions": [
+    {
+      "id": "aql.g",
+      "type": "file",
+      "title": "Antlr file",
+      "link": "AQL/aql.g",
+      "description": "Antlr 3 Grammar for AQL."
+    }
+  ],
+  "jira": {
+    "open_issues": "11109",
+    "roadmap": "SPECQUERY"
+  },
+  "releases": [
+    {
+      "id": "1.1.0",
+      "date": "",
+      "jira": {
+        "crs": "SPECQUERY/versions/11262",
+        "prs": "SPECPR/versions/11565"
+      }
     },
-    "releases": [
-        {
-            "id": "1.1.0",
-            "date": "",
-            "jira": {
-                "crs": "SPECQUERY/versions/11262",
-                "prs": "SPECPR/versions/11565"
-            }
-        },
-        {
-            "id": "1.0.1",
-            "date": "2020-07-26",
-            "jira": {
-                "crs": "SPECQUERY/versions/11261",
-                "prs": "SPECPR/versions/12530"
-            }
-        },
-        {
-            "id": "1.0.0",
-            "date": "2017-11-15",
-            "jira": {
-                "crs": "SPECQUERY/versions/11260",
-                "prs": "SPECPR/versions/11564"
-            }
-        }
-    ]
+    {
+      "id": "1.0.1",
+      "date": "2020-07-26",
+      "jira": {
+        "crs": "SPECQUERY/versions/11261",
+        "prs": "SPECPR/versions/12530"
+      }
+    },
+    {
+      "id": "1.0.0",
+      "date": "2017-11-15",
+      "jira": {
+        "crs": "SPECQUERY/versions/11260",
+        "prs": "SPECPR/versions/11564"
+      }
+    }
+  ]
 }

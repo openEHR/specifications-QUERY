@@ -1,3 +1,5 @@
+include::partial$module_vars.adoc[]
+
 = AQL Operator Syntax Examples
 
 The following sub-sections illustrate various AQL operators with examples.
@@ -16,6 +18,7 @@ NOTE: the ADL expressions on the right-hand side of the `matches` operator are i
 ¦*EHR path*                 ¦`o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]`
 
 ¦*AQL Fragment*             ¦
+[source, sql]
 ----
 ehr_path/value
     matches {
@@ -44,6 +47,7 @@ ehr_path/value
 ¦*EHR path*                 ¦`o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]`
 
 ¦*AQL Fragment*             ¦
+[source, sql]
 ----
 ehr_path/value
     matches {
@@ -72,6 +76,7 @@ ehr_path/value
 ¦*EHR path*                 ¦`o/data[at0001]/events[at0002 and name/value='Any event']/data[at0003]/items[at0013.1]`
 
 ¦*AQL Fragment*             ¦
+[source, sql]
 ----
 ehr_path/value matches {
     DV_PROPORTION matches {
@@ -93,6 +98,7 @@ ehr_path/value matches {
                                   name/value='Fractions']/items[at0013.4 and name/value='LDL-Cholesterol']`
 
 ¦*AQL Fragment*                 ¦
+[source, sql]
 ----
 Total cholesterol EHR path/value matches {
     DV_QUANTITY matches {
@@ -124,6 +130,7 @@ The following example shows how arithmetic operators may be used within AQL stat
 ¦*Clinical Scenario 1*      ¦For each recorded administration of ampicillin check for problem diagnosis of skin rash that is within 2 days of the administration date
 
 ¦*AQL Fragment*             ¦
+[source, sql]
 ----
 SELECT e/ehr_id
 FROM EHR e CONTAINS (COMPOSITION c1
@@ -155,6 +162,7 @@ The following example shows the use of a nested query and the `not-in` operator.
 ¦*Clinical Scenario 1*      ¦All patients who have not been discharged
 
 ¦*AQL Fragment*             ¦
+[source, sql]
 ----
 SELECT e/ehr_id
 FROM

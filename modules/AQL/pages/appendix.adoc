@@ -1,0 +1,49 @@
+include::partial$module_vars.adoc[]
+
+= Appendix
+
+
+== Acknowledgements
+
+=== Primary Author
+
+* Chunlan Ma, MD, Ocean Informatics, Australia.
+
+=== Contributors
+
+This specification benefited from wide formal and informal input from the openEHR and wider health informatics community. The openEHR Foundation would like to recognise the following people for their contributions.
+
+* Heath Frankel, Ocean Informatics, Australia
+* Bostjan Lah, Architect, Marand, Slovenia
+
+=== Support
+
+The work reported in this paper has been funded by the following organisations:
+
+* Ocean Informatics, Australia
+* Marand, Slovenia
+
+=== Trademarks
+
+* 'openEHR' is a trademark of the openEHR Foundation
+* 'Java' is a registered trademark of Oracle Corporation
+* 'Microsoft' and '.Net' are trademarks of the Microsoft Corporation
+== Tools
+
+Various tools that can be used to work with archetypes and templates, including extracting 'archetype paths' for use in AQL statements, are listed on the openEHR website {modelling_tools}[modelling tools page^].
+
+== Original Source
+
+The text of this specification was originally posted on the {openehr_wiki_root}/spaces/spec/pages/4915203/AQL-+Archetype+Query+Language[openEHR wiki^], and was used by the global openEHR community in that form.
+
+=== AQL features not yet supported
+
+The following features are likely to be needed, but are not yet formalized by this specification:
+
+* `XOR` operator;
+* functions;
+* embedded queries.
+
+:sectnums!:
+
+include::partial$amendment_record.adoc[]

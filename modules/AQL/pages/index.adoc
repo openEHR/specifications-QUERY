@@ -1,3 +1,5 @@
+include::partial$module_vars.adoc[]
+
 //
 // ============================================ Asciidoc HEADER =============================================
 //
@@ -7,7 +9,16 @@
 //
 
 
-= Archetype Query Language (AQL)
+= Archetype Query Language (AQL) [.spec-status.spec-status-stable]#{spec_status}#
+
+Archetype Query Language: an SQL-inspired query language for retrieving openEHR EHR data. Uses archetype paths as the addressing mechanism and supports SELECT, FROM, WHERE, ORDER BY, and aggregation functions for clinical data retrieval. AQL queries are submitted to openEHR platforms via the Query REST API, either as ad-hoc queries or as stored named queries with bound parameters. The language provides path-based navigation through Composition and Entry structures using archetype node identifiers, enabling precise targeting of clinical data elements.
+
+== Purpose
+
+This document describes the syntax of the openEHR Archetype Query Language (AQL).
+
+
+
 
 
 //
@@ -19,47 +30,12 @@
 // --------------------------------------------- Preface -----------------------------------------------
 //
 
-== Acknowledgements
+== Feedback
 
-=== Primary Author
+Feedback may be provided on the {openehr_technical_list}[technical mailing list^].
 
-* Chunlan Ma, MD, Ocean Informatics, Australia.
+Issues may be raised on the {component_prs}[specifications Problem Report tracker^].
 
-=== Contributors
-
-This specification benefited from wide formal and informal input from the openEHR and wider health informatics community. The openEHR Foundation would like to recognise the following people for their contributions.
-
-* Heath Frankel, Ocean Informatics, Australia
-* Bostjan Lah, Architect, Marand, Slovenia
-
-=== Support
-
-The work reported in this paper has been funded by the following organisations:
-
-* Ocean Informatics, Australia
-* Marand, Slovenia
-
-=== Trademarks
-
-* 'openEHR' is a trademark of the openEHR Foundation
-* 'Java' is a registered trademark of Oracle Corporation
-* 'Microsoft' and '.Net' are trademarks of the Microsoft Corporation
+To see changes made due to previously reported issues, see the {component_history}[{component} component Change Request tracker^].
 
 
-//
-// --------------------------------------------- TOC -----------------------------------------------
-//
-//toc::[left]
-
-//
-// --------------------------------------------- CHAPTERS -----------------------------------------------
-//
-
-//
-// --------------------------------------------- REFERENCES -----------------------------------------------
-//
-
-:sectnums!:
-//== References
-//
-//bibliography::[]

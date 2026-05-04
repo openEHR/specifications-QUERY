@@ -1,0 +1,6 @@
+name: QUERY
+title: Query Languages
+start_page: ROOT:index.adoc
+nav:
+  - modules/ROOT/nav.adoc
+  - modules/AQL/nav.adoc

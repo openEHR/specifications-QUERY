@@ -1,3 +1,5 @@
+include::partial$module_vars.adoc[]
+
 = AQL Syntax Specification
 
 The following Antlr grammar expresses the AQL syntax.

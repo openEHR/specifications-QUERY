@@ -1,3 +1,5 @@
+include::partial$module_vars.adoc[]
+
 = AQL Syntax Description
 
 == Overview
@@ -56,6 +58,7 @@ Another type of openEHR path is the path pointing to an attribute of openEHR Ref
 
 AQL variables are used to refer a specific openEHR class defined within an AQL `FROM` clause. Consider the following example:
 
+[source, sql]
 --------
 SELECT
    o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude,
@@ -123,6 +126,7 @@ Standard predicates always have a left operand, operator and right operand, e.g.
 * The right operand is normally a criterion value or a parameter, such as `'123456'`, `$ehrUid`. It can also be an openEHR path (based on the BNF).
 * The operator can be one of the following:
 +
+[source, sql]
 ----
 >, >=, =, <, <=, !=
 ----
@@ -131,6 +135,7 @@ Standard predicates always have a left operand, operator and right operand, e.g.
 
 An archetype predicate is a shortcut of a standard predicate, i.e. the predicate does not have the left operand and operator. It only has an archetype id, e.g. `[openEHR-EHR-COMPOSITION.encounter.v1]`. The archetype predicate is a specific type of query criterion indicating which archetype instances are relevant to this query. It is used to scope the data source from which the query result data is to be retrieved. Therefore, an archetype predicate is only used within an AQL `FROM` clause, for example,
 
+[source, sql]
 --------
 FROM EHR [ehr_id/value='1234']
    CONTAINS COMPOSITION c [openEHR-EHR-COMPOSITION.encounter.v1]
@@ -139,6 +144,7 @@ FROM EHR [ehr_id/value='1234']
 
 This predicates could also be written as `Standard predicates`:
 
+[source, sql]
 --------
 FROM EHR e
    CONTAINS COMPOSITION c
@@ -157,12 +163,14 @@ A node predicate is also a shortcut of a standard predicate. It has the followin
 
 * Containing an `archetype_node_id` (i.e. an at-code) only, e.g.:
 +
+[source, sql]
 --------
 [at0002]
 --------
 +
 The corresponding standard predicate would be:
 +
+[source, sql]
 --------
 [archetype_node_id=at0002]
 --------
@@ -170,6 +178,7 @@ The corresponding standard predicate would be:
 
 * Containing an `archetype_node_id` and a `name value/criterion`, e.g.:
 +
+[source, sql]
 --------
 [at0002 and name/value=$nameValue]
 [at0002 and name/value='real name value']
@@ -177,6 +186,7 @@ The corresponding standard predicate would be:
 +
 The corresponding standard predicates would be:
 +
+[source, sql]
 --------
 [archetype_node_id=at0002 and name/value=$nameValue]
 [archetype_node_id=at0002 and name/value='real name value']
@@ -184,6 +194,7 @@ The corresponding standard predicates would be:
 
 * Containing an `archetype_node_id` and a shortcut of a `name/value` criterion, e.g.:
 +
+[source, sql]
 --------
 [at0002, $nameValue]
 [at0002, 'real name value']
@@ -191,6 +202,7 @@ The corresponding standard predicates would be:
 +
 The corresponding standard predicates would be:
 +
+[source, sql]
 --------
 [archetype_node_id=at0002 and name/value=$nameValue]
 [archetype_node_id=at0002 and name/value='real name value']
@@ -198,6 +210,7 @@ The corresponding standard predicates would be:
 
 * The above three forms are the most common node predicates. A more advanced form is to include a general criterion instead of the `name/value` criterion within the predicate. The general criterion consists of left operand, operator, and right operand, e.g.:
 +
+[source, sql]
 --------
 [at0002 and value/defining_code/terminology_id/value=$terminologyId]
 --------
@@ -230,6 +243,7 @@ The `matches` binary operator is used in the `WHERE` clause. The left operand is
 
 . *cADL list constraint*: a comma-separated value list, which is one of the cADL constraint forms used in the {openehr_am}[Archetype Definition Language (ADL)^]. Below is an example using a string value list:
 +
+[source, sql]
 --------
 SELECT
    o/data[at0002]/events[at0003]/data/items[at0015]/items[at0018]/name
@@ -247,6 +261,7 @@ A value list is only used in AQL `WHERE` clause when the criteria is to match on
 +
 Some examples of value list:
 +
+[source, sql]
 --------
 matches {'string item 1', 'string item 2', 'string item3'}  // A string list, equivalent to
                                                             // matches 'string item1' or ..
@@ -259,6 +274,7 @@ matches {1.1, 2.5, 3.8}                                     // a real value list
 
 . URI: can be a terminology URI, openEHR EHR URI, or other URI. An example with a terminology URI is shown below:
 +
+[source, sql]
 --------
 SELECT
    e/ehr_status/subject/external_ref/id/value, diagnosis/data/items[at0002.1]/value
@@ -282,6 +298,7 @@ A terminology URI consists of the following components:
 +
 This is an example of a terminology URI:
 +
+[source, sql]
 --------
     terminology://snomed-CT/hierarchy?rootConceptId=50043002
     \_________/   \_______/ \_______/ \___________/ \______/
@@ -308,6 +325,7 @@ This is an example of a terminology URI:
 
 The example below uses `NOT` operator followed by a Boolean identified expression:
 
+[source, sql]
 --------
 SELECT
    e/ehr_id/value
@@ -322,6 +340,7 @@ WHERE
 
 The above example is equivalent to the two expressions shown in the following `WHERE` clause:
 
+[source, sql]
 --------
 SELECT
    e/ehr_id/value
@@ -342,6 +361,7 @@ These advanced operators are not yet supported by the grammar. The operator synt
 
 In the AQL example below, `EXISTS` is used in negated form to filter out `COMPOSITIONs` (and therefore EHRs) that do not contain a discharge `ADMIN_ENTRY` instance:
 
+[source, sql]
 --------
 SELECT
    e/ehr_id/value
@@ -365,18 +385,21 @@ An AQL identified path can take any of the following forms:
 
 * a variable name defined in the `FROM` clause followed by an archetype path, which specifies a data item at that path within the object, as follows:
 +
+[source, sql]
 ----
 o/data[at0001]/.../data[at0003]/items[at0004]/value/value
 ----
 
 * a variable name followed by a predicate, which specifies an object that satisfies the predicate, as follows:
 +
+[source, sql]
 ----
 o[name/value=$nameValue]
 ----
 
 * a variable name followed by a predicate and an archetype path, which specifies a data item at a path within an object satisfying the predicate, as follows:
 +
+[source, sql]
 ----
 o[name/value=$nameValue]/data[at0001]/.../data[at0003]/items[at0004]/value/value
 ----
@@ -407,6 +430,7 @@ NOTE: The underlying types of date/time strings are inferred by the AQL processo
 
 Examples are as below:
 
+[source, sql]
 --------
 WHERE composition/context/start_time <= '1986-01-01'    // complete date in ISO 8601 extended format. AQL grammar identifies this value as a date value.
 WHERE composition/context/start_time > '19860101'       // a complete date in ISO 8601 basic format. AQL grammar identifies it as a string value.
@@ -458,6 +482,7 @@ In summary:
 
 A simple `FROM` clause consists of three parts: keyword `FROM`, class expression and/or containment constraints, e.g.
 
+[source, sql]
 --------
 FROM
    EHR e [ehr_id/value=$ehrId]
@@ -468,6 +493,7 @@ FROM
 
 Two examples of a class expression are shown below:
 
+[source, sql]
 --------
 -- EHR class, class identifier/variable, and a standard predicate
 EHR e [ehr_id/value=$ehrId]
@@ -481,6 +507,7 @@ Class expressions are used for two purposes:
 . indicating the constraints on RM classes so as to scope the data source for the query. For instance, `EHR e[ehr_id/value='123456']` indicates that the required data must be from a specific EHR with `ehr_id` value `'123456'`; while `COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]` indicates the required data must be from or must be associated with a Composition instance with archetype id - `openEHR-EHR-COMPOSITION.report.v1`.
 . defining an RM class variable that may be used by other clauses to indicate the required data or data items on which query criteria are applied. The example below uses the class expression to define a variable e which is used by the `SELECT` clause indicating all relevant `ehr_id` values are retrieved, and a variable `c` used by the `WHERE` clause indicating that the query criteria is set on the Composition `template_id` value.
 +
+[source, sql]
 --------
 SELECT
    e/ehr_id/value
@@ -503,12 +530,14 @@ Since archetypes are in hierarchical structure, AQL has a containment constraint
 
 The syntax of containment constraint is very simple: using keyword `CONTAINS` between two class expressions. Left class expression is the the parent object of the right class expression, e.g.
 
+[source, sql]
 --------
 EHR e CONTAINS COMPOSITION c [openEHR-EHR-COMPOSITION.referral.v1]
 --------
 
 Boolean operators (`AND`, `OR`, `NOT`) and parentheses are used when multiple containment constrains are required, e.g.
 
+[source, sql]
 --------
 EHR e
    CONTAINS COMPOSITION c [openEHR-EHR-COMPOSITION.referral.v1] AND COMPOSITION c1 [openEHR-EHR-COMPOSITION.report.v1]
@@ -526,6 +555,7 @@ An AQL `WHERE` clause is used to represent further criteria applied to the data 
 
 The `WHERE` clause syntax has the following parts (in order): keyword `WHERE` and identified expression(s). Boolean operators (`AND`, `OR`, `NOT`) and parenthesis can be used to represent multiple identified expressions. Examples:
 
+[source, sql]
 --------
 WHERE
    c/name/value=$nameValue AND c/archetype_details/template_id/value=$templateId
@@ -549,6 +579,7 @@ The following examples illustrate the binary form.
 
 * Left operand is an identified path; right operand is a primitive value:
 +
+[source, sql]
 --------
 o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value >= 140
 
@@ -557,12 +588,14 @@ c/archetype_details/template_id/value = 'health_encounter'
 
 * Left operand is an identified path and right operand is a parameter:
 +
+[source, sql]
 --------
 c/archetype_details/template_id/value = $templateParameter
 --------
 
 * Both left operand and right operand are identified paths:
 +
+[source, sql]
 --------
 o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value >
 o1/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/value
@@ -580,6 +613,7 @@ Some examples are shown below.
 
 Example 1: retrieve all Compositions' name value, context start time and composer name from a specific EHR.
 
+[source, sql]
 --------
 SELECT
    c/name/value AS Name, c/context/start_time AS date_time, c/composer/name AS Composer
@@ -590,6 +624,7 @@ FROM
 
 Example 2: Retrieve all Composition objects of a specific EHR.
 
+[source, sql]
 --------
 SELECT c
 FROM EHR e[ehr_id/value=$ehrUid] 
@@ -602,6 +637,7 @@ The `TOP` syntax was borrowed from SQL language for representing the number of r
 
 It starts with keyword TOP, followed by an integer number and/or the direction (i.e. `BACKWARD`, `FORWARD`), e.g.
 
+[source, sql]
 --------
 SELECT
    TOP 10 c/name/value AS Name, c/context/start_time AS date_time, c/composer/name AS Composer
@@ -618,6 +654,7 @@ As in SQL, `AQL` supports the use of a name alias for the retrieved data. This i
 
 The `ORDER BY` clause is used to sort the returned results. The keyword `ORDER BY` is followed by an identified path and the keyword `DESC`, `DESCENDING`, `ASCE`, or `ASCENDING`, e.g.
 
+[source, sql]
 --------
 ORDER BY c/name/value
 --------
