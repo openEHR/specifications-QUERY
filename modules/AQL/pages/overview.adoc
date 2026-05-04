@@ -1,3 +1,5 @@
+include::partial$module_vars.adoc[]
+
 = Overview
 
 == Existing Query Languages
@@ -35,6 +37,7 @@ AQL also has features found in other query languages, including:
 
 Below is an example of an AQL statement. This statement returns all blood pressure values contained in `COMPOSITION` instances defined by the `openEHR-EHR-COMPOSITION.encounter.v1` archetype, which contain `OBSERVATION` instances defined by the `openEHR-EHR-OBSERVATION.blood_pressure.v1` archetype, where the systolic value is greater than or equal to 140 or whose diastolic value is greater than or equal to 90, within a specified EHR (i.e. whose EHR id is the value of the variable `$ehrUid`). The AQL syntax is a synthesis of SQL structural syntax and the <<_openehr_path_syntax,openEHR path syntax>>.
 
+[source, sql]
 ----
 SELECT                                                       -- Select clause
    o/data[at0001]/.../items[at0004]/value AS systolic,       -- Identified path with alias

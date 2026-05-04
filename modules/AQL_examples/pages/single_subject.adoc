@@ -1,6 +1,9 @@
+include::partial$module_vars.adoc[]
+
 = Single-Subject AQL Examples
 
 .Scenario: *Get the latest 5 abnormal blood pressure values that were recorded in a health encounter for a specific patient.*
+[source, sql]
 ----
 SELECT
     obs/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude AS systolic,
