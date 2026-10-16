@@ -267,7 +267,7 @@ FROM
          CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]
 --------
 
-A query that does not include a `VERSION` class expression is applied only to the latest version of each versioned object.
+`LATEST_VERSION` is the default. A `VERSION` class expression without a version predicate, such as `VERSION v`, is equivalent to `VERSION v[LATEST_VERSION]`, and a query that does not include a `VERSION` class expression is applied only to the latest version of each versioned object. To query earlier versions, `ALL_VERSIONS` or a standard predicate has to be stated.
 
 == Identified Paths
 

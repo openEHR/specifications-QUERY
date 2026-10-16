@@ -7,7 +7,7 @@
 4+^h|*Release 1.2.0 (unreleased)*
 
 |[[latest_issue]]1.1.1
-|{spec_tickets}/SPECQUERY-38[SPECQUERY-38^]: Document the version predicates `LATEST_VERSION` and `ALL_VERSIONS`, and state that a query without a `VERSION` class expression is applied only to the latest versions (addresses {spec_tickets}/SPECPR-481[SPECPR-481^]).
+|{spec_tickets}/SPECQUERY-38[SPECQUERY-38^]: Document the version predicates `LATEST_VERSION` and `ALL_VERSIONS`, and state that `LATEST_VERSION` is the default, also for a `VERSION` class expression without a predicate (addresses {spec_tickets}/SPECPR-481[SPECPR-481^]).
 |M Polajnar, +
  S Kohler
 |[[latest_issue_date]]16 Oct 2026

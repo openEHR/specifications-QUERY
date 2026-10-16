@@ -21,7 +21,7 @@ AQL has the following distinctive features:
 . the utilization of a <<_containment,`CONTAINS` operator>> to match data hierarchy relationships in order to constrain the source data to which the query is applied;
 . the utilization of ADL-like operator syntaxes, such as `matches`, `exists` and `not`;
 . model-neutral syntax: AQL does not have any dependency on a Reference Model; it is also neutral to system implementation and environment;
-. supports querying historical versions of data, using <<_version_predicate,version predicates>> and time-based conditions; a query that does not refer to `VERSION` is applied only to the latest version of each versioned object.
+. supports querying historical versions of data, using <<_version_predicate,version predicates>> and time-based conditions; by default, a query is applied only to the latest version of each versioned object.
 
 AQL also has features found in other query languages, including:
 
