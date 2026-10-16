@@ -6,12 +6,18 @@
 
 4+^h|*Release 1.2.0 (unreleased)*
 
+|[[latest_issue]]1.1.1
+|{spec_tickets}/SPECQUERY-38[SPECQUERY-38^]: Document the version predicates `LATEST_VERSION` and `ALL_VERSIONS`, and state that `LATEST_VERSION` is the default, also for a `VERSION` class expression without a predicate (addresses {spec_tickets}/SPECPR-481[SPECPR-481^]).
+|M Polajnar, +
+ S Kohler
+|[[latest_issue_date]]16 Oct 2026
+
 4+^h|*Release 1.1.0*
 
-|[[latest_issue]]1.1.0
+|1.1.0
 |{spec_tickets}/SPECQUERY-8[SPECQUERY-8^] Correct numerous minor typographical and formatting errors. Improve the wording and readability.
 |S Iancu
-|[[latest_issue_date]]04 Feb 2021
+|04 Feb 2021
 
 |
 |{spec_tickets}/SPECQUERY-30[SPECQUERY-30^] Update (rewrite) grammar to ANTLR4 format.
