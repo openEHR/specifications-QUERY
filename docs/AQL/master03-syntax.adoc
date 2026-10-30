@@ -142,7 +142,7 @@ There are no specific guidelines on how to resolve query parameters. Generally s
 
 AQL uses predicates (see {openehr_path_syntax_predicates}[Predicate Expressions^]) to define criteria for coarse-grained and fine-grained data. Predicate expressions are always enclosed by brackets (`[]`).
 
-There are three types of predicates used by AQL: the _standard predicate_, the _archetype predicate_, and the _node predicate_.
+There are four types of predicates used by AQL: the _standard predicate_, the _archetype predicate_, the _node predicate_ and the _version predicate_.
 
 === Standard predicate
 
@@ -247,6 +247,27 @@ The corresponding standard predicates would be:
 --------
 
 A node predicate defines criteria on fine-grained data.
+
+=== Version predicate
+
+A version predicate can only be used on a `VERSION` class expression in the `FROM` clause (see <<_class_expressions>>). It selects the versions of a versioned object, such as a `VERSIONED_COMPOSITION`, to which the query is applied. It takes one of the following forms:
+
+* `LATEST_VERSION`: only the latest version of each versioned object;
+* `ALL_VERSIONS`: all versions of each versioned object;
+* a <<_standard_predicate,standard predicate>> on an attribute of `VERSION`.
+
+The following query returns all versions of the matching Compositions:
+
+--------
+SELECT
+   v/commit_audit/time_committed/value, c
+FROM
+   EHR e
+      CONTAINS VERSION v[ALL_VERSIONS]
+         CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.report.v1]
+--------
+
+`LATEST_VERSION` is the default. A `VERSION` class expression without a version predicate, such as `VERSION v`, is equivalent to `VERSION v[LATEST_VERSION]`, and a query that does not include a `VERSION` class expression is applied only to the latest version of each versioned object. To query earlier versions, `ALL_VERSIONS` or a standard predicate has to be stated.
 
 == Identified Paths
 
@@ -793,7 +814,7 @@ Class expressions syntax include three parts. A class expression must have part 
 
 . part one (mandatory): RM class name, such as `EHR`, `COMPOSITION`, `OBSERVATION` etc.
 . part two (optional): AQL variable name
-. part three (optional): a standard predicate or an archetype predicate.
+. part three (optional): a standard predicate or an archetype predicate; for `VERSION`, a <<_version_predicate,version predicate>>.
 
 Two examples of a class expression are shown below:
 
