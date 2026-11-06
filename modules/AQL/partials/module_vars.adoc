@@ -6,5 +6,5 @@ include::ROOT:partial$component_vars.adoc[]
 :keywords: query, AQL, archetype, Xpath, openehr
 :description: openEHR Archetype Query Language (AQL)
 
-:latest_issue: 1.1.0
-:latest_issue_date: 04 Feb 2021
+:latest_issue: 1.1.1
+:latest_issue_date: 16 Oct 2026
