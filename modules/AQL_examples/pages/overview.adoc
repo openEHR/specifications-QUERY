@@ -1,3 +1,5 @@
+include::partial$module_vars.adoc[]
+
 = Overview
 
 {openehr_query_aql}[Archetype Query Language (AQL)] is a declarative query language developed specifically for expressing queries used for searching and retrieving the data found in archetype-based repositories.

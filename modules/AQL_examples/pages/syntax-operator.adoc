@@ -1,3 +1,5 @@
+include::partial$module_vars.adoc[]
+
 == Operator Syntax Examples
 
 The following sub-sections illustrate various AQL operators with examples.
@@ -9,6 +11,7 @@ The following examples show how the ADL `matches` operator may be used within AQ
 NOTE: the ADL expressions on the right-hand side of the `matches` operator are in ADL 1.4 format.
 
 .Scenario: *Get all blood glucose values and their corresponding subject ids, where blood glucose > 11 mmol/L or blood glucose >= 200 mg/dL*
+[source, sql]
 ----
 SELECT
     e/ehr_status/subject/external_ref/id/value,
@@ -32,6 +35,7 @@ WHERE
     }
 ----
 
+[source, sql]
 ----
 SELECT
     e/ehr_status/subject/external_ref/id/value as subjectId,
@@ -49,6 +53,7 @@ WHERE
 ----
 
 .Scenario: *Get all blood glucose values and their corresponding ehr ids, where blood glucose level is between 5-6 mmol/L or between 90-110 mg/dL*
+[source, sql]
 ----
 SELECT
     e/ehr_id,
@@ -73,6 +78,7 @@ WHERE
 ----
 
 .Alternative
+[source, sql]
 ----
 SELECT
     e/ehr_id/value as ehrId,
@@ -90,6 +96,7 @@ WHERE
 ----
 
 .Scenario: *HbA1c > 7.0%*
+[source, sql]
 ----
 SELECT
     e/ehr_id,
@@ -106,6 +113,7 @@ WHERE
 ----
 
 .Alternative
+[source, sql]
 ----
 SELECT
     e/ehr_id/value as ehrId,
@@ -118,6 +126,7 @@ WHERE
 ----
 
 .Scenario: *Total cholesterol >= 5.0 mmol/L or LDL-C >= 3.0 mmol/L*
+[source, sql]
 ----
 SELECT
     e/ehr_id,
@@ -147,6 +156,7 @@ WHERE
 The following example shows how arithmetic operators may be used within AQL statements.
 
 .Scenario: *For each recorded administration of ampicillin check for problem diagnosis of skin rash that is within 2 days of the administration date*
+[source, sql]
 ----
 SELECT e/ehr_id
 FROM EHR e CONTAINS (COMPOSITION c1
@@ -171,6 +181,7 @@ WHERE
 The following example shows the use of a nested query and the `not-in` operator.
 
 .Scenario: *All patients who have not been discharged*
+[source, sql]
 ----
 SELECT e/ehr_id
 FROM

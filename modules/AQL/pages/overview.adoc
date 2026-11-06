@@ -1,3 +1,5 @@
+include::partial$module_vars.adoc[]
+
 = Overview
 
 == Existing Query Languages
@@ -16,12 +18,12 @@ The minimum requirement for data to be queried using AQL (including with archety
 
 AQL has the following distinctive features:
 
-. the utilization of <<_openehr_path_syntax,openEHR path syntax>> to locate clinical statements and data values within them using archetypes; this syntax is used to represent the query criteria and returned results, and allows stating query criteria using archetype and node identifiers, data values within the archetypes, and class attributes defined within the Reference Model;
+. the utilization of <<syntax.adoc#{underscore}openehr_path_syntax,openEHR path syntax>> to locate clinical statements and data values within them using archetypes; this syntax is used to represent the query criteria and returned results, and allows stating query criteria using archetype and node identifiers, data values within the archetypes, and class attributes defined within the Reference Model;
 . returned results may be objects of any granularity from 'top-level' RM objects to primitive data items;
-. the utilization of a <<_containment,`CONTAINS` operator>> to match data hierarchy relationships in order to constrain the source data to which the query is applied;
+. the utilization of a <<syntax.adoc#{underscore}containment,`CONTAINS` operator>> to match data hierarchy relationships in order to constrain the source data to which the query is applied;
 . the utilization of ADL-like operator syntaxes, such as `matches`, `exists` and `not`;
 . model-neutral syntax: AQL does not have any dependency on a Reference Model; it is also neutral to system implementation and environment;
-. supports querying historical versions of data, using <<_version_predicate,version predicates>> and time-based conditions; by default, a query is applied only to the latest version of each versioned object.
+. supports querying historical versions of data, using <<syntax.adoc#{underscore}version_predicate,version predicates>> and time-based conditions; by default, a query is applied only to the latest version of each versioned object.
 
 AQL also has features found in other query languages, including:
 
@@ -33,8 +35,9 @@ AQL also has features found in other query languages, including:
 
 == AQL example
 
-Below is an example of an AQL statement. This statement returns all blood pressure values contained in `COMPOSITION` instances defined by the `openEHR-EHR-COMPOSITION.encounter.v1` archetype, which contain `OBSERVATION` instances defined by the `openEHR-EHR-OBSERVATION.blood_pressure.v1` archetype, where the systolic value is greater than or equal to 140 or whose diastolic value is greater than or equal to 90, within a specified EHR (i.e. whose EHR id is the value of the variable `$ehrUid`). The AQL syntax is a synthesis of SQL structural syntax and the <<_openehr_path_syntax,openEHR path syntax>>.
+Below is an example of an AQL statement. This statement returns all blood pressure values contained in `COMPOSITION` instances defined by the `openEHR-EHR-COMPOSITION.encounter.v1` archetype, which contain `OBSERVATION` instances defined by the `openEHR-EHR-OBSERVATION.blood_pressure.v1` archetype, where the systolic value is greater than or equal to 140 or whose diastolic value is greater than or equal to 90, within a specified EHR (i.e. whose EHR id is the value of the variable `$ehrUid`). The AQL syntax is a synthesis of SQL structural syntax and the <<syntax.adoc#{underscore}openehr_path_syntax,openEHR path syntax>>.
 
+[source, sql]
 ----
 SELECT                                                       -- Select clause
    o/data[at0001]/.../items[at0004]/value AS systolic,       -- Identified path with alias
