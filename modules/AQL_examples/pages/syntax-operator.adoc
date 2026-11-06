@@ -184,3 +184,5 @@ WHERE
             ADMIN_ENTRY ae2 [openEHR-EHR-ADMIN_ENTRY.discharge.v1]
    )
 ----
+
+include::partial$syntax-function.adoc[leveloffset=+1]

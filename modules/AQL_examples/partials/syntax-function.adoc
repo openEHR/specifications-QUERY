@@ -1,8 +1,8 @@
-== Function Syntax Examples
+= Function Syntax Examples
 
 The following sub-sections illustrate various AQL functions with examples.
 
-=== Aggregate functions
+== Aggregate functions
 
 .*Example 1:* The `COUNT()` and `MIN()` functions are used to return the number of discharge letters and the date of their oldest event:
 --------
@@ -36,7 +36,7 @@ FROM
         CONTAINS OBSERVATION o[openEHR-EHR-OBSERVATION.blood_pressure.v1]
 --------
 
-=== TERMINOLOGY
+== TERMINOLOGY
 
 The following are examples of the use of `TERMINOLOGY` function related to FHIR terminology operations.
 
