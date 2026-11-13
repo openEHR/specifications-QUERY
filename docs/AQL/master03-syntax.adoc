@@ -978,9 +978,9 @@ FROM
 
 ==== Containment
 
-Since archetypes are in hierarchical structure, AQL has a containment constraint which specifies the hierarchical relationships between parent and child data items. The `FROM` clause utilises this hierarchical constraint along with <<_class_expressions, class expression>> to determine the data source to which the AQL query is applied.
+Since archetypes are in hierarchical structure, AQL has a containment constraint which specifies the hierarchical relationship between an ancestor data item and its descendant data items, where a descendant is a direct child or any item further down the hierarchy. The `FROM` clause utilises this hierarchical constraint along with <<_class_expressions, class expression>> to determine the data source to which the AQL query is applied.
 
-The syntax of containment constraint expression is very simple: using `CONTAINS` operator between two class expressions. Left-hand operand class expression is the parent object of the right-hand operand class expression, e.g.
+The syntax of containment constraint expression is very simple: using `CONTAINS` operator between two class expressions. The left-hand operand class expression is an ancestor of the right-hand operand class expression: the right-hand object may be found at any depth below the left-hand object, not only as its direct child (similar to the XPath `//` axis). For instance, `COMPOSITION c CONTAINS OBSERVATION o` matches an OBSERVATION placed directly in `COMPOSITION.content` as well as one nested in a SECTION. The hierarchy also covers the logical containment of COMPOSITIONs in an EHR, e.g.
 
 --------
 EHR e CONTAINS COMPOSITION c [openEHR-EHR-COMPOSITION.referral.v1]
@@ -999,7 +999,7 @@ EHR e
       CONTAINS (OBSERVATION o [openEHR-EHR-OBSERVATION.laboratory-hba1c.v1] OR OBSERVATION o1 [openEHR-EHR-OBSERVATION.laboratory-glucose.v1])
 --------
 
-The logical operator `NOT` can be used in combination with `CONTAINS` to express an exclusion constraint,  i.e. the absence of any containment relationship between a parent and potential child items. The following example matches referral COMPOSITIONs that do not contain laboratory test result OBSERVATIONs:
+The logical operator `NOT` can be used in combination with `CONTAINS` to express an exclusion constraint,  i.e. the absence of any containment relationship between an ancestor and potential descendant items. The following example matches referral COMPOSITIONs that do not contain laboratory test result OBSERVATIONs:
 
 --------
 EHR e
