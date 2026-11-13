@@ -6,11 +6,17 @@
 
 4+^h|*Release 1.2.0 (unreleased)*
 
-|[[latest_issue]]1.1.1
+|[[latest_issue]]1.2.0
+|{spec_tickets}/SPECPR-235[SPECPR-235^]: Define `CONTAINS` as an ancestor/descendant relationship: the right-hand object may be at any depth below the left-hand object, not only a direct child.
+|P Pazos, +
+ S Kohler
+|[[latest_issue_date]]13 Nov 2026
+
+|1.1.1
 |{spec_tickets}/SPECQUERY-38[SPECQUERY-38^]: Document the version predicates `LATEST_VERSION` and `ALL_VERSIONS`, and state that `LATEST_VERSION` is the default, also for a `VERSION` class expression without a predicate (addresses {spec_tickets}/SPECPR-481[SPECPR-481^]).
 |M Polajnar, +
  S Kohler
-|[[latest_issue_date]]16 Oct 2026
+|16 Oct 2026
 
 4+^h|*Release 1.1.0*
 
