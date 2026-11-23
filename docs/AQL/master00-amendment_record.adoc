@@ -6,11 +6,16 @@
 
 4+^h|*Release 1.2.0 (unreleased)*
 
-|[[latest_issue]]1.1.1
+|[[latest_issue]]1.2.0
+|An archetype predicate matches data committed under any identifier in the equivalence class of the archetype it names, as declared by ADL 2 `path_equivalent_to` sections (<<Path-equivalent archetypes>>).
+|I McNicoll
+|[[latest_issue_date]]23 Nov 2026
+
+|1.1.1
 |{spec_tickets}/SPECQUERY-38[SPECQUERY-38^]: Document the version predicates `LATEST_VERSION` and `ALL_VERSIONS`, and state that `LATEST_VERSION` is the default, also for a `VERSION` class expression without a predicate (addresses {spec_tickets}/SPECPR-481[SPECPR-481^]).
 |M Polajnar, +
  S Kohler
-|[[latest_issue_date]]16 Oct 2026
+|16 Oct 2026
 
 4+^h|*Release 1.1.0*
 
