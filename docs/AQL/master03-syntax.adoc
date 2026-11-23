@@ -194,6 +194,8 @@ FROM EHR e
 
 For an archetype predicate, the standard predicate above is therefore a match of `_archetype_node_id_` against the members of the equivalence class rather than a single string comparison. A query that must select data committed under one identifier only can use a standard predicate on `_archetype_details_/archetype_id/value` instead.
 
+Where a system resolves archetype predicates using archetype specialisation (for example so that a predicate also matches specialisations of the named archetype), it may treat a legacy ADL 1.4 identifier as the ADL 2 identifier in its equivalence class and use the lineage of that ADL 2 archetype and its operational templates, since legacy data does not record specialisation lineage.
+
 Because a path equivalence asserts only that paths and RM types are the same, results may differ between members of a class in their terminology bindings, value sets or occurrences, which a query using values from both should take into account.
 
 === Node predicate
