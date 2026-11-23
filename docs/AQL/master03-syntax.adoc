@@ -180,6 +180,24 @@ WHERE
 
 This equivalence could be used by implementers of AQL to transform predicates into their standard form, as a canonical representation of the query, which can simplified its processing, validation, evaluation and transformation into specific database query languages.
 
+==== Path-equivalent archetypes
+
+An archetype or template may declare that it has exactly the same paths as other artefacts, typically the ADL 1.4 original of an ADL 2 conversion, using the ADL 2 `path_equivalent_to` section (see `AUTHORED_ARCHETYPE._path_equivalent_ids_` in the {openehr_am_aom2}#_path_equivalence[AOM2 specification^]). The identifiers so linked, taken as the transitive closure of the declarations known to the system in its archetypes and operational templates (including `OPERATIONAL_TEMPLATE._component_path_equivalences_`), form an _equivalence class_.
+
+An archetype predicate matches any `LOCATABLE` whose `_archetype_node_id_` is in the equivalence class of the identifier given in the predicate, or is that identifier where it belongs to no class. For example, if `org.openehr::openEHR-EHR-OBSERVATION.blood_pressure.v1.2.3` declares `path_equivalent_to openEHR-EHR-OBSERVATION.blood_pressure.v1`, the following matches data committed under either identifier:
+
+--------
+SELECT o/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude
+FROM EHR e
+   CONTAINS OBSERVATION o [openEHR-EHR-OBSERVATION.blood_pressure.v1]
+--------
+
+For an archetype predicate, the standard predicate above is therefore a match of `_archetype_node_id_` against the members of the equivalence class rather than a single string comparison. A query that must select data committed under one identifier only can use a standard predicate on `_archetype_details_/archetype_id/value` instead.
+
+Where a system resolves archetype predicates using archetype specialisation (for example so that a predicate also matches specialisations of the named archetype), it may treat a legacy ADL 1.4 identifier as the ADL 2 identifier in its equivalence class and use the lineage of that ADL 2 archetype and its operational templates, since legacy data does not record specialisation lineage.
+
+Because a path equivalence asserts only that paths and RM types are the same, results may differ between members of a class in their terminology bindings, value sets or occurrences, which a query using values from both should take into account.
+
 === Node predicate
 
 A node predicate is also a shortcut of a standard predicate. It has the following forms:
