@@ -228,19 +228,22 @@ The corresponding standard predicates would be:
 +
 --------
 [at0002, at0003]
-[at0002, snomed_ct(3.1)::313267000]
-[at0003, icd10AM::F60.1|Schizoid personality disorder|]
 --------
 +
-The corresponding standard predicates would be:
+The corresponding standard predicate would be:
 +
 --------
 [archetype_node_id=at0002 and name/defining_code/code_string='at0003' and name/defining_code/terminology_id/value='local']
-[archetype_node_id=at0002 and name/defining_code/code_string='313267000' and name/defining_code/terminology_id/value='snomed_ct(3.1)']
-[archetype_node_id=at0003 and name/defining_code/code_string='F60.1' and name/defining_code/terminology_id/value='icd10AM']
 --------
 +
-These examples use legacy terminology identifiers; for the recommended URI form and matching of versions, see <<_matching_terminology_identifiers>>.
+The shortcut cannot hold a URI terminology identifier, since `:` and `/` are not allowed in its terminology part. For an external terminology, use the standard predicate, e.g.:
++
+--------
+[archetype_node_id=at0002 and name/defining_code/code_string='313267000' and name/defining_code/terminology_id/value='http://snomed.info/sct']
+[archetype_node_id=at0003 and name/defining_code/code_string='F60.1' and name/defining_code/terminology_id/value='http://hl7.org/fhir/sid/icd-10']
+--------
++
+For matching of terminology versions, see <<_matching_terminology_identifiers>>.
 
 * The above four forms are the most common node predicates. A more advanced form is to include a general criterion instead of the `name/value` criterion within the predicate. The general criterion consists of left-hand operand, operator, and right-hand operand, e.g.:
 +
@@ -441,7 +444,7 @@ WHERE
 [[_matching_terminology_identifiers]]
 ==== Matching terminology identifiers and versions
 
-The recommended form of a terminology identifier is a URI, such as `\http://snomed.info/sct` or `\http://loinc.org`, held in `terminology_id/value`. The version of the terminology is held separately in `terminology_id/version`; for SNOMED CT it is the full version URI defined by SNOMED International, e.g. `\http://snomed.info/sct/900000000000207008/version/20260101`. The legacy form, a short name with an optional version in brackets (e.g. `SNOMED-CT(2024-01)`), is still valid (see the `TERMINOLOGY_ID` class in the {openehr_base_types}[openEHR Base Types^] specification).
+The recommended form of a terminology identifier is a URI, such as `\http://snomed.info/sct` or `\http://loinc.org`, held in `terminology_id/value`. The version of the terminology is held separately in `terminology_id/version`. For SNOMED CT, it is the full version URI defined by SNOMED International, e.g. `\http://snomed.info/sct/900000000000207008/version/20260101`.
 
 Because the version is held in its own attribute, `LIKE` can match any version of an edition or module, while `=` matches the terminology identifier exactly. The examples below show the common cases.
 
@@ -474,18 +477,25 @@ WHERE
    p/data/items[at0002]/value/defining_code/terminology_id/version LIKE 'http://snomed.info/sct/*/version/2026*'
 --------
 
-* Match both the URI and the legacy short-name forms of the same terminology, e.g. for data recorded before URI identifiers were used:
+NOTE: AQL has no regular expression operator. `LIKE` with the `?` and `*` wildcards is the supported way to match parts of a terminology identifier or version.
+
+===== Legacy terminology identifiers
+
+Data recorded before URIs were recommended may use the legacy form, a short name with an optional version in brackets, e.g. `SNOMED-CT(2024-01)` (see the `TERMINOLOGY_ID` class in the {openehr_base_types}[openEHR Base Types^] specification). For such data, the bracketed part is version information:
+
+* `terminology_id/value` returns the identifier as stored, without the version in brackets, e.g. `SNOMED-CT`. A legacy short name is not translated to a URI in the result.
+* In a criterion, a URI also matches data recorded with the corresponding legacy short name: the platform relates the two using the legacy conversion table of the {openehr_term_terminology}[openEHR Terminology^] specification. Queries therefore use the URI only.
+* `terminology_id/version` returns the `version` attribute if it is set, otherwise the version in brackets, e.g. `2024-01`.
+
+Example for legacy data:
+
+* Match a legacy version: the URI matches data recorded as `SNOMED-CT(2024-01)`:
 +
 --------
 WHERE
-   p/data/items[at0002]/value/defining_code/code_string = '73211009' AND
-   (p/data/items[at0002]/value/defining_code/terminology_id/value = 'http://snomed.info/sct' OR
-    p/data/items[at0002]/value/defining_code/terminology_id/value LIKE 'SNOMED-CT*')
+   p/data/items[at0002]/value/defining_code/terminology_id/value = 'http://snomed.info/sct' AND
+   p/data/items[at0002]/value/defining_code/terminology_id/version = '2024-01'
 --------
-+
-The `LIKE` pattern `'SNOMED-CT*'` matches `SNOMED-CT` as well as a legacy identifier with a version in brackets, such as `SNOMED-CT(2024-01)`.
-
-NOTE: AQL has no regular expression operator; `LIKE` with the `?` and `*` wildcards is the supported way to match parts of a terminology identifier or version.
 
 === Logical operators
 
@@ -765,6 +775,39 @@ The function with syntax `CURRENT_DATE_TIME()`, or `NOW()`, accepts no arguments
 ==== CURRENT_TIMEZONE
 
 The function with syntax `CURRENT_TIMEZONE()` accepts no arguments and returns the current timezone as String value with the format '±hh:mm'.
+
+=== Terminology identifier functions
+
+These functions normalise a terminology identifier, so that query results can show one form even when the data contains both URIs and legacy short names. They use the legacy conversion table of the {openehr_term_terminology}[openEHR Terminology^] specification. The argument is a `TERMINOLOGY_ID` (an identified path ending in `terminology_id`) or a String holding a terminology identifier. A version in brackets is not part of the result.
+
+==== TERMINOLOGY_URI
+
+`TERMINOLOGY_URI(terminology_id)` returns the URI of the terminology. A URI is returned as is. A legacy short name is translated to its URI with the conversion table. If the table has no entry, the identifier is returned as stored, without the version in brackets.
+
+--------
+SELECT
+   TERMINOLOGY_URI(p/data/items[at0002]/value/defining_code/terminology_id) AS terminology,
+   p/data/items[at0002]/value/defining_code/code_string AS code
+FROM
+   EHR e
+      CONTAINS EVALUATION p[openEHR-EHR-EVALUATION.problem-diagnosis.v1]
+--------
+
+For data recorded as `SNOMED-CT(2024-01)` or as `\http://snomed.info/sct`, `terminology` is `\http://snomed.info/sct`.
+
+==== TERMINOLOGY_NAMESPACE
+
+`TERMINOLOGY_NAMESPACE(terminology_id)` returns the legacy short name of the terminology. A short name is returned as is, without the version in brackets. A URI is translated to its short name with the conversion table. If the table has no entry, the URI is returned as is.
+
+--------
+SELECT
+   TERMINOLOGY_NAMESPACE(p/data/items[at0002]/value/defining_code/terminology_id) AS terminology
+FROM
+   EHR e
+      CONTAINS EVALUATION p[openEHR-EHR-EVALUATION.problem-diagnosis.v1]
+--------
+
+For data recorded as `\http://snomed.info/sct` or as `SNOMED-CT(2024-01)`, `terminology` is `SNOMED-CT`.
 
 === Other functions
 

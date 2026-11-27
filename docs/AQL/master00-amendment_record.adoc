@@ -6,8 +6,8 @@
 
 4+^h|*Release 1.2.0 (unreleased)*
 
-|[[latest_issue]]1.1.2
-|{spec_tickets}/SPECPR-538[SPECPR-538^]: Add examples for matching URI terminology identifiers and terminology versions with `=` and `LIKE`, including legacy short-name identifiers.
+|[[latest_issue]]1.2.0
+|{spec_tickets}/SPECPR-538[SPECPR-538^]: Add examples for matching URI terminology identifiers and terminology versions with `=` and `LIKE`, describe how legacy short-name identifiers are queried, and add the functions `TERMINOLOGY_URI` and `TERMINOLOGY_NAMESPACE` to the language and grammar.
 |I McNicoll, +
  D Bosca, +
  E Sundvall, +

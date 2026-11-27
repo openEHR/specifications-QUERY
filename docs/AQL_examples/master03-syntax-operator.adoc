@@ -42,7 +42,7 @@ FROM EHR e
         CONTAINS OBSERVATION o[openEHR-EHR-OBSERVATION.laboratory_test_result.v1]
             CONTAINS CLUSTER a[openEHR-EHR-CLUSTER.laboratory_test_analyte.v1]
 WHERE
-    (a/items[at0001]/value/defining_code/code_string matches {'14743-9','2345-7'} AND a/items[at0001]/value/defining_code/terminology_id = 'LOINC')
+    (a/items[at0001]/value/defining_code/code_string matches {'14743-9','2345-7'} AND a/items[at0001]/value/defining_code/terminology_id/value = 'http://loinc.org')
     AND
     ((a/items[at0024]/value/magnitude > 11 AND a/items[at0024]/value/units matches {'mmol/L'})
         OR (a/items[at0024]/value/magnitude >= 200 AND a/items[at0024]/value/units matches {'mg/dL'}))
@@ -83,7 +83,7 @@ FROM EHR e
         CONTAINS OBSERVATION o[openEHR-EHR-OBSERVATION.laboratory_test_result.v1]
             CONTAINS CLUSTER a[openEHR-EHR-CLUSTER.laboratory_test_analyte.v1]
 WHERE
-    (a/items[at0001]/value/defining_code/code_string matches {'14743-9','2345-7'} AND a/items[at0001]/value/defining_code/terminology_id = 'LOINC')
+    (a/items[at0001]/value/defining_code/code_string matches {'14743-9','2345-7'} AND a/items[at0001]/value/defining_code/terminology_id/value = 'http://loinc.org')
     AND
     ((a/items[at0024]/value/magnitude >= 5 AND a/items[at0024]/value/magnitude <=6 AND a/items[at0024]/value/units matches {'mmol/L'})
         OR (a/items[at0024]/value/magnitude >= 90 AND a/items[at0024]/value/magnitude >= 110 AND a/items[at0024]/value/units matches {'mg/dL'}))
