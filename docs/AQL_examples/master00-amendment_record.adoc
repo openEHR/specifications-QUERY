@@ -6,12 +6,17 @@
 
 4+^h|*Release 1.2.0 (unreleased)*
 
+|[[latest_issue]]1.1.1
+|{spec_tickets}/SPECPR-538[SPECPR-538^] Use the LOINC URI `\http://loinc.org` on `terminology_id/value` in the operator examples.
+|S Kohler
+|[[latest_issue_date]]27 Nov 2026
+
 4+^h|*Release 1.1.0*
 
-|[[latest_issue]]1.1.0
+|1.1.0
 |{spec_tickets}/SPECQUERY-8[SPECQUERY-8^] Improve readability and clean up text (non-semantic).
 |S Iancu
-|[[latest_issue_date]]01 Dec 2020
+|01 Dec 2020
 
 |
 |{spec_tickets}/SPECQUERY-12[SPECQUERY-12^] Improve terminology support by adding a new TERMINOLOGY function.
