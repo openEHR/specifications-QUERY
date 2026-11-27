@@ -239,6 +239,8 @@ The corresponding standard predicates would be:
 [archetype_node_id=at0002 and name/defining_code/code_string='313267000' and name/defining_code/terminology_id/value='snomed_ct(3.1)']
 [archetype_node_id=at0003 and name/defining_code/code_string='F60.1' and name/defining_code/terminology_id/value='icd10AM']
 --------
++
+These examples use legacy terminology identifiers; for the recommended URI form and matching of versions, see <<_matching_terminology_identifiers>>.
 
 * The above four forms are the most common node predicates. A more advanced form is to include a general criterion instead of the `name/value` criterion within the predicate. The general criterion consists of left-hand operand, operator, and right-hand operand, e.g.:
 +
@@ -435,6 +437,55 @@ WHERE
    c/name/value='Current Problems' AND
    p/data/items[at0002]/value/defining_code/code_string matches TERMINOLOGY('expand', 'hl7.org/fhir/4.0', 'http://snomed.info/sct?fhir_vs=isa/50697003')
 --------
+
+[[_matching_terminology_identifiers]]
+==== Matching terminology identifiers and versions
+
+The recommended form of a terminology identifier is a URI, such as `\http://snomed.info/sct` or `\http://loinc.org`, held in `terminology_id/value`. The version of the terminology is held separately in `terminology_id/version`; for SNOMED CT it is the full version URI defined by SNOMED International, e.g. `\http://snomed.info/sct/900000000000207008/version/20260101`. The legacy form, a short name with an optional version in brackets (e.g. `SNOMED-CT(2024-01)`), is still valid (see the `TERMINOLOGY_ID` class in the {openehr_base_types}[openEHR Base Types^] specification).
+
+Because the version is held in its own attribute, `LIKE` can match any version of an edition or module, while `=` matches the terminology identifier exactly. The examples below show the common cases.
+
+* Match a code in a terminology, whatever its version, by constraining `terminology_id/value` and `code_string` only:
++
+--------
+SELECT
+   c/context/start_time, p/data/items[at0002]/value
+FROM
+   EHR e
+      CONTAINS COMPOSITION c[openEHR-EHR-COMPOSITION.problem_list.v1]
+         CONTAINS EVALUATION p[openEHR-EHR-EVALUATION.problem-diagnosis.v1]
+WHERE
+   p/data/items[at0002]/value/defining_code/terminology_id/value = 'http://snomed.info/sct' AND
+   p/data/items[at0002]/value/defining_code/code_string = '73211009'
+--------
+
+* Match any version of the SNOMED CT International Edition (module `900000000000207008`):
++
+--------
+WHERE
+   p/data/items[at0002]/value/defining_code/terminology_id/value = 'http://snomed.info/sct' AND
+   p/data/items[at0002]/value/defining_code/terminology_id/version LIKE 'http://snomed.info/sct/900000000000207008/version/*'
+--------
+
+* Match the versions of any SNOMED CT edition released in 2026:
++
+--------
+WHERE
+   p/data/items[at0002]/value/defining_code/terminology_id/version LIKE 'http://snomed.info/sct/*/version/2026*'
+--------
+
+* Match both the URI and the legacy short-name forms of the same terminology, e.g. for data recorded before URI identifiers were used:
++
+--------
+WHERE
+   p/data/items[at0002]/value/defining_code/code_string = '73211009' AND
+   (p/data/items[at0002]/value/defining_code/terminology_id/value = 'http://snomed.info/sct' OR
+    p/data/items[at0002]/value/defining_code/terminology_id/value LIKE 'SNOMED-CT*')
+--------
++
+The `LIKE` pattern `'SNOMED-CT*'` matches `SNOMED-CT` as well as a legacy identifier with a version in brackets, such as `SNOMED-CT(2024-01)`.
+
+NOTE: AQL has no regular expression operator; `LIKE` with the `?` and `*` wildcards is the supported way to match parts of a terminology identifier or version.
 
 === Logical operators
 

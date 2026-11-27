@@ -6,11 +6,19 @@
 
 4+^h|*Release 1.2.0 (unreleased)*
 
-|[[latest_issue]]1.1.1
+|[[latest_issue]]1.1.2
+|{spec_tickets}/SPECPR-538[SPECPR-538^]: Add examples for matching URI terminology identifiers and terminology versions with `=` and `LIKE`, including legacy short-name identifiers.
+|I McNicoll, +
+ D Bosca, +
+ E Sundvall, +
+ S Kohler
+|[[latest_issue_date]]27 Nov 2026
+
+|1.1.1
 |{spec_tickets}/SPECQUERY-38[SPECQUERY-38^]: Document the version predicates `LATEST_VERSION` and `ALL_VERSIONS`, and state that `LATEST_VERSION` is the default, also for a `VERSION` class expression without a predicate (addresses {spec_tickets}/SPECPR-481[SPECPR-481^]).
 |M Polajnar, +
  S Kohler
-|[[latest_issue_date]]16 Oct 2026
+|16 Oct 2026
 
 4+^h|*Release 1.1.0*
 
