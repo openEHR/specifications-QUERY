@@ -477,7 +477,7 @@ WHERE
    p/data/items[at0002]/value/defining_code/terminology_id/version LIKE 'http://snomed.info/sct/*/version/2026*'
 --------
 
-NOTE: AQL has no regular expression operator. `LIKE` with the `?` and `*` wildcards is the supported way to match parts of a terminology identifier or version.
+NOTE: In the `WHERE` clause, `LIKE` with the `?` and `*` wildcards is the way to match parts of a terminology identifier or version. Regular expressions are only available in node predicates, as `matches {/regex/}`.
 
 ===== Legacy terminology identifiers
 
